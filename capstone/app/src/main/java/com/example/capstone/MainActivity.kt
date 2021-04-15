@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.capstone.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,14 +13,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        replaceFragment(MainFragment())
+        replaceFragment(HomeFragment())
 
         // bottom navigation item이 선택되면
         // 해당되는 fragment로 전환
         bottom_nav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.bottom_nav_main -> {
-                    replaceFragment(MainFragment())
+                R.id.bottom_nav_home -> {
+                    replaceFragment(HomeFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.bottom_nav_timetable -> {

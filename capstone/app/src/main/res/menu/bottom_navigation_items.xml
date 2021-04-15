@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/bottom_nav_main"
-        android:title="@string/menu_main"
-        android:icon="@drawable/bottom_main" />
+    <item android:id="@+id/bottom_nav_home"
+        android:title="@string/menu_home"
+        android:icon="@drawable/bottom_home" />
     <item android:id="@+id/bottom_nav_timetable"
         android:title="@string/menu_timetable"
         android:icon="@drawable/bottom_timetable"/>
@@ -11,7 +11,7 @@
         android:icon="@drawable/bottom_board_list" />
     <item android:id="@+id/bottom_nav_notice"
         android:title="@string/menu_notice"
-        android:icon="@drawable/bottom_notice" />
+        android:icon="@drawable/selector_bottom_notice" />
     <item android:id="@+id/bottom_nav_myinfo"
         android:title="@string/menu_myinfo"
         android:icon="@drawable/bottom_myinfo" />

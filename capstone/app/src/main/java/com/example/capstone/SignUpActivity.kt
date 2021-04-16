@@ -7,33 +7,25 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContentProviderCompat.requireContext
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import org.jetbrains.anko.sdk27.coroutines.onItemClick
 import org.jetbrains.anko.startActivity
 
 class SignUpActivity : AppCompatActivity() {
-    val classList = Array(8, {i -> i + 1})
-    val gradeList = Array(3, {i -> i + 1})
-    val phoneList = arrayOf("SKT", "KT", "LG")
+    val classList = Array(8, {i -> i + 1})     // 반 드롭다운 배열
+    val gradeList = Array(3, {i -> i + 1})     // 학년 드롭다운 배열
+    val phoneList = arrayOf("SKT", "KT", "LG")      // 통신사 드롭다운 배열
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        // 뒤로가기 버튼 -> 로그인 화면으로 돌아감
         SignUpGoBackButton.setOnClickListener {
             startActivity<LoginActivity>()
         }
 
-        SignUpClassDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, classList)
-        SignUpClassDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                println("반")
-            }
-
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                println("$p2")
-            }
-        }
-
+        // 학년 드롭다운 스피너
         SignUpGradeDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gradeList)
         SignUpGradeDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -45,6 +37,20 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+        // 반 드롭다운 스피너
+        SignUpClassDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, classList)
+        SignUpClassDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                println("반")
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                println("$p2")
+            }
+        }
+
+
+        // 통신사 드롭다운 스피너
         SignUpPhoneDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, phoneList)
         SignUpPhoneDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -55,5 +61,41 @@ class SignUpActivity : AppCompatActivity() {
                 println("$p2")
             }
         }
+
+        // 닉네임 중복확인 버튼
+        SignUpNicknameButton.setOnClickListener {
+            // 닉네임 중복확인 구현
+        }
+
+        // ID 중복확인 버튼
+        SignUpIdButton.setOnClickListener {
+            // ID 중복확인 구현
+        }
+
+        // 인증번호 받기 버튼
+        SignUpSendNumButton.setOnClickListener {
+            // 인증번호 전송 구현
+        }
+
+        SignUpButton.setOnClickListener {       // 회원가입 버튼
+            signUp()        // 가입 메소드
+        }
+    }
+
+    private fun signUp() {
+        val nickname = SignUpNicknameEditTextView.text
+        val id = SignUpIdEditTextView.text
+        val password = SignUpPasswordEditTextView.text
+        val name = SignUpNameEditTextView.text
+        val birth = SignUpBirthEditText.text
+        val stuGrade = SignUpGradeDropdown
+        val stuClass = SignUpClassDropdown
+        val stuNum = SignUpNumberEditText.text
+        val agency = SignUpPhoneDropdown
+        val phoneNum = SignUpPhoneEditText.text
+
+        val result = arrayOf(nickname, id, password, name, birth, stuGrade, stuClass, stuNum, agency, phoneNum)
+
+        // 가입 구현
     }
 }

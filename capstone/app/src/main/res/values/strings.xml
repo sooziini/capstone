@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">capstone</string>
+
+    <string name="menu_home">홈</string>
+    <string name="menu_timetable">시간표</string>
+    <string name="menu_board_list">게시판</string>
+    <string name="menu_notice">알림</string>
+    <string name="menu_myinfo">내정보</string>
+
 </resources>

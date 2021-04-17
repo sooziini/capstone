@@ -12,18 +12,21 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // 회원가입 클릭
         LoginRegisterButton.setOnClickListener {
             startActivity<SignUpActivity>()
         }
 
+        // 아이디, 비밀번호 찾기 클릭
         LoginFindIdPassword.setOnClickListener {
-            // 추후 구현
+            // 구현
         }
 
+        // 로그인 버튼
         LoginButton.setOnClickListener {
-            if (LoginIdEditText.text != null && LoginPasswordEditText.text != null) {
+            if (LoginIdEditText.text.isNotEmpty() && LoginPasswordEditText.text.isNotEmpty()) { // ID 비밀번호 확인 조건 필요
                     startActivity<MainActivity>()
-            } else if (LoginIdEditText.text == null || LoginPasswordEditText.text == null){
+            } else if (LoginIdEditText.text.isEmpty() || LoginPasswordEditText.text.isEmpty()){
                 alert("ID와 비밀번호를 모두 입력하세요") {
                     yesButton {  }
                 }.show()

@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,15 @@ class FreeBoardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_free_board)
 
+        free_board_back.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        free_board_write.setOnClickListener {
+            startActivity(Intent(this, BoardWriteActivity::class.java))
+        }
+        
+        // 자유게시판 전체 게시글 GET
         (application as MasterApplication).service.getPostList()
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
@@ -35,13 +45,13 @@ class FreeBoardActivity : AppCompatActivity() {
                         post_recyclerview.adapter = adapter
                         post_recyclerview.layoutManager = LinearLayoutManager(this@FreeBoardActivity)
                     } else {
-                        toast("post fail")
+                        toast("error")
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<PostList>, t: Throwable) {
-                    toast("post fail")
+                    toast("network error")
                 }
             })
     }

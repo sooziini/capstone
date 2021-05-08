@@ -4,29 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/post_shape"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/post_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
         android:text="title"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/post_item_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="body"
-        android:textSize="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        android:text="body"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16dp"
+        android:ellipsize="end"
+        android:maxLines="1" />
 
 </LinearLayout>

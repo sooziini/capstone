@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
+    <TextView
+        android:id="@+id/HomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Cloudy"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/main_color"
+        android:textStyle="bold" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

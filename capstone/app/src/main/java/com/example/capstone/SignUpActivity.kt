@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.sdk27.coroutines.onItemClick
 import org.jetbrains.anko.startActivity
 
-class SignUpActivity : AppCompatActivity() {
+class   SignUpActivity : AppCompatActivity() {
     val classList = Array(8, {i -> i + 1})     // 반 드롭다운 배열
     val gradeList = Array(3, {i -> i + 1})     // 학년 드롭다운 배열
     val phoneList = arrayOf("SKT", "KT", "LG")      // 통신사 드롭다운 배열
@@ -64,17 +64,17 @@ class SignUpActivity : AppCompatActivity() {
 
         // 닉네임 중복확인 버튼
         SignUpNicknameButton.setOnClickListener {
-            // 닉네임 중복확인 구현
+            checkNicknameDup()
         }
 
         // ID 중복확인 버튼
         SignUpIdButton.setOnClickListener {
-            // ID 중복확인 구현
+            checkIdDup()
         }
 
         // 인증번호 받기 버튼
         SignUpSendNumButton.setOnClickListener {
-            // 인증번호 전송 구현
+            sendNum()
         }
 
         SignUpButton.setOnClickListener {       // 회원가입 버튼
@@ -97,5 +97,18 @@ class SignUpActivity : AppCompatActivity() {
         val result = arrayOf(nickname, id, password, name, birth, stuGrade, stuClass, stuNum, agency, phoneNum)
 
         // 가입 구현
+        // 닉네임, ID, (학년,반,번호), (통신사, 휴대폰 번호) 중복되지 않을 시 가입
+    }
+
+    private fun checkNicknameDup() {
+        // 닉네임 중복확인 버튼 기능구현
+    }
+
+    private fun checkIdDup() {
+        // ID 중복확인 버튼 기능구현
+    }
+
+    private fun sendNum() {
+        // 인증번호 전송 기능구현
     }
 }

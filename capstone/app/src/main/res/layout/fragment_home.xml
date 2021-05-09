@@ -157,11 +157,11 @@
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:background="@android:color/white" />
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0"-->
+<!--                    android:background="@android:color/white" />-->
 
             </LinearLayout>
 

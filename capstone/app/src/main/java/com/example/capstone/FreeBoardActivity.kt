@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.Post
@@ -20,14 +22,15 @@ class FreeBoardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_free_board)
 
-        free_board_back.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+        // toolbar 설정
+        setSupportActionBar(free_board_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
+        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
         free_board_write.setOnClickListener {
             startActivity(Intent(this, BoardWriteActivity::class.java))
         }
-        
+
         // 자유게시판 전체 게시글 GET
         (application as MasterApplication).service.getPostList()
             .enqueue(object : Callback<PostList> {
@@ -54,5 +57,28 @@ class FreeBoardActivity : AppCompatActivity() {
                     toast("network error")
                 }
             })
+    }
+
+    // menu xml에서 설정한 menu를 붙임
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.free_board_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            // toolbar의 뒤로가기 버튼을 눌렀을 때
+            android.R.id.home -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                // finish()
+                return true
+            }
+            R.id.free_board_search -> {
+                toast("search success")
+                // view 필요
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

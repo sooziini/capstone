@@ -15,4 +15,20 @@ interface RetrofitService {
     fun createPost(
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
+
+    @POST("user/login")
+    fun login(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    @POST ("user/register")
+    fun signUp(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    @GET("user/confirm/name")
+    fun confirmId(): Call<HashMap<String, String>>
+
+    @GET("user/confirm/nickname")
+    fun confirmNickname(): Call<HashMap<String, String>>
 }

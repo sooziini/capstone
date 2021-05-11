@@ -4,6 +4,7 @@ import java.io.Serializable
 import java.sql.Date
 
 data class PostList (
+    val success: String,
     val data: ArrayList<Post>
 ): Serializable
 

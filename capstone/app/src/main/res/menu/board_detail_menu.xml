@@ -6,7 +6,7 @@
         android:title="수정하기"
         app:showAsAction="withText" />
     <item
-        android:id="@+id/board_detail_remove"
+        android:id="@+id/board_detail_delete"
         android:title="삭제하기"
         app:showAsAction="withText" />
 </menu>

@@ -35,6 +35,10 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
+
+        MainSearchButton.setOnClickListener {
+            // 검색 구현
+        }
     }
 
 }

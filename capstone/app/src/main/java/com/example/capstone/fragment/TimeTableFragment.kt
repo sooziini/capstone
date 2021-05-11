@@ -18,5 +18,7 @@ class TimeTableFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_time_table, container, false)
     }
+    
+    // 시간표 내용 채우기
 
 }

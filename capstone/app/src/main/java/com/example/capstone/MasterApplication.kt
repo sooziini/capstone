@@ -22,6 +22,5 @@ class MasterApplication: Application() {
             .build()
 
         service = retrofit.create(RetrofitService::class.java)
-        Log.d("test", "retrofit2")
     }
 }

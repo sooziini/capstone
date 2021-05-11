@@ -5,11 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import com.example.capstone.dataclass.PostList
 import kotlinx.android.synthetic.main.activity_board_detail.*
-import kotlinx.android.synthetic.main.activity_board_write.*
 import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BoardDetailActivity : AppCompatActivity() {
+
+    lateinit var board_id: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_detail)
@@ -21,11 +29,31 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
-            val board_id = intent.getStringExtra("board_id")
-            toast(board_id)
+            board_id = intent.getStringExtra("board_id")
+            // 받은 board_id로 게시글 detail GET
+            (application as MasterApplication).service.getPostDetail(board_id)
+                .enqueue(object : Callback<PostList> {
+                    override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
+                        if (response.isSuccessful && response.body()!!.success == "true") {
+                            val post = response.body()!!.data[0]
+                            board_detail_title.setText(post.title).toString()
+                            board_detail_body.setText(post.body).toString()
+                            board_detail_date.setText(post.regdate).toString()
+                        } else {
+                            toast("게시글 조회 실패")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<PostList>, t: Throwable) {
+                        toast("network error")
+                        finish()
+                    }
+                })
         } else {
             finish()
         }
+
+        // 댓글창
 
     }
 
@@ -48,12 +76,48 @@ class BoardDetailActivity : AppCompatActivity() {
                 // view 필요
                 return true
             }
-            R.id.board_detail_remove -> {
-                toast("remove success")
-                // view 필요
+            R.id.board_detail_delete -> {
+                setDialog()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정하는 함수
+    private fun setDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_board_delete, null)
+        builder.setView(dialogView).show()
+
+        val deleteBtn = dialogView.findViewById<Button>(R.id.dialog_board_delete_btn)
+        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
+        // 삭제 버튼 눌렀을 때
+        deleteBtn.setOnClickListener {
+            (application as MasterApplication).service.deletePostDetail(board_id)
+                .enqueue(object : Callback<HashMap<String, String>> {
+                    override fun onResponse(
+                        call: Call<HashMap<String, String>>,
+                        response: Response<HashMap<String, String>>
+                    ) {
+                        if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                            startActivity(Intent(this@BoardDetailActivity, FreeBoardActivity::class.java))
+                            finish()
+                        } else {
+                            toast("게시글 삭제 실패")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                        toast("network error")
+                        finish()
+                    }
+                })
+        }
+        // 취소 버튼 눌렀을 때
+        cancelBtn.setOnClickListener {
+            // 다시 BoardDetail 화면으로 돌아감
+            
+        }
     }
 }

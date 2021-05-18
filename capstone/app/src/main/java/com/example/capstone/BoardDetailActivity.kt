@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +17,7 @@ import retrofit2.Response
 
 class BoardDetailActivity : AppCompatActivity() {
 
-    lateinit var board_id: String
+    private lateinit var board_id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,8 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
-            board_id = intent.getStringExtra("board_id")
+            board_id = intent.getStringExtra("board_id")!!
+            toast(board_id)
             // 받은 board_id로 게시글 detail GET
             (application as MasterApplication).service.getPostDetail(board_id)
                 .enqueue(object : Callback<PostList> {
@@ -44,12 +46,14 @@ class BoardDetailActivity : AppCompatActivity() {
                         }
                     }
 
+                    // 응답 실패 시
                     override fun onFailure(call: Call<PostList>, t: Throwable) {
                         toast("network error")
-                        finish()
+                        //finish()
                     }
                 })
         } else {
+            // intent 실패할 경우 현재 액티비티 종료
             finish()
         }
 
@@ -76,8 +80,11 @@ class BoardDetailActivity : AppCompatActivity() {
                 // view 필요
                 return true
             }
+            // 삭제하기 버튼 클릭시 dialog 뜸
             R.id.board_detail_delete -> {
-                setDialog()
+                // 현재 activity가 종료되었을 경우 dialog를 설정하지 않음
+                if (!this.isFinishing)
+                    setDialog()
                 return true
             }
         }
@@ -87,11 +94,13 @@ class BoardDetailActivity : AppCompatActivity() {
     // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정하는 함수
     private fun setDialog() {
         val builder = AlertDialog.Builder(this)
+            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+            .create()
         val dialogView = layoutInflater.inflate(R.layout.dialog_board_delete, null)
-        builder.setView(dialogView).show()
 
         val deleteBtn = dialogView.findViewById<Button>(R.id.dialog_board_delete_btn)
         val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
+
         // 삭제 버튼 눌렀을 때
         deleteBtn.setOnClickListener {
             (application as MasterApplication).service.deletePostDetail(board_id)
@@ -108,16 +117,18 @@ class BoardDetailActivity : AppCompatActivity() {
                         }
                     }
 
+                    // 응답 실패 시
                     override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                         toast("network error")
                         finish()
                     }
                 })
         }
-        // 취소 버튼 눌렀을 때
+         // 취소 버튼 눌렀을 때
         cancelBtn.setOnClickListener {
-            // 다시 BoardDetail 화면으로 돌아감
-            
+            builder.dismiss()
         }
+        builder.setView(dialogView)
+        builder.show()
     }
 }

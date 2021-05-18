@@ -9,7 +9,8 @@ data class PostList (
 ): Serializable
 
 data class Post (
-    val board_id: Int,
+//    val board_img: Int, //게시판 별 아이콘 이미지
+    //val board_id: Int,
     val title: String,
     val body: String,
     val user_id: String,

@@ -22,26 +22,6 @@ class BoardListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val List = arrayListOf(
-            Post("자유게시판","자유게시판 내용"),
-            Post("비밀게시판","비밀게시판 내용")
-        )
-
-//        startActivity(Intent(this,ScrapActivity::class.java))
-
-        rv_boardList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        rv_boardList.setHasFixedSize(true)
-
-        rv_boardList.adapter = BoardAdapter(List)
-
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_board_list, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
         val boardSample = arrayListOf<Board>(
             Board(R.id.iv_boardIcon,"자유게시판"),
             Board(R.id.iv_boardIcon,"비밀게시판"),
@@ -52,6 +32,11 @@ class BoardListFragment : Fragment() {
         rv_boardList.setHasFixedSize(true)
 
         rv_boardList.adapter = BoardListAdapter(boardSample,this.layoutInflater)
+
+
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_board_list, container, false)
     }
 
 }

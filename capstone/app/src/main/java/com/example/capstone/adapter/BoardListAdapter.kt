@@ -12,7 +12,6 @@ import com.example.capstone.R.*
 import com.example.capstone.dataclass.Board
 
 class BoardListAdapter(
-//                    val context: Context,
                     val BoardList : ArrayList<Board>,
                     val inflater: LayoutInflater
                     ):RecyclerView.Adapter<BoardListAdapter.BoardListViewHolder>() {
@@ -31,11 +30,9 @@ class BoardListAdapter(
     }
 
     inner class BoardListViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val boardImg = itemView.findViewById<ImageView>(R.id.iv_boardIcon)
         val boardName = itemView.findViewById<TextView>(R.id.tv_boardName)
 
         fun bind (board: Board,position: Int){
-            boardImg.setImageResource(board.board_img)
             boardName.text = board.board_name
         }
 

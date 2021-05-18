@@ -1,33 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/post_shape"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/post_item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/post_item_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:text="body"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="16dp"
-        android:ellipsize="end"
-        android:maxLines="1" />
+        <TextView
+            android:id="@+id/tem_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="body"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_title" />
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_updateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="68dp"
+            android:text="3분전"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="익명"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_updateTime"
+            app:layout_constraintStart_toEndOf="@+id/tv_updateTime"
+            app:layout_constraintTop_toTopOf="@+id/tv_updateTime" />
+
+        <ImageView
+            android:id="@+id/iv_commnet"
+            android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_writer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_writer"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/conversation" />
+
+        <ImageView
+            android:id="@+id/iv_like"
+            android:layout_width="27dp"
+            android:layout_height="21dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_writer"
+            app:layout_constraintEnd_toStartOf="@+id/iv_commnet"
+            app:layout_constraintTop_toTopOf="@+id/tv_writer"
+            app:srcCompat="@drawable/like" />
+
+        <TextView
+            android:id="@+id/tv_likeNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            app:layout_constraintEnd_toStartOf="@+id/iv_commnet"
+            app:layout_constraintStart_toEndOf="@+id/iv_like"
+            app:layout_constraintTop_toTopOf="@+id/iv_like" />
+
+        <TextView
+            android:id="@+id/tv_commentNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_commnet"
+            app:layout_constraintTop_toTopOf="@+id/iv_commnet" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

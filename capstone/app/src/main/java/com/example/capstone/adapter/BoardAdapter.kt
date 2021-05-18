@@ -1,6 +1,5 @@
 package com.example.capstone.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,8 @@ class BoardAdapter (
 
     // 뷰홀더 설정
     inner class PostViewHolder(itemView: View, itemClick: (Post) -> Unit): RecyclerView.ViewHolder(itemView) {
-        private val postTitle: TextView = itemView.findViewById(R.id.post_item_title)
-        private val postBody: TextView = itemView.findViewById(R.id.post_item_body)
+        private val postTitle: TextView = itemView.findViewById(R.id.item_title)
+        private val postBody: TextView = itemView.findViewById(R.id.tem_body)
 
         fun bind(post: Post, index: Int) {
             // var i = index

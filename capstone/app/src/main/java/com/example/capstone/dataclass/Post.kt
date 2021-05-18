@@ -15,3 +15,8 @@ data class Post (
     val user_id: String,
     val regdate: String
 ): Serializable
+
+data class Board (
+    val board_img: Int,
+    val board_name : String
+        ): Serializable

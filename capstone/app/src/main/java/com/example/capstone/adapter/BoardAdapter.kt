@@ -1,5 +1,6 @@
 package com.example.capstone.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,12 @@ import com.example.capstone.R
 
 class BoardAdapter (
     private val postList: ArrayList<Post>,
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater,
+    private val itemClick: (Post) -> Unit
 ): RecyclerView.Adapter<BoardAdapter.PostViewHolder>() {
 
     // 뷰홀더 설정
-    inner class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class PostViewHolder(itemView: View, itemClick: (Post) -> Unit): RecyclerView.ViewHolder(itemView) {
         private val postTitle: TextView = itemView.findViewById(R.id.post_item_title)
         private val postBody: TextView = itemView.findViewById(R.id.post_item_body)
 
@@ -23,17 +25,15 @@ class BoardAdapter (
             // var i = index
             postTitle.text = post.title
             postBody.text = post.body
+
+            itemView.setOnClickListener { itemClick(post) }
         }
     }
 
     // 뷰홀더 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = inflater.inflate(R.layout.boardlist_item, parent, false)
-        return PostViewHolder(view).apply {
-            itemView.setOnClickListener {
-                //게시판 항목 클릭 시 해당 페이지로 전환
-            }
-        }
+        val view = inflater.inflate(R.layout.post_item, parent, false)
+        return PostViewHolder(view, itemClick)
     }
 
     // recyclerview item 개수 return

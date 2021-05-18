@@ -41,15 +41,10 @@ class BoardWriteActivity : AppCompatActivity() {
                             call: Call<HashMap<String, String>>,
                             response: Response<HashMap<String, String>>
                         ) {
-                            if (response.isSuccessful) {
-                                val result = response.body()
-                                if (result!!.get("success") == "true") {
-                                    startActivity(Intent(this@BoardWriteActivity, FreeBoardActivity::class.java))
-                                } else {
-                                    toast("글 작성 실패")
-                                }
+                            if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                                startActivity(Intent(this@BoardWriteActivity, FreeBoardActivity::class.java))
                             } else {
-                                toast("error")
+                                toast("게시글 작성 실패")
                             }
                         }
 

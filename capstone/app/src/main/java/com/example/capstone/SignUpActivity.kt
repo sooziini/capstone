@@ -3,11 +3,13 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.get
+import com.example.capstone.dataclass.RegData
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.sdk27.coroutines.onItemClick
@@ -19,9 +21,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class   SignUpActivity : AppCompatActivity() {
+    var idConfirm: Boolean = false
+    var nicknameConfirm: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
@@ -94,22 +97,47 @@ class   SignUpActivity : AppCompatActivity() {
 
     private fun signUp() {
 
-//        val regData = RegData(""
-        val nickname = SignUpNicknameEditTextView.text.toString()
         val id = SignUpIdEditTextView.text.toString()
         val password = SignUpPasswordEditTextView.text.toString()
+        val passwordconfirm = SignUpPassWordCheckEditTextView.text.toString()
         val name = SignUpNameEditTextView.text.toString()
+        val phoneNum = SignUpPhoneEditText.text.toString()
+        val nickname = SignUpNicknameEditTextView.text.toString()
         val birth = SignUpBirthEditText.text.toString()
         val stuGrade = SignUpGradeDropdown.getSelectedItem().toString().toInt()
         val stuClass = SignUpClassDropdown.getSelectedItem().toString().toInt()
-        val phoneNum = SignUpPhoneEditText.text.toString()
-        val agency = SignUpPhoneDropdown
 
-        val regData = HashMap<String, String>()
+        if(password != passwordconfirm) {
+            alert("비밀번호를 확인해 주세요") {
+                yesButton {  }
+            }
+            return
+        }
 
-        // 가입 구현
-        // 닉네임, ID, (학년,반,번호), (통신사, 휴대폰 번호) 중복되지 않을 시
-        // & 모든 칸에 빈칸이 없다면
+        if (!(1 <= stuGrade && stuGrade <= 3)) {
+            // 맞는 학년 데이터가 아닌 경우
+            alert("학년을 선택해 주세요") {
+                yesButton { }
+            }
+            return
+        }
+
+        if (!(1 <= stuClass && stuClass <= 8)) {
+            // 맞는 반 데이터가 아닌 경우
+            alert ("반을 선택해 주세요"){
+                yesButton { }
+            }
+            return
+        }
+
+        if (id == "" || password == "" || passwordconfirm == "" || name == "" || phoneNum == "" || nickname == "" || birth == "") {
+            alert("빈칸 없이 입력해주세요"){
+                yesButton {  }
+            }
+            return
+        }
+
+        val regData = HashMap<String, Any>()
 
         regData.put("id", id)
         regData.put("password", password)
@@ -117,28 +145,16 @@ class   SignUpActivity : AppCompatActivity() {
         regData.put("phone", phoneNum)
         regData.put("nickname", nickname)
         regData.put("birth", birth)
+        regData.put("schoolgrade", stuGrade)
+        regData.put("schoolclass", stuClass)
 
-//        if (1 <= stuGrade && stuGrade <= 3) {
-//            alert("학년을 선택해 주세요") {
-//                yesButton {
-//
-//                }
-//            }
-//        }
-//        else {
-//            regData.put("schoolgrade", stuGrade)
-//        }
-//
-//        if (1 <= stuClass && stuClass <= 8 ) {
-//            alert ("반을 선택해 주세요"){
-//                yesButton {
-//
-//                }
-//            }
-//        }
-//        else {
-//            regData.put("schoolclass", stuClass)
-//        }
+        val agency = SignUpPhoneDropdown
+
+//        val regData = RegData(id, password, name, phoneNum, nickname, birth, stuGrade, stuClass)
+
+        // 가입 구현
+        // 닉네임, ID, (학년,반,번호), (통신사, 휴대폰 번호) 중복되지 않을 시
+        // & 모든 칸에 빈칸이 없다면
 
         // 입력받은 회원정보 POST
         (application as MasterApplication).service.signUp(regData)
@@ -177,10 +193,18 @@ class   SignUpActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val result = response.body()
                         if (result!!.get("success") == "true") {
-                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+//                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                            alert("사용가능한 닉네임입니다.") {
+                                yesButton {  }
+                            }
+                            nicknameConfirm = true
+
                         } else {
-                            toast("회원가입 실패")
+                            alert("사용불가능한 닉네임입니다.") {
+                                yesButton {  }
+                            }
                         }
+                        nicknameConfirm = false
                     } else {
                         toast("error")
                     }
@@ -205,9 +229,11 @@ class   SignUpActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val result = response.body()
                         if (result!!.get("success") == "true") {
-                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+//                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+
+                            // 중복확인 구현
                         } else {
-                            toast("회원가입 실패")
+                            toast("중복확인 실패")
                         }
                     } else {
                         toast("error")

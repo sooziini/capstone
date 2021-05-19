@@ -19,21 +19,14 @@
         <activity android:name=".BoardDetailActivity" />
         <activity android:name=".FreeBoardActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        </activity>-->
-        <activity android:name=".MainActivity"/>
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
     </application>
 
 </manifest>

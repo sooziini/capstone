@@ -10,6 +10,6 @@ data class RegData(
     val nickname: String,
     val birth: String,
 
-    val stuGrade: Int,
-    val stuClass: Int
+    val schoolGrade: Int,
+    val schoolClass: Int
 ): Serializable

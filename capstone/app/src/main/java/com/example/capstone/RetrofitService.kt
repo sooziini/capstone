@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.dataclass.RegData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -38,12 +39,12 @@ interface RetrofitService {
     @POST("user/login")
     fun login(
         @Body params: HashMap<String, String>
-    ): Call<HashMap<String, String>>
+    ): Call<HashMap<String, Any>>
 
     // 회원가입
     @POST ("user/register")
     fun signUp(
-        @Body params: HashMap<String, String>
+        @Body params: HashMap<String, Any>
     ): Call<HashMap<String, String>>
 
     // 아이디 중복 확인

@@ -20,11 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchResultActivity" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
         <activity android:name=".CommentActivity" />
         <activity android:name=".ScrapActivity" />
-        <activity android:name=".BoardWriteActivity" />
+        <activity android:name=".BoardWriteActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
         <activity android:name=".BoardDetailActivity" />
         <activity android:name=".FreeBoardActivity" />
         <activity android:name=".SignUpActivity" />

@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
 import com.example.capstone.dataclass.RegData
 import retrofit2.Call
@@ -21,7 +22,7 @@ interface RetrofitService {
     @GET("board/{boardid}/")
     fun getPostDetail(
         @Path("boardid") board_id: String
-    ): Call<PostList>
+    ): Call<PostDetail>
 
     // 게시글 검색
     @GET("board/search")

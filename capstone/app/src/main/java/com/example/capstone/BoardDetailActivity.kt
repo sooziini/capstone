@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
+import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
@@ -31,13 +32,13 @@ class BoardDetailActivity : AppCompatActivity() {
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
             board_id = intent.getStringExtra("board_id")!!
-            toast(board_id)
+
             // 받은 board_id로 게시글 detail GET
             (application as MasterApplication).service.getPostDetail(board_id)
-                .enqueue(object : Callback<PostList> {
-                    override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
+                .enqueue(object : Callback<PostDetail> {
+                    override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                         if (response.isSuccessful && response.body()!!.success == "true") {
-                            val post = response.body()!!.data[0]
+                            val post = response.body()!!.data
                             board_detail_title.setText(post.title).toString()
                             board_detail_body.setText(post.body).toString()
                             board_detail_date.setText(post.regdate).toString()
@@ -47,9 +48,9 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
 
                     // 응답 실패 시
-                    override fun onFailure(call: Call<PostList>, t: Throwable) {
+                    override fun onFailure(call: Call<PostDetail>, t: Throwable) {
                         toast("network error")
-                        //finish()
+                        finish()
                     }
                 })
         } else {
@@ -97,7 +98,6 @@ class BoardDetailActivity : AppCompatActivity() {
             .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
             .create()
         val dialogView = layoutInflater.inflate(R.layout.dialog_board_delete, null)
-
         val deleteBtn = dialogView.findViewById<Button>(R.id.dialog_board_delete_btn)
         val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
 
@@ -124,7 +124,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
                 })
         }
-         // 취소 버튼 눌렀을 때
+        // 취소 버튼 눌렀을 때
         cancelBtn.setOnClickListener {
             builder.dismiss()
         }

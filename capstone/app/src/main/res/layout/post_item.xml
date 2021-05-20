@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/post_shape"
@@ -10,10 +10,10 @@
         android:id="@+id/post_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp"
-        android:text="title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -22,14 +22,103 @@
         android:id="@+id/post_item_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:text="body"
+        android:text="@string/body"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/post_item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@string/date"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | "/>
+
+            <TextView
+                android:id="@+id/post_item_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@string/user"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/post_item_comment_img"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginRight="3dp"
+                app:srcCompat="@drawable/conversation" />
+
+            <TextView
+                android:id="@+id/post_item_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@string/count" />
+
+            <ImageView
+                android:id="@+id/post_item_like_img"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginRight="3dp"
+                app:srcCompat="@drawable/like"
+                app:tint="@color/main_color" />
+
+            <TextView
+                android:id="@+id/post_item_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@string/count" />
+
+            <ImageView
+                android:id="@+id/post_item_scrap_img"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/star"/>
+
+            <TextView
+                android:id="@+id/post_item_scrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@string/count"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

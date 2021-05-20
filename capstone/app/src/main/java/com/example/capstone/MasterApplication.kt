@@ -27,7 +27,7 @@ class MasterApplication: Application() {
             if (checkIsLogin()) {
                 getUserToken()?.let { token ->
                     val request = original. newBuilder()
-                        .header("AUTHORIZATION")
+                        .header("AUTHORIZATION", token)
                         .build()
                     it.proceed(request)
                 }
@@ -38,7 +38,7 @@ class MasterApplication: Application() {
 
         // retrofit 생성
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.56.1:3000/api/")
+            .baseUrl("http://192.168.0.5:3000/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

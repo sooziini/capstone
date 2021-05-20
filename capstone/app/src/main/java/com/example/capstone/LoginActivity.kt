@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
@@ -15,6 +16,7 @@ import org.jetbrains.anko.yesButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Tag
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +58,8 @@ class LoginActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val result = response.body()
 //                            val token = response.headers().get("X-AUTH-TOKEN").toString()
-                            val tokenMap = result?.get("token") as HashMap<String, String>
-                            val token = tokenMap.get("refresh_token").toString()
+                            val tokenMap = result!!.get("token") as LinkedTreeMap<String, String>
+                            val token = tokenMap!!.get("refresh_token").toString()
 
                             if (token == "null") {
                                 Toast.makeText(this@LoginActivity, "아이디, 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
@@ -77,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
 //                            } else {
 //                                toast("로그인 실패")
 //                            }
-                        } else {
+                        } else {        // 3xx, 4xx 를 받은 경우
                             toast("error")
                         }
                     }
@@ -85,13 +87,8 @@ class LoginActivity : AppCompatActivity() {
                     // 응답 실패 시
                     override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                         toast("network error")
-                        Log.d("","실패 : $t")
+                        Log.d("","onFailure : $t")
                     }
-
-//                    override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-//                        toast("network error")
-//                        Log.d("","실패 : $t")
-//                    }
                 })
         }
     }

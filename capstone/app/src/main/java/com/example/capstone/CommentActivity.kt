@@ -14,19 +14,19 @@ class CommentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
 
-        val sampleCommentList : ArrayList<Post> = arrayListOf(
-            Post(1,"board1","text1","user1","reg1",0),
-            Post(2,"board2","text2","user2","reg2",0),
-            Post(3,"board3","text3","user3","reg3",0),
-            Post(4,"board4","text4","user4","reg4",0),
-        )
-
-        rv_commentBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-        rv_commentBoard.setHasFixedSize(true)
-
-
-        rv_commentBoard.adapter = BoardAdapter(sampleCommentList,layoutInflater,itemClick = {post ->
-            toast("${post.title},${post.body}")
-        })
+//        val sampleCommentList : ArrayList<Post> = arrayListOf(
+//            Post(1,"board1","text1","user1","reg1",0),
+//            Post(2,"board2","text2","user2","reg2",0),
+//            Post(3,"board3","text3","user3","reg3",0),
+//            Post(4,"board4","text4","user4","reg4",0),
+//        )
+//
+//        rv_commentBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+//        rv_commentBoard.setHasFixedSize(true)
+//
+//
+//        rv_commentBoard.adapter = BoardAdapter(sampleCommentList,layoutInflater,itemClick = {post ->
+//            toast("${post.title},${post.body}")
+//        })
     }
 }

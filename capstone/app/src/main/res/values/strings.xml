@@ -7,4 +7,10 @@
     <string name="menu_notice">알림</string>
     <string name="menu_myinfo">내정보</string>
 
+    <string name="title">title</string>
+    <string name="body">body</string>
+    <string name="date">date</string>
+    <string name="user">nickname</string>
+    <string name="count">0</string>
+
 </resources>

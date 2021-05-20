@@ -17,3 +17,4 @@ data class Post (
     val replyCount: Int,
     val ScrapCount: Int
 ): Serializable
+

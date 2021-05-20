@@ -3,6 +3,7 @@ package com.example.capstone.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.dataclass.Post
@@ -10,25 +11,38 @@ import com.example.capstone.R
 
 class BoardAdapter (
     private val postList: ArrayList<Post>,
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater,
+    private val itemClick: (Post) -> Unit
 ): RecyclerView.Adapter<BoardAdapter.PostViewHolder>() {
 
     // 뷰홀더 설정
-    inner class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class PostViewHolder(itemView: View, itemClick: (Post) -> Unit): RecyclerView.ViewHolder(itemView) {
         private val postTitle: TextView = itemView.findViewById(R.id.post_item_title)
         private val postBody: TextView = itemView.findViewById(R.id.post_item_body)
+        private val postDate: TextView = itemView.findViewById(R.id.post_item_date)
+        private val postUser: TextView = itemView.findViewById(R.id.post_item_nickname)
+        private val postComment: TextView = itemView.findViewById(R.id.post_item_comment)
+        private val postLike: TextView = itemView.findViewById(R.id.post_item_like)
+        private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap)
 
         fun bind(post: Post, index: Int) {
             // var i = index
             postTitle.text = post.title
             postBody.text = post.body
+            postDate.text = post.regdate
+            postUser.text = post.user_id
+            postComment.text = post.replyCount.toString()
+            postLike.text = post.goodCount.toString()
+            postScrap.text = post.ScrapCount.toString()
+
+            itemView.setOnClickListener { itemClick(post) }
         }
     }
 
     // 뷰홀더 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = inflater.inflate(R.layout.post_item, parent, false)
-        return PostViewHolder(view)
+        return PostViewHolder(view, itemClick)
     }
 
     // recyclerview item 개수 return

@@ -3,13 +3,11 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.BoardAdapter
-import com.example.capstone.dataclass.Post
 import com.example.capstone.dataclass.PostList
 import kotlinx.android.synthetic.main.activity_free_board.*
 import org.jetbrains.anko.toast
@@ -36,25 +34,28 @@ class FreeBoardActivity : AppCompatActivity() {
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
                     // 응답 성공 시
-                    if (response.isSuccessful) {
-                        toast("post success")
-
+                    if (response.isSuccessful && response.body()!!.success == "true") {
                         val postListList = response.body()
                         val postList = postListList!!.data
-                        Log.d("test", ""+response.raw())
 
                         // 게시판 글 목록 화면 뷰 작성
-                        val adapter = BoardAdapter(postList, LayoutInflater.from(this@FreeBoardActivity))
+                        // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
+                        val adapter = BoardAdapter(postList, LayoutInflater.from(this@FreeBoardActivity)) { post ->
+                            val intent = Intent(this@FreeBoardActivity, BoardDetailActivity::class.java)
+                            intent.putExtra("board_id", post.board_id.toString())
+                            startActivity(intent)
+                        }
                         post_recyclerview.adapter = adapter
                         post_recyclerview.layoutManager = LinearLayoutManager(this@FreeBoardActivity)
                     } else {
-                        toast("error")
+                        toast("게시글 목록 조회 실패")
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<PostList>, t: Throwable) {
                     toast("network error")
+                    finish()
                 }
             })
     }
@@ -70,12 +71,12 @@ class FreeBoardActivity : AppCompatActivity() {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
                 startActivity(Intent(this, MainActivity::class.java))
-                // finish()
+                finish()
                 return true
             }
             R.id.free_board_search -> {
-                toast("search success")
-                // view 필요
+                startActivity(Intent(this, SearchActivity::class.java))
+                // finish()
                 return true
             }
         }

@@ -27,7 +27,7 @@ class MasterApplication: Application() {
             if (checkIsLogin()) {
                 getUserToken()?.let { token ->
                     val request = original. newBuilder()
-                        .header("X-AUTH_TOKEN", "token $token")
+                        .header("AUTHORIZATION")
                         .build()
                     it.proceed(request)
                 }

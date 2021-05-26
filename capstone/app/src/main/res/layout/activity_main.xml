@@ -33,7 +33,6 @@
             android:layout_gravity="bottom"
             app:labelVisibilityMode="unlabeled"
             app:itemIconTint="@color/bottom_navigation_colors"
-            app:itemTextColor="@color/bottom_navigation_colors"
             app:menu="@menu/bottom_navigation_items" />
 
     </LinearLayout>

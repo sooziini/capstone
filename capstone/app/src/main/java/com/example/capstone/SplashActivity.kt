@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)      // 액티비티 전환 히 애니메이션 무시
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)      // 액티비티 전환 시 애니메이션 무시
             startActivity(intent)
             finish()
         }, SPLASH_VIEW_TIME)

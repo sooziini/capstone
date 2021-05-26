@@ -46,7 +46,7 @@
             android:id="@+id/dialog_board_delete_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
             android:background="@color/main_color"
             android:text="삭제"
             android:textColor="@android:color/white"

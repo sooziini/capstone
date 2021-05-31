@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.get
 import com.example.capstone.dataclass.RegData
@@ -23,6 +27,22 @@ import retrofit2.Response
 class   SignUpActivity : AppCompatActivity() {
     var idConfirm: Boolean = false
     var nicknameConfirm: Boolean = false
+
+
+    class MyEditWatcher: TextWatcher {
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            Log.d("", "beforeTextChanged: $s")
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            Log.d("", "afterTextChanged: $s")
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            Log.d("", "onTextChanged: $s")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +95,10 @@ class   SignUpActivity : AppCompatActivity() {
             }
         }
 
+        var watcher = MyEditWatcher()
+        SignUpNicknameEditTextView.addTextChangedListener(watcher)
+//        SignUpNicknameEditTextView.setOnEditorActionListener()
+
         // 닉네임 중복확인 버튼
         SignUpNicknameButton.setOnClickListener {
             checkNicknameDup()
@@ -93,6 +117,7 @@ class   SignUpActivity : AppCompatActivity() {
         SignUpButton.setOnClickListener {       // 회원가입 버튼
             signUp()        // 가입 메소드
         }
+
     }
 
     private fun signUp() {
@@ -153,7 +178,7 @@ class   SignUpActivity : AppCompatActivity() {
 //        val regData = RegData(id, password, name, phoneNum, nickname, birth, stuGrade, stuClass)
 
         // 가입 구현
-        // 닉네임, ID, (학년,반,번호), (통신사, 휴대폰 번호) 중복되지 않을 시
+        // 닉네임, ID, (학년,반), (통신사, 휴대폰 번호) 중복되지 않을 시
         // & 모든 칸에 빈칸이 없다면
 
         // 입력받은 회원정보 POST
@@ -183,8 +208,12 @@ class   SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkNicknameDup() {
+        val nicknameMap = HashMap<String, String>()
+
+        nicknameMap.put("nickname", SignUpNicknameEditTextView.text.toString())
+
         // 닉네임 중복확인 버튼 기능구현
-        (application as MasterApplication).service.confirmNickname()
+        (application as MasterApplication).service.confirmNickname(nicknameMap)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
@@ -194,17 +223,17 @@ class   SignUpActivity : AppCompatActivity() {
                         val result = response.body()
                         if (result!!.get("success") == "true") {
 //                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                            alert("사용불가능한 닉네임입니다.") {
+                                yesButton {  }
+                            }
+                            nicknameConfirm = false
+
+                        } else {
                             alert("사용가능한 닉네임입니다.") {
                                 yesButton {  }
                             }
                             nicknameConfirm = true
-
-                        } else {
-                            alert("사용불가능한 닉네임입니다.") {
-                                yesButton {  }
-                            }
                         }
-                        nicknameConfirm = false
                     } else {
                         toast("error")
                     }
@@ -213,14 +242,19 @@ class   SignUpActivity : AppCompatActivity() {
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    Log.d("", "실패 : $t")
                 }
             })
 
     }
 
     private fun checkIdDup() {
+        val idMap = HashMap<String, String>()
+
+        idMap.put("id", SignUpIdEditTextView.text.toString())
+
         // ID 중복확인 버튼 기능구현
-        (application as MasterApplication).service.confirmId()
+        (application as MasterApplication).service.confirmId(idMap)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
@@ -243,6 +277,7 @@ class   SignUpActivity : AppCompatActivity() {
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    Log.d("", "실패 : $t")
                 }
             })
     }

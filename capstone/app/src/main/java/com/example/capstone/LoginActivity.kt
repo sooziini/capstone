@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
             // 구현
         }
 
-        // 로그인 버튼
+        // 로그인 버튼   
         LoginButton.setOnClickListener {
             val id = LoginIdEditText.text.toString()
             val password = LoginPasswordEditText.text.toString()
@@ -58,8 +58,13 @@ class LoginActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val result = response.body()
 //                            val token = response.headers().get("X-AUTH-TOKEN").toString()
-                            val tokenMap = result!!.get("token") as LinkedTreeMap<String, String>
-                            val token = tokenMap!!.get("refresh_token").toString()
+                            var tokenMap: LinkedTreeMap<String, String>
+                            var token: String = "null"
+
+                            if (result!!.get("token") != null) {
+                                tokenMap = result!!.get("token") as LinkedTreeMap<String, String>
+                                token = tokenMap?.get("access_token").toString()
+                            }
 
                             if (token == "null") {
                                 Toast.makeText(this@LoginActivity, "아이디, 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()

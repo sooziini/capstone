@@ -199,6 +199,7 @@
             android:background="@null"/>
 
         <ImageView
+            android:id="@+id/board_detail_comment_submit"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"

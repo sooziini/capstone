@@ -49,10 +49,14 @@ interface RetrofitService {
     ): Call<HashMap<String, String>>
 
     // 아이디 중복 확인
-    @GET("user/confirm/name")
-    fun confirmId(): Call<HashMap<String, String>>
+    @POST("user/confirm/name")
+    fun confirmId(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
 
     // 닉네임 중복 확인
-    @GET("user/confirm/nickname")
-    fun confirmNickname(): Call<HashMap<String, String>>
+    @POST("user/confirm/nickname")
+    fun confirmNickname(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
 }

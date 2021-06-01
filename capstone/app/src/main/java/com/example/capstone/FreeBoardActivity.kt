@@ -25,11 +25,17 @@ class FreeBoardActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-        free_board_write.setOnClickListener {
+        free_board_write_btn.setOnClickListener {
             startActivity(Intent(this, BoardWriteActivity::class.java))
         }
 
         // 자유게시판 전체 게시글 GET
+        retrofitGetPostList()
+
+    }
+
+    // 게시판 전체 게시글 GET하는 함수
+    private fun retrofitGetPostList() {
         (application as MasterApplication).service.getPostList()
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
@@ -76,7 +82,7 @@ class FreeBoardActivity : AppCompatActivity() {
             }
             R.id.free_board_search -> {
                 startActivity(Intent(this, SearchActivity::class.java))
-                // finish()
+                //finish()
                 return true
             }
         }

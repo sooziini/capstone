@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
-            app:mt_hint="검색할 제목을 입력하세요"
+            app:mt_placeholder="검색할 단어를 입력하세요"
+            app:mt_hint="검색할 단어를 입력하세요"
             app:mt_speechMode="false" />
     </LinearLayout>
 
@@ -41,4 +42,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/board_search_linear" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

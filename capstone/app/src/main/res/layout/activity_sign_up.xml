@@ -6,63 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/sign_up_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="hideKeyboard"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="회원가입"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:fillViewport="true"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/SignUpGoBackButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@android:drawable/presence_invisible"
-                    android:backgroundTint="@color/main_color"
-                    app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
-
-                <TextView
-                    android:id="@+id/SignUpTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:text="회원가입"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="24dp" />
-            </LinearLayout>
+            android:onClick="hideKeyboard"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/SignUpNicknameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
                 android:text="닉네임"
                 android:textColor="@android:color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/SignUpNicknameEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_weight="3"
                     android:ems="10"
                     android:hint="닉네임"
                     android:inputType="text" />
@@ -70,50 +64,37 @@
                 <Button
                     android:id="@+id/SignUpNicknameButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="중복확인"
-                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
             </LinearLayout>
 
             <TextView
                 android:id="@+id/SignUpIdTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="ID"
                 android:textColor="@android:color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/SignUpIdEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="0"
-                    android:ems="10"
+                    android:layout_weight="3"
                     android:hint="ID"
+                    android:ems="10"
                     android:inputType="text" />
 
                 <Button
                     android:id="@+id/SignUpIdButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="중복확인"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -123,7 +104,6 @@
                 android:id="@+id/SignUpPasswordTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="비밀번호"
                 android:textColor="@android:color/black" />
@@ -132,11 +112,6 @@
                 android:id="@+id/SignUpPasswordEditTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="32dp"
-                android:layout_weight="0"
-                android:ems="10"
                 android:hint="Password"
                 android:inputType="text|textPassword" />
 
@@ -144,7 +119,6 @@
                 android:id="@+id/SignUpPasswordCheckTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="비밀번호 확인"
                 android:textColor="@android:color/black" />
@@ -153,11 +127,6 @@
                 android:id="@+id/SignUpPassWordCheckEditTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="32dp"
-                android:layout_weight="0"
-                android:ems="10"
                 android:hint="Password"
                 android:inputType="text|textPassword" />
 
@@ -165,7 +134,6 @@
                 android:id="@+id/SignUpNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="이름"
                 android:textColor="@android:color/black" />
@@ -174,10 +142,6 @@
                 android:id="@+id/SignUpNameEditTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="32dp"
-                android:ems="10"
                 android:hint="이름"
                 android:inputType="text" />
 
@@ -185,7 +149,6 @@
                 android:id="@+id/SignUpBirthTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="생년월일"
                 android:textColor="@android:color/black" />
@@ -194,42 +157,33 @@
                 android:id="@+id/SignUpBirthEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="32dp"
-                android:layout_weight="0"
-                android:ems="10"
-                android:hint="생년월일 8자리 (ex) 20050101"
+                android:hint="생년월일 8자리 ex) 20050101"
                 android:inputType="number" />
 
             <TextView
                 android:id="@+id/SignUpGradeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:text="학년 / 반 / 번호"
+                android:text="학년 / 반 "
                 android:textColor="@android:color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/SignUpGradeDropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1" />
 
                 <Spinner
                     android:id="@+id/SignUpClassDropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
             </LinearLayout>
@@ -238,51 +192,41 @@
                 android:id="@+id/SignUpPhoneTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:text="휴대전화"
+                android:text="전화번호"
                 android:textColor="@android:color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/SignUpPhoneDropdown"
-                    android:layout_width="110dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
                 <EditText
                     android:id="@+id/SignUpPhoneEditText"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:ems="10"
                     android:hint="- 제외 입력"
                     android:inputType="text" />
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/SignUpCommitEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:ems="10"
                     android:hint="인증번호 x자리"
                     android:inputType="number" />
@@ -290,27 +234,22 @@
                 <Button
                     android:id="@+id/SignUpSendNumButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="인증번호 받기" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/SignUpButton"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="285dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="#AB001FB8"
-                android:text="가입하기"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/main_color"
+                android:text="회원가입하기"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textStyle="bold" />
-
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

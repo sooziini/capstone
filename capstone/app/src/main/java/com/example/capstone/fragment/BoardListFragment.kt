@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.ScrapActivity
 import com.example.capstone.adapter.BoardAdapter
@@ -23,6 +24,11 @@ class BoardListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        // toolbar 설정 (지우지 말아주세요ㅜㅜ)
+//        val toolbar = (activity as MainActivity).supportActionBar
+//        toolbar?.setDisplayHomeAsUpEnabled(false)
+//        toolbar?.setDisplayShowTitleEnabled(false)
         return inflater.inflate(R.layout.fragment_board_list, container, false)
     }
 

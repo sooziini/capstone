@@ -7,13 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstone.BoardDetailActivity
-import com.example.capstone.FreeBoardActivity
-import com.example.capstone.MasterApplication
-import com.example.capstone.R
+import com.example.capstone.*
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.PostList
-import kotlinx.android.synthetic.main.activity_free_board.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
@@ -51,8 +47,8 @@ class HomeFragment : Fragment() {
                                 startActivity(intent)
                             }
                         }
-                        home_RecyclerView.adapter = adapter
-                        home_RecyclerView.layoutManager = LinearLayoutManager(context)
+                        home_recyclerview.adapter = adapter
+                        home_recyclerview.layoutManager = LinearLayoutManager(context)
                     } else {
                         toast("게시글 목록 조회 실패")
                     }
@@ -80,9 +76,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        MainSearchButton.setOnClickListener {
-            // 검색 구현
-        }
     }
 
 }

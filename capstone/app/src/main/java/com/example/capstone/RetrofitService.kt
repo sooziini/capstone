@@ -2,7 +2,6 @@ package com.example.capstone
 
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
-import com.example.capstone.dataclass.RegData
 import retrofit2.Call
 import retrofit2.http.*
 

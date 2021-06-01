@@ -3,21 +3,16 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.get
-import com.example.capstone.dataclass.RegData
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.sdk27.coroutines.onItemClick
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
 import retrofit2.Call
@@ -25,20 +20,21 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class   SignUpActivity : AppCompatActivity() {
+
+    // 키보드 InputMethodManager 변수 선언
+    var imm: InputMethodManager? = null
+
     var idConfirm: Boolean = false
     var nicknameConfirm: Boolean = false
 
 
     class MyEditWatcher: TextWatcher {
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             Log.d("", "beforeTextChanged: $s")
         }
-
         override fun afterTextChanged(s: Editable?) {
             Log.d("", "afterTextChanged: $s")
         }
-
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             Log.d("", "onTextChanged: $s")
         }
@@ -48,10 +44,13 @@ class   SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        // 뒤로가기 버튼 -> 로그인 화면으로 돌아감
-        SignUpGoBackButton.setOnClickListener {
-            startActivity<LoginActivity>()
-        }
+        // toolbar 설정
+        setSupportActionBar(sign_up_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
+        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
+        // 키보드 InputMethodManager 세팅
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         // 학년 드롭다운 스피너
 //        val gradeList = Array(3, {i -> i + 1})     // 학년 드롭다운 배열
@@ -188,21 +187,17 @@ class   SignUpActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful) {
-                        val result = response.body()
-                        if (result!!.get("success") == "true") {
-                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
-                        } else {
-                            toast("회원가입 실패")
-                        }
+                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
                     } else {
-                        toast("error")
+                        toast("회원가입 실패")
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    finish()
                 }
             })
     }
@@ -220,9 +215,7 @@ class   SignUpActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
-                        if (result!!.get("success") == "true") {
-//                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                        if (response.body()!!.get("success") == "true") {
                             alert("사용불가능한 닉네임입니다.") {
                                 yesButton {  }
                             }
@@ -242,7 +235,7 @@ class   SignUpActivity : AppCompatActivity() {
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
-                    Log.d("", "실패 : $t")
+                    finish()
                 }
             })
 
@@ -260,29 +253,44 @@ class   SignUpActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful) {
-                        val result = response.body()
-                        if (result!!.get("success") == "true") {
-//                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
 
-                            // 중복확인 구현
-                        } else {
-                            toast("중복확인 실패")
-                        }
+                        // 중복확인 구현
+
                     } else {
-                        toast("error")
+                        toast("중복확인 실패")
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
-                    Log.d("", "실패 : $t")
+                    finish()
                 }
             })
     }
 
     private fun sendNum() {
         // 인증번호 전송 기능구현
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // toolbar의 뒤로가기 버튼을 눌렀을 때
+            android.R.id.home -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // 이벤트 메서드 생성
+    // 액티비티 최상위 layout에 onClick 세팅
+    // 해당 layout 내 view 클릭 시 함수 실행
+    fun hideKeyboard(v: View) {
+        if (v != null)
+            imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

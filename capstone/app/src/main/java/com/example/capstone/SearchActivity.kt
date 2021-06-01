@@ -46,7 +46,7 @@ class SearchActivity : AppCompatActivity() {
                     imm.hideSoftInputFromWindow(search_recyclerview.windowToken, 0)
 
                     search_recyclerview.visibility = View.VISIBLE
-                    searchTitle(title)
+                    retrofitSearchPostList(title)
                 }
             }
 
@@ -70,7 +70,7 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
-    private fun searchTitle(title: String) {
+    private fun retrofitSearchPostList(title: String) {
         (application as MasterApplication).service.searchPostList(title)
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {

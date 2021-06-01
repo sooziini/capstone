@@ -6,193 +6,175 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/home_linear"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/HomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:text="Cloudy"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="24dp"
+                android:text="상명여고"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/main_color"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/home_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="16dp"
+            android:fillViewport="true"
+            android:scrollbars="none" >
 
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="32dp"
-                android:layout_weight="0"
-                android:background="@color/main_color"
                 android:orientation="vertical"
-                android:padding="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal">
 
                 <LinearLayout
+                    android:id="@+id/home_meal_linear"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@android:color/white"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/search_shape"
+                    android:padding="10dp" >
 
-                    <ImageView
-                        android:id="@+id/MainRestaurantImageView"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        app:srcCompat="@drawable/ic_baseline_restaurant_menu_24"
-                        app:tint="@android:color/holo_orange_light" />
-
-                    <TextView
-                        android:id="@+id/MainLunchTableTextView"
-                        android:layout_width="258dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        android:text="    식단표"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textStyle="bold" />
-
-                    <ImageButton
-                        android:id="@+id/MainLunchTableButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@android:drawable/presence_invisible"
-                        android:backgroundTint="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/MainLunchDateView"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:height="45dp"
-                        android:clickable="false"
-                        android:contextClickable="false"
-                        android:lineSpacingExtra="14sp"
-                        android:text="** 월 ** 일"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:translationX="20dp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/MainLunchContentView"
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:id="@+id/MainRestaurantImageView"
+                            android:layout_width="32sp"
+                            android:layout_height="32sp"
+                            app:srcCompat="@drawable/home_restaurant"
+                            app:tint="@android:color/holo_orange_light" />
+
+                        <TextView
+                            android:id="@+id/MainLunchTableTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_gravity="center_vertical"
+                            android:text="식단표"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/MainLunchTableButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:drawable/presence_invisible"
+                            android:backgroundTint="@android:color/transparent"
+                            app:srcCompat="@drawable/arrow_forward" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:height="45dp"
-                        android:text="흰밥"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:translationX="20dp" />
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/MainLunchDateView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:contextClickable="false"
+                            android:text="**월 **일"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                        <TextView
+                            android:id="@+id/MainLunchContentView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="흰밥, 미역국, 닭갈비, 계란말이"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="32dp"
-                android:background="@color/main_color"
-                android:orientation="vertical"
-                android:padding="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/search_shape" >
 
-                    <ImageView
-                        android:id="@+id/MainFreeBoardmageView"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_push_pin_24"
-                        app:tint="#001FB8" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/MainFreeBoardTextView"
-                        android:layout_width="258dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:text="    자유 게시판"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textStyle="bold" />
+                        <ImageView
+                            android:id="@+id/MainFreeBoardImageView"
+                            android:layout_width="32sp"
+                            android:layout_height="32sp"
+                            app:srcCompat="@drawable/home_push_pin"
+                            app:tint="@color/main_color" />
 
-                    <ImageButton
-                        android:id="@+id/MainFreeBoardButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:drawable/presence_invisible"
-                        android:backgroundTint="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/MainFreeBoardTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:text="자유 게시판"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/MainFreeBoardButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:drawable/presence_invisible"
+                            android:backgroundTint="@android:color/transparent"
+                            app:srcCompat="@drawable/arrow_forward" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/home_RecyclerView"
+                        android:id="@+id/home_recyclerview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/white"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         tools:itemCount="3" />
+
                 </LinearLayout>
 
-                <!--                <androidx.recyclerview.widget.RecyclerView-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    android:layout_weight="0"-->
-                <!--                    android:background="@android:color/white" />-->
-
             </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/MainSearchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="32dp"
-                android:backgroundTint="@android:color/transparent"
-                android:src="@drawable/menu_search"
-                android:tint="@color/main_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+        </ScrollView>
+    </LinearLayout>
 </FrameLayout>

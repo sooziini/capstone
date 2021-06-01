@@ -34,29 +34,7 @@ class BoardDetailActivity : AppCompatActivity() {
             board_id = intent.getStringExtra("board_id")!!
 
             // 받은 board_id로 게시글 detail GET
-            (application as MasterApplication).service.getPostDetail(board_id)
-                .enqueue(object : Callback<PostDetail> {
-                    override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
-                        if (response.isSuccessful && response.body()!!.success == "true") {
-                            val post = response.body()!!.data
-                            board_detail_title.setText(post.title).toString()
-                            board_detail_body.setText(post.body).toString()
-                            board_detail_date.setText(post.regdate.substring(0, 16)).toString()
-                            board_detail_nickname.setText(post.user_id).toString()
-                            board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
-                            board_detail_like_cnt.setText(post.goodCount.toString()).toString()
-                            board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
-                        } else {
-                            toast("게시글 조회 실패")
-                        }
-                    }
-
-                    // 응답 실패 시
-                    override fun onFailure(call: Call<PostDetail>, t: Throwable) {
-                        toast("network error")
-                        finish()
-                    }
-                })
+            retrofitGetPostDetail(board_id)
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -64,6 +42,33 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 댓글창
 
+    }
+
+    // 받은 board_id로 게시글 detail GET하는 함수
+    private fun retrofitGetPostDetail(board_id: String) {
+        (application as MasterApplication).service.getPostDetail(board_id)
+            .enqueue(object : Callback<PostDetail> {
+                override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        val post = response.body()!!.data
+                        board_detail_title.setText(post.title).toString()
+                        board_detail_body.setText(post.body).toString()
+                        board_detail_date.setText(post.regdate.substring(0, 16)).toString()
+                        board_detail_nickname.setText(post.user_id).toString()
+                        board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
+                        board_detail_like_cnt.setText(post.goodCount.toString()).toString()
+                        board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
+                    } else {
+                        toast("게시글 조회 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<PostDetail>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 
     // menu xml에서 설정한 menu를 붙임

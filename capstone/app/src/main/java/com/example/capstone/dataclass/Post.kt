@@ -7,6 +7,11 @@ data class PostList (
     val data: ArrayList<Post>
 ): Serializable
 
+data class PostDetail (
+    val success: String,
+    val data: Post
+): Serializable
+
 data class Post (
     val board_id: Int,
     val title: String,

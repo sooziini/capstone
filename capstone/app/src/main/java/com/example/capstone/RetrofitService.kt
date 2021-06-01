@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
 import com.example.capstone.dataclass.RegData
 import retrofit2.Call
@@ -21,7 +22,7 @@ interface RetrofitService {
     @GET("board/{boardid}/")
     fun getPostDetail(
         @Path("boardid") board_id: String
-    ): Call<PostList>
+    ): Call<PostDetail>
 
     // 게시글 검색
     @GET("board/search")
@@ -48,10 +49,14 @@ interface RetrofitService {
     ): Call<HashMap<String, String>>
 
     // 아이디 중복 확인
-    @GET("user/confirm/name")
-    fun confirmId(): Call<HashMap<String, String>>
+    @POST("user/confirm/name")
+    fun confirmId(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
 
     // 닉네임 중복 확인
-    @GET("user/confirm/nickname")
-    fun confirmNickname(): Call<HashMap<String, String>>
+    @POST("user/confirm/nickname")
+    fun confirmNickname(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
 }

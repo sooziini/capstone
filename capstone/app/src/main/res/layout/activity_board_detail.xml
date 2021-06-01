@@ -11,44 +11,202 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
-
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/board_detail_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_detail_toolbar" />
+    <ScrollView
+        android:id="@+id/board_detail_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/board_detail_toolbar">
 
-    <TextView
-        android:id="@+id/board_detail_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/body"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_detail_title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/post_shape"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
-    <TextView
-        android:id="@+id/board_detail_date"
-        android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:id="@+id/board_detail_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/board_detail_profile"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:srcCompat="@drawable/profile_cloud" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="8dp">
+
+                        <TextView
+                            android:id="@+id/board_detail_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/user"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <TextView
+                            android:id="@+id/board_detail_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/date"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/board_detail_like_btn"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="3dp"
+                        app:srcCompat="@drawable/detail_like"
+                        app:tint="@color/main_color"/>
+
+                    <ImageView
+                        android:id="@+id/board_detail_scrap_btn"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        app:srcCompat="@drawable/detail_scrap"
+                        app:tint="@color/scrap"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/board_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/board_detail_linear" />
+
+                <TextView
+                    android:id="@+id/board_detail_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/body"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/board_detail_title" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/board_detail_body">
+
+                    <ImageView
+                        android:id="@+id/board_detail_comment_img"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="2dp"
+                        app:srcCompat="@drawable/detail_comment" />
+
+                    <TextView
+                        android:id="@+id/board_detail_comment_cnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:text="@string/count"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                    <ImageView
+                        android:id="@+id/board_detail_like_img"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="2dp"
+                        app:srcCompat="@drawable/detail_like_selected"
+                        app:tint="@color/main_color" />
+
+                    <TextView
+                        android:id="@+id/board_detail_like_cnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:text="@string/count"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                    <ImageView
+                        android:id="@+id/board_detail_scrap_img"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="2dp"
+                        android:src="@drawable/detail_scrap_selected"
+                        app:tint="@color/scrap" />
+
+                    <TextView
+                        android:id="@+id/board_detail_scrap_cnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/count"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--            리사이클러뷰-->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_detail_toolbar" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/search_shape"
+        android:layout_margin="4dp">
+
+        <EditText
+            android:id="@+id/board_detail_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:hint="댓글을 입력하세요"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:padding="16dp"
+            android:background="@null"/>
+
+        <ImageView
+            android:id="@+id/board_detail_comment_submit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:tint="@color/no_select"
+            app:srcCompat="@drawable/detail_comment_submit" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

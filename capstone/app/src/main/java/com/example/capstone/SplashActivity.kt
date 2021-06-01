@@ -15,8 +15,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)      // 액티비티 전환 히 애니메이션 무시
+            // LoginActivity로 수정해야 함
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)      // 액티비티 전환 시 애니메이션 무시
             startActivity(intent)
             finish()
         }, SPLASH_VIEW_TIME)

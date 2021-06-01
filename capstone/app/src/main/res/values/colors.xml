@@ -2,4 +2,5 @@
 <resources>
     <color name="main_color">#4682B4</color>
     <color name="no_select">#706F6F</color>
+    <color name="scrap">#FFE500</color>
 </resources>

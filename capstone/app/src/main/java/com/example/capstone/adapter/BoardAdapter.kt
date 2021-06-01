@@ -21,15 +21,15 @@ class BoardAdapter (
         private val postBody: TextView = itemView.findViewById(R.id.post_item_body)
         private val postDate: TextView = itemView.findViewById(R.id.post_item_date)
         private val postUser: TextView = itemView.findViewById(R.id.post_item_nickname)
-        private val postComment: TextView = itemView.findViewById(R.id.post_item_comment)
-        private val postLike: TextView = itemView.findViewById(R.id.post_item_like)
-        private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap)
+        private val postComment: TextView = itemView.findViewById(R.id.post_item_comment_cnt)
+        private val postLike: TextView = itemView.findViewById(R.id.post_item_like_cnt)
+        private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt)
 
         fun bind(post: Post, index: Int) {
             // var i = index
             postTitle.text = post.title
             postBody.text = post.body
-            postDate.text = post.regdate
+            postDate.text = post.regdate.substring(5, 16)
             postUser.text = post.user_id
             postComment.text = post.replyCount.toString()
             postLike.text = post.goodCount.toString()

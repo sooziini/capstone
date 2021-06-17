@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
         MainFreeBoardButton.setOnClickListener {
             activity?.let{
                 // startActivity<FreeBoardActivity>()
-                val intent = Intent(context, FreeBoardActivity::class.java)
+                val intent = Intent(context, BoardActivity::class.java)
                 startActivity(intent)
             }
         }

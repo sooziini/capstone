@@ -29,7 +29,7 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".BoardDetailActivity" />
-        <activity android:name=".FreeBoardActivity" />
+        <activity android:name=".BoardActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/drawer_main_menu"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_main_menu_home"
+            android:icon="@drawable/drawer_home"
+            android:title="@string/drawer_main_menu_home" />
+        <item
+            android:id="@+id/drawer_main_menu_school"
+            android:icon="@drawable/drawer_out"
+            android:title="@string/drawer_main_menu_school" />
+    </group>
+
+    <group android:id="@+id/drawer_board_menu"
+        android:checkableBehavior="single">
+        <item android:id="@+id/drawer_board_menu_all"
+            android:title="@string/drawer_board_menu_all" />
+        <item android:id="@+id/drawer_board_menu_grade"
+            android:title="@string/drawer_board_menu_grade" />
+    </group>
+
+    <group android:id="@+id/drawer_activity_menu"
+        android:checkableBehavior="single">
+        <item android:id="@+id/drawer_activity_menu_sug"
+            android:title="@string/drawer_activity_menu_sug" />
+        <item android:id="@+id/drawer_activity_menu_notice"
+            android:title="@string/drawer_activity_menu_notice" />
+        <item android:id="@+id/drawer_activity_menu_club"
+            android:title="@string/drawer_activity_menu_club" />
+    </group>
+
+    <group android:id="@+id/drawer_my_menu"
+        android:checkableBehavior="single">
+        <item android:id="@+id/drawer_my_menu_teacher"
+            android:title="@string/drawer_my_menu_teacher" />
+    </group>
+</menu>

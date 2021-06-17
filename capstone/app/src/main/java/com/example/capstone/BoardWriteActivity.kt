@@ -59,7 +59,7 @@ class BoardWriteActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        startActivity(Intent(this@BoardWriteActivity, FreeBoardActivity::class.java))
+                        startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
                     } else {
                         toast("게시글 작성 실패")
                     }
@@ -77,7 +77,7 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, FreeBoardActivity::class.java))
+                startActivity(Intent(this, BoardActivity::class.java))
                 finish()
                 return true
             }

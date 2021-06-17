@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">capstone</string>
 
-    <string name="menu_home">홈</string>
+<!--    drawer navigation-->
+    <string name="drawer_main_menu_home">홈</string>
+    <string name="drawer_main_menu_school">학교 홈페이지 바로가기</string>
+    <string name="drawer_board_menu_all">전교생 자유게시판</string>
+    <string name="drawer_board_menu_grade">학년별 자유게시판</string>
+    <string name="drawer_activity_menu_sug">학생 건의함</string>
+    <string name="drawer_activity_menu_notice">학생회 공지</string>
+    <string name="drawer_activity_menu_club">동아리 활동</string>
+    <string name="drawer_my_menu_teacher">선생님과의 대화</string>
+
     <string name="menu_timetable">시간표</string>
     <string name="menu_board_list">게시판</string>
     <string name="menu_notice">알림</string>

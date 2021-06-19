@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast

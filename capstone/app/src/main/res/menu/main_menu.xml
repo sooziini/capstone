@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/main_menu_notice"
         android:icon="@drawable/home_notice"
-        android:title="알림"
+        android:title="@string/main_menu_notice"
         app:showAsAction="always" />
     <item android:id="@+id/main_menu_myinfo"
         android:icon="@drawable/home_myinfo"
-        android:title="내정보"
+        android:title="@string/main_menu_myinfo"
         app:showAsAction="always" >
         <menu>
+            <item android:id="@+id/main_menu_myinfo_report"
+                android:title="@string/main_menu_myinfo_report"
+                app:showAsAction="withText"/>
             <item android:id="@+id/main_menu_myinfo_setting"
-                android:title="설정"
+                android:title="@string/main_menu_myinfo_setting"
                 app:showAsAction="withText"/>
             <item android:id="@+id/main_menu_myinfo_logout"
-                android:title="로그아웃"
+                android:title="@string/main_menu_myinfo_logout"
                 app:showAsAction="withText"/>
         </menu>
     </item>

@@ -72,25 +72,42 @@ class MainActivity : AppCompatActivity() {
                     main_drawerlayout.closeDrawers()
                     true
                 }
+                // 전교생 자유게시판
                 R.id.drawer_board_menu_all -> {
                     main_drawerlayout.closeDrawers()
                     startActivity(Intent(this, BoardActivity::class.java))
                     true
                 }
+                // 학년별 자유게시판
                 R.id.drawer_board_menu_grade -> {
                     main_drawerlayout.closeDrawers()
                     true
                 }
+                // 학생 건의함
                 R.id.drawer_activity_menu_sug -> {
                     main_drawerlayout.closeDrawers()
                     true
                 }
+                // 학생회 공지
                 R.id.drawer_activity_menu_notice -> {
                     main_drawerlayout.closeDrawers()
                     true
                 }
+                // 동아리 활동
                 R.id.drawer_activity_menu_club -> {
                     main_drawerlayout.closeDrawers()
+                    true
+                }
+                // 선생님과의 대화
+                R.id.drawer_my_menu_message -> {
+                    main_drawerlayout.closeDrawers()
+                    startActivity(Intent(this, MessageActivity::class.java))
+                    true
+                }
+                // 게시글 보관함
+                R.id.drawer_my_menu_scrap -> {
+                    main_drawerlayout.closeDrawers()
+                    startActivity(Intent(this, ScrapActivity::class.java))
                     true
                 }
                 else -> false
@@ -111,15 +128,25 @@ class MainActivity : AppCompatActivity() {
                 main_drawerlayout.openDrawer(GravityCompat.START)
                 return true
             }
+            // 알림
             R.id.main_menu_notice -> {
+                startActivity(Intent(this, NoticeActivity::class.java))
                 return true
             }
             R.id.main_menu_myinfo -> {
                 return true
             }
-            R.id.main_menu_myinfo_setting -> {
+            // 신고 및 경고
+            R.id.main_menu_myinfo_report -> {
+                startActivity(Intent(this, ReportActivity::class.java))
                 return true
             }
+            // 설정
+            R.id.main_menu_myinfo_setting -> {
+                startActivity(Intent(this, SettingActivity::class.java))
+                return true
+            }
+            // 로그아웃
             R.id.main_menu_myinfo_logout -> {
                 return true
             }

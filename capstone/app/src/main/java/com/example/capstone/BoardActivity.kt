@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -21,11 +22,11 @@ class BoardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_board)
 
         // toolbar 설정
-        setSupportActionBar(free_board_toolbar)
+        setSupportActionBar(board_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-        free_board_write_btn.setOnClickListener {
+        board_write_btn.setOnClickListener {
             startActivity(Intent(this, BoardWriteActivity::class.java))
         }
 

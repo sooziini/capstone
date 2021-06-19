@@ -32,7 +32,9 @@
 
     <group android:id="@+id/drawer_my_menu"
         android:checkableBehavior="single">
-        <item android:id="@+id/drawer_my_menu_teacher"
-            android:title="@string/drawer_my_menu_teacher" />
+        <item android:id="@+id/drawer_my_menu_message"
+            android:title="@string/drawer_my_menu_message" />
+        <item android:id="@+id/drawer_my_menu_scrap"
+            android:title="@string/drawer_my_menu_scrap" />
     </group>
 </menu>

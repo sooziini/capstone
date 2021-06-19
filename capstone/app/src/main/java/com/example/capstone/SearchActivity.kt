@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.network.MasterApplication
 import com.mancj.materialsearchbar.MaterialSearchBar
 import kotlinx.android.synthetic.main.activity_board_search.*
 import org.jetbrains.anko.toast

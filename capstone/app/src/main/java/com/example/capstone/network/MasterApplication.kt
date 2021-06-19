@@ -1,8 +1,7 @@
-package com.example.capstone
+package com.example.capstone.network
 
 import android.app.Application
 import android.content.Context
-import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

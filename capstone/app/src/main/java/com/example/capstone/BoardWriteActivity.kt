@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_write.*
 import org.jetbrains.anko.toast
 import retrofit2.Call

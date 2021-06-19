@@ -24,7 +24,7 @@
             android:layout_height="140sp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/cloudy_alpha" />
+            app:srcCompat="@drawable/logo" />
 
         <TextView
             android:id="@+id/LoginTextView"

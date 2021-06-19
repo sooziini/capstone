@@ -9,23 +9,24 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.PostList
-import kotlinx.android.synthetic.main.activity_free_board.*
+import com.example.capstone.network.MasterApplication
+import kotlinx.android.synthetic.main.activity_board.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FreeBoardActivity : AppCompatActivity() {
+class BoardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_free_board)
+        setContentView(R.layout.activity_board)
 
         // toolbar 설정
-        setSupportActionBar(free_board_toolbar)
+        setSupportActionBar(board_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-        free_board_write_btn.setOnClickListener {
+        board_write_btn.setOnClickListener {
             startActivity(Intent(this, BoardWriteActivity::class.java))
         }
 
@@ -46,13 +47,13 @@ class FreeBoardActivity : AppCompatActivity() {
 
                         // 게시판 글 목록 화면 뷰 작성
                         // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
-                        val adapter = BoardAdapter(postList, LayoutInflater.from(this@FreeBoardActivity)) { post ->
-                            val intent = Intent(this@FreeBoardActivity, BoardDetailActivity::class.java)
+                        val adapter = BoardAdapter(postList, LayoutInflater.from(this@BoardActivity)) { post ->
+                            val intent = Intent(this@BoardActivity, BoardDetailActivity::class.java)
                             intent.putExtra("board_id", post.board_id.toString())
                             startActivity(intent)
                         }
                         post_recyclerview.adapter = adapter
-                        post_recyclerview.layoutManager = LinearLayoutManager(this@FreeBoardActivity)
+                        post_recyclerview.layoutManager = LinearLayoutManager(this@BoardActivity)
                     } else {
                         toast("게시글 목록 조회 실패")
                     }
@@ -68,7 +69,7 @@ class FreeBoardActivity : AppCompatActivity() {
 
     // menu xml에서 설정한 menu를 붙임
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.free_board_menu, menu)
+        menuInflater.inflate(R.menu.board_menu, menu)
         return true
     }
 

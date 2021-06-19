@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_write.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -59,7 +60,7 @@ class BoardWriteActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        startActivity(Intent(this@BoardWriteActivity, FreeBoardActivity::class.java))
+                        startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
                     } else {
                         toast("게시글 작성 실패")
                     }
@@ -77,7 +78,7 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, FreeBoardActivity::class.java))
+                startActivity(Intent(this, BoardActivity::class.java))
                 finish()
                 return true
             }

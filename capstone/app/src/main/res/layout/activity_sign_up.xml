@@ -26,48 +26,20 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
+        android:layout_weight="1"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/SignUpButton"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:onClick="hideKeyboard"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/SignUpNicknameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="닉네임"
-                android:textColor="@android:color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/SignUpNicknameEditTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:ems="10"
-                    android:hint="닉네임"
-                    android:inputType="text" />
-
-                <Button
-                    android:id="@+id/SignUpNicknameButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="중복확인"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/SignUpIdTextView"
@@ -238,18 +210,25 @@
                     android:text="인증번호 받기" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/SignUpButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/main_color"
-                android:text="회원가입하기"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/SignUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/main_color"
+        android:padding="10dp"
+        android:text="회원가입하기"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

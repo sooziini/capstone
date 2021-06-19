@@ -1,6 +1,5 @@
 package com.example.capstone
 
-import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import com.example.capstone.dataclass.PostDetail
-import com.example.capstone.dataclass.PostList
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -81,7 +80,7 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, FreeBoardActivity::class.java))
+                startActivity(Intent(this, BoardActivity::class.java))
                 finish()
                 return true
             }
@@ -119,7 +118,7 @@ class BoardDetailActivity : AppCompatActivity() {
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                            startActivity(Intent(this@BoardDetailActivity, FreeBoardActivity::class.java))
+                            startActivity(Intent(this@BoardDetailActivity, BoardActivity::class.java))
                             finish()
                         } else {
                             toast("게시글 삭제 실패")

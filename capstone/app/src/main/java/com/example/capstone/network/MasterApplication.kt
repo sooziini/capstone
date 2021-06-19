@@ -1,8 +1,7 @@
-package com.example.capstone
+package com.example.capstone.network
 
 import android.app.Application
 import android.content.Context
-import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -38,7 +37,7 @@ class MasterApplication: Application() {
 
         // retrofit 생성
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.5:3000/api/")
+            .baseUrl("http://172.30.1.36:3000/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

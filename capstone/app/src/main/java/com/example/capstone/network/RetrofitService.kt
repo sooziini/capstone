@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.network
 
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList

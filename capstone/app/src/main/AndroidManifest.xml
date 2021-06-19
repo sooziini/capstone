@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MasterApplication"
+        android:name=".network.MasterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,6 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".SchoolMealActivity"></activity>
+        <activity android:name=".TodoListActivity" />
+        <activity android:name=".TimeTableActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".MessageActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,21 +27,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".CommentActivity" />
         <activity android:name=".ScrapActivity" />
-        <activity android:name=".BoardWriteActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+        <activity
+            android:name=".BoardWriteActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".BoardDetailActivity" />
-        <activity android:name=".FreeBoardActivity" />
+        <activity android:name=".BoardActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
-
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

@@ -15,7 +15,6 @@ class TimeTableFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        //setHasOptionsMenu(true)
 
         return inflater.inflate(R.layout.fragment_time_table, container, false)
     }
@@ -23,6 +22,6 @@ class TimeTableFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // 시간표 내용 채우기
+
     }
 }

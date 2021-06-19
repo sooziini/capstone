@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
@@ -95,13 +96,6 @@ class   SignUpActivity : AppCompatActivity() {
         }
 
         var watcher = MyEditWatcher()
-        SignUpNicknameEditTextView.addTextChangedListener(watcher)
-//        SignUpNicknameEditTextView.setOnEditorActionListener()
-
-        // 닉네임 중복확인 버튼
-        SignUpNicknameButton.setOnClickListener {
-            checkNicknameDup()
-        }
 
         // ID 중복확인 버튼
         SignUpIdButton.setOnClickListener {
@@ -126,7 +120,6 @@ class   SignUpActivity : AppCompatActivity() {
         val passwordconfirm = SignUpPassWordCheckEditTextView.text.toString()
         val name = SignUpNameEditTextView.text.toString()
         val phoneNum = SignUpPhoneEditText.text.toString()
-        val nickname = SignUpNicknameEditTextView.text.toString()
         val birth = SignUpBirthEditText.text.toString()
         val stuGrade = SignUpGradeDropdown.getSelectedItem().toString().toInt()
         val stuClass = SignUpClassDropdown.getSelectedItem().toString().toInt()
@@ -154,7 +147,7 @@ class   SignUpActivity : AppCompatActivity() {
             return
         }
 
-        if (id == "" || password == "" || passwordconfirm == "" || name == "" || phoneNum == "" || nickname == "" || birth == "") {
+        if (id == "" || password == "" || passwordconfirm == "" || name == "" || phoneNum == "" || birth == "") {
             alert("빈칸 없이 입력해주세요"){
                 yesButton {  }
             }
@@ -167,7 +160,6 @@ class   SignUpActivity : AppCompatActivity() {
         regData.put("password", password)
         regData.put("name", name)
         regData.put("phone", phoneNum)
-        regData.put("nickname", nickname)
         regData.put("birth", birth)
         regData.put("schoolgrade", stuGrade)
         regData.put("schoolclass", stuClass)
@@ -202,44 +194,44 @@ class   SignUpActivity : AppCompatActivity() {
             })
     }
 
-    private fun checkNicknameDup() {
-        val nicknameMap = HashMap<String, String>()
-
-        nicknameMap.put("nickname", SignUpNicknameEditTextView.text.toString())
-
-        // 닉네임 중복확인 버튼 기능구현
-        (application as MasterApplication).service.confirmNickname(nicknameMap)
-            .enqueue(object : Callback<HashMap<String, String>> {
-                override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
-                ) {
-                    if (response.isSuccessful) {
-                        if (response.body()!!.get("success") == "true") {
-                            alert("사용불가능한 닉네임입니다.") {
-                                yesButton {  }
-                            }
-                            nicknameConfirm = false
-
-                        } else {
-                            alert("사용가능한 닉네임입니다.") {
-                                yesButton {  }
-                            }
-                            nicknameConfirm = true
-                        }
-                    } else {
-                        toast("error")
-                    }
-                }
-
-                // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                    toast("network error")
-                    finish()
-                }
-            })
-
-    }
+//    private fun checkNicknameDup() {
+//        val nicknameMap = HashMap<String, String>()
+//
+//        nicknameMap.put("nickname", SignUpNicknameEditTextView.text.toString())
+//
+//        // 닉네임 중복확인 버튼 기능구현
+//        (application as MasterApplication).service.confirmNickname(nicknameMap)
+//            .enqueue(object : Callback<HashMap<String, String>> {
+//                override fun onResponse(
+//                    call: Call<HashMap<String, String>>,
+//                    response: Response<HashMap<String, String>>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        if (response.body()!!.get("success") == "true") {
+//                            alert("사용불가능한 닉네임입니다.") {
+//                                yesButton {  }
+//                            }
+//                            nicknameConfirm = false
+//
+//                        } else {
+//                            alert("사용가능한 닉네임입니다.") {
+//                                yesButton {  }
+//                            }
+//                            nicknameConfirm = true
+//                        }
+//                    } else {
+//                        toast("error")
+//                    }
+//                }
+//
+//                // 응답 실패 시
+//                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+//                    toast("network error")
+//                    finish()
+//                }
+//            })
+//
+//    }
 
     private fun checkIdDup() {
         val idMap = HashMap<String, String>()

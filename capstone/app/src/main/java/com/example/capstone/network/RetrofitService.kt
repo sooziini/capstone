@@ -2,6 +2,7 @@ package com.example.capstone.network
 
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.dataclass.ReplyListList
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -34,6 +35,12 @@ interface RetrofitService {
     fun deletePostDetail(
         @Path("boardid") board_id: String
     ): Call<HashMap<String, String>>
+
+    // 댓글 조회
+    @GET("reply/{boardid}")
+    fun getReplyList(
+        @Path("boardid") board_id: String
+    ): Call<ReplyListList>
 
     // 로그인
     @POST("user/login")

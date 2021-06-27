@@ -54,6 +54,7 @@ class BoardActivity : AppCompatActivity() {
                         }
                         post_recyclerview.adapter = adapter
                         post_recyclerview.layoutManager = LinearLayoutManager(this@BoardActivity)
+                        post_recyclerview.setHasFixedSize(true)
                     } else {
                         toast("게시글 목록 조회 실패")
                     }

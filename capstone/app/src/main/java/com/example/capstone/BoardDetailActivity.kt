@@ -34,12 +34,29 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 게시글 detail GET
             retrofitGetPostDetail(board_id)
+
+            // 댓글 조회 후 recyclerview 설정 필요
+
+
+
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
         }
 
-        // 댓글창
+        // 댓글 등록 버튼을 클릭했을 경우
+        board_detail_comment_btn.setOnClickListener {
+            val body = board_detail_comment.text.toString()
+            val reply = HashMap<String, String>()
+
+            if (body == "") {
+                toast("댓글을 입력해주세요")
+            } else {
+                reply.put("body", body)
+                // 댓글 작성 POST
+                retrofitCreateReply(board_id, reply)
+            }
+        }
 
     }
 
@@ -70,6 +87,31 @@ class BoardDetailActivity : AppCompatActivity() {
             })
     }
 
+    // 입력받은 댓글 POST하는 함수
+    private fun retrofitCreateReply(board_id: String, body: HashMap<String, String>) {
+        (application as MasterApplication).service.createReply(board_id, body)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        // 댓글 작성 성공
+                        // 댓글 recyclerview 갱신해야 함
+
+                    } else {
+                        toast("댓글 작성 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    // finish()
+                }
+            })
+    }
+
     // menu xml에서 설정한 menu를 붙임
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.board_detail_menu, menu)
@@ -87,6 +129,7 @@ class BoardDetailActivity : AppCompatActivity() {
             R.id.board_detail_edit -> {
                 toast("edit success")
                 // view 필요
+
                 return true
             }
             // 삭제하기 버튼 클릭시 dialog 뜸

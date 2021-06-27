@@ -20,7 +20,7 @@
     <string name="title">title</string>
     <string name="body">body</string>
     <string name="date">date</string>
-    <string name="user">nickname</string>
+    <string name="user">익명</string>
     <string name="count">0</string>
 
 </resources>

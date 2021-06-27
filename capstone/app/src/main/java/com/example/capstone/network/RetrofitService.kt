@@ -42,6 +42,13 @@ interface RetrofitService {
         @Path("boardid") board_id: String
     ): Call<ReplyListList>
 
+    // 댓글 등록
+    @POST("reply/{boardid}")
+    fun createReply(
+        @Path("boardid") board_id: String,
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
     // 로그인
     @POST("user/login")
     fun login(

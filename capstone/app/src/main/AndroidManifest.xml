@@ -3,6 +3,7 @@
     package="com.example.capstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".network.MasterApplication"
@@ -13,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SchoolMealActivity"></activity>
+        <activity android:name=".SchoolMealActivity" />
         <activity android:name=".TodoListActivity" />
         <activity android:name=".TimeTableActivity" />
         <activity android:name=".ReportActivity" />
@@ -30,7 +31,6 @@
         <activity
             android:name=".SearchActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".CommentActivity" />
         <activity android:name=".ScrapActivity" />
         <activity
             android:name=".BoardWriteActivity"

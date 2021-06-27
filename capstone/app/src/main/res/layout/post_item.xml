@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp"
-    android:background="@drawable/post_shape"
+    android:background="@drawable/shape_post"
     android:orientation="vertical">
 
     <TextView
@@ -14,7 +14,8 @@
         android:layout_marginRight="14dp"
         android:layout_marginLeft="14dp"
         android:text="@string/title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/title"
         android:textStyle="bold" />
 
     <TextView

@@ -75,7 +75,9 @@ class MainActivity : AppCompatActivity() {
                 // 전교생 자유게시판
                 R.id.drawer_board_menu_all -> {
                     main_drawerlayout.closeDrawers()
-                    startActivity(Intent(this, BoardActivity::class.java))
+                    val intent = Intent(this, BoardActivity::class.java)
+                    intent.putExtra("type", "all_free")
+                    startActivity(intent)
                     true
                 }
                 // 학년별 자유게시판

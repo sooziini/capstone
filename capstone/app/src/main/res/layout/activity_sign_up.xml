@@ -137,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="학년 / 반 "
+                android:text="학년 / 반 / 번호"
                 android:textColor="@android:color/black" />
 
             <LinearLayout
@@ -157,6 +157,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/SignUpStuNumEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="1"
+                    android:hint="번호"
+                    android:inputType="number" />
 
             </LinearLayout>
 

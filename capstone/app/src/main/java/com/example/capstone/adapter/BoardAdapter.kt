@@ -23,7 +23,7 @@ class BoardAdapter (
         private val postUser: TextView = itemView.findViewById(R.id.post_item_nickname)
         private val postComment: TextView = itemView.findViewById(R.id.post_item_comment_cnt)
         private val postLike: TextView = itemView.findViewById(R.id.post_item_like_cnt)
-        private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt)
+private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt)
 
         fun bind(post: Post, index: Int) {
             // var i = index

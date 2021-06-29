@@ -55,4 +55,6 @@ private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(postList[position], position)
     }
+
+
 }

@@ -42,8 +42,7 @@ class BoardActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
                     // 응답 성공 시
                     if (response.isSuccessful && response.body()!!.success == "true") {
-                        val postListList = response.body()
-                        val postList = postListList!!.data
+                        val postList = response.body()!!.data
 
                         // 게시판 글 목록 화면 뷰 작성
                         // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환

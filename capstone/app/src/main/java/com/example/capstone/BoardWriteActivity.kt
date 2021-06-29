@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_write.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -44,34 +45,40 @@ class BoardWriteActivity : AppCompatActivity() {
                 post.put("body", body)
 
                 // 입력받은 title과 body POST
-                (application as MasterApplication).service.createPost(post)
-                    .enqueue(object : Callback<HashMap<String, String>> {
-                        override fun onResponse(
-                            call: Call<HashMap<String, String>>,
-                            response: Response<HashMap<String, String>>
-                        ) {
-                            if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                                startActivity(Intent(this@BoardWriteActivity, FreeBoardActivity::class.java))
-                            } else {
-                                toast("게시글 작성 실패")
-                            }
-                        }
-
-                        // 응답 실패 시
-                        override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                            toast("network error")
-                        }
-                    })
+                retrofitCreatePost(post)
             }
         }
 
+    }
+
+    // 입력받은 title과 body POST하는 함수
+    private fun retrofitCreatePost(post: HashMap<String, String>) {
+        (application as MasterApplication).service.createPost(post)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
+                    } else {
+                        toast("게시글 작성 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    //finish()
+                }
+            })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, FreeBoardActivity::class.java))
+                startActivity(Intent(this, BoardActivity::class.java))
                 finish()
                 return true
             }

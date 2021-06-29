@@ -4,15 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_scrap.*
+import kotlinx.android.synthetic.main.activity_report.*
 
-class ScrapActivity : AppCompatActivity() {
+class ReportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scrap)
+        setContentView(R.layout.activity_report)
 
         // toolbar 설정
-        setSupportActionBar(scrap_toolbar)
+        setSupportActionBar(report_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 

@@ -17,16 +17,19 @@
         android:id="@+id/board_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/board_detail_linear_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/board_detail_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/post_shape"
-            android:orientation="vertical"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -44,15 +47,16 @@
 
                     <ImageView
                         android:id="@+id/board_detail_profile"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="60sp"
+                        android:layout_height="60sp"
+                        app:tint="@color/main_color"
                         app:srcCompat="@drawable/profile_cloud" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="8dp">
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/board_detail_nickname"
@@ -65,7 +69,7 @@
                             android:id="@+id/board_detail_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="3dp"
                             android:text="@string/date"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textSize="16sp" />
@@ -78,18 +82,17 @@
 
                     <ImageView
                         android:id="@+id/board_detail_like_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30sp"
+                        android:layout_height="40sp"
                         android:layout_marginEnd="3dp"
-                        app:srcCompat="@drawable/detail_like"
-                        app:tint="@color/main_color"/>
+                        app:srcCompat="@drawable/detail_like" />
 
                     <ImageView
                         android:id="@+id/board_detail_scrap_btn"
-                        android:layout_width="35dp"
-                        android:layout_height="40dp"
+                        android:layout_width="35sp"
+                        android:layout_height="40sp"
                         app:srcCompat="@drawable/detail_scrap"
-                        app:tint="@color/scrap"/>
+                        app:tint="@color/scrap" />
 
                 </LinearLayout>
 
@@ -100,7 +103,6 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/board_detail_linear" />
@@ -109,10 +111,9 @@
                     android:id="@+id/board_detail_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:text="@string/body"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/board_detail_title" />
 
@@ -126,8 +127,8 @@
 
                     <ImageView
                         android:id="@+id/board_detail_comment_img"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="18sp"
+                        android:layout_height="18sp"
                         android:layout_marginEnd="2dp"
                         app:srcCompat="@drawable/detail_comment" />
 
@@ -141,11 +142,10 @@
 
                     <ImageView
                         android:id="@+id/board_detail_like_img"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="18sp"
+                        android:layout_height="18sp"
                         android:layout_marginEnd="2dp"
-                        app:srcCompat="@drawable/detail_like_selected"
-                        app:tint="@color/main_color" />
+                        app:srcCompat="@drawable/detail_like" />
 
                     <TextView
                         android:id="@+id/board_detail_like_cnt"
@@ -157,10 +157,10 @@
 
                     <ImageView
                         android:id="@+id/board_detail_scrap_img"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="18sp"
+                        android:layout_height="18sp"
                         android:layout_marginEnd="2dp"
-                        android:src="@drawable/detail_scrap_selected"
+                        android:src="@drawable/detail_scrap"
                         app:tint="@color/scrap" />
 
                     <TextView
@@ -173,12 +173,13 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            리사이클러뷰-->
+            <!--              댓글 리사이클러뷰-->
 
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/board_detail_linear_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -199,7 +200,7 @@
             android:background="@null"/>
 
         <ImageView
-            android:id="@+id/board_detail_comment_submit"
+            android:id="@+id/board_detail_comment_btn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"

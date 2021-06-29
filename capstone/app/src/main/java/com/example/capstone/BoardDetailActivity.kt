@@ -1,6 +1,5 @@
 package com.example.capstone
 
-import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import com.example.capstone.dataclass.PostDetail
-import com.example.capstone.dataclass.PostList
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -34,29 +33,7 @@ class BoardDetailActivity : AppCompatActivity() {
             board_id = intent.getStringExtra("board_id")!!
 
             // 받은 board_id로 게시글 detail GET
-            (application as MasterApplication).service.getPostDetail(board_id)
-                .enqueue(object : Callback<PostDetail> {
-                    override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
-                        if (response.isSuccessful && response.body()!!.success == "true") {
-                            val post = response.body()!!.data
-                            board_detail_title.setText(post.title).toString()
-                            board_detail_body.setText(post.body).toString()
-                            board_detail_date.setText(post.regdate.substring(0, 16)).toString()
-                            board_detail_nickname.setText(post.user_id).toString()
-                            board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
-                            board_detail_like_cnt.setText(post.goodCount.toString()).toString()
-                            board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
-                        } else {
-                            toast("게시글 조회 실패")
-                        }
-                    }
-
-                    // 응답 실패 시
-                    override fun onFailure(call: Call<PostDetail>, t: Throwable) {
-                        toast("network error")
-                        finish()
-                    }
-                })
+            retrofitGetPostDetail(board_id)
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -64,6 +41,33 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 댓글창
 
+    }
+
+    // 받은 board_id로 게시글 detail GET하는 함수
+    private fun retrofitGetPostDetail(board_id: String) {
+        (application as MasterApplication).service.getPostDetail(board_id)
+            .enqueue(object : Callback<PostDetail> {
+                override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        val post = response.body()!!.data
+                        board_detail_title.setText(post.title).toString()
+                        board_detail_body.setText(post.body).toString()
+                        board_detail_date.setText(post.regdate.substring(0, 16)).toString()
+                        board_detail_nickname.setText(post.user_id).toString()
+                        board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
+                        board_detail_like_cnt.setText(post.goodCount.toString()).toString()
+                        board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
+                    } else {
+                        toast("게시글 조회 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<PostDetail>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 
     // menu xml에서 설정한 menu를 붙임
@@ -76,7 +80,7 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, FreeBoardActivity::class.java))
+                startActivity(Intent(this, BoardActivity::class.java))
                 finish()
                 return true
             }
@@ -114,7 +118,7 @@ class BoardDetailActivity : AppCompatActivity() {
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                            startActivity(Intent(this@BoardDetailActivity, FreeBoardActivity::class.java))
+                            startActivity(Intent(this@BoardDetailActivity, BoardActivity::class.java))
                             finish()
                         } else {
                             toast("게시글 삭제 실패")

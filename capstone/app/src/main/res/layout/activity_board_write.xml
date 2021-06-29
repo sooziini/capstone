@@ -21,7 +21,6 @@
             android:text="글쓰기"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -29,7 +28,7 @@
         android:id="@+id/board_write_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/board_write_btn"
@@ -73,7 +72,7 @@
         android:background="@color/main_color"
         android:padding="10dp"
         android:text="작성 완료"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

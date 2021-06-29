@@ -141,7 +141,7 @@ class BoardDetailActivity : AppCompatActivity() {
                                     reply.add(replyList[i].child[j])
                             }
                             Log.d("msg", reply.toString())
-                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity))
+                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
                             reply_recyclerview.adapter = adapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                             reply_recyclerview.setHasFixedSize(true)

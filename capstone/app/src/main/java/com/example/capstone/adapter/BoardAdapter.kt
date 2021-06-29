@@ -55,4 +55,6 @@ class BoardAdapter (
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(postList[position], position)
     }
+
+
 }

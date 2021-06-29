@@ -3,17 +3,24 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
+import com.example.capstone.dataclass.Reply
+import com.example.capstone.dataclass.ReplyListList
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
@@ -36,7 +43,7 @@ class BoardDetailActivity : AppCompatActivity() {
             retrofitGetPostDetail(board_id)
 
             // 댓글 조회 후 recyclerview 설정 필요
-
+            retrofitGetReplyList(board_id)
 
 
         } else {
@@ -83,6 +90,43 @@ class BoardDetailActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<PostDetail>, t: Throwable) {
                     toast("network error")
                     finish()
+                }
+            })
+    }
+
+    // 받은 board_id로 댓글 GET하는 함수
+    private fun retrofitGetReplyList(board_id: String) {
+        (application as MasterApplication).service.getReplyList(board_id)
+            .enqueue(object : Callback<ReplyListList> {
+                override fun onResponse(
+                    call: Call<ReplyListList>,
+                    response: Response<ReplyListList>
+                ) {
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        val replyList = response.body()?.data
+                        var reply = ArrayList<Reply>()
+
+                        if (replyList != null && replyList.size > 0) {
+                            // 새로운 replyList 생성
+                            for (i in 0 until replyList.size) {
+                                reply.add(replyList[i].parent)
+                                for (j in 0 until replyList[i].child.size)
+                                    reply.add(replyList[i].child[j])
+                            }
+                            Log.d("msg", reply.toString())
+                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity))
+                            reply_recyclerview.adapter = adapter
+                            reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
+                            reply_recyclerview.setHasFixedSize(true)
+                        }
+                    } else {
+                        toast("댓글 조회 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<ReplyListList>, t: Throwable) {
+                    toast("network error")
+                    // finish()
                 }
             })
     }

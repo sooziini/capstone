@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +8,6 @@
     android:id="@+id/main_drawerlayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -27,6 +27,146 @@
                 android:src="@drawable/logo"/>
         </androidx.appcompat.widget.Toolbar>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/Home_DateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6월 2일 (수)"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/main_color"
+                android:textStyle="bold"
+                tools:text="6월 2일 (수)" />
+
+            <TextView
+                android:id="@+id/Home_WelcomeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10101 000님, 환영합니다."
+                tools:text="10101 000님, 환영합니다." />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Home_TimeTableText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="오늘의 시간표"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/main_color"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/Home_TimeTableButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="175dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:srcCompat="@drawable/arrow_forward" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/Home_TimeTableFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment
+                    android:name="com.example.capstone.fragment.TimeTableFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="오늘의 할일"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/main_color"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/Home_TodoListButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="195dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:srcCompat="@drawable/arrow_forward" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/Home_TodoListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment
+                    android:name="com.example.capstone.fragment.TodoListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Home_MealText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="오늘의 급식"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/main_color"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/Home_MealButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="195dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:srcCompat="@drawable/arrow_forward" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/Home_MealFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment
+                    android:id="@+id/fragment3"
+                    android:name="com.example.capstone.fragment.SchoolMealFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

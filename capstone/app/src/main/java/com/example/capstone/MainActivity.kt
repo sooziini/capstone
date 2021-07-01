@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
+import com.example.capstone.fragment.SchoolMealFragment
+import com.example.capstone.fragment.TimeTableFragment
+import com.example.capstone.fragment.TodoListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -116,6 +119,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        Home_TimeTableButton.setOnClickListener {
+            val intent = Intent(this, TimeTableActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        Home_TodoListButton.setOnClickListener {
+            val intent = Intent(this, TodoListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        Home_MealButton.setOnClickListener {
+            val intent = Intent(this, SchoolMealActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_TimeTableFragment, TimeTableFragment())
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_TodoListFragment, TodoListFragment())
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_MealFragment, SchoolMealFragment())
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

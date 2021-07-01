@@ -10,7 +10,9 @@ interface RetrofitService {
     // @Headers("content-type: application/json")
     // 게시글 목록 조회
     @GET("board/")
-    fun getPostList(): Call<PostList>
+    fun getPostList(
+        @Query("type") type: String
+    ): Call<PostList>
 
     // 게시글 생성
     @POST("board/")
@@ -25,7 +27,7 @@ interface RetrofitService {
     ): Call<PostDetail>
 
     // 게시글 검색
-    @GET("board/search")
+    @GET("board/search/")
     fun searchPostList(
         @Query("title") title: String
     ): Call<PostList>

@@ -23,4 +23,7 @@
     <string name="user">익명</string>
     <string name="count">0</string>
 
+    <string name="edit">수정하기</string>
+    <string name="delete">삭제하기</string>
+    <string name="report">신고하기</string>
 </resources>

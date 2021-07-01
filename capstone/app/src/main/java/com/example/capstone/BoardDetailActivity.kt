@@ -25,6 +25,8 @@ import kotlin.collections.ArrayList
 class BoardDetailActivity : AppCompatActivity() {
 
     private lateinit var board_id: String
+    var detailLike = 0
+    var detailScrap = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +44,34 @@ class BoardDetailActivity : AppCompatActivity() {
             // 받은 board_id로 게시글 detail GET
             retrofitGetPostDetail(board_id)
 
-            // 댓글 조회 후 recyclerview 설정 필요
+            // 받은 board_id로 댓글 GET
             retrofitGetReplyList(board_id)
 
+            // 좋아요 버튼 눌렀을 경우
+            board_detail_like_btn.setOnClickListener {
+                // 안 누름 -> 누름
+                if (detailLike == 0) {
+                    board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+                    detailLike = 1
+                } else {
+                    // 누름 -> 안 누름
+                    board_detail_like_btn.setImageResource(R.drawable.detail_like)
+                    detailLike = 0
+                }
+            }
+
+            // 스크랩 버튼 눌렀을 경우
+            board_detail_scrap_btn.setOnClickListener {
+                // 안 누름 -> 누름
+                if (detailScrap == 0) {
+                    board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+                    detailScrap = 1
+                } else {
+                    // 누름 -> 안 누름
+                    board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
+                    detailScrap = 0
+                }
+            }
 
         } else {
             // intent 실패할 경우 현재 액티비티 종료
@@ -114,7 +141,7 @@ class BoardDetailActivity : AppCompatActivity() {
                                     reply.add(replyList[i].child[j])
                             }
                             Log.d("msg", reply.toString())
-                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity))
+                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
                             reply_recyclerview.adapter = adapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                             reply_recyclerview.setHasFixedSize(true)

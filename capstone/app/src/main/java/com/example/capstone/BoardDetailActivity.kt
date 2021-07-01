@@ -140,7 +140,7 @@ class BoardDetailActivity : AppCompatActivity() {
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-                            Log.d("msg", reply.toString())
+
                             val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
                             reply_recyclerview.adapter = adapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
@@ -151,9 +151,10 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
                 }
 
+                // 응답 실패 시
                 override fun onFailure(call: Call<ReplyListList>, t: Throwable) {
                     toast("network error")
-                    // finish()
+                    finish()
                 }
             })
     }

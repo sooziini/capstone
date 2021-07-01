@@ -17,6 +17,8 @@
     <string name="main_menu_myinfo_setting">설정</string>
     <string name="main_menu_myinfo_logout">로그아웃</string>
 
+    <string name="timetable">시간표</string>
+
     <string name="title">title</string>
     <string name="body">body</string>
     <string name="date">date</string>

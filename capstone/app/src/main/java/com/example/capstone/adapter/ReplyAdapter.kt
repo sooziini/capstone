@@ -35,7 +35,7 @@ class ReplyAdapter(
 
             // report 버튼 클릭 시 팝업메뉴 설정
             replyReportBtn.setOnClickListener {
-                var pop = PopupMenu(context, replyReportBtn)
+                val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
                 pop.setOnMenuItemClickListener { item ->
@@ -74,7 +74,7 @@ class ReplyAdapter(
 
             // report 버튼 클릭 시 팝업메뉴 설정
             replyReportBtn.setOnClickListener {
-                var pop = PopupMenu(context, replyReportBtn)
+                val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
                 pop.setOnMenuItemClickListener { item ->

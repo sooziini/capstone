@@ -1,17 +1,17 @@
 package com.example.capstone
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.EditText
-import androidx.core.content.edit
 import kotlinx.android.synthetic.main.activity_time_table.*
 
-
-
 class TimeTableActivity : AppCompatActivity() {
-    private val SharedPrefFile = "com.example/capstone"
     private lateinit var sp : SharedPreferences
 
     private var editMode = false
@@ -36,7 +36,12 @@ class TimeTableActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_table)
 
-        sp = getSharedPreferences(SharedPrefFile, Context.MODE_PRIVATE)
+        // toolbar 설정
+        setSupportActionBar(timetable_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
+        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
+        sp = getSharedPreferences("timetable", Context.MODE_PRIVATE)
 
         monday = arrayListOf(TimeTable_Mon1, TimeTable_Mon2, TimeTable_Mon3, TimeTable_Mon4, TimeTable_Mon5, TimeTable_Mon6, TimeTable_Mon7)
         tuesday = arrayListOf(TimeTable_Tue1, TimeTable_Tue2, TimeTable_Tue3, TimeTable_Tue4, TimeTable_Tue5, TimeTable_Tue6, TimeTable_Tue7)
@@ -49,17 +54,6 @@ class TimeTableActivity : AppCompatActivity() {
 
         loadData(sp)
 
-        TimeTable_EditButton.setOnClickListener {
-            if(editMode == false) {
-                setEditMode()
-                TimeTable_EditButton.setImageResource(R.drawable.ic_baseline_done_24)
-                editMode = true
-            } else {
-                doneEditMode()
-                TimeTable_EditButton.setImageResource(R.drawable.ic_baseline_edit_24)
-                editMode = false
-            }
-        }
     }
 
     override fun onPause() {
@@ -127,5 +121,34 @@ class TimeTableActivity : AppCompatActivity() {
         for(i in 0..6) {
             saturday[i].setText(sp.getString(satList[i], ""))
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.timetable_menu, menu)
+        return true
+    }
+
+    fun timetableOnClick(item: MenuItem) {
+        if(!editMode) {
+            setEditMode()
+            item.setIcon(R.drawable.timetable_done)
+            editMode = true
+        } else {
+            doneEditMode()
+            item.setIcon(R.drawable.timetable_edit)
+            editMode = false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId) {
+            // toolbar의 뒤로가기 버튼을 눌렀을 때
+            android.R.id.home -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

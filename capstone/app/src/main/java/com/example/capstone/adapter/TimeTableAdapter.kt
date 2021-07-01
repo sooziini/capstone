@@ -10,8 +10,7 @@ import com.example.capstone.dataclass.StuClass
 
 class TimeTableAdapter (
     private val classList : ArrayList<StuClass>,
-    private val inflater: LayoutInflater,
-    private val itemClick: (StuClass) -> Unit
+    private val inflater: LayoutInflater
 ): RecyclerView.Adapter<TimeTableAdapter.StuClassViewHolder>() {
 
     inner class StuClassViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

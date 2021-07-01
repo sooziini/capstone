@@ -75,6 +75,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/design_default_color_background"
+                        android:gravity="center"
                         android:text="월"
                         android:textAlignment="center"
                         android:textStyle="bold" />
@@ -86,6 +87,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/design_default_color_background"
+                        android:gravity="center"
                         android:text="화"
                         android:textAlignment="center"
                         android:textStyle="bold" />
@@ -97,6 +99,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/design_default_color_background"
+                        android:gravity="center"
                         android:text="수"
                         android:textAlignment="center"
                         android:textStyle="bold" />
@@ -108,6 +111,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/design_default_color_background"
+                        android:gravity="center"
                         android:text="목"
                         android:textAlignment="center"
                         android:textStyle="bold" />
@@ -119,6 +123,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/design_default_color_background"
+                        android:gravity="center"
                         android:text="금"
                         android:textAlignment="center"
                         android:textStyle="bold" />
@@ -130,6 +135,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/design_default_color_background"
+                        android:gravity="center"
                         android:text="토"
                         android:textAlignment="center"
                         android:textStyle="bold" />
@@ -140,6 +146,7 @@
                     android:id="@+id/TimeTable_Row1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="1dp"
                     android:layout_weight="1">
 
                     <TextView
@@ -150,7 +157,7 @@
                         android:background="@color/design_default_color_background"
                         android:gravity="center"
                         android:text="1교시"
-                        android:textAlignment="inherit" />
+                        android:textAlignment="center" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon1"
@@ -161,7 +168,9 @@
                         android:background="@color/design_default_color_background"
                         android:ems="1"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue1"
@@ -172,7 +181,9 @@
                         android:background="@color/design_default_color_background"
                         android:ems="1"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed1"
@@ -183,7 +194,9 @@
                         android:background="@color/design_default_color_background"
                         android:ems="1"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu1"
@@ -194,7 +207,9 @@
                         android:background="@color/design_default_color_background"
                         android:ems="1"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri1"
@@ -205,7 +220,9 @@
                         android:background="@color/design_default_color_background"
                         android:ems="1"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat1"
@@ -216,7 +233,9 @@
                         android:background="@color/design_default_color_background"
                         android:ems="1"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                 </TableRow>
 
@@ -243,7 +262,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue2"
@@ -252,7 +273,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed2"
@@ -261,7 +284,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu2"
@@ -270,7 +295,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri2"
@@ -279,7 +306,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat2"
@@ -288,7 +317,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
                 </TableRow>
 
                 <TableRow
@@ -313,7 +344,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue3"
@@ -322,7 +355,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed3"
@@ -331,7 +366,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu3"
@@ -340,7 +377,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri3"
@@ -349,7 +388,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat3"
@@ -358,7 +399,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
                 </TableRow>
 
                 <TableRow
@@ -383,7 +426,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue4"
@@ -392,7 +437,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed4"
@@ -401,7 +448,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu4"
@@ -410,7 +459,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri4"
@@ -419,7 +470,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat4"
@@ -428,7 +481,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
                 </TableRow>
 
                 <TableRow
@@ -453,7 +508,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue5"
@@ -462,7 +519,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed5"
@@ -471,7 +530,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu5"
@@ -480,7 +541,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri5"
@@ -489,7 +552,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat5"
@@ -498,7 +563,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
                 </TableRow>
 
                 <TableRow
@@ -523,7 +590,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue6"
@@ -532,7 +601,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed6"
@@ -541,7 +612,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu6"
@@ -550,7 +623,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri6"
@@ -559,7 +634,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat6"
@@ -568,7 +645,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
                 </TableRow>
 
                 <TableRow
@@ -593,7 +672,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue7"
@@ -602,7 +683,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed7"
@@ -611,7 +694,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu7"
@@ -620,7 +705,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri7"
@@ -629,7 +716,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat7"
@@ -638,7 +727,9 @@
                         android:layout_margin="1dp"
                         android:background="@color/design_default_color_background"
                         android:enabled="false"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
                 </TableRow>
 
             </TableLayout>

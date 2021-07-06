@@ -100,7 +100,7 @@ class BoardDetailActivity : AppCompatActivity() {
             .enqueue(object : Callback<PostDetail> {
                 override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
-                        val post = response.body()!!.data
+                        val post = response.body()!!.data[0]
                         board_detail_title.setText(post.title).toString()
                         board_detail_body.setText(post.body).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()

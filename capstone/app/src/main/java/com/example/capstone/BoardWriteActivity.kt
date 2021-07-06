@@ -9,11 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_write.*
 import okhttp3.MediaType
@@ -31,6 +34,7 @@ class BoardWriteActivity : AppCompatActivity() {
     // 키보드 InputMethodManager 변수 선언
     var imm: InputMethodManager? = null
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
+    var uriPaths: ArrayList<Uri> = ArrayList()
     var filePaths: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +62,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 // 권한이 있을 경우
                 getImages()
             }
+
         }
 
         // 글쓰기 완료 버튼을 클릭했을 경우
@@ -119,20 +124,31 @@ class BoardWriteActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
             val count = data?.clipData!!.itemCount
+            uriPaths.clear()
             filePaths.clear()
             if (data.clipData != null && count > 1) {
                 // 이미지 다중 선택
                 for (i in 0 until count) {
                     val uri = data.clipData!!.getItemAt(i).uri
+                    uriPaths.add(uri)
                     val filePath = getImageFilePath(uri)
                     filePaths.add(filePath)
                 }
             } else {
                 // 이미지 단일 선택
                 val uri = data.data!!
+                uriPaths.add(uri)
                 val filePath = getImageFilePath(uri)
                 filePaths.add(filePath)
             }
+        }
+
+        // 이미지 미리보기 화면
+        val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this))
+        // val adapter = PostImageAdapter(filePaths, LayoutInflater.from(this))
+        post_img_recyclerview.adapter = adapter
+        post_img_recyclerview.layoutManager = LinearLayoutManager(this).also {
+            it.orientation = LinearLayoutManager.HORIZONTAL
         }
     }
 

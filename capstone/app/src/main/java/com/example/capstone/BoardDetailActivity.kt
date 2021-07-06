@@ -101,6 +101,8 @@ class BoardDetailActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val post = response.body()!!.data[0]
+                        val postImg = response.body()!!.imagepath
+
                         board_detail_title.setText(post.title).toString()
                         board_detail_body.setText(post.body).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
@@ -108,6 +110,12 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
                         board_detail_like_cnt.setText(post.goodCount.toString()).toString()
                         board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
+
+                        // 사진이 있을 경우
+                        if (postImg.size > 1) {
+                            
+                        }
+
                     } else {
                         toast("게시글 조회 실패")
                     }

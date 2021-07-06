@@ -3,6 +3,8 @@ package com.example.capstone.network
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
 import com.example.capstone.dataclass.ReplyListList
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -15,9 +17,12 @@ interface RetrofitService {
     ): Call<PostList>
 
     // 게시글 생성
+    @Multipart
     @POST("board/")
     fun createPost(
-        @Body params: HashMap<String, String>
+        @Part("title") title: String,
+        @Part("body") body: String,
+        @Part images: ArrayList<MultipartBody.Part>
     ): Call<HashMap<String, String>>
 
     // 게시글 자세히보기

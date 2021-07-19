@@ -13,10 +13,11 @@
         app:layout_constraintTop_toTopOf="parent">
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/board_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginBottom="8dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/board_detail_linear_comment"
@@ -27,16 +28,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/board_detail_constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp" >
 
                 <LinearLayout
                     android:id="@+id/board_detail_linear"
@@ -47,10 +48,10 @@
 
                     <ImageView
                         android:id="@+id/board_detail_profile"
-                        android:layout_width="60sp"
-                        android:layout_height="60sp"
-                        app:tint="@color/main_color"
-                        app:srcCompat="@drawable/profile_cloud" />
+                        android:layout_width="52sp"
+                        android:layout_height="52sp"
+                        app:srcCompat="@drawable/profile_cloud"
+                        app:tint="@color/main_color" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -63,7 +64,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/user"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                         <TextView
                             android:id="@+id/board_detail_date"
@@ -71,8 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:text="@string/date"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textSize="16sp" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                     </LinearLayout>
 
                     <View
@@ -82,15 +82,15 @@
 
                     <ImageView
                         android:id="@+id/board_detail_like_btn"
-                        android:layout_width="30sp"
-                        android:layout_height="40sp"
+                        android:layout_width="25sp"
+                        android:layout_height="35sp"
                         android:layout_marginEnd="3dp"
                         app:srcCompat="@drawable/detail_like" />
 
                     <ImageView
                         android:id="@+id/board_detail_scrap_btn"
-                        android:layout_width="35sp"
-                        android:layout_height="40sp"
+                        android:layout_width="30sp"
+                        android:layout_height="35sp"
                         app:srcCompat="@drawable/detail_scrap"
                         app:tint="@color/scrap" />
 
@@ -102,7 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/title"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/board_detail_linear" />
@@ -173,10 +174,17 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--              댓글 리사이클러뷰-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reply_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:padding="10dp"
+                android:scrollbars="horizontal" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/board_detail_linear_comment"
@@ -185,7 +193,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/search_shape"
+        android:background="@drawable/shape_search"
         android:layout_margin="4dp">
 
         <EditText
@@ -193,11 +201,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
+            android:background="@null"
             android:hint="댓글을 입력하세요"
             android:inputType="textMultiLine"
             android:maxLines="3"
             android:padding="16dp"
-            android:background="@null"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <ImageView
             android:id="@+id/board_detail_comment_btn"
@@ -206,7 +215,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            app:tint="@color/no_select"
+            app:tint="@color/selected"
             app:srcCompat="@drawable/detail_comment_submit" />
     </LinearLayout>
 

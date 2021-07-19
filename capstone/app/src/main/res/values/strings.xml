@@ -17,10 +17,15 @@
     <string name="main_menu_myinfo_setting">설정</string>
     <string name="main_menu_myinfo_logout">로그아웃</string>
 
+    <string name="timetable">시간표</string>
+
     <string name="title">title</string>
     <string name="body">body</string>
     <string name="date">date</string>
-    <string name="user">nickname</string>
+    <string name="user">익명</string>
     <string name="count">0</string>
 
+    <string name="edit">수정하기</string>
+    <string name="delete">삭제하기</string>
+    <string name="report">신고하기</string>
 </resources>

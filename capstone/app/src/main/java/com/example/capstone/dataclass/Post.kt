@@ -9,7 +9,8 @@ data class PostList (
 
 data class PostDetail (
     val success: String,
-    val data: Post
+    val data: ArrayList<Post>,
+    val imagepath: ArrayList<String>
 ): Serializable
 
 data class Post (

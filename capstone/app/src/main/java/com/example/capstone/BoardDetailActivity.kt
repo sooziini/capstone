@@ -3,21 +3,30 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
+import com.example.capstone.dataclass.Reply
+import com.example.capstone.dataclass.ReplyListList
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
     private lateinit var board_id: String
+    var detailLike = 0
+    var detailScrap = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +43,54 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 게시글 detail GET
             retrofitGetPostDetail(board_id)
+
+            // 받은 board_id로 댓글 GET
+            retrofitGetReplyList(board_id)
+
+            // 좋아요 버튼 눌렀을 경우
+            board_detail_like_btn.setOnClickListener {
+                // 안 누름 -> 누름
+                if (detailLike == 0) {
+                    board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+                    detailLike = 1
+                } else {
+                    // 누름 -> 안 누름
+                    board_detail_like_btn.setImageResource(R.drawable.detail_like)
+                    detailLike = 0
+                }
+            }
+
+            // 스크랩 버튼 눌렀을 경우
+            board_detail_scrap_btn.setOnClickListener {
+                // 안 누름 -> 누름
+                if (detailScrap == 0) {
+                    board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+                    detailScrap = 1
+                } else {
+                    // 누름 -> 안 누름
+                    board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
+                    detailScrap = 0
+                }
+            }
+
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
         }
 
-        // 댓글창
+        // 댓글 등록 버튼을 클릭했을 경우
+        board_detail_comment_btn.setOnClickListener {
+            val body = board_detail_comment.text.toString()
+            val reply = HashMap<String, String>()
+
+            if (body == "") {
+                toast("댓글을 입력해주세요")
+            } else {
+                reply.put("body", body)
+                // 댓글 작성 POST
+                retrofitCreateReply(board_id, reply)
+            }
+        }
 
     }
 
@@ -49,7 +100,9 @@ class BoardDetailActivity : AppCompatActivity() {
             .enqueue(object : Callback<PostDetail> {
                 override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
-                        val post = response.body()!!.data
+                        val post = response.body()!!.data[0]
+                        val postImg = response.body()!!.imagepath
+
                         board_detail_title.setText(post.title).toString()
                         board_detail_body.setText(post.body).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
@@ -57,6 +110,12 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
                         board_detail_like_cnt.setText(post.goodCount.toString()).toString()
                         board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
+
+                        // 사진이 있을 경우
+                        if (postImg.size > 1) {
+                            
+                        }
+
                     } else {
                         toast("게시글 조회 실패")
                     }
@@ -66,6 +125,69 @@ class BoardDetailActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<PostDetail>, t: Throwable) {
                     toast("network error")
                     finish()
+                }
+            })
+    }
+
+    // 받은 board_id로 댓글 GET하는 함수
+    private fun retrofitGetReplyList(board_id: String) {
+        (application as MasterApplication).service.getReplyList(board_id)
+            .enqueue(object : Callback<ReplyListList> {
+                override fun onResponse(
+                    call: Call<ReplyListList>,
+                    response: Response<ReplyListList>
+                ) {
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        val replyList = response.body()?.data
+                        var reply = ArrayList<Reply>()
+
+                        if (replyList != null && replyList.size > 0) {
+                            // 새로운 replyList 생성
+                            for (i in 0 until replyList.size) {
+                                reply.add(replyList[i].parent)
+                                for (j in 0 until replyList[i].child.size)
+                                    reply.add(replyList[i].child[j])
+                            }
+
+                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
+                            reply_recyclerview.adapter = adapter
+                            reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
+                            reply_recyclerview.setHasFixedSize(true)
+                        }
+                    } else {
+                        toast("댓글 조회 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<ReplyListList>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
+    }
+
+    // 입력받은 댓글 POST하는 함수
+    private fun retrofitCreateReply(board_id: String, body: HashMap<String, String>) {
+        (application as MasterApplication).service.createReply(board_id, body)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        // 댓글 작성 성공
+                        // 댓글 recyclerview 갱신해야 함
+
+                    } else {
+                        toast("댓글 작성 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    // finish()
                 }
             })
     }
@@ -87,6 +209,7 @@ class BoardDetailActivity : AppCompatActivity() {
             R.id.board_detail_edit -> {
                 toast("edit success")
                 // view 필요
+
                 return true
             }
             // 삭제하기 버튼 클릭시 dialog 뜸

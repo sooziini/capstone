@@ -2,6 +2,9 @@ package com.example.capstone.network
 
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.dataclass.ReplyListList
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -9,12 +12,17 @@ interface RetrofitService {
     // @Headers("content-type: application/json")
     // 게시글 목록 조회
     @GET("board/")
-    fun getPostList(): Call<PostList>
+    fun getPostList(
+        @Query("type") type: String
+    ): Call<PostList>
 
     // 게시글 생성
+    @Multipart
     @POST("board/")
     fun createPost(
-        @Body params: HashMap<String, String>
+        @Part("title") title: String,
+        @Part("body") body: String,
+        @Part images: ArrayList<MultipartBody.Part>
     ): Call<HashMap<String, String>>
 
     // 게시글 자세히보기
@@ -24,7 +32,7 @@ interface RetrofitService {
     ): Call<PostDetail>
 
     // 게시글 검색
-    @GET("board/search")
+    @GET("board/search/")
     fun searchPostList(
         @Query("title") title: String
     ): Call<PostList>
@@ -33,6 +41,19 @@ interface RetrofitService {
     @DELETE("board/{boardid}/")
     fun deletePostDetail(
         @Path("boardid") board_id: String
+    ): Call<HashMap<String, String>>
+
+    // 댓글 조회
+    @GET("reply/{boardid}")
+    fun getReplyList(
+        @Path("boardid") board_id: String
+    ): Call<ReplyListList>
+
+    // 댓글 등록
+    @POST("reply/{boardid}")
+    fun createReply(
+        @Path("boardid") board_id: String,
+        @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
 
     // 로그인

@@ -91,6 +91,7 @@ class SearchActivity : AppCompatActivity() {
                                 val intent = Intent(this@SearchActivity, BoardDetailActivity::class.java)
                                 intent.putExtra("board_id", post.board_id.toString())
                                 startActivity(intent)
+                                finish()
                             }
                             search_recyclerview.adapter = adapter
                             search_recyclerview.layoutManager = LinearLayoutManager(this@SearchActivity)

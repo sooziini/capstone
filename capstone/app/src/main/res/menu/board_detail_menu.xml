@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/board_detail_edit"
-        android:title="수정하기"
+        android:title="@string/edit"
         app:showAsAction="withText" />
     <item
         android:id="@+id/board_detail_delete"
-        android:title="삭제하기"
+        android:title="@string/delete"
         app:showAsAction="withText" />
 </menu>

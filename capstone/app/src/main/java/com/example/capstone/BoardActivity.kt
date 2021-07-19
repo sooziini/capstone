@@ -17,6 +17,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BoardActivity : AppCompatActivity() {
+
+    lateinit var type: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board)
@@ -26,24 +29,30 @@ class BoardActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
+        // 성공적으로 intent 전달값을 받았을 경우
+        if (intent.hasExtra("type")) {
+            type = intent.getStringExtra("type")!!
+
+            // 해당 게시판 전체 게시글 GET
+            retrofitGetPostList(type)
+        } else {
+            // intent 실패할 경우 현재 액티비티 종료
+            finish()
+        }
+
         board_write_btn.setOnClickListener {
             startActivity(Intent(this, BoardWriteActivity::class.java))
         }
-
-        // 자유게시판 전체 게시글 GET
-        retrofitGetPostList()
-
     }
 
     // 게시판 전체 게시글 GET하는 함수
-    private fun retrofitGetPostList() {
-        (application as MasterApplication).service.getPostList()
+    private fun retrofitGetPostList(type: String) {
+        (application as MasterApplication).service.getPostList(type)
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
                     // 응답 성공 시
                     if (response.isSuccessful && response.body()!!.success == "true") {
-                        val postListList = response.body()
-                        val postList = postListList!!.data
+                        val postList = response.body()!!.data
 
                         // 게시판 글 목록 화면 뷰 작성
                         // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
@@ -54,6 +63,7 @@ class BoardActivity : AppCompatActivity() {
                         }
                         post_recyclerview.adapter = adapter
                         post_recyclerview.layoutManager = LinearLayoutManager(this@BoardActivity)
+                        post_recyclerview.setHasFixedSize(true)
                     } else {
                         toast("게시글 목록 조회 실패")
                     }

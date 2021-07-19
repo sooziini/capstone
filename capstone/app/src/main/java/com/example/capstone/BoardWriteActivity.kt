@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -48,22 +49,6 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 키보드 InputMethodManager 세팅
         imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-
-        // 사진 첨부 버튼을 클릭했을 경우
-        board_write_camera.setOnClickListener {
-            val permissionChk = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-
-            if (permissionChk != PackageManager.PERMISSION_GRANTED) {
-                // 권한이 없을 경우
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    REQUEST_READ_EXTERNAL_STORAGE)
-            } else {
-                // 권한이 있을 경우
-                getImages()
-            }
-
-        }
 
         // 글쓰기 완료 버튼을 클릭했을 경우
         board_write_btn.setOnClickListener {
@@ -175,13 +160,32 @@ class BoardWriteActivity : AppCompatActivity() {
             })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.board_write_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            // toolbar의 뒤로가기 버튼을 눌렀을 때
+            // toolbar의 뒤로가기 버튼을 눌렀을 경우
             android.R.id.home -> {
                 startActivity(Intent(this, BoardActivity::class.java))
                 finish()
                 return true
+            }
+            // 사진 첨부 버튼을 클릭했을 경우
+            R.id.board_write_image -> {
+                val permissionChk = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+                if (permissionChk != PackageManager.PERMISSION_GRANTED) {
+                    // 권한이 없을 경우
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        REQUEST_READ_EXTERNAL_STORAGE)
+                } else {
+                    // 권한이 있을 경우
+                    getImages()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

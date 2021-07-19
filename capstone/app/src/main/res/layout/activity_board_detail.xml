@@ -180,8 +180,7 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never"
-                android:padding="10dp"
-                android:scrollbars="horizontal" />
+                android:padding="10dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

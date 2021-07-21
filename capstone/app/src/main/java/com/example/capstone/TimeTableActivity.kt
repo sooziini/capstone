@@ -9,6 +9,7 @@ import android.provider.BaseColumns
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+
 import com.example.capstone.SQLite.FeedReaderDbHelper
 import kotlinx.android.synthetic.main.activity_time_table.*
 
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_time_table.*
 
 class TimeTableActivity : AppCompatActivity() {
     lateinit var dbHelper: FeedReaderDbHelper
+
     private var editMode = false
 
     private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
@@ -74,11 +76,12 @@ class TimeTableActivity : AppCompatActivity() {
         loadData()
     }
 
-    override fun onDestroy() {
-        dbHelper.close()
-        super.onDestroy()
-    }
+//    override fun onDestroy() {
+//        dbHelper.close()
+//        super.onDestroy()
+//    }
 
+    // 시간표 편집
     private fun setEditMode() {
         for (day in dayArray) {
             for (textView in day)
@@ -86,6 +89,7 @@ class TimeTableActivity : AppCompatActivity() {
         }
     }
 
+    // 시간표 편집 완료
     private fun doneEditMode() {
         for (day in dayArray) {
             for (textView in day)
@@ -94,22 +98,40 @@ class TimeTableActivity : AppCompatActivity() {
         saveData()
     }
 
+    // 시간표 저장하는 함수
     private fun saveData() {
-        val db = dbHelper.writableDatabase
+
+        val dbHelper = TimeTableDBHelper(this) // DB
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+
+//         for (i in 0..6) {
+//             val contentVal = ContentValues()
+//             contentVal.put(FeedEntry.COLUMN_NAME_DEPT, monday[i].text.toString())
+
+//             val where = "${FeedEntry.COLUMN_NAME_DAYTIME}=?"
+//             val args = arrayOf(monList[i])
+//             val suc = db.update(FeedEntry.TABLE_NAME, contentVal, where, args)
+//             toast(suc.toString())
+
         val dayList = arrayOf(monList, tueList, wedList, thuList, friList, satList)
 
         for (i in 0..5) {
             saveDept(db, dayArray[i], dayList[i])
         }
+        db.close()
     }
 
+    // 시간표 조회하는 함수
     private fun loadData() {
+        val dbHelper = TimeTableDBHelper(this) // DB
         val db = dbHelper.readableDatabase
         val likeText = arrayOf("Mon%", "Tue%", "Wed%", "Thu%", "Fri%", "Sat%")
 
         for (i in 0..5) {
             loadDept(db, dayArray[i], likeText[i])
         }
+
+        db.close()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -194,8 +216,4 @@ class TimeTableActivity : AppCompatActivity() {
 //        const val DATABASE_NAME = "timetable.db"
 //    }
 //}
-
-
-
-
 

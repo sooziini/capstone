@@ -37,6 +37,16 @@ interface RetrofitService {
         @Query("title") title: String
     ): Call<PostList>
 
+    // 게시글 수정
+    @Multipart
+    @PUT("board/{boardid}")
+    fun putPostDetail(
+        @Path("boardid") board_id: String,
+        @Part("title") title: String,
+        @Part("body") body: String,
+        @Part images: ArrayList<MultipartBody.Part>
+    ): Call<HashMap<String, String>>
+
     // 게시글 삭제
     @DELETE("board/{boardid}/")
     fun deletePostDetail(

@@ -1,4 +1,4 @@
-package com.example.capstone.SQLite
+package com.example.capstone.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -21,16 +21,13 @@ private const val SQL_INIT_TABLE =
             "('Sat1'), ('Sat2'), ('Sat3'), ('Sat4'), ('Sat5'), ('Sat6'), ('Sat7')"
 private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${TimeTableActivity.FeedEntry.TABLE_NAME}"
 
-class FeedReaderDbHelper(context: Context) : SQLiteOpenHelper(context,
-    DATABASE_NAME, null,
-    DATABASE_VERSION
-) {
-
+class FeedReaderDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
         db.execSQL(SQL_INIT_TABLE)
     }
 
+    // table 구조 변경
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(SQL_DELETE_ENTRIES)
         onCreate(db)

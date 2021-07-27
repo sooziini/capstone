@@ -1,18 +1,12 @@
 package com.example.capstone.fragment
 
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstone.MainActivity
 import com.example.capstone.R
-import com.example.capstone.SQLite.FeedReaderDbHelper
-import com.example.capstone.TimeTableActivity
 import com.example.capstone.adapter.TimeTableAdapter
 import com.example.capstone.dataclass.StuClass
 import kotlinx.android.synthetic.main.fragment_time_table.*

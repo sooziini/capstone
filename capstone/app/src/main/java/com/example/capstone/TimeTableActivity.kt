@@ -9,17 +9,18 @@ import android.provider.BaseColumns
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import com.example.capstone.database.TimeTableDBHelper
+import com.example.capstone.database.FeedReaderDBHelper
 import kotlinx.android.synthetic.main.activity_time_table.*
-import org.jetbrains.anko.toast
 
 class TimeTableActivity : AppCompatActivity() {
+
     object FeedEntry : BaseColumns {
         const val TABLE_NAME = "timetable"
         const val COLUMN_NAME_DAYTIME = "daytime"
         const val COLUMN_NAME_DEPT = "dept"
     }
 
+    lateinit var dbHelper: FeedReaderDBHelper
     private var editMode = false
 
     private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
@@ -41,6 +42,8 @@ class TimeTableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_table)
+
+        dbHelper = FeedReaderDBHelper(this)     // DB
 
         // toolbar 설정
         setSupportActionBar(timetable_toolbar)
@@ -64,10 +67,10 @@ class TimeTableActivity : AppCompatActivity() {
         loadData()
     }
 
-//    override fun onDestroy() {
-//        dbHelper.close()
-//        super.onDestroy()
-//    }
+    override fun onDestroy() {
+        dbHelper.close()
+        super.onDestroy()
+    }
 
     // 시간표 편집
     private fun setEditMode() {
@@ -88,120 +91,48 @@ class TimeTableActivity : AppCompatActivity() {
 
     // 시간표 저장하는 함수
     private fun saveData() {
-        val dbHelper = TimeTableDBHelper(this) // DB
         val db: SQLiteDatabase = dbHelper.writableDatabase
+        val dayList = arrayOf(monList, tueList, wedList, thuList, friList, satList)
 
-//        val values = ContentValues().apply {
-//            for (i in 0..6) {
-//                put(FeedEntry.COLUMN_NAME_DAYTIME, monList[i])
-//                put(FeedEntry.COLUMN_NAME_DEPT, monday[i].text.toString())
-//            }
-//            for (i in 0..6) {
-//                put(tueList[i], tuesday[i].text.toString())
-//            }
-//            for (i in 0..6) {
-//                put(wedList[i], wednesday[i].text.toString())
-//            }
-//            for (i in 0..6) {
-//                put(thuList[i], thursday[i].text.toString())
-//            }
-//            for (i in 0..6) {
-//                put(friList[i], friday[i].text.toString())
-//            }
-//            for (i in 0..6) {
-//                put(satList[i], saturday[i].text.toString())
-//            }
-//        }
-
-//        val newRowId = db?.insert(FeedEntry.TABLE_NAME, null, values)
-//
-//        if (newRowId!!.equals(-1)) {
-//            alert ("시간표가 저장되지 않았습니다."){
-//                yesButton {  }
-//            }
-//        }
-        for (i in 0..6) {
-            val contentVal = ContentValues()
-            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, monday[i].text.toString())
-
-            val where = "${FeedEntry.COLUMN_NAME_DAYTIME}=?"
-            val args = arrayOf(monList[i])
-            val suc = db.update(FeedEntry.TABLE_NAME, contentVal, where, args)
-            toast(suc.toString())
+        for (i in 0..5) {
+            saveDept(db, dayArray[i], dayList[i])
         }
-        db.close()
     }
 
     // 시간표 조회하는 함수
     private fun loadData() {
-        val dbHelper = TimeTableDBHelper(this) // DB
-        val db = dbHelper.readableDatabase
+        val db: SQLiteDatabase = dbHelper.readableDatabase
+        val likeText = arrayOf("Mon%", "Tue%", "Wed%", "Thu%", "Fri%", "Sat%")
 
+        for (i in 0..5) {
+            loadDept(db, dayArray[i], likeText[i])
+        }
+    }
+
+    private fun saveDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, dTextList: Array<String>) {
+        for (i in 0..6) {
+            val contentVal = ContentValues()
+            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, dayList[i].text.toString())
+
+            val arg = arrayOf(dTextList[i])
+            db.update(FeedEntry.TABLE_NAME, contentVal, "${FeedEntry.COLUMN_NAME_DAYTIME} = ?", arg)
+        }
+    }
+
+    private fun loadDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, likeText: String) {
         val projection = arrayOf(FeedEntry.COLUMN_NAME_DAYTIME, FeedEntry.COLUMN_NAME_DEPT)
-        val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} = ?"
-        var selectionArgs = arrayOf("Mon%")
+        val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} LIKE ?"
+        val selectionArgs = arrayOf(likeText)
         val sortOrder = "${FeedEntry.COLUMN_NAME_DAYTIME} ASC"
 
-        var cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
+        val cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
         with(cursor) {
             var i = 0
             while(moveToNext()) {
-                monday[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
+                dayList[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
                 i += 1
             }
         }
-
-        selectionArgs = arrayOf("Tue%")
-        cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                tuesday[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-
-        selectionArgs = arrayOf("Wed%")
-        cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                wednesday[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-
-        selectionArgs = arrayOf("Thu%")
-        cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                thursday[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-
-        selectionArgs = arrayOf("Fri%")
-        cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                friday[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-
-        selectionArgs = arrayOf("Sat%")
-        cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                saturday[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-
-        db.close()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

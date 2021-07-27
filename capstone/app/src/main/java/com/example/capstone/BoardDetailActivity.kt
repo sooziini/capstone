@@ -207,9 +207,9 @@ class BoardDetailActivity : AppCompatActivity() {
                 return true
             }
             R.id.board_detail_edit -> {
-                toast("edit success")
-                // view 필요
-
+                val intent = Intent(this, BoardWriteActivity::class.java)
+                intent.putExtra("board_write_id", board_id)     // 글 수정의 경우 board_id 전달
+                startActivity(intent)
                 return true
             }
             // 삭제하기 버튼 클릭시 dialog 뜸

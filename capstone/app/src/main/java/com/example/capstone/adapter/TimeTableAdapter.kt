@@ -11,8 +11,8 @@ import com.example.capstone.dataclass.StuClass
 
 class TimeTableAdapter(
     private val context: Context,
-    private val classList : ArrayList<StuClass>
-//    private val inflater: LayoutInflater
+    private val classList : ArrayList<StuClass>,
+    private val inflater: LayoutInflater
 ): RecyclerView.Adapter<TimeTableAdapter.StuClassViewHolder>() {
 
     inner class StuClassViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -30,8 +30,8 @@ class TimeTableAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StuClassViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.timetable_item, parent, false)
-//        val view = inflater.inflate(R.layout.timetable_item, parent, false)
+//        val view = LayoutInflater.from(context).inflate(R.layout.timetable_item, parent, false)
+        val view = inflater.inflate(R.layout.timetable_item, parent, false)
         return StuClassViewHolder(view)
     }
 

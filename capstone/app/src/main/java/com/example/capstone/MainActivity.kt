@@ -15,13 +15,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
 
         // toolbar 설정
         setSupportActionBar(main_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_TodoListFrameLayout, TodoListFragment())
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_MealFrameLayout, SchoolMealFragment())
+            .commit()
 
 //        replaceFragment(HomeFragment())
 //        main_toolbar.visibility = View.GONE
@@ -64,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
+        setContentView(R.layout.activity_main)
 
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -136,18 +149,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_TimeTableFragment, TimeTableFragment())
-            .commit()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_TodoListFragment, TodoListFragment())
-            .commit()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_MealFragment, SchoolMealFragment())
-            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

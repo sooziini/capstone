@@ -107,6 +107,9 @@ class SignUpActivity : AppCompatActivity() {
             signUp()        // 가입 메소드
         }
 
+        SignUpAuthButton.setOnClickListener {
+            auth()
+        }
     }
 
     private fun signUp() {
@@ -116,8 +119,8 @@ class SignUpActivity : AppCompatActivity() {
         val name = SignUpNameEditTextView.text.toString()
         val phoneNum = SignUpPhoneEditText.text.toString()
         val birth = SignUpBirthEditText.text.toString()
-        val stuGrade = SignUpGradeDropdown.getSelectedItem().toString().toInt()
-        val stuClass = SignUpClassDropdown.getSelectedItem().toString().toInt()
+        val stuGrade = SignUpGradeDropdown.selectedItem.toString().toInt()
+        val stuClass = SignUpClassDropdown.selectedItem.toString().toInt()
         val stuNum = SignUpStuNumEditText.text.toString().toInt()
         val stuYear = SignUpYearEditText.text.toString().toInt()
 
@@ -252,6 +255,12 @@ class SignUpActivity : AppCompatActivity() {
                     finish()
                 }
             })
+    }
+
+    // 학번 인증
+    private fun auth() {
+        val authMap = HashMap<String, String>()
+        val stuNum = SignUpGradeDropdown.selectedItem.toString()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

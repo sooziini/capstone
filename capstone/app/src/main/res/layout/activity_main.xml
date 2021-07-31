@@ -85,7 +85,7 @@
             </LinearLayout>
 
             <FrameLayout
-                android:id="@+id/Home_TimeTableFragment"
+                android:id="@+id/Home_TimeTableFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" >
@@ -121,7 +121,7 @@
             </LinearLayout>
 
             <FrameLayout
-                android:id="@+id/Home_TodoListFragment"
+                android:id="@+id/Home_TodoListFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" >
@@ -156,7 +156,7 @@
             </LinearLayout>
 
             <FrameLayout
-                android:id="@+id/Home_MealFragment"
+                android:id="@+id/Home_MealFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" >

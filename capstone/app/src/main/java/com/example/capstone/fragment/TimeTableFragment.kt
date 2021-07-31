@@ -37,11 +37,11 @@ class TimeTableFragment: Fragment() {
         Log.d(TAG, "classList: " + classList.toString())
 
         val deptAdapter = TimeTableAdapter(requireContext(), classList, LayoutInflater.from(requireContext()))
-        TimeTable_RecyclerView?.adapter = deptAdapter
+        TimeTable_RecyclerView.adapter = deptAdapter
 
-        val layoutManager = LinearLayoutManager(context)
-        TimeTable_RecyclerView?.layoutManager = layoutManager
-        TimeTable_RecyclerView?.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(requireContext())
+        TimeTable_RecyclerView.layoutManager = layoutManager
+        TimeTable_RecyclerView.setHasFixedSize(true)
 
 
         return inflater.inflate(R.layout.fragment_time_table, container, false)
@@ -77,9 +77,14 @@ class TimeTableFragment: Fragment() {
             7 ->
                 likeText = "Sat%"
         }
-        val classList = loadDept(likeText)
 
-        return classList
+        if (likeText == "Sun%") {
+            return null as ArrayList<StuClass>
+        } else {
+            val classList = loadDept(likeText)
+            return classList
+        }
+
     }
 
     private fun loadDept(likeText: String): ArrayList<StuClass> {

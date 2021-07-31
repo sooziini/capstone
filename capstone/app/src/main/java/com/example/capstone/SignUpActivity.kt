@@ -260,7 +260,12 @@ class SignUpActivity : AppCompatActivity() {
     // 학번 인증
     private fun auth() {
         val authMap = HashMap<String, String>()
-        val stuNum = SignUpGradeDropdown.selectedItem.toString()
+        val name = SignUpNameEditTextView.text.toString()
+        val stuNum = SignUpGradeDropdown.selectedItem.toString() + SignUpClassDropdown.selectedItem.toString() + SignUpStuNumEditText.text.toString()
+
+        authMap.put("name", name)
+        authMap.put("studentId", stuNum)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -31,7 +31,7 @@ import java.io.File
 class BoardWriteActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null         // 키보드 InputMethodManager 변수 선언
-    private var board_write_id: Int = -1
+    private lateinit var board_write_id: String
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
     var uriPaths: ArrayList<Uri> = ArrayList()
     var filePaths: ArrayList<String> = ArrayList()
@@ -50,13 +50,13 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_write_id")) {
-            board_write_id = intent.getIntExtra("board_write_id", -1)
+            board_write_id = intent.getStringExtra("board_write_id")!!
 
-            Log.d("abc", board_write_id.toString())
+            Log.d("abc", board_write_id)
 
             // 게시글 수정일 경우
             // 기존 title, body, images 불러오기
-            if (board_write_id != -1) {
+            if (board_write_id != "-1") {
 
             }
         } else {
@@ -91,7 +91,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 }
 
                 // 새 글 작성의 경우
-                if (board_write_id == -1) {
+                if (board_write_id == "-1") {
                     // 입력받은 title, body, images POST
                     retrofitCreatePost(title, body, images)
                 } else {
@@ -218,11 +218,11 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 경우
             android.R.id.home -> {
-                if (board_write_id == -1)
+                if (board_write_id == "-1")
                     startActivity(Intent(this, BoardActivity::class.java))
                 else {
                     val intent = Intent(this, BoardDetailActivity::class.java)
-                    intent.putExtra("board_id", board_write_id.toString())
+                    intent.putExtra("board_id", board_write_id)
                     startActivity(intent)
                 }
                 finish()

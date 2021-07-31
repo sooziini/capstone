@@ -3,7 +3,6 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -46,36 +45,19 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 댓글 GET
             retrofitGetReplyList(board_id)
-
-            // 좋아요 버튼 눌렀을 경우
-            board_detail_like_btn.setOnClickListener {
-                // 안 누름 -> 누름
-                if (detailLike == 0) {
-                    board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
-                    detailLike = 1
-                } else {
-                    // 누름 -> 안 누름
-                    board_detail_like_btn.setImageResource(R.drawable.detail_like)
-                    detailLike = 0
-                }
-            }
-
-            // 스크랩 버튼 눌렀을 경우
-            board_detail_scrap_btn.setOnClickListener {
-                // 안 누름 -> 누름
-                if (detailScrap == 0) {
-                    board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
-                    detailScrap = 1
-                } else {
-                    // 누름 -> 안 누름
-                    board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
-                    detailScrap = 0
-                }
-            }
-
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
+        }
+
+        // 좋아요 버튼 눌렀을 경우
+        board_detail_like_btn.setOnClickListener {
+            onDetailLikeBtnClick()
+        }
+
+        // 스크랩 버튼 눌렀을 경우
+        board_detail_scrap_btn.setOnClickListener {
+            onDetailScrapBtnClick()
         }
 
         // 댓글 등록 버튼을 클릭했을 경우
@@ -109,7 +91,13 @@ class BoardDetailActivity : AppCompatActivity() {
                         // board_detail_nickname.setText(post.user_id).toString()
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
                         board_detail_like_cnt.setText(post.goodCount.toString()).toString()
-                        board_detail_scrap_cnt.setText(post.ScrapCount.toString()).toString()
+                        board_detail_scrap_cnt.setText(post.scrapCount.toString()).toString()
+
+                        if (post.goodCheck == "N") detailLike = 0
+                        else onDetailLikeBtnClick()
+
+                        if (post.scrapCheck == "N") detailScrap = 0
+                        else onDetailScrapBtnClick()
 
                         // 사진이 있을 경우
                         if (postImg.size > 1) {
@@ -190,6 +178,29 @@ class BoardDetailActivity : AppCompatActivity() {
                     // finish()
                 }
             })
+    }
+
+    private fun onDetailLikeBtnClick() {
+        if (detailLike == 0) {
+            board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+            detailLike = 1
+        } else {
+            // 누름 -> 안 누름
+            board_detail_like_btn.setImageResource(R.drawable.detail_like)
+            detailLike = 0
+        }
+    }
+
+    private fun onDetailScrapBtnClick() {
+        // 안 누름 -> 누름
+        if (detailScrap == 0) {
+            board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+            detailScrap = 1
+        } else {
+            // 누름 -> 안 누름
+            board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
+            detailScrap = 0
+        }
     }
 
     // menu xml에서 설정한 menu를 붙임

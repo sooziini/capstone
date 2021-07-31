@@ -3,7 +3,6 @@ package com.example.capstone.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.dataclass.Post
@@ -33,7 +32,7 @@ private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt
             postUser.text = post.user_id
             postComment.text = post.replyCount.toString()
             postLike.text = post.goodCount.toString()
-            postScrap.text = post.ScrapCount.toString()
+            postScrap.text = post.scrapCount.toString()
 
             itemView.setOnClickListener { itemClick(post) }
         }

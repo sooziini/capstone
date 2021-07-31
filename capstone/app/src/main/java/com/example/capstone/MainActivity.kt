@@ -23,47 +23,17 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-//        replaceFragment(HomeFragment())
-//        main_toolbar.visibility = View.GONE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_TimeTableFragment, TimeTableFragment())
+            .commit()
+
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.Home_TodoListFragment, TodoListFragment())
+//            .commit()
 //
-//        // bottom navigation item이 선택되면
-//        // 해당되는 fragment로 전환
-//        bottom_nav.setOnNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.bottom_nav_home -> {
-//                    replaceFragment(HomeFragment())
-//                    main_toolbar.visibility = View.GONE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_timetable -> {
-//                    replaceFragment(TimeTableFragment())
-//                    main_toolbar_title.text = "시간표"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_board_list -> {
-//                    replaceFragment(BoardListFragment())
-//                    main_toolbar_title.text = "게시판"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_notice -> {
-//                    replaceFragment(NoticeFragment())
-//                    main_toolbar_title.text = "알림"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_myinfo -> {
-//                    replaceFragment(MyInfoFragment())
-//                    main_toolbar_title.text = "내 정보"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                else -> {
-//                    return@setOnNavigationItemSelectedListener false
-//                }
-//            }
-//        }
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.Home_MealFragment, SchoolMealFragment())
+//            .commit()
 
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -136,18 +106,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_TimeTableFragment, TimeTableFragment())
-            .commit()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_TodoListFragment, TodoListFragment())
-            .commit()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_MealFragment, SchoolMealFragment())
-            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

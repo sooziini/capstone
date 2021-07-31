@@ -2,11 +2,13 @@ package com.example.capstone.fragment
 
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
 import com.example.capstone.adapter.TimeTableAdapter
 import com.example.capstone.database.FeedEntry
@@ -18,7 +20,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TimeTableFragment : Fragment() {
-    val dbHelper = FeedReaderDBHelper(requireContext())
+    val dbHelper = context?.let { FeedReaderDBHelper(it) }
 
     var classList = arrayListOf<StuClass>()
 
@@ -28,14 +30,15 @@ class TimeTableFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val deptAdapter = TimeTableAdapter(requireContext(), classList)
-        TimeTable_RecyclerView.adapter = deptAdapter
-
         getTimeTable(classList)
-        val layoutManager = LinearLayoutManager(requireContext())
-        TimeTable_RecyclerView.layoutManager = layoutManager
-        TimeTable_RecyclerView.setHasFixedSize(true)
+        Log.d("abc", classList.toString())
 
+        if (classList.size > 0) {
+            val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
+            TimeTable_RecyclerView.adapter = deptAdapter
+            TimeTable_RecyclerView.layoutManager = LinearLayoutManager(this.activity)
+            TimeTable_RecyclerView.setHasFixedSize(true)
+        }
 
         return inflater.inflate(R.layout.fragment_time_table, container, false)
     }
@@ -49,7 +52,7 @@ class TimeTableFragment : Fragment() {
     }
 
     private fun loadData(dayNum: Int, classList: ArrayList<StuClass>) {
-        val db = dbHelper.readableDatabase
+        val db = dbHelper?.readableDatabase
         lateinit var likeText: String
         when(dayNum) {
             1 -> {
@@ -71,7 +74,9 @@ class TimeTableFragment : Fragment() {
                 likeText = "Sat%"
         }
 
-        loadDept(db, classList, likeText)
+        if (db != null) {
+            loadDept(db, classList, likeText)
+        }
     }
 
     private fun loadDept(db: SQLiteDatabase, classList: ArrayList<StuClass>, likeText: String) {

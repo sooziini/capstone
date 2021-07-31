@@ -6,4 +6,5 @@
     <color name="reply_child">#EDEDED</color>
     <color name="scrap">#FFE500</color>
     <color name="title">#000000</color>
+    <color name="warn_red">#FF0000</color>
 </resources>

@@ -5,30 +5,16 @@ import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import com.example.capstone.SQLite.FeedReaderDbHelper
+import com.example.capstone.database.FeedReaderDBHelper
+import com.example.capstone.database.FeedEntry
 import kotlinx.android.synthetic.main.activity_time_table.*
 
-//private const val SQL_CREATE_ENTRIES =
-//    "CREATE TABLE if not exists ${TimeTableActivity.FeedEntry.TABLE_NAME} (" +
-//            "${BaseColumns._ID} INTEGER PRIMARY KEY, " +
-//            "${TimeTableActivity.FeedEntry.COLUMN_NAME_DAYTIME} CHAR(5), " +
-//            "${TimeTableActivity.FeedEntry.COLUMN_NAME_DEPT} VARCHAR(10))"
-//private const val SQL_INIT_TABLE =
-//    "INSERT INTO ${TimeTableActivity.FeedEntry.TABLE_NAME}(${TimeTableActivity.FeedEntry.COLUMN_NAME_DAYTIME}) VALUES" +
-//            "('Mon1'), ('Mon2'), ('Mon3'), ('Mon4'), ('Mon5'), ('Mon6'), ('Mon7'), " +
-//            "('Tue1'), ('Tue2'), ('Tue3'), ('Tue4'), ('Tue5'), ('Tue6'), ('Tue7'), " +
-//            "('Wed1'), ('Wed2'), ('Wed3'), ('Wed4'), ('Wed5'), ('Wed6'), ('Wed7'), " +
-//            "('Thu1'), ('Thu2'), ('Thu3'), ('Thu4'), ('Thu5'), ('Thu6'), ('Thu7'), " +
-//            "('Fri1'), ('Fri2'), ('Fri3'), ('Fri4'), ('Fri5'), ('Fri6'), ('Fri7'), " +
-//            "('Sat1'), ('Sat2'), ('Sat3'), ('Sat4'), ('Sat5'), ('Sat6'), ('Sat7')"
-//private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${TimeTableActivity.FeedEntry.TABLE_NAME}"
-
 class TimeTableActivity : AppCompatActivity() {
-    lateinit var dbHelper: FeedReaderDbHelper
+
+    lateinit var dbHelper: FeedReaderDBHelper
     private var editMode = false
 
     private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
@@ -51,7 +37,8 @@ class TimeTableActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_table)
 
-        dbHelper = FeedReaderDbHelper(this) // DB
+        dbHelper = FeedReaderDBHelper(this)     // DB
+
         // toolbar 설정
         setSupportActionBar(timetable_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
@@ -79,6 +66,7 @@ class TimeTableActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    // 시간표 편집
     private fun setEditMode() {
         for (day in dayArray) {
             for (textView in day)
@@ -86,6 +74,7 @@ class TimeTableActivity : AppCompatActivity() {
         }
     }
 
+    // 시간표 편집 완료
     private fun doneEditMode() {
         for (day in dayArray) {
             for (textView in day)
@@ -94,8 +83,9 @@ class TimeTableActivity : AppCompatActivity() {
         saveData()
     }
 
+    // 시간표 저장하는 함수
     private fun saveData() {
-        val db = dbHelper.writableDatabase
+        val db: SQLiteDatabase = dbHelper.writableDatabase
         val dayList = arrayOf(monList, tueList, wedList, thuList, friList, satList)
 
         for (i in 0..5) {
@@ -103,12 +93,39 @@ class TimeTableActivity : AppCompatActivity() {
         }
     }
 
+    // 시간표 조회하는 함수
     private fun loadData() {
-        val db = dbHelper.readableDatabase
+        val db: SQLiteDatabase = dbHelper.readableDatabase
         val likeText = arrayOf("Mon%", "Tue%", "Wed%", "Thu%", "Fri%", "Sat%")
 
         for (i in 0..5) {
             loadDept(db, dayArray[i], likeText[i])
+        }
+    }
+
+    private fun saveDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, dTextList: Array<String>) {
+        for (i in 0..6) {
+            val contentVal = ContentValues()
+            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, dayList[i].text.toString())
+
+            val arg = arrayOf(dTextList[i])
+            db.update(FeedEntry.TABLE_NAME, contentVal, "${FeedEntry.COLUMN_NAME_DAYTIME} = ?", arg)
+        }
+    }
+
+    private fun loadDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, likeText: String) {
+        val projection = arrayOf(FeedEntry.COLUMN_NAME_DAYTIME, FeedEntry.COLUMN_NAME_DEPT)
+        val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} LIKE ?"
+        val selectionArgs = arrayOf(likeText)
+        val sortOrder = "${FeedEntry.COLUMN_NAME_DAYTIME} ASC"
+
+        val cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
+        with(cursor) {
+            var i = 0
+            while(moveToNext()) {
+                dayList[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
+                i += 1
+            }
         }
     }
 
@@ -140,62 +157,4 @@ class TimeTableActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    object FeedEntry : BaseColumns {
-        const val TABLE_NAME = "timetable"
-        const val COLUMN_NAME_DAYTIME = "daytime"
-        const val COLUMN_NAME_DEPT = "dept"
-    }
-
-    private fun saveDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, dTextList: Array<String>) {
-        for (i in 0..6) {
-            val contentVal = ContentValues()
-            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, dayList[i].text.toString())
-
-            val arg = arrayOf(dTextList[i])
-            val suc = db.update(FeedEntry.TABLE_NAME, contentVal, "${FeedEntry.COLUMN_NAME_DAYTIME} = ?", arg)
-        }
-    }
-
-    private fun loadDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, likeText: String) {
-        val projection = arrayOf(FeedEntry.COLUMN_NAME_DAYTIME, FeedEntry.COLUMN_NAME_DEPT)
-        val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} LIKE ?"
-        val selectionArgs = arrayOf(likeText)
-        val sortOrder = "${FeedEntry.COLUMN_NAME_DAYTIME} ASC"
-
-        val cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                dayList[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-    }
 }
-
-//class FeedReaderDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-//    override fun onCreate(db: SQLiteDatabase) {
-//        db.execSQL(SQL_CREATE_ENTRIES)
-//        db.execSQL(SQL_INIT_TABLE)
-//    }
-//
-//    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-//        db.execSQL(SQL_DELETE_ENTRIES)
-//        onCreate(db)
-//    }
-//
-//    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-//        onUpgrade(db, oldVersion, newVersion)
-//    }
-//
-//    companion object {
-//        const val DATABASE_VERSION = 1
-//        const val DATABASE_NAME = "timetable.db"
-//    }
-//}
-
-
-
-
-

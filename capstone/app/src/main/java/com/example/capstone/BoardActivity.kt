@@ -42,7 +42,7 @@ class BoardActivity : AppCompatActivity() {
 
         board_write_btn.setOnClickListener {
             val intent = Intent(this@BoardActivity, BoardWriteActivity::class.java)
-            intent.putExtra("board_write_id", -1)     // 글 작성의 경우 -1 전달
+            intent.putExtra("board_write_id", "-1")     // 글 작성의 경우 -1 전달
             startActivity(intent)
         }
     }

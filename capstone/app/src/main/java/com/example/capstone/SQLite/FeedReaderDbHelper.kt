@@ -1,10 +1,11 @@
-package com.example.capstone.database
+package com.example.capstone.SQLite
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import com.example.capstone.TimeTableActivity
+import com.example.capstone.database.FeedEntry
 
 private const val SQL_CREATE_ENTRIES =
     "CREATE TABLE if not exists ${FeedEntry.TABLE_NAME} (" +
@@ -21,13 +22,16 @@ private const val SQL_INIT_TABLE =
             "('Sat1'), ('Sat2'), ('Sat3'), ('Sat4'), ('Sat5'), ('Sat6'), ('Sat7')"
 private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${FeedEntry.TABLE_NAME}"
 
-class FeedReaderDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class FeedReaderDbHelper(context: Context) : SQLiteOpenHelper(context,
+    DATABASE_NAME, null,
+    DATABASE_VERSION
+) {
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
         db.execSQL(SQL_INIT_TABLE)
     }
 
-    // table 구조 변경
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(SQL_DELETE_ENTRIES)
         onCreate(db)
@@ -41,10 +45,4 @@ class FeedReaderDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         const val DATABASE_VERSION = 1
         const val DATABASE_NAME = "timetable.db"
     }
-}
-
-object FeedEntry : BaseColumns {
-    const val TABLE_NAME = "timetable"
-    const val COLUMN_NAME_DAYTIME = "daytime"
-    const val COLUMN_NAME_DEPT = "dept"
 }

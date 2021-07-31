@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.alert
@@ -20,16 +21,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class   SignUpActivity : AppCompatActivity() {
-
+class SignUpActivity : AppCompatActivity() {
     // 키보드 InputMethodManager 변수 선언
     var imm: InputMethodManager? = null
-
     var idConfirm: Boolean = false
-    var nicknameConfirm: Boolean = false
 
-
-    class MyEditWatcher: TextWatcher {
+    inner class IdEditWatcher: TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             Log.d("", "beforeTextChanged: $s")
         }
@@ -37,6 +34,9 @@ class   SignUpActivity : AppCompatActivity() {
             Log.d("", "afterTextChanged: $s")
         }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            idConfirm = false
+            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+            toast(idConfirm.toString())
             Log.d("", "onTextChanged: $s")
         }
     }
@@ -95,16 +95,12 @@ class   SignUpActivity : AppCompatActivity() {
             }
         }
 
-        var watcher = MyEditWatcher()
+        val idWatcher = IdEditWatcher()
+        SignUpIdEditTextView.addTextChangedListener(idWatcher)
 
         // ID 중복확인 버튼
         SignUpIdButton.setOnClickListener {
             checkIdDup()
-        }
-
-        // 인증번호 받기 버튼
-        SignUpSendNumButton.setOnClickListener {
-            sendNum()
         }
 
         SignUpButton.setOnClickListener {       // 회원가입 버튼
@@ -114,7 +110,6 @@ class   SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-
         val id = SignUpIdEditTextView.text.toString()
         val password = SignUpPasswordEditTextView.text.toString()
         val passwordconfirm = SignUpPassWordCheckEditTextView.text.toString()
@@ -123,34 +118,50 @@ class   SignUpActivity : AppCompatActivity() {
         val birth = SignUpBirthEditText.text.toString()
         val stuGrade = SignUpGradeDropdown.getSelectedItem().toString().toInt()
         val stuClass = SignUpClassDropdown.getSelectedItem().toString().toInt()
+        val stuNum = SignUpStuNumEditText.text.toString().toInt()
+        val stuYear = SignUpYearEditText.text.toString().toInt()
+
+
+        if (id != "" && idConfirm == false) {
+//            alert("ID 중복확인을 해주세요.") {
+//                yesButton {  }
+//            }
+            toast("ID 중복확인을 해주세요")
+            return
+        }
 
         if(password != passwordconfirm) {
-            alert("비밀번호를 확인해 주세요") {
-                yesButton {  }
-            }
+//            alert("비밀번호를 확인해 주세요.") {
+//                yesButton {  }
+//            }
+            toast("비밀번호를 확인해 주세요")
             return
         }
 
         if (!(1 <= stuGrade && stuGrade <= 3)) {
             // 맞는 학년 데이터가 아닌 경우
-            alert("학년을 선택해 주세요") {
-                yesButton { }
-            }
+//            alert("학년을 선택해 주세요.") {
+//                yesButton { }
+//            }
+            toast("학년을 선택해 주세요")
             return
         }
 
         if (!(1 <= stuClass && stuClass <= 8)) {
             // 맞는 반 데이터가 아닌 경우
-            alert ("반을 선택해 주세요"){
-                yesButton { }
-            }
+//            alert ("반을 선택해 주세요"){
+//                yesButton { }
+//            }
+            toast("반을 선택해 주세요")
             return
         }
 
+        // 모든 칸에 빈칸이 없다면
         if (id == "" || password == "" || passwordconfirm == "" || name == "" || phoneNum == "" || birth == "") {
-            alert("빈칸 없이 입력해주세요"){
-                yesButton {  }
-            }
+//            alert("빈칸 없이 입력해주세요"){
+//                yesButton {  }
+//            }
+            toast("빈칸 없이 입력해주세요")
             return
         }
 
@@ -163,14 +174,15 @@ class   SignUpActivity : AppCompatActivity() {
         regData.put("birth", birth)
         regData.put("schoolgrade", stuGrade)
         regData.put("schoolclass", stuClass)
+        regData.put("schoolnumber", stuNum)
+        /////////////////////////////
+        regData.put("role", "student")
+        regData.put("year", stuYear)
 
-        val agency = SignUpPhoneDropdown
-
-//        val regData = RegData(id, password, name, phoneNum, nickname, birth, stuGrade, stuClass)
+//        val agency = SignUpPhoneDropdown.selectedItem.toString()
 
         // 가입 구현
         // 닉네임, ID, (학년,반), (통신사, 휴대폰 번호) 중복되지 않을 시
-        // & 모든 칸에 빈칸이 없다면
 
         // 입력받은 회원정보 POST
         (application as MasterApplication).service.signUp(regData)
@@ -194,49 +206,17 @@ class   SignUpActivity : AppCompatActivity() {
             })
     }
 
-//    private fun checkNicknameDup() {
-//        val nicknameMap = HashMap<String, String>()
-//
-//        nicknameMap.put("nickname", SignUpNicknameEditTextView.text.toString())
-//
-//        // 닉네임 중복확인 버튼 기능구현
-//        (application as MasterApplication).service.confirmNickname(nicknameMap)
-//            .enqueue(object : Callback<HashMap<String, String>> {
-//                override fun onResponse(
-//                    call: Call<HashMap<String, String>>,
-//                    response: Response<HashMap<String, String>>
-//                ) {
-//                    if (response.isSuccessful) {
-//                        if (response.body()!!.get("success") == "true") {
-//                            alert("사용불가능한 닉네임입니다.") {
-//                                yesButton {  }
-//                            }
-//                            nicknameConfirm = false
-//
-//                        } else {
-//                            alert("사용가능한 닉네임입니다.") {
-//                                yesButton {  }
-//                            }
-//                            nicknameConfirm = true
-//                        }
-//                    } else {
-//                        toast("error")
-//                    }
-//                }
-//
-//                // 응답 실패 시
-//                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-//                    toast("network error")
-//                    finish()
-//                }
-//            })
-//
-//    }
-
+    // 아이디 중복확인
     private fun checkIdDup() {
         val idMap = HashMap<String, String>()
+        val id = SignUpIdEditTextView.text.toString()
 
-        idMap.put("id", SignUpIdEditTextView.text.toString())
+        if (id != "") {
+            idMap.put("id", id)
+        } else {
+            toast("ID를 입력해주세요")
+            return
+        }
 
         // ID 중복확인 버튼 기능구현
         (application as MasterApplication).service.confirmId(idMap)
@@ -245,10 +225,22 @@ class   SignUpActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
-
-                        // 중복확인 구현
-
+                    if (response.isSuccessful) {
+                        if(response.body()!!.get("success") == "true") {
+//                            alert("사용할 수 없는 ID입니다.") {
+//                                yesButton { }
+//                            }
+                            idConfirm = false
+                            toast("사용할 수 없는 ID 입니다.")
+                            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+                        } else {
+//                            alert("사용할 수 있는 ID입니다.") {
+//                                yesButton {  }
+//                            }
+                            idConfirm = true
+                            toast("사용할 수 있는 ID입니다.")
+                            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                        }
                     } else {
                         toast("중복확인 실패")
                     }
@@ -260,10 +252,6 @@ class   SignUpActivity : AppCompatActivity() {
                     finish()
                 }
             })
-    }
-
-    private fun sendNum() {
-        // 인증번호 전송 기능구현
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

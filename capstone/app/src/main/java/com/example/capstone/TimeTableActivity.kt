@@ -5,20 +5,14 @@ import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import com.example.capstone.database.FeedReaderDBHelper
+import com.example.capstone.database.FeedEntry
 import kotlinx.android.synthetic.main.activity_time_table.*
 
 class TimeTableActivity : AppCompatActivity() {
-
-    object FeedEntry : BaseColumns {
-        const val TABLE_NAME = "timetable"
-        const val COLUMN_NAME_DAYTIME = "daytime"
-        const val COLUMN_NAME_DEPT = "dept"
-    }
 
     lateinit var dbHelper: FeedReaderDBHelper
     private var editMode = false

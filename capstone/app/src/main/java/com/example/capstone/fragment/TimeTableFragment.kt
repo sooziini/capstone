@@ -1,7 +1,11 @@
 package com.example.capstone.fragment
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,45 +21,48 @@ import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TimeTableFragment : Fragment() {
-    val dbHelper = FeedReaderDBHelper(requireContext())
+class TimeTableFragment: Fragment() {
+    lateinit var dbHelper: FeedReaderDBHelper
 
-    var classList = arrayListOf<StuClass>()
+    lateinit var classList: ArrayList<StuClass>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        dbHelper = FeedReaderDBHelper(requireContext())
 
-        val deptAdapter = TimeTableAdapter(requireContext(), classList)
-        TimeTable_RecyclerView.adapter = deptAdapter
+        classList = getTimeTable()
+        Log.d(TAG, "classList: " + classList.toString())
 
-        getTimeTable(classList)
-        val layoutManager = LinearLayoutManager(requireContext())
-        TimeTable_RecyclerView.layoutManager = layoutManager
-        TimeTable_RecyclerView.setHasFixedSize(true)
+        val deptAdapter = TimeTableAdapter(requireContext(), classList, LayoutInflater.from(requireContext()))
+        TimeTable_RecyclerView?.adapter = deptAdapter
+
+        val layoutManager = LinearLayoutManager(context)
+        TimeTable_RecyclerView?.layoutManager = layoutManager
+        TimeTable_RecyclerView?.setHasFixedSize(true)
 
 
         return inflater.inflate(R.layout.fragment_time_table, container, false)
     }
 
-    private fun getTimeTable(classList: ArrayList<StuClass>) {
+    private fun getTimeTable(): ArrayList<StuClass> {
         val instance = Calendar.getInstance()
         val dayNum = instance.get(Calendar.DAY_OF_WEEK)
-        lateinit var day: String
 
-        loadData(dayNum, classList)
+        val classList = loadData(dayNum)
+
+        return classList
     }
 
-    private fun loadData(dayNum: Int, classList: ArrayList<StuClass>) {
-        val db = dbHelper.readableDatabase
+    private fun loadData(dayNum: Int): ArrayList<StuClass> {
         lateinit var likeText: String
         when(dayNum) {
             1 -> {
 //                day = "일"
-                likeText = "Sun"
-                return
+                likeText = "Sun%"
+//                return null
             }
             2 ->
                 likeText = "Mon%"
@@ -70,17 +77,20 @@ class TimeTableFragment : Fragment() {
             7 ->
                 likeText = "Sat%"
         }
+        val classList = loadDept(likeText)
 
-        loadDept(db, classList, likeText)
+        return classList
     }
 
-    private fun loadDept(db: SQLiteDatabase, classList: ArrayList<StuClass>, likeText: String) {
+    private fun loadDept(likeText: String): ArrayList<StuClass> {
+        val db = dbHelper.readableDatabase
         val projection = arrayOf(FeedEntry.COLUMN_NAME_DAYTIME, FeedEntry.COLUMN_NAME_DEPT)
         val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} LIKE ?"
         val selectionArgs = arrayOf(likeText)
         val sortOrder = "${FeedEntry.COLUMN_NAME_DAYTIME} ASC"
         val start = arrayOf("8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00")
         val end = arrayOf("8:50", "9:50", "10:50", "11:50", "12:50", "13:50", "14:50", "15:50")
+        val classList = ArrayList<StuClass>()
 
         val cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
         with(cursor) {
@@ -114,5 +124,6 @@ class TimeTableFragment : Fragment() {
                 i += 1
             }
         }
+        return classList
     }
 }

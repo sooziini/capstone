@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         // toolbar 설정
         setSupportActionBar(main_toolbar)
@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
-        setContentView(R.layout.activity_main)
 
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {

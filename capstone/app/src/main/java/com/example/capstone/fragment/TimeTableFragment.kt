@@ -1,9 +1,6 @@
 package com.example.capstone.fragment
 
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,19 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import com.example.capstone.R
 import com.example.capstone.adapter.TimeTableAdapter
 import com.example.capstone.database.FeedEntry
 import com.example.capstone.database.FeedReaderDBHelper
 import com.example.capstone.dataclass.StuClass
 import kotlinx.android.synthetic.main.fragment_time_table.*
-import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
 
 class TimeTableFragment: Fragment() {
     lateinit var dbHelper: FeedReaderDBHelper
-
     lateinit var classList: ArrayList<StuClass>
 
     override fun onCreateView(
@@ -32,28 +28,32 @@ class TimeTableFragment: Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         dbHelper = FeedReaderDBHelper(requireContext())
+        return inflater.inflate(R.layout.fragment_time_table, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         classList = getTimeTable()
         Log.d(TAG, "classList: " + classList.toString())
 
-        val deptAdapter = TimeTableAdapter(requireContext(), classList, LayoutInflater.from(requireContext()))
-        TimeTable_RecyclerView?.adapter = deptAdapter
+        if (classList.size > 0) {
+            val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
+            TimeTable_RecyclerView?.adapter = deptAdapter
+            val layoutmanager = LinearLayoutManager(this.activity)
+            layoutmanager.orientation = HORIZONTAL
+            layoutmanager.canScrollHorizontally()
 
-        val layoutManager = LinearLayoutManager(context)
-        TimeTable_RecyclerView?.layoutManager = layoutManager
-        TimeTable_RecyclerView?.setHasFixedSize(true)
-
-
-        return inflater.inflate(R.layout.fragment_time_table, container, false)
+            TimeTable_RecyclerView?.layoutManager = layoutmanager
+            TimeTable_RecyclerView?.setHasFixedSize(true)
+        }
     }
 
     private fun getTimeTable(): ArrayList<StuClass> {
         val instance = Calendar.getInstance()
         val dayNum = instance.get(Calendar.DAY_OF_WEEK)
 
-        val classList = loadData(dayNum)
-
-        return classList
+        return loadData(dayNum)
     }
 
     private fun loadData(dayNum: Int): ArrayList<StuClass> {
@@ -77,9 +77,14 @@ class TimeTableFragment: Fragment() {
             7 ->
                 likeText = "Sat%"
         }
-        val classList = loadDept(likeText)
+        if (likeText == "Sun%") {
+            return null as ArrayList<StuClass>
+        } else {
+            val classList = loadDept(likeText)
+            return classList
+        }
 
-        return classList
+        return loadDept(likeText)
     }
 
     private fun loadDept(likeText: String): ArrayList<StuClass> {

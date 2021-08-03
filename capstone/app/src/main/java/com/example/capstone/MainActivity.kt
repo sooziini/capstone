@@ -5,17 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.example.capstone.fragment.SchoolMealFragment
 import com.example.capstone.fragment.TimeTableFragment
 import com.example.capstone.fragment.TodoListFragment
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         // toolbar 설정
         setSupportActionBar(main_toolbar)
@@ -76,7 +83,6 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
-        setContentView(R.layout.activity_main)
 
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -183,6 +189,29 @@ class MainActivity : AppCompatActivity() {
             }
             // 로그아웃
             R.id.main_menu_myinfo_logout -> {
+                (application as MasterApplication).service.logout("")
+                    .enqueue(object : Callback<HashMap<String, String>> {
+                        override fun onResponse(
+                            call: Call<HashMap<String, String>>,
+                            response: Response<HashMap<String, String>>
+                        ) {
+                            if (response.isSuccessful) {
+                                if(response.body()!!.get("success") == "true") {
+                                    toast("로그아웃 되었습니다.")
+                                } else {
+                                    toast("로그아웃 실패")
+                                }
+                            } else {
+                                toast("로그아웃 실패")
+                            }
+                        }
+
+                        // 응답 실패 시
+                        override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                            toast("network error")
+                            finish()
+                        }
+                    })
                 return true
             }
         }

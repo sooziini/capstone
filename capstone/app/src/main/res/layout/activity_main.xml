@@ -87,14 +87,9 @@
             <FrameLayout
                 android:id="@+id/Home_TimeTableFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-<!--                <fragment-->
-<!--                    android:id="@+id/Home_TimeTableFragment"-->
-<!--                    android:name="com.example.capstone.fragment.TimeTableFragment"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:scrollbars="horizontal"></FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,13 +123,8 @@
             <FrameLayout
                 android:id="@+id/Home_TodoListFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-<!--                <fragment-->
-<!--                    android:id="@+id/Home_TodoListFragment"-->
-<!--                    android:name="com.example.capstone.fragment.TodoListFragment"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" >
             </FrameLayout>
 
             <LinearLayout
@@ -168,13 +158,8 @@
             <FrameLayout
                 android:id="@+id/Home_MealFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-<!--                <fragment-->
-<!--                    android:id="@+id/Home_MealFragment"-->
-<!--                    android:name="com.example.capstone.fragment.SchoolMealFragment"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" >
             </FrameLayout>
 
         </LinearLayout>

@@ -84,9 +84,14 @@ interface RetrofitService {
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
 
-    // 닉네임 중복 확인
-    @POST("user/confirm/nickname")
-    fun confirmNickname(
+    // 학번 인증
+    @POST("user/auth/student/check")
+    fun authStudent(
         @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    @POST("user/logout")
+    fun logout(
+        @Header("Authorization") token: String
     ): Call<HashMap<String, String>>
 }

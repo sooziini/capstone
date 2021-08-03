@@ -21,6 +21,8 @@ data class Post (
     val regdate: String,
     val goodCount: Int,
     val replyCount: Int,
-    val ScrapCount: Int
+    val scrapCount: Int,
+    val goodCheck: String,
+    val scrapCheck: String
 ): Serializable
 

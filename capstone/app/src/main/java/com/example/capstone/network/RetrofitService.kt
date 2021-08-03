@@ -53,6 +53,18 @@ interface RetrofitService {
         @Path("boardid") board_id: String
     ): Call<HashMap<String, String>>
 
+    // 게시글 스크랩
+    @GET("board/scrap/{boardid}")
+    fun scrapPost(
+        @Path("boardid") board_id: String
+    ): Call<HashMap<String, String>>
+
+    // 게시글 좋아요
+    @GET("board/good/{boardid}")
+    fun goodPost(
+        @Path("boardid") board_id: String
+    ): Call<HashMap<String, String>>
+
     // 댓글 조회
     @GET("reply/{boardid}")
     fun getReplyList(

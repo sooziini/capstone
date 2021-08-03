@@ -97,7 +97,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 } else {
                     // 글 수정의 경우
                     // board_id + 입력받은 title, body, images UPDATE
-                    retrofitPutPost(board_write_id.toString(), title, body, images)
+                    retrofitPutPost(board_write_id, title, body, images)
                 }
 
             }

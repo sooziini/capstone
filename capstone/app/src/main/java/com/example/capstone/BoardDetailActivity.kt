@@ -52,12 +52,12 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 좋아요 버튼 눌렀을 경우
         board_detail_like_btn.setOnClickListener {
-            onDetailLikeBtnClick()
+            retrofitGoodPostClick()
         }
 
         // 스크랩 버튼 눌렀을 경우
         board_detail_scrap_btn.setOnClickListener {
-            onDetailScrapBtnClick()
+            retrofitScrapPostClick()
         }
 
         // 댓글 등록 버튼을 클릭했을 경우
@@ -94,10 +94,15 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_scrap_cnt.setText(post.scrapCount.toString()).toString()
 
                         if (post.goodCheck == "N") detailLike = 0
-                        else onDetailLikeBtnClick()
-
+                        else {
+                            board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+                            detailLike = 1
+                        }
                         if (post.scrapCheck == "N") detailScrap = 0
-                        else onDetailScrapBtnClick()
+                        else {
+                            board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+                            detailScrap = 1
+                        }
 
                         // 사진이 있을 경우
                         if (postImg.size > 1) {
@@ -180,27 +185,64 @@ class BoardDetailActivity : AppCompatActivity() {
             })
     }
 
-    private fun onDetailLikeBtnClick() {
-        if (detailLike == 0) {
-            board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
-            detailLike = 1
-        } else {
-            // 누름 -> 안 누름
-            board_detail_like_btn.setImageResource(R.drawable.detail_like)
-            detailLike = 0
-        }
+    // 게시글 좋아요하는 함수
+    private fun retrofitGoodPostClick() {
+        (application as MasterApplication).service.goodPost(board_id)
+            .enqueue(object : Callback<HashMap<String, String>>{
+            override fun onResponse(
+                call: Call<HashMap<String, String>>,
+                response: Response<HashMap<String, String>>
+            ) {
+                if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    // 안 누름 -> 누름
+                    if (response.body()!!.get("stat") == "INSERT") {
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+                        detailLike = 1
+                    } else if (response.body()!!.get("stat") == "DELETE") {
+                        // 누름 -> 안 누름
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like)
+                        detailLike = 0
+                    }
+                } else {
+                    toast("게시글 좋아요 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                toast("network error")
+                // finish()
+            }
+        })
     }
 
-    private fun onDetailScrapBtnClick() {
-        // 안 누름 -> 누름
-        if (detailScrap == 0) {
-            board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
-            detailScrap = 1
-        } else {
-            // 누름 -> 안 누름
-            board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
-            detailScrap = 0
-        }
+    // 게시글 스크랩하는 함수
+    private fun retrofitScrapPostClick() {
+        (application as MasterApplication).service.scrapPost(board_id)
+            .enqueue(object : Callback<HashMap<String, String>> {
+            override fun onResponse(
+                call: Call<HashMap<String, String>>,
+                response: Response<HashMap<String, String>>
+            ) {
+                if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    // 안 누름 -> 누름
+                    if (response.body()!!.get("stat") == "INSERT") {
+                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+                        detailLike = 1
+                    } else if (response.body()!!.get("stat") == "DELETE") {
+                        // 누름 -> 안 누름
+                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
+                        detailLike = 0
+                    }
+                } else {
+                    toast("게시글 스크랩 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                toast("network error")
+                // finish()
+            }
+        })
     }
 
     // menu xml에서 설정한 menu를 붙임
@@ -221,6 +263,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 val intent = Intent(this, BoardWriteActivity::class.java)
                 intent.putExtra("board_write_id", board_id)     // 글 수정의 경우 board_id 전달
                 startActivity(intent)
+                finish()
                 return true
             }
             // 삭제하기 버튼 클릭시 dialog 뜸

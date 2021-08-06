@@ -15,12 +15,13 @@ import com.example.capstone.database.FeedEntry
 import com.example.capstone.database.FeedReaderDBHelper
 import com.example.capstone.dataclass.StuClass
 import kotlinx.android.synthetic.main.fragment_time_table.*
+import org.jetbrains.anko.support.v4.toast
 import java.util.*
 import kotlin.collections.ArrayList
 
 class TimeTableFragment: Fragment() {
     lateinit var dbHelper: FeedReaderDBHelper
-    lateinit var classList: ArrayList<StuClass>
+    var classList: ArrayList<StuClass>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +38,8 @@ class TimeTableFragment: Fragment() {
         classList = getTimeTable()
         Log.d(TAG, "classList: " + classList.toString())
 
-        if (classList.size > 0) {
-            val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
+        if (classList != null) {
+            val deptAdapter = TimeTableAdapter(classList!!, LayoutInflater.from(this.activity))
             TimeTable_RecyclerView?.adapter = deptAdapter
             val layoutmanager = LinearLayoutManager(this.activity)
             layoutmanager.orientation = HORIZONTAL
@@ -49,15 +50,19 @@ class TimeTableFragment: Fragment() {
         }
     }
 
-    private fun getTimeTable(): ArrayList<StuClass> {
+    private fun getTimeTable(): ArrayList<StuClass>? {
         val instance = Calendar.getInstance()
         val dayNum = instance.get(Calendar.DAY_OF_WEEK)
-
+        val year = instance.get(Calendar.YEAR).toString()
+        val month = instance.get(Calendar.MONTH).toString()
+        val day = instance.get(Calendar.DATE).toString()
+        toast(year + " " + month +  " " + day)
         return loadData(dayNum)
     }
 
-    private fun loadData(dayNum: Int): ArrayList<StuClass> {
+    private fun loadData(dayNum: Int): ArrayList<StuClass>? {
         lateinit var likeText: String
+
         when(dayNum) {
             1 -> {
 //                day = "일"
@@ -78,13 +83,11 @@ class TimeTableFragment: Fragment() {
                 likeText = "Sat%"
         }
         if (likeText == "Sun%") {
-            return null as ArrayList<StuClass>
+            return null
         } else {
             val classList = loadDept(likeText)
             return classList
         }
-
-        return loadDept(likeText)
     }
 
     private fun loadDept(likeText: String): ArrayList<StuClass> {
@@ -101,25 +104,33 @@ class TimeTableFragment: Fragment() {
         with(cursor) {
             var i = 0
             while(moveToNext()) {
-                if (i < 5) {
+                if (i < 4) {
                     val stuClass = StuClass(
-                        classNum = i,
+                        classNum = i + 1,
                         className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
                         startTime = start[i],
                         endTime = end[i]
                     )
                     classList.add(stuClass)
-                } else if (i == 5) {
+                } else if (i == 4) {
                     val stuClass = StuClass(
-                        classNum = i,
+                        classNum = null,
                         className = "점심시간",
                         startTime = start[i],
                         endTime = end[i]
                     )
                     classList.add(stuClass)
+                    i = i + 1
+                    val stuClass2 = StuClass(
+                        classNum = i,
+                        className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
+                        startTime = start[i],
+                        endTime = end[i]
+                    )
+                    classList.add(stuClass2)
                 } else {
                     val stuClass = StuClass(
-                        classNum = i - 1,
+                        classNum = i,
                         className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
                         startTime = start[i],
                         endTime = end[i]

@@ -90,8 +90,20 @@ interface RetrofitService {
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
 
+    // 로그아웃
     @POST("user/logout")
     fun logout(
         @Header("Authorization") token: String
     ): Call<HashMap<String, String>>
+
+    // 토큰 검증 (회원 데이터 조회)
+    @GET("auth/valid")
+    fun authorization(
+        @Header("Authorization") token: String
+    ):Call<HashMap<String, Any>>
+
+    @POST("user/password/find")
+    fun findPassword(
+        @Body params: HashMap<String, String>
+    ):Call<HashMap<String, String>>
 }

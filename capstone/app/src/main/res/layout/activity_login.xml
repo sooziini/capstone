@@ -96,7 +96,7 @@
             android:layout_marginTop="24dp"
             android:clickable="true"
             android:focusable="true"
-            android:text="아이디/비밀번호 찾기" />
+            android:text="비밀번호 찾기" />
 
         <TextView
             android:id="@+id/LoginRegisterBtn"

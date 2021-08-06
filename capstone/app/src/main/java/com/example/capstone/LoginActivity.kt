@@ -33,11 +33,12 @@ class LoginActivity : AppCompatActivity() {
         // 회원가입 클릭
         LoginRegisterBtn.setOnClickListener {
             startActivity<SignUpActivity>()
+            finish()
         }
 
         // 아이디, 비밀번호 찾기 클릭
         LoginFindIdPassword.setOnClickListener {
-            // 구현
+            startActivity(Intent(this@LoginActivity, FindPasswordActivity::class.java))
         }
 
         // 로그인 버튼   
@@ -63,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
                         ) {
                             if (response.isSuccessful) {
                                 val result = response.body()
-                                //val token = response.headers().get("X-AUTH-TOKEN").toString()
                                 var tokenMap: LinkedTreeMap<String, String>
                                 var accessToken: String? = null
                                 var refreshToken: String? = null
@@ -79,22 +79,15 @@ class LoginActivity : AppCompatActivity() {
                                 } else {
                                     // access_token 저장
                                     saveUserToken("access_token", accessToken, this@LoginActivity)
-                                    toast("access : " + accessToken)
                                     Log.d("", "access : " + accessToken)
                                     // refresh_token 저장
                                     saveUserToken("refresh_token", refreshToken, this@LoginActivity)
-                                    toast("refresh : " + refreshToken)
                                     Log.d("", "refresh : " + refreshToken)
 
                                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-
+                                    finish()
                                 }
 
-//                            if (result!!.get("success") == "true") {
-//                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-//                            } else {
-//                                toast("로그인 실패")
-//                            }
                             } else {        // 3xx, 4xx 를 받은 경우
                                 toast("로그인 실패")
                             }
@@ -112,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun saveUserToken(name: String, token: String, activity: Activity) {
-        val sp = activity.getSharedPreferences("user_token", Context.MODE_PRIVATE)
+        val sp = activity.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString(name, token)
         editor.apply()
@@ -124,5 +117,10 @@ class LoginActivity : AppCompatActivity() {
     fun hideKeyboard(v: View) {
         if (v != null)
             imm?.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
+        super.onBackPressed()
     }
 }

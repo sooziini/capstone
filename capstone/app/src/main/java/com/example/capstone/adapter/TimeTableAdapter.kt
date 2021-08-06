@@ -21,7 +21,11 @@ class TimeTableAdapter(
         private val endTime : TextView = itemView.findViewById(R.id.timetable_item_endtime)
 
         fun bind(stuClass: StuClass) {
-            classNum.text = stuClass.classNum.toString()
+            if (stuClass.classNum == null) {
+                classNum.text = ""
+            } else {
+                classNum.text = stuClass.classNum.toString()
+            }
             className.text = stuClass.className
             startTime.text = stuClass.startTime
             endTime.text = stuClass.endTime

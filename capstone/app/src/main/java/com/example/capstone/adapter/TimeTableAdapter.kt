@@ -10,34 +10,61 @@ import com.example.capstone.R
 import com.example.capstone.dataclass.StuClass
 
 class TimeTableAdapter(
-    private val classList : ArrayList<StuClass>,
+    private val classList : ArrayList<StuClass>?,
     private val inflater: LayoutInflater
 ): RecyclerView.Adapter<TimeTableAdapter.StuClassViewHolder>() {
 
     inner class StuClassViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val classNum : TextView = itemView.findViewById(R.id.timetable_item_class)
-        private val className : TextView = itemView.findViewById(R.id.timetable_item_classname)
-        private val startTime : TextView = itemView.findViewById(R.id.timetable_item_starttime)
-        private val endTime : TextView = itemView.findViewById(R.id.timetable_item_endtime)
+        private val classNum : TextView? = itemView.findViewById(R.id.timetable_item_class)
+        private val className : TextView? = itemView.findViewById(R.id.timetable_item_classname)
+        private val startTime : TextView? = itemView.findViewById(R.id.timetable_item_starttime)
+        private val endTime : TextView? = itemView.findViewById(R.id.timetable_item_endtime)
 
         fun bind(stuClass: StuClass) {
-            classNum.text = stuClass.classNum.toString()
-            className.text = stuClass.className
-            startTime.text = stuClass.startTime
-            endTime.text = stuClass.endTime
+
+            if (classList == null) {
+                return
+            }
+
+            if (stuClass.classNum == null) {
+                classNum?.text = ""
+            } else {
+                classNum?.text = stuClass.classNum.toString()
+            }
+            if (stuClass.className == "") {
+                className?.text = "공강"
+            }
+            else {
+                className?.text = stuClass.className
+            }
+            startTime?.text = stuClass.startTime
+            endTime?.text = stuClass.endTime
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StuClassViewHolder {
-        val view = inflater.inflate(R.layout.timetable_item, parent, false)
+        lateinit var view : View
+        if(classList == null) {
+            view = inflater.inflate(R.layout.timetable_null_item, parent, false)
+        }
+        else {
+            view = inflater.inflate(R.layout.timetable_item, parent, false)
+        }
         return StuClassViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return classList.size
+        if(classList != null) {
+            return classList.size
+        }
+        else {
+            return 1
+        }
     }
 
     override fun onBindViewHolder(holder: StuClassViewHolder, position: Int) {
-        holder.bind(classList[position])
+        if (classList != null) {
+            holder.bind(classList!![position])
+        }
     }
 }

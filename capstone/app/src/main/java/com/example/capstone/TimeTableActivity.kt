@@ -13,7 +13,6 @@ import com.example.capstone.database.FeedEntry
 import kotlinx.android.synthetic.main.activity_time_table.*
 
 class TimeTableActivity : AppCompatActivity() {
-
     lateinit var dbHelper: FeedReaderDBHelper
     private var editMode = false
 

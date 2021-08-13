@@ -49,7 +49,7 @@ class MasterApplication: Application() {
     // -> token 값이 없으면 login X
     private fun checkIsLogin(): Boolean {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val token = sp.getString("login_sp", "null")
+        val token = sp.getString("access_token", "null")
 
         return token != "null"
     }

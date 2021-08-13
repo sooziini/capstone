@@ -173,44 +173,65 @@ class SignUpActivity : AppCompatActivity() {
         val name = SignUpNameEditTextView.text.toString()
         val phoneNum = SignUpPhoneEditText.text.toString()
         val birth = SignUpBirthEditText.text.toString()
-        val stuGrade = SignUpGradeDropdown.selectedItem.toString().toInt()
-        val stuClass = SignUpClassDropdown.selectedItem.toString().toInt()
-        val stuNum = SignUpStuNumEditText.text.toString().toInt()
-        val stuYear = SignUpYearEditText.text.toString().toInt()
+        var stuGrade = 0
+        var stuClass = 0
+        var stuNum = 0
+        var stuYear = 0
         val email = SignUpEmailEditText.text.toString()
 
-        if (id != "" && idConfirm == false) {
+        if (idConfirm == false) {
             toast("ID 중복확인을 해주세요")
             return
         }
 
-        if(password != passwordconfirm) {
+        if(password != passwordconfirm || password == "") {
             toast("비밀번호를 확인해 주세요")
             return
         }
 
-        if (!(1 <= stuGrade && stuGrade <= 3)) {
+        if (SignUpGradeDropdown.selectedItem.toString() != "학년") {
+            stuGrade = SignUpGradeDropdown.selectedItem.toString().toInt()
+        }
+        else {
             toast("학년을 선택해 주세요")
             return
         }
 
-        if (!(1 <= stuClass && stuClass <= 8)) {
+        if (SignUpClassDropdown.selectedItem.toString() != "반") {
+            stuClass = SignUpClassDropdown.selectedItem.toString().toInt()
+        }
+        else {
             toast("반을 선택해 주세요")
             return
         }
 
-        if(SignUpYearEditText.text.isEmpty()) {
-            toast("입학년도를 입력해 주세요")
+        if (SignUpStuNumEditText.text.isNotEmpty()){
+            stuNum = SignUpStuNumEditText.text.toString().toInt()
+        }
+        else {
+            toast("번호를 입력해주세요")
             return
         }
 
+        if (SignUpYearEditText.text.isNotEmpty()) {
+            stuYear = SignUpYearEditText.text.toString().toInt()
+        }
+        else {
+            toast("입학년도를 입력해주세요")
+            return
+        }
+
+        if (stuAuth == false) {
+            toast("학번인증을 해주세요")
+            return
+        }
 //        if(SignUpEmailEditText.text.isEmpty()) {
 //            toast("이메일을 입력해 주세요")
 //            return
 //        }
 
         // 모든 칸에 빈칸이 없다면
-        if (id == "" || password == "" || passwordconfirm == "" || name == "" || phoneNum == "" || birth == "") {
+        if (name == "" || phoneNum == "" || birth == "" || email == "") {
             toast("빈칸 없이 입력해주세요")
             return
         }

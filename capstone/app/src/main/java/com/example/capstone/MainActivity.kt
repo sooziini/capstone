@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -22,6 +23,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.floor
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     lateinit var sp: SharedPreferences
@@ -36,8 +40,9 @@ class MainActivity : AppCompatActivity() {
         lateinit var dayn: String
         sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         accessToken = sp?.getString("access_token", "null").toString()
+        Log.d("sp_access : ", accessToken)
 
-        when (instance.get(Calendar.DAY_OF_MONTH)) {
+        when (instance.get(Calendar.DAY_OF_WEEK)) {
             1 -> dayn = "일"
             2 -> dayn = "월"
             3 -> dayn = "화"
@@ -47,35 +52,36 @@ class MainActivity : AppCompatActivity() {
             7 -> dayn = "토"
         }
 
-        Home_DateText.text = month + "월 " + day + "일 (" + dayn + ")"
+        Home_DateText.setText(month + "월 " + day + "일 (" + dayn + ")")
+
         lateinit var studentId: String
-//        lateinit var studentName: String
+        lateinit var studentName: String
 
-
-/*      수정 중
-        (application as MasterApplication).service.authorization(accessToken.toString())
+        (application as MasterApplication).service.authorization(accessToken)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
                     call: Call<HashMap<String, Any>>,
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        if(response.body()!!.get("success") == "true") {
+                        if(response.body()!!.get("success").toString() == "true") {
                             val data = response.body()!!.get("data") as LinkedTreeMap<String, Any>
-                            val stug = data.get("schoolgrade").toString()
-                            var stuc = data.get("schoolclass").toString()
-                            var stun = data.get("schoolnumber").toString()
+                            val stug = (data.get("schoolgrade") as Double).roundToInt().toString()
+                            var stuc = (data.get("schoolclass") as Double).roundToInt().toString()
+                            var stun = (data.get("schoolnumber") as Double).roundToInt().toString()
                             if (stuc.length < 10)
                                 stuc = "0$stuc"
                             if (stun.length < 10)
                                 stun = "0$stun"
                             studentId = stug + stuc + stun
-                            studentName = data.get()
+                            studentName = data.get("name").toString()
+                            Home_WelcomeText.text = studentId + " " + studentName + "님, 환영합니다!"
                         } else {
-                            toast("로그아웃 실패")
+                            toast("success != true")
+//                            toast("데이터 로드 실패")
                         }
                     } else {
-                        toast("로그아웃 실패")
+                        toast("데이터 로드 실패")
                     }
                 }
 
@@ -85,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             })
-*/
+
 
         // toolbar 설정
         setSupportActionBar(main_toolbar)

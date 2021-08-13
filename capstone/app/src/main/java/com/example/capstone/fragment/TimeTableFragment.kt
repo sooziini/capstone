@@ -38,25 +38,19 @@ class TimeTableFragment: Fragment() {
         classList = getTimeTable()
         Log.d(TAG, "classList: " + classList.toString())
 
-        if (classList != null) {
-            val deptAdapter = TimeTableAdapter(classList!!, LayoutInflater.from(this.activity))
-            TimeTable_RecyclerView?.adapter = deptAdapter
-            val layoutmanager = LinearLayoutManager(this.activity)
-            layoutmanager.orientation = HORIZONTAL
-            layoutmanager.canScrollHorizontally()
+        val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
+        TimeTable_RecyclerView?.adapter = deptAdapter
+        val layoutmanager = LinearLayoutManager(this.activity)
+        layoutmanager.orientation = HORIZONTAL
+        layoutmanager.canScrollHorizontally()
 
-            TimeTable_RecyclerView?.layoutManager = layoutmanager
-            TimeTable_RecyclerView?.setHasFixedSize(true)
-        }
+        TimeTable_RecyclerView?.layoutManager = layoutmanager
+        TimeTable_RecyclerView?.setHasFixedSize(true)
     }
 
     private fun getTimeTable(): ArrayList<StuClass>? {
         val instance = Calendar.getInstance()
         val dayNum = instance.get(Calendar.DAY_OF_WEEK)
-        val year = instance.get(Calendar.YEAR).toString()
-        val month = instance.get(Calendar.MONTH).toString()
-        val day = instance.get(Calendar.DATE).toString()
-        toast(year + " " + month +  " " + day)
         return loadData(dayNum)
     }
 
@@ -85,8 +79,7 @@ class TimeTableFragment: Fragment() {
         if (likeText == "Sun%") {
             return null
         } else {
-            val classList = loadDept(likeText)
-            return classList
+            return loadDept(likeText)
         }
     }
 

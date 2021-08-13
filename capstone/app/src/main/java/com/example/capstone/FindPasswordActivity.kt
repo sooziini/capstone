@@ -29,6 +29,9 @@ class FindPasswordActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
+        // 키보드 InputMethodManager 세팅
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+
         FindPasswordCommitbutton.setOnClickListener {
             sendTempPassword()      // 임시 비밀번호 전송
         }
@@ -69,26 +72,26 @@ class FindPasswordActivity : AppCompatActivity() {
         map.put("name", name)
         map.put("studentId", stuId)
 
-//        (application as MasterApplication).service.findPassword(map)
-//            .enqueue(object : Callback<HashMap<String, String>> {
-//                override fun onResponse(
-//                    call: Call<HashMap<String, String>>,
-//                    response: Response<HashMap<String, String>>
-//                ) {
-//                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
-//                        toast("임시 비밀번호가 발급되었습니다.")
-//                        startActivity(Intent(this@FindPasswordActivity, LoginActivity::class.java))
-//                        finish()
-//                    } else {        // 3xx, 4xx 를 받은 경우
-//                        toast("입력정보를 확인해주세요.")
-//                    }
-//                }
-//
-//                // 응답 실패 시
-//                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-//                    toast("network error")
-//                    finish()
-//                }
-//            })
+        (application as MasterApplication).service.findPassword(map)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful) {
+                        toast("임시 비밀번호가 발급되었습니다.")
+                        startActivity(Intent(this@FindPasswordActivity, LoginActivity::class.java))
+                        finish()
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("입력정보를 확인해주세요.")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 }

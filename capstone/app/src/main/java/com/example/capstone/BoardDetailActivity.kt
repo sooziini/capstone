@@ -24,6 +24,7 @@ import kotlin.collections.ArrayList
 class BoardDetailActivity : AppCompatActivity() {
 
     private lateinit var board_id: String
+    private lateinit var activity_num: String
     var detailLike = 0
     var detailScrap = 0
 
@@ -39,6 +40,7 @@ class BoardDetailActivity : AppCompatActivity() {
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
             board_id = intent.getStringExtra("board_id")!!
+            activity_num = intent.getStringExtra("activity_num")!!
 
             // 받은 board_id로 게시글 detail GET
             retrofitGetPostDetail(board_id)
@@ -255,7 +257,11 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, BoardActivity::class.java))
+                when (activity_num) {
+                    "0" -> startActivity(Intent(this, BoardActivity::class.java))
+                    "1" -> startActivity(Intent(this, SearchActivity::class.java))
+                    "2" -> startActivity(Intent(this, ScrapActivity::class.java))
+                }
                 finish()
                 return true
             }

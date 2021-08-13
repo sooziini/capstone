@@ -61,6 +61,7 @@ class BoardActivity : AppCompatActivity() {
                         val adapter = BoardAdapter(postList, LayoutInflater.from(this@BoardActivity)) { post ->
                             val intent = Intent(this@BoardActivity, BoardDetailActivity::class.java)
                             intent.putExtra("board_id", post.board_id.toString())
+                            intent.putExtra("activity_num", 0.toString())
                             startActivity(intent)
                         }
                         post_recyclerview.adapter = adapter

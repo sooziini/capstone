@@ -52,10 +52,8 @@ class BoardWriteActivity : AppCompatActivity() {
         if (intent.hasExtra("board_write_id")) {
             board_write_id = intent.getStringExtra("board_write_id")!!
 
-            Log.d("abc", board_write_id)
-
             // 게시글 수정일 경우
-            // 기존 title, body, images 불러오기
+            // 기존 title, body 불러오기
             if (board_write_id != "-1") {
 
             }
@@ -172,6 +170,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
                         startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
+                        finish()
                     } else {
                         toast("게시글 작성 실패")
                     }
@@ -196,6 +195,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
                         startActivity(Intent(this@BoardWriteActivity, BoardDetailActivity::class.java))
+                        finish()
                     } else {
                         toast("게시글 수정 실패")
                     }

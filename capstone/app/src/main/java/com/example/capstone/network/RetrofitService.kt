@@ -6,6 +6,7 @@ import com.example.capstone.dataclass.ReplyListList
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -77,6 +78,9 @@ interface RetrofitService {
         @Path("boardid") board_id: String,
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
+
+    @GET("board/scrap")
+    fun getScrapPostList(): Call<PostList>
 
     // 로그인
     @POST("user/login")

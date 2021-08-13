@@ -15,7 +15,7 @@
         android:layout_marginLeft="14dp"
         android:text="@string/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/title"
+        android:textColor="@color/basic"
         android:textStyle="bold" />
 
     <TextView

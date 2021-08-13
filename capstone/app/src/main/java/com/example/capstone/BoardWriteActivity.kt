@@ -12,6 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,9 +79,35 @@ class BoardWriteActivity : AppCompatActivity() {
             } else if (body == "") {
                 toast("내용을 입력해주세요")
             } else {
-                submitWritePost(title, body)
+                setWriteDialog(title, body)
             }
         }
+    }
+
+    // 글쓰기 완료 버튼 눌렀을 때 뜨는 dialog 설정 함수
+    private fun setWriteDialog(title: String, body: String) {
+        val builder = AlertDialog.Builder(this)
+            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+            .create()
+        val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
+        val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
+        when (intentBoardWriteId) {
+            "-1" -> dialogText.text = "게시글을 작성하시겠습니까?"
+            else -> dialogText.text = "게시글을 수정하시겠습니까?"
+        }
+        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
+        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
+
+        // 확인 버튼 눌렀을 때
+        okBtn.setOnClickListener {
+            submitWritePost(title, body)
+        }
+        // 취소 버튼 눌렀을 때
+        cancelBtn.setOnClickListener {
+            builder.dismiss()
+        }
+        builder.setView(dialogView)
+        builder.show()
     }
 
     // 글쓰기 완료 시 이미지 경로와 함께 포스팅하는 함수
@@ -99,15 +128,10 @@ class BoardWriteActivity : AppCompatActivity() {
             images.add(part)
         }
 
-        // 새 글 작성의 경우
-        if (intentBoardWriteId == "-1") {
-            // 입력받은 title, body, images POST
-            retrofitCreatePost(title, body, images)
-        } else {
-            // 글 수정의 경우
-            // board_id + 입력받은 title, body, images UPDATE
-            retrofitPutPost(intentBoardWriteId, title, body, images)
-        }
+        // 새 글 작성의 경우 입력받은 title, body, images POST
+        if (intentBoardWriteId == "-1") retrofitCreatePost(title, body, images)
+        // 글 수정의 경우 board_id + 입력받은 title, body, images UPDATE
+        else retrofitPutPost(intentBoardWriteId, title, body, images)
     }
 
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수
@@ -225,13 +249,13 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 경우
             android.R.id.home -> {
-                if (intentBoardWriteId == "-1")
-                    startActivity(Intent(this, BoardActivity::class.java))
-                else {
-                    val intent = Intent(this, BoardDetailActivity::class.java)
-                    intent.putExtra("board_id", intentBoardWriteId)
-                    startActivity(intent)
-                }
+//                if (intentBoardWriteId == "-1")
+//                    startActivity(Intent(this, BoardActivity::class.java))
+//                else {
+//                    val intent = Intent(this, BoardDetailActivity::class.java)
+//                    intent.putExtra("board_id", intentBoardWriteId)
+//                    startActivity(intent)
+//                }
                 finish()
                 return true
             }

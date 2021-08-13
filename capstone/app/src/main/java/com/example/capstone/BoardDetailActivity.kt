@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.ReplyAdapter
@@ -23,10 +24,10 @@ import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
-    private lateinit var board_id: String
-    private lateinit var activity_num: String
-    private lateinit var board_title: String
-    private lateinit var board_body: String
+    private lateinit var intentBoardId: String
+    private lateinit var intentActivityNum: String
+    private lateinit var boardDetailTitle: String
+    private lateinit var boardDetailBody: String
     var detailLike = 0
     var detailScrap = 0
 
@@ -41,14 +42,14 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
-            board_id = intent.getStringExtra("board_id")!!
-            activity_num = intent.getStringExtra("activity_num")!!
+            intentBoardId = intent.getStringExtra("board_id")!!
+            intentActivityNum = intent.getStringExtra("activity_num")!!
 
             // 받은 board_id로 게시글 detail GET
-            retrofitGetPostDetail(board_id)
+            retrofitGetPostDetail(intentBoardId)
 
             // 받은 board_id로 댓글 GET
-            retrofitGetReplyList(board_id)
+            retrofitGetReplyList(intentBoardId)
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -74,7 +75,7 @@ class BoardDetailActivity : AppCompatActivity() {
             } else {
                 reply.put("body", body)
                 // 댓글 작성 POST
-                retrofitCreateReply(board_id, reply)
+                retrofitCreateReply(intentBoardId, reply)
             }
         }
 
@@ -88,9 +89,8 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val post = response.body()!!.data[0]
                         val postImg = response.body()!!.imagepath
-                        board_title = post.title
-                        board_body = post.body
-
+                        boardDetailTitle = post.title
+                        boardDetailBody = post.body
                         board_detail_title.setText(post.title).toString()
                         board_detail_body.setText(post.body).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
@@ -193,18 +193,19 @@ class BoardDetailActivity : AppCompatActivity() {
 
     // 게시글 좋아요하는 함수
     private fun retrofitGoodPostClick() {
-        (application as MasterApplication).service.goodPost(board_id)
+        (application as MasterApplication).service.goodPost(intentBoardId)
             .enqueue(object : Callback<HashMap<String, String>>{
             override fun onResponse(
                 call: Call<HashMap<String, String>>,
                 response: Response<HashMap<String, String>>
             ) {
                 if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    val stat = response.body()!!.get("stat")
                     // 안 누름 -> 누름
-                    if (response.body()!!.get("stat") == "INSERT") {
+                    if (stat == "INSERT") {
                         board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         detailLike = 1
-                    } else if (response.body()!!.get("stat") == "DELETE") {
+                    } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
                         board_detail_like_btn.setImageResource(R.drawable.detail_like)
                         detailLike = 0
@@ -223,18 +224,19 @@ class BoardDetailActivity : AppCompatActivity() {
 
     // 게시글 스크랩하는 함수
     private fun retrofitScrapPostClick() {
-        (application as MasterApplication).service.scrapPost(board_id)
+        (application as MasterApplication).service.scrapPost(intentBoardId)
             .enqueue(object : Callback<HashMap<String, String>> {
             override fun onResponse(
                 call: Call<HashMap<String, String>>,
                 response: Response<HashMap<String, String>>
             ) {
                 if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    val stat = response.body()!!.get("stat")
                     // 안 누름 -> 누름
-                    if (response.body()!!.get("stat") == "INSERT") {
+                    if (stat == "INSERT") {
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                         detailLike = 1
-                    } else if (response.body()!!.get("stat") == "DELETE") {
+                    } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
                         detailLike = 0
@@ -261,7 +263,7 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                when (activity_num) {
+                when (intentActivityNum) {
                     "0" -> startActivity(Intent(this, BoardActivity::class.java))
                     "1" -> startActivity(Intent(this, SearchActivity::class.java))
                     "2" -> startActivity(Intent(this, ScrapActivity::class.java))
@@ -271,9 +273,9 @@ class BoardDetailActivity : AppCompatActivity() {
             }
             R.id.board_detail_edit -> {
                 val intent = Intent(this, BoardWriteActivity::class.java)
-                intent.putExtra("board_write_id", board_id)     // 글 수정의 경우 board_id 전달
-                intent.putExtra("board_write_title", board_title)
-                intent.putExtra("board_write_body", board_body)
+                intent.putExtra("board_write_id", intentBoardId)     // 글 수정의 경우 board_id 전달
+                intent.putExtra("board_write_title", boardDetailTitle)
+                intent.putExtra("board_write_body", boardDetailBody)
                 startActivity(intent)
                 finish()
                 return true
@@ -282,25 +284,27 @@ class BoardDetailActivity : AppCompatActivity() {
             R.id.board_detail_delete -> {
                 // 현재 activity가 종료되었을 경우 dialog를 설정하지 않음
                 if (!this.isFinishing)
-                    setDialog()
+                    setDeleteDialog()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정하는 함수
-    private fun setDialog() {
+    // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
+    private fun setDeleteDialog() {
         val builder = AlertDialog.Builder(this)
             .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
             .create()
-        val dialogView = layoutInflater.inflate(R.layout.dialog_board_delete, null)
-        val deleteBtn = dialogView.findViewById<Button>(R.id.dialog_board_delete_btn)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
+        val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
+        dialogText.text = "게시글을 삭제하시겠습니까?"
+        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
         val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
 
-        // 삭제 버튼 눌렀을 때
-        deleteBtn.setOnClickListener {
-            (application as MasterApplication).service.deletePostDetail(board_id)
+        // 확인 버튼 눌렀을 때
+        okBtn.setOnClickListener {
+            (application as MasterApplication).service.deletePostDetail(intentBoardId)
                 .enqueue(object : Callback<HashMap<String, String>> {
                     override fun onResponse(
                         call: Call<HashMap<String, String>>,

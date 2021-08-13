@@ -90,7 +90,7 @@ class SearchActivity : AppCompatActivity() {
                             val adapter = BoardAdapter(postList, LayoutInflater.from(this@SearchActivity)) { post ->
                                 val intent = Intent(this@SearchActivity, BoardDetailActivity::class.java)
                                 intent.putExtra("board_id", post.board_id.toString())
-                                intent.putExtra("activity_num", 1.toString())
+                                intent.putExtra("activity_num", "1")
                                 startActivity(intent)
                             }
                             search_recyclerview.adapter = adapter

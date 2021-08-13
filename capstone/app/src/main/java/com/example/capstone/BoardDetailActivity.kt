@@ -25,6 +25,8 @@ class BoardDetailActivity : AppCompatActivity() {
 
     private lateinit var board_id: String
     private lateinit var activity_num: String
+    private lateinit var board_title: String
+    private lateinit var board_body: String
     var detailLike = 0
     var detailScrap = 0
 
@@ -86,6 +88,8 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val post = response.body()!!.data[0]
                         val postImg = response.body()!!.imagepath
+                        board_title = post.title
+                        board_body = post.body
 
                         board_detail_title.setText(post.title).toString()
                         board_detail_body.setText(post.body).toString()
@@ -268,6 +272,8 @@ class BoardDetailActivity : AppCompatActivity() {
             R.id.board_detail_edit -> {
                 val intent = Intent(this, BoardWriteActivity::class.java)
                 intent.putExtra("board_write_id", board_id)     // 글 수정의 경우 board_id 전달
+                intent.putExtra("board_write_title", board_title)
+                intent.putExtra("board_write_body", board_body)
                 startActivity(intent)
                 finish()
                 return true

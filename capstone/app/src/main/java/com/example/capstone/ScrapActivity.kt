@@ -43,7 +43,7 @@ class ScrapActivity : AppCompatActivity() {
                         val adapter = BoardAdapter(postList, LayoutInflater.from(this@ScrapActivity)) { post ->
                             val intent = Intent(this@ScrapActivity, BoardDetailActivity::class.java)
                             intent.putExtra("board_id", post.board_id.toString())
-                            intent.putExtra("activity_num", 2.toString())
+                            intent.putExtra("activity_num", "2")
                             startActivity(intent)
                         }
                         post_recyclerview.adapter = adapter

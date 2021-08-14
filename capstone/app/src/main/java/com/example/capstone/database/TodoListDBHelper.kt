@@ -13,12 +13,10 @@ private const val SQL_CREATE_ENTRIES =
             "${TodoEntry.COLUMN_NAME_CHECK} TEXT)"
 
 private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${TodoEntry.TABLE_NAME}"
-private const val SQL_INSERT_TEST = "INSERT INTO ${TodoEntry.TABLE_NAME}(${TodoEntry.COLUMN_NAME_DATE}, ${TodoEntry.COLUMN_NAME_TODOLIST}, ${TodoEntry.COLUMN_NAME_CHECK}) VALUES('20210813', 'TEST', 'false')"
 
 class TodoListDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
-//        db.execSQL(SQL_INSERT_TEST)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

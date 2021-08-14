@@ -229,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="이메일"
-                android:textColor="@color/title" />
+                android:textColor="@color/basic" />
 
             <EditText
                 android:id="@+id/SignUpEmailEditText"

@@ -43,6 +43,8 @@ class BoardActivity : AppCompatActivity() {
         board_write_btn.setOnClickListener {
             val intent = Intent(this@BoardActivity, BoardWriteActivity::class.java)
             intent.putExtra("board_write_id", "-1")     // 글 작성의 경우 -1 전달
+            intent.putExtra("board_write_title", "-1")
+            intent.putExtra("board_write_body", "-1")
             startActivity(intent)
         }
     }
@@ -61,6 +63,7 @@ class BoardActivity : AppCompatActivity() {
                         val adapter = BoardAdapter(postList, LayoutInflater.from(this@BoardActivity)) { post ->
                             val intent = Intent(this@BoardActivity, BoardDetailActivity::class.java)
                             intent.putExtra("board_id", post.board_id.toString())
+                            intent.putExtra("activity_num", "0")
                             startActivity(intent)
                         }
                         post_recyclerview.adapter = adapter
@@ -94,7 +97,9 @@ class BoardActivity : AppCompatActivity() {
                 return true
             }
             R.id.free_board_search -> {
-                startActivity(Intent(this, SearchActivity::class.java))
+                val intent = Intent(this@BoardActivity, SearchActivity::class.java)
+                intent.putExtra("type", type)
+                startActivity(intent)
                 //finish()
                 return true
             }

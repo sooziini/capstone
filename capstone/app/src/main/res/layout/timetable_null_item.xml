@@ -12,5 +12,5 @@
         android:layout_height="wrap_content"
         android:text="시간표가 없어요 !"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/title" />
+        android:textColor="@color/basic" />
 </LinearLayout>

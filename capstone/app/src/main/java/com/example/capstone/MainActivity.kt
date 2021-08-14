@@ -1,8 +1,11 @@
 package com.example.capstone
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -11,18 +14,84 @@ import com.example.capstone.fragment.SchoolMealFragment
 import com.example.capstone.fragment.TimeTableFragment
 import com.example.capstone.fragment.TodoListFragment
 import com.example.capstone.network.MasterApplication
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.math.floor
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
+    lateinit var sp: SharedPreferences
+    lateinit var accessToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val instance = Calendar.getInstance()
+        val month = (instance.get(Calendar.MONTH) + 1).toString()
+        val day = instance.get(Calendar.DATE).toString()
+        lateinit var dayn: String
+        sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        accessToken = sp?.getString("access_token", "null").toString()
+        Log.d("sp_access : ", accessToken)
+
+        when (instance.get(Calendar.DAY_OF_WEEK)) {
+            1 -> dayn = "일"
+            2 -> dayn = "월"
+            3 -> dayn = "화"
+            4 -> dayn = "수"
+            5 -> dayn = "목"
+            6 -> dayn = "금"
+            7 -> dayn = "토"
+        }
+
+        Home_DateText.setText(month + "월 " + day + "일 (" + dayn + ")")
+
+        lateinit var studentId: String
+        lateinit var studentName: String
+
+        (application as MasterApplication).service.authorization(accessToken)
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        if(response.body()!!.get("success").toString() == "true") {
+                            val data = response.body()!!.get("data") as LinkedTreeMap<String, Any>
+                            val stug = (data.get("schoolgrade") as Double).roundToInt().toString()
+                            var stuc = (data.get("schoolclass") as Double).roundToInt().toString()
+                            var stun = (data.get("schoolnumber") as Double).roundToInt().toString()
+                            if (stuc.length < 10)
+                                stuc = "0$stuc"
+                            if (stun.length < 10)
+                                stun = "0$stun"
+                            studentId = stug + stuc + stun
+                            studentName = data.get("name").toString()
+                            Home_WelcomeText.text = studentId + " " + studentName + "님, 환영합니다!"
+                        } else {
+                            toast("success != true")
+//                            toast("데이터 로드 실패")
+                        }
+                    } else {
+                        toast("데이터 로드 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
+
 
         // toolbar 설정
         setSupportActionBar(main_toolbar)
@@ -141,19 +210,16 @@ class MainActivity : AppCompatActivity() {
         Home_TimeTableButton.setOnClickListener {
             val intent = Intent(this, TimeTableActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         Home_TodoListButton.setOnClickListener {
             val intent = Intent(this, TodoListActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         Home_MealButton.setOnClickListener {
             val intent = Intent(this, SchoolMealActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
@@ -189,7 +255,7 @@ class MainActivity : AppCompatActivity() {
             }
             // 로그아웃
             R.id.main_menu_myinfo_logout -> {
-                (application as MasterApplication).service.logout("")
+                (application as MasterApplication).service.logout(accessToken)
                     .enqueue(object : Callback<HashMap<String, String>> {
                         override fun onResponse(
                             call: Call<HashMap<String, String>>,
@@ -197,6 +263,8 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             if (response.isSuccessful) {
                                 if(response.body()!!.get("success") == "true") {
+                                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                    finish()
                                     toast("로그아웃 되었습니다.")
                                 } else {
                                     toast("로그아웃 실패")
@@ -234,4 +302,3 @@ class MainActivity : AppCompatActivity() {
 //        fragmentTransaction.commit()    // 끝
 //    }
 }
-

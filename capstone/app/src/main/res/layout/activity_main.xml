@@ -52,8 +52,10 @@
                 android:id="@+id/Home_WelcomeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="10101 000님, 환영합니다."
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/basic"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

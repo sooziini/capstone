@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity() {
                             val stug = (data.get("schoolgrade") as Double).roundToInt().toString()
                             var stuc = (data.get("schoolclass") as Double).roundToInt().toString()
                             var stun = (data.get("schoolnumber") as Double).roundToInt().toString()
-                            if (stuc.length < 10)
+                            if (stuc.toInt() < 10)
                                 stuc = "0$stuc"
-                            if (stun.length < 10)
+                            if (stun.toInt() < 10)
                                 stun = "0$stun"
                             studentId = stug + stuc + stun
                             studentName = data.get("name").toString()
@@ -110,48 +110,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_MealFrameLayout, SchoolMealFragment())
             .commit()
-
-//        replaceFragment(HomeFragment())
-//        main_toolbar.visibility = View.GONE
-//
-//        // bottom navigation item이 선택되면
-//        // 해당되는 fragment로 전환
-//        bottom_nav.setOnNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.bottom_nav_home -> {
-//                    replaceFragment(HomeFragment())
-//                    main_toolbar.visibility = View.GONE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_timetable -> {
-//                    replaceFragment(TimeTableFragment())
-//                    main_toolbar_title.text = "시간표"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_board_list -> {
-//                    replaceFragment(BoardListFragment())
-//                    main_toolbar_title.text = "게시판"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_notice -> {
-//                    replaceFragment(NoticeFragment())
-//                    main_toolbar_title.text = "알림"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_myinfo -> {
-//                    replaceFragment(MyInfoFragment())
-//                    main_toolbar_title.text = "내 정보"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                else -> {
-//                    return@setOnNavigationItemSelectedListener false
-//                }
-//            }
-//        }
 
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {

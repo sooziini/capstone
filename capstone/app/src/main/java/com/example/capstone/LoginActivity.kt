@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -64,23 +65,28 @@ class LoginActivity : AppCompatActivity() {
                                 val result = response.body()
                                 //val token = response.headers().get("X-AUTH-TOKEN").toString()
                                 var tokenMap: LinkedTreeMap<String, String>
-                                var token: String = "null"
+                                var accessToken: String? = null
+                                var refreshToken: String? = null
 
                                 if (result!!.get("token") != null) {
                                     tokenMap = result!!.get("token") as LinkedTreeMap<String, String>
-                                    token = tokenMap?.get("access_token").toString()
+                                    accessToken = tokenMap?.get("access_token").toString()
+                                    refreshToken = tokenMap?.get("refresh_token").toString()
                                 }
 
-                                if (token == "null") {
+                                if (accessToken == null || refreshToken == null) {
                                     Toast.makeText(this@LoginActivity, "아이디, 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
                                 } else {
-                                    saveUserToken(token, this@LoginActivity)
+                                    // access_token 저장
+                                    saveUserToken("access_token", accessToken, this@LoginActivity)
+                                    toast("access : " + accessToken)
+                                    Log.d("", "access : " + accessToken)
+                                    // refresh_token 저장
+                                    saveUserToken("refresh_token", refreshToken, this@LoginActivity)
+                                    toast("refresh : " + refreshToken)
+                                    Log.d("", "refresh : " + refreshToken)
 
-//                                (application as MasterApplication).createRetrofit()
-
-//                                Toast.makeText(this@LoginActivity, "${result!!.get("id")}" + "님 환영합니다 !", Toast.LENGTH_SHORT).show()
                                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-//                                    .putExtra("userId", result.get("id").toString()))
 
                                 }
 
@@ -105,10 +111,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun saveUserToken(token: String, activity: Activity) {
-        val sp = activity.getSharedPreferences("login_token", Context.MODE_PRIVATE)
+    fun saveUserToken(name: String, token: String, activity: Activity) {
+        val sp = activity.getSharedPreferences("user_token", Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.putString("login_token", token)
+        editor.putString(name, token)
         editor.apply()
     }
 

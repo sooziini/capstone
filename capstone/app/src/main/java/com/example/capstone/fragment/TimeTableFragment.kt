@@ -1,5 +1,6 @@
 package com.example.capstone.fragment
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import com.example.capstone.R
 import com.example.capstone.adapter.TimeTableAdapter
 import com.example.capstone.database.FeedEntry
@@ -26,16 +28,25 @@ class TimeTableFragment: Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         dbHelper = FeedReaderDBHelper(requireContext())
+        return inflater.inflate(R.layout.fragment_time_table, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         classList = getTimeTable()
+        Log.d(TAG, "classList: " + classList.toString())
 
         if (classList.size > 0) {
             val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
             TimeTable_RecyclerView?.adapter = deptAdapter
-            TimeTable_RecyclerView?.layoutManager = LinearLayoutManager(this.activity)
+            val layoutmanager = LinearLayoutManager(this.activity)
+            layoutmanager.orientation = HORIZONTAL
+            layoutmanager.canScrollHorizontally()
+
+            TimeTable_RecyclerView?.layoutManager = layoutmanager
             TimeTable_RecyclerView?.setHasFixedSize(true)
         }
-
-        return inflater.inflate(R.layout.fragment_time_table, container, false)
     }
 
     private fun getTimeTable(): ArrayList<StuClass> {
@@ -66,6 +77,13 @@ class TimeTableFragment: Fragment() {
             7 ->
                 likeText = "Sat%"
         }
+        if (likeText == "Sun%") {
+            return null as ArrayList<StuClass>
+        } else {
+            val classList = loadDept(likeText)
+            return classList
+        }
+
         return loadDept(likeText)
     }
 

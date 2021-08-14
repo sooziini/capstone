@@ -97,7 +97,9 @@ class BoardActivity : AppCompatActivity() {
                 return true
             }
             R.id.free_board_search -> {
-                startActivity(Intent(this, SearchActivity::class.java))
+                val intent = Intent(this@BoardActivity, SearchActivity::class.java)
+                intent.putExtra("type", type)
+                startActivity(intent)
                 //finish()
                 return true
             }

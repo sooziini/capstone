@@ -35,6 +35,7 @@ interface RetrofitService {
     // 게시글 검색
     @GET("board/search/")
     fun searchPostList(
+        @Query("type") type: String,
         @Query("title") title: String
     ): Call<PostList>
 

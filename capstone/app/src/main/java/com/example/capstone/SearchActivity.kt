@@ -22,10 +22,19 @@ import retrofit2.Response
 class SearchActivity : AppCompatActivity() {
 
     lateinit var title: String
+    lateinit var type: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_search)
+
+        // 성공적으로 intent 전달값을 받았을 경우
+        if (intent.hasExtra("type")) {
+            type = intent.getStringExtra("type")!!
+        } else {
+            // intent 실패할 경우 현재 액티비티 종료
+            finish()
+        }
 
         val searchBar = findViewById<MaterialSearchBar>(R.id.board_search_bar)
         searchBar.clearSuggestions()
@@ -72,7 +81,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun retrofitSearchPostList(title: String) {
-        (application as MasterApplication).service.searchPostList(title)
+        (application as MasterApplication).service.searchPostList(type, title)
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
                     // 응답 성공 시

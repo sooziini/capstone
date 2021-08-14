@@ -46,9 +46,9 @@ class ScrapActivity : AppCompatActivity() {
                             intent.putExtra("activity_num", "2")
                             startActivity(intent)
                         }
-                        post_recyclerview.adapter = adapter
-                        post_recyclerview.layoutManager = LinearLayoutManager(this@ScrapActivity)
-                        post_recyclerview.setHasFixedSize(true)
+                        scrap_recyclerview.adapter = adapter
+                        scrap_recyclerview.layoutManager = LinearLayoutManager(this@ScrapActivity)
+                        scrap_recyclerview.setHasFixedSize(true)
                     } else {
                         toast("게시글 목록 조회 실패")
                     }

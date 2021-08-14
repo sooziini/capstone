@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/drawer_my_menu_scrap"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/basic"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 

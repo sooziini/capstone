@@ -98,6 +98,7 @@ class SearchActivity : AppCompatActivity() {
                             // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
                             val adapter = BoardAdapter(postList, LayoutInflater.from(this@SearchActivity)) { post ->
                                 val intent = Intent(this@SearchActivity, BoardDetailActivity::class.java)
+                                intent.putExtra("type", type)
                                 intent.putExtra("board_id", post.board_id.toString())
                                 intent.putExtra("activity_num", "1")
                                 startActivity(intent)

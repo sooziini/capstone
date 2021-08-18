@@ -34,6 +34,7 @@ import java.io.File
 class BoardWriteActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null         // 키보드 InputMethodManager 변수 선언
+    private lateinit var intentType: String
     private lateinit var intentBoardWriteId: String
     private lateinit var intentBoardWriteTitle: String
     private lateinit var intentBoardWriteBody: String
@@ -55,6 +56,7 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_write_id")) {
+            intentType = intent.getStringExtra("type")!!
             intentBoardWriteId = intent.getStringExtra("board_write_id")!!
             intentBoardWriteTitle = intent.getStringExtra("board_write_title")!!
             intentBoardWriteBody = intent.getStringExtra("board_write_body")!!
@@ -194,14 +196,16 @@ class BoardWriteActivity : AppCompatActivity() {
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
     private fun retrofitCreatePost(title: String, body: String, images: ArrayList<MultipartBody.Part>) {
-        (application as MasterApplication).service.createPost(title, body, images)
+        (application as MasterApplication).service.createPost(intentType, title, body, images)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
+                        val intent = Intent(this@BoardWriteActivity, BoardActivity::class.java)
+                        intent.putExtra("type", intentType)
+                        startActivity(intent)
                         finish()
                     } else {
                         toast("게시글 작성 실패")
@@ -226,7 +230,11 @@ class BoardWriteActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        startActivity(Intent(this@BoardWriteActivity, BoardDetailActivity::class.java))
+                        val intent = Intent(this@BoardWriteActivity, BoardDetailActivity::class.java)
+                        intent.putExtra("type", intentType)
+                        intent.putExtra("board_id", board_id)
+                        intent.putExtra("activity_num", "0")
+                        startActivity(intent)
                         finish()
                     } else {
                         toast("게시글 수정 실패")

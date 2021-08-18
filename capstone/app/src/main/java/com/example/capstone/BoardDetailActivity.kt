@@ -24,6 +24,7 @@ import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
+    private lateinit var intentType: String
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
@@ -42,6 +43,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
+            intentType = intent.getStringExtra("type")!!
             intentBoardId = intent.getStringExtra("board_id")!!
             intentActivityNum = intent.getStringExtra("activity_num")!!
 
@@ -217,7 +219,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                 toast("network error")
-                // finish()
+                finish()
             }
         })
     }
@@ -248,7 +250,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                 toast("network error")
-                // finish()
+                finish()
             }
         })
     }
@@ -263,16 +265,13 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                when (intentActivityNum) {
-                    "0" -> startActivity(Intent(this, BoardActivity::class.java))
-                    "1" -> startActivity(Intent(this, SearchActivity::class.java))
-                    "2" -> startActivity(Intent(this, ScrapActivity::class.java))
-                }
+
                 finish()
                 return true
             }
             R.id.board_detail_edit -> {
                 val intent = Intent(this, BoardWriteActivity::class.java)
+                intent.putExtra("type", intentType)
                 intent.putExtra("board_write_id", intentBoardId)     // 글 수정의 경우 board_id 전달
                 intent.putExtra("board_write_title", boardDetailTitle)
                 intent.putExtra("board_write_body", boardDetailBody)
@@ -289,6 +288,26 @@ class BoardDetailActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        when (intentActivityNum) {
+            "0" -> {
+                val intent = Intent(this, BoardActivity::class.java)
+                intent.putExtra("type", intentType)
+                startActivity(intent)
+            }
+            "1" -> {
+                super.onBackPressed()
+//                        val intent = Intent(this, SearchActivity::class.java)
+//                        intent.putExtra("type", intentType)
+//                        startActivity(intent)
+            }
+            "2" -> {
+                super.onBackPressed()
+            }
+        }
+        finish()
     }
 
     // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
@@ -311,7 +330,9 @@ class BoardDetailActivity : AppCompatActivity() {
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                            startActivity(Intent(this@BoardDetailActivity, BoardActivity::class.java))
+                            val intent = Intent(this@BoardDetailActivity, BoardActivity::class.java)
+                            intent.putExtra("type", intentType)
+                            startActivity(intent)
                             finish()
                         } else {
                             toast("게시글 삭제 실패")

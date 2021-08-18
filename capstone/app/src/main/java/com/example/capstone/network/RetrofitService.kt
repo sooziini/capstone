@@ -21,6 +21,7 @@ interface RetrofitService {
     @Multipart
     @POST("board/")
     fun createPost(
+        @Query("type") type: String,
         @Part("title") title: String,
         @Part("body") body: String,
         @Part images: ArrayList<MultipartBody.Part>

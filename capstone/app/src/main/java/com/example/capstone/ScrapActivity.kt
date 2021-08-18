@@ -42,6 +42,7 @@ class ScrapActivity : AppCompatActivity() {
                         // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
                         val adapter = BoardAdapter(postList, LayoutInflater.from(this@ScrapActivity)) { post ->
                             val intent = Intent(this@ScrapActivity, BoardDetailActivity::class.java)
+                            intent.putExtra("type", "2")
                             intent.putExtra("board_id", post.board_id.toString())
                             intent.putExtra("activity_num", "2")
                             startActivity(intent)

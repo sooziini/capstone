@@ -42,6 +42,7 @@ class BoardActivity : AppCompatActivity() {
 
         board_write_btn.setOnClickListener {
             val intent = Intent(this@BoardActivity, BoardWriteActivity::class.java)
+            intent.putExtra("type", type)
             intent.putExtra("board_write_id", "-1")     // 글 작성의 경우 -1 전달
             intent.putExtra("board_write_title", "-1")
             intent.putExtra("board_write_body", "-1")
@@ -62,6 +63,7 @@ class BoardActivity : AppCompatActivity() {
                         // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
                         val adapter = BoardAdapter(postList, LayoutInflater.from(this@BoardActivity)) { post ->
                             val intent = Intent(this@BoardActivity, BoardDetailActivity::class.java)
+                            intent.putExtra("type", type)
                             intent.putExtra("board_id", post.board_id.toString())
                             intent.putExtra("activity_num", "0")
                             startActivity(intent)

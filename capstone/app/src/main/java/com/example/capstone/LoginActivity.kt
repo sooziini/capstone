@@ -79,10 +79,10 @@ class LoginActivity : AppCompatActivity() {
                                 } else {
                                     // access_token 저장
                                     saveUserToken("access_token", accessToken, this@LoginActivity)
-                                    Log.d("", "access : " + accessToken)
+                                    Log.d("abc", "access : " + accessToken)
                                     // refresh_token 저장
                                     saveUserToken("refresh_token", refreshToken, this@LoginActivity)
-                                    Log.d("", "refresh : " + refreshToken)
+                                    Log.d("abc", "refresh : " + refreshToken)
 
                                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                     finish()

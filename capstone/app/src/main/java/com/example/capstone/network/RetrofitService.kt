@@ -10,7 +10,6 @@ import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
-    // @Headers("content-type: application/json")
     // 게시글 목록 조회
     @GET("board/")
     fun getPostList(
@@ -18,6 +17,7 @@ interface RetrofitService {
     ): Call<PostList>
 
     // 게시글 생성
+    @Headers("content-type: application/json")
     @Multipart
     @POST("board/")
     fun createPost(

@@ -2,6 +2,9 @@ package com.example.capstone.network
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,29 +19,33 @@ class MasterApplication: Application() {
 
     // retrofit 생성하는 함수
     fun createRetrofit() {
-
         // header 설정 (header에 token이 있는 retrofit)
         // 원래 나가려던 통신을 original에 잡아둠
         // original에 header 추가 -> proceed
-//        val header = Interceptor {
-//            val original = it.request()
-//
-//            if (checkIsLogin()) {
-//                getUserToken()?.let { token ->
-//                    val request = original. newBuilder()
-//                        .header("AUTHORIZATION", token)
-//                        .build()
-//                    it.proceed(request)
-//                }
-//            } else {
-//                it.proceed(original)
-//            }
-//        }
+        val header = Interceptor {
+            val original = it.request()
+
+            if (checkIsLogin()) {
+                getUserToken()?.let { token ->
+                    val request = original. newBuilder()
+                        .header("Authorization", token)
+                        .build()
+                    it.proceed(request)
+                }
+            } else {
+                it.proceed(original)
+            }
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(header)
+            .build()
 
         // retrofit 생성
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://172.20.10.2:3000/api/")
+            .baseUrl("http://192.168.0.2:3000/api/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
 
         service = retrofit.create(RetrofitService::class.java)
@@ -49,14 +56,15 @@ class MasterApplication: Application() {
     // -> token 값이 없으면 login X
     private fun checkIsLogin(): Boolean {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val token = sp.getString("access_token", "null")
+        var token = sp.getString("access_token", null)
+        Log.d("abc", token)
 
-        return token != "null"
+        return token != null
     }
 
     private fun getUserToken(): String? {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val token = sp.getString("login_sp", "null")
+        val token = sp.getString("access_token", "null")
 
         return if (token == "null") null
         else token

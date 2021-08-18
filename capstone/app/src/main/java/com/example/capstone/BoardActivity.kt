@@ -28,7 +28,10 @@ class BoardActivity : AppCompatActivity() {
         setSupportActionBar(board_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+    }
 
+    override fun onResume() {
+        super.onResume()
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("type")) {
             type = intent.getStringExtra("type")!!
@@ -94,18 +97,22 @@ class BoardActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                onBackPressed()
                 return true
             }
             R.id.free_board_search -> {
                 val intent = Intent(this@BoardActivity, SearchActivity::class.java)
                 intent.putExtra("type", type)
                 startActivity(intent)
-                //finish()
+                finish()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

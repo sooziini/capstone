@@ -3,6 +3,7 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -31,6 +32,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailBody: String
     var detailLike = 0
     var detailScrap = 0
+    private lateinit var replyAdapter: ReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,10 @@ class BoardDetailActivity : AppCompatActivity() {
         setSupportActionBar(board_detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+    }
 
+    override fun onResume() {
+        super.onResume()
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
             intentType = intent.getStringExtra("type")!!
@@ -52,6 +57,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 댓글 GET
             retrofitGetReplyList(intentBoardId)
+
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -70,17 +76,14 @@ class BoardDetailActivity : AppCompatActivity() {
         // 댓글 등록 버튼을 클릭했을 경우
         board_detail_comment_btn.setOnClickListener {
             val body = board_detail_comment.text.toString()
-            val reply = HashMap<String, String>()
 
             if (body == "") {
                 toast("댓글을 입력해주세요")
             } else {
-                reply.put("body", body)
                 // 댓글 작성 POST
-                retrofitCreateReply(intentBoardId, reply)
+                retrofitCreateReply(intentBoardId, body)
             }
         }
-
     }
 
     // 받은 board_id로 게시글 detail GET하는 함수
@@ -144,14 +147,14 @@ class BoardDetailActivity : AppCompatActivity() {
 
                         if (replyList != null && replyList.size > 0) {
                             // 새로운 replyList 생성
+                            reply.clear()
                             for (i in 0 until replyList.size) {
                                 reply.add(replyList[i].parent)
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-
-                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
-                            reply_recyclerview.adapter = adapter
+                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
+                            reply_recyclerview.adapter = replyAdapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                             reply_recyclerview.setHasFixedSize(true)
                         }
@@ -169,26 +172,32 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     // 입력받은 댓글 POST하는 함수
-    private fun retrofitCreateReply(board_id: String, body: HashMap<String, String>) {
+    private fun retrofitCreateReply(board_id: String, body: String) {
         (application as MasterApplication).service.createReply(board_id, body)
-            .enqueue(object : Callback<HashMap<String, String>> {
+            .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        // 댓글 작성 성공
-                        // 댓글 recyclerview 갱신해야 함
+                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                        // replyAdapter.notifyDataSetChanged()
 
+                        // 임시방편
+                        finish()
+                        val intent = Intent(this@BoardDetailActivity, BoardDetailActivity::class.java)
+                        intent.putExtra("type", intentType)
+                        intent.putExtra("board_id", intentBoardId)
+                        intent.putExtra("activity_num", "0")
+                        startActivity(intent)
                     } else {
                         toast("댓글 작성 실패")
                     }
                 }
 
                 // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
-                    // finish()
+                    finish()
                 }
             })
     }
@@ -265,8 +274,7 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-
-                finish()
+                onBackPressed()
                 return true
             }
             R.id.board_detail_edit -> {
@@ -298,13 +306,12 @@ class BoardDetailActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             "1" -> {
-                super.onBackPressed()
-//                        val intent = Intent(this, SearchActivity::class.java)
-//                        intent.putExtra("type", intentType)
-//                        startActivity(intent)
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("type", intentType)
+                startActivity(intent)
             }
             "2" -> {
-                super.onBackPressed()
+
             }
         }
         finish()

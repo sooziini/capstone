@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var dayn: String
         sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         accessToken = sp?.getString("access_token", "null").toString()
-        Log.d("sp_access : ", accessToken)
+        Log.d("abc", accessToken)
 
         when (instance.get(Calendar.DAY_OF_WEEK)) {
             1 -> dayn = "일"
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var studentId: String
         lateinit var studentName: String
 
-        (application as MasterApplication).service.authorization(accessToken)
+        (application as MasterApplication).service.authorization()
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
                     call: Call<HashMap<String, Any>>,
@@ -99,9 +99,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
+//            .commit()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_TodoListFrameLayout, TodoListFragment())

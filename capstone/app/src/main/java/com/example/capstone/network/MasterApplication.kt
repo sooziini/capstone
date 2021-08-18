@@ -26,8 +26,8 @@ class MasterApplication: Application() {
             val original = it.request()
 
             if (checkIsLogin()) {
-                getUserToken()?.let { token ->
-                    val request = original. newBuilder()
+                getUserToken().let { token ->
+                    val request = original.newBuilder()
                         .header("Authorization", token)
                         .build()
                     it.proceed(request)
@@ -57,7 +57,6 @@ class MasterApplication: Application() {
     private fun checkIsLogin(): Boolean {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         var token = sp.getString("access_token", null)
-        Log.d("abc", token)
 
         return token != null
     }

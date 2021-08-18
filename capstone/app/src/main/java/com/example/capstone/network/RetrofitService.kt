@@ -76,10 +76,11 @@ interface RetrofitService {
 
     // 댓글 등록
     @POST("reply/{boardid}")
+    @FormUrlEncoded
     fun createReply(
         @Path("boardid") board_id: String,
-        @Body params: HashMap<String, String>
-    ): Call<HashMap<String, String>>
+        @Field("body") body: String
+    ): Call<HashMap<String, Any>>
 
     @GET("board/scrap")
     fun getScrapPostList(): Call<PostList>
@@ -117,7 +118,6 @@ interface RetrofitService {
     // 토큰 검증 (회원 데이터 조회)
     @GET("auth/valid")
     fun authorization(
-        @Header("Authorization") token: String
     ):Call<HashMap<String, Any>>
 
     @POST("user/password/find")

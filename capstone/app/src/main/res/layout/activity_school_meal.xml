@@ -49,6 +49,15 @@
         app:layout_constraintTop_toBottomOf="@+id/school_meal_toolbar" />
 
     <TextView
+        android:id="@+id/SchoolMeal_CalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SchoolMeal_RecyclerView" />
+
+    <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

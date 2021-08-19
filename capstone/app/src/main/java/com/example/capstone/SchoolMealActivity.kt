@@ -61,6 +61,7 @@ class SchoolMealActivity : AppCompatActivity() {
                         val mealData = todaymeal.get("DDISH_NM")
                         val mealArray = mealData?.split("<br/>")
                         Log.d("mealArray", mealArray.toString())
+                        val kcal = todaymeal.get("CAL_INFO")
 
                         for (element in mealArray!!) {
                             mealList.add(Meal(element))
@@ -68,8 +69,16 @@ class SchoolMealActivity : AppCompatActivity() {
                         SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
+
+                        SchoolMeal_CalText.text = "열량 : $kcal"
                     } else {
-                        toast("load 실패")
+                        mealList.clear()
+
+                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
+                        SchoolMeal_RecyclerView.setHasFixedSize(true)
+
+                        SchoolMeal_CalText.text = ""
                     }
                 }
 
@@ -122,6 +131,7 @@ class SchoolMealActivity : AppCompatActivity() {
                             val mealData = todaymeal.get("DDISH_NM")
                             val mealArray = mealData?.split("<br/>")
                             Log.d("mealArray", mealArray.toString())
+                            val kcal = todaymeal.get("CAL_INFO")
 
                             for (element in mealArray!!) {
                                 mealList.add(Meal(element))
@@ -129,12 +139,16 @@ class SchoolMealActivity : AppCompatActivity() {
                             SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
                             SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                             SchoolMeal_RecyclerView.setHasFixedSize(true)
+
+                            SchoolMeal_CalText.text = "열량 : $kcal"
                         } else {
                             mealList.clear()
 
                             SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
                             SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                             SchoolMeal_RecyclerView.setHasFixedSize(true)
+
+                            SchoolMeal_CalText.text = ""
                         }
                     }
 

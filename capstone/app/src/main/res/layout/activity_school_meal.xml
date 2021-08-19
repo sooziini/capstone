@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:text="급식"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/black"
+            android:textColor="@color/basic"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -30,8 +30,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/basic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/school_meal_toolbar" />
@@ -43,7 +43,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="75dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/round_border"
+        android:background="@drawable/shape_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/school_meal_toolbar" />

@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.TodoListAdapter
 import com.example.capstone.database.TodoEntry
@@ -29,6 +30,7 @@ class TodoListActivity : AppCompatActivity() {
     val todoList = ArrayList<Todo>()
     lateinit var date: String
     var editMode: Boolean = false
+    lateinit var adapter: TodoListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +71,11 @@ class TodoListActivity : AppCompatActivity() {
 
             var picker = DatePickerDialog(this, listener, year, month, day)
             picker.show()
+        }
+
+        // 삭제 버튼
+        Todo_DeleteFloatButton.setOnClickListener {
+
         }
     }
 
@@ -119,8 +126,8 @@ class TodoListActivity : AppCompatActivity() {
                 todoList.add(todo)
             }
         }
-
-        TodoAct_RecyclerView.adapter = TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this)
+        adapter = TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this)
+        TodoAct_RecyclerView.adapter = adapter
         TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
         TodoAct_RecyclerView.setHasFixedSize(true)
     }
@@ -170,12 +177,26 @@ class TodoListActivity : AppCompatActivity() {
             Todo_DeleteFloatButton.visibility = View.VISIBLE
             item.setIcon(R.drawable.timetable_done)
 
-            // 선택 삭제 기능
-
+            adapter.setOnItemClickListener { response ->
+                val size = TodoAct_RecyclerView.adapter?.itemCount
+                for (i in 0 until size!!) {
+                    val box = TodoAct_RecyclerView.get(i)
+                    box.isClickable = false
+                }
+            }
             editMode = true
         } else {
-            Todo_DeleteFloatButton.visibility = View.INVISIBLE
+            Todo_DeleteFloatButton.visibility = View.GONE
             item.setIcon(R.drawable.ic_todo_menu_edit)
+
+            adapter.setOnItemClickListener { response ->
+                val size = TodoAct_RecyclerView.adapter?.itemCount
+                for (i in 0 until size!!) {
+                    val box = TodoAct_RecyclerView.get(i)
+                    box.isClickable = true
+                }
+            }
+
             editMode = false
         }
     }

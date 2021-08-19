@@ -7,12 +7,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +33,9 @@ import java.io.File
 class BoardWriteActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null         // 키보드 InputMethodManager 변수 선언
-    private lateinit var board_write_id: String
+    private lateinit var intentBoardWriteId: String
+    private lateinit var intentBoardWriteTitle: String
+    private lateinit var intentBoardWriteBody: String
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
     var uriPaths: ArrayList<Uri> = ArrayList()
     var filePaths: ArrayList<String> = ArrayList()
@@ -50,14 +54,15 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_write_id")) {
-            board_write_id = intent.getStringExtra("board_write_id")!!
-
-            Log.d("abc", board_write_id)
+            intentBoardWriteId = intent.getStringExtra("board_write_id")!!
+            intentBoardWriteTitle = intent.getStringExtra("board_write_title")!!
+            intentBoardWriteBody = intent.getStringExtra("board_write_body")!!
 
             // 게시글 수정일 경우
-            // 기존 title, body, images 불러오기
-            if (board_write_id != "-1") {
-
+            // 기존 title, body 불러오기
+            if (intentBoardWriteId != "-1") {
+                board_write_title.setText(intentBoardWriteTitle).toString()
+                board_write_body.setText(intentBoardWriteBody).toString()
             }
         } else {
             // intent 실패할 경우 현재 액티비티 종료
@@ -74,35 +79,59 @@ class BoardWriteActivity : AppCompatActivity() {
             } else if (body == "") {
                 toast("내용을 입력해주세요")
             } else {
-                // val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
-                // val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
-                var images = ArrayList<MultipartBody.Part>()
-
-                for (i in 0 until filePaths.size) {
-                    // File(찾을 파일 주소) -> File 클래스가 알아서 파일을 찾아줌
-                    val file = File(filePaths[i])
-                    // image라는 타입 정해주고, 실제 찾은 file을 넣어줌
-                    val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-                    // "image" -> 서버한테 보낼 때 사용할 이름
-                    // MultipartBody -> Body가 여러개
-                    // 이미지를 보낼 때 하나만 딱 보내는 게 아니고 여러개 쪼개서 보냄
-                    val part = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
-                    images.add(part)
-                }
-
-                // 새 글 작성의 경우
-                if (board_write_id == "-1") {
-                    // 입력받은 title, body, images POST
-                    retrofitCreatePost(title, body, images)
-                } else {
-                    // 글 수정의 경우
-                    // board_id + 입력받은 title, body, images UPDATE
-                    retrofitPutPost(board_write_id.toString(), title, body, images)
-                }
-
+                setWriteDialog(title, body)
             }
         }
+    }
 
+    // 글쓰기 완료 버튼 눌렀을 때 뜨는 dialog 설정 함수
+    private fun setWriteDialog(title: String, body: String) {
+        val builder = AlertDialog.Builder(this)
+            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+            .create()
+        val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
+        val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
+        when (intentBoardWriteId) {
+            "-1" -> dialogText.text = "게시글을 작성하시겠습니까?"
+            else -> dialogText.text = "게시글을 수정하시겠습니까?"
+        }
+        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
+        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
+
+        // 확인 버튼 눌렀을 때
+        okBtn.setOnClickListener {
+            submitWritePost(title, body)
+        }
+        // 취소 버튼 눌렀을 때
+        cancelBtn.setOnClickListener {
+            builder.dismiss()
+        }
+        builder.setView(dialogView)
+        builder.show()
+    }
+
+    // 글쓰기 완료 시 이미지 경로와 함께 포스팅하는 함수
+    private fun submitWritePost(title: String, body: String) {
+        // val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
+        // val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
+        var images = ArrayList<MultipartBody.Part>()
+
+        for (i in 0 until filePaths.size) {
+            // File(찾을 파일 주소) -> File 클래스가 알아서 파일을 찾아줌
+            val file = File(filePaths[i])
+            // image라는 타입 정해주고, 실제 찾은 file을 넣어줌
+            val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            // "image" -> 서버한테 보낼 때 사용할 이름
+            // MultipartBody -> Body가 여러개
+            // 이미지를 보낼 때 하나만 딱 보내는 게 아니고 여러개 쪼개서 보냄
+            val part = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
+            images.add(part)
+        }
+
+        // 새 글 작성의 경우 입력받은 title, body, images POST
+        if (intentBoardWriteId == "-1") retrofitCreatePost(title, body, images)
+        // 글 수정의 경우 board_id + 입력받은 title, body, images UPDATE
+        else retrofitPutPost(intentBoardWriteId, title, body, images)
     }
 
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수
@@ -172,6 +201,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
                         startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
+                        finish()
                     } else {
                         toast("게시글 작성 실패")
                     }
@@ -196,6 +226,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
                         startActivity(Intent(this@BoardWriteActivity, BoardDetailActivity::class.java))
+                        finish()
                     } else {
                         toast("게시글 수정 실패")
                     }
@@ -218,13 +249,13 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 경우
             android.R.id.home -> {
-                if (board_write_id == "-1")
-                    startActivity(Intent(this, BoardActivity::class.java))
-                else {
-                    val intent = Intent(this, BoardDetailActivity::class.java)
-                    intent.putExtra("board_id", board_write_id)
-                    startActivity(intent)
-                }
+//                if (intentBoardWriteId == "-1")
+//                    startActivity(Intent(this, BoardActivity::class.java))
+//                else {
+//                    val intent = Intent(this, BoardDetailActivity::class.java)
+//                    intent.putExtra("board_id", intentBoardWriteId)
+//                    startActivity(intent)
+//                }
                 finish()
                 return true
             }

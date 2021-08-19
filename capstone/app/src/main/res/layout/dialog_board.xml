@@ -2,19 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/dialog_delete_text"
+        android:id="@+id/dialog_board_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
-        android:text="게시글을 삭제하시겠습니까?"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/basic"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,24 +31,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_delete_text">
+        app:layout_constraintTop_toBottomOf="@+id/dialog_board_text">
 
         <Button
             android:id="@+id/dialog_board_cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/main_color"
+            android:background="@drawable/shape_btn"
             android:text="취소"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/dialog_board_delete_btn"
+            android:id="@+id/dialog_board_ok_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:background="@color/main_color"
-            android:text="삭제"
+            android:layout_marginStart="36dp"
+            android:background="@drawable/shape_btn"
+            android:text="확인"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
     </LinearLayout>

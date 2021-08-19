@@ -6,6 +6,7 @@ import com.example.capstone.dataclass.ReplyListList
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -34,6 +35,7 @@ interface RetrofitService {
     // 게시글 검색
     @GET("board/search/")
     fun searchPostList(
+        @Query("type") type: String,
         @Query("title") title: String
     ): Call<PostList>
 
@@ -53,6 +55,18 @@ interface RetrofitService {
         @Path("boardid") board_id: String
     ): Call<HashMap<String, String>>
 
+    // 게시글 스크랩
+    @GET("board/scrap/{boardid}")
+    fun scrapPost(
+        @Path("boardid") board_id: String
+    ): Call<HashMap<String, String>>
+
+    // 게시글 좋아요
+    @GET("board/good/{boardid}")
+    fun goodPost(
+        @Path("boardid") board_id: String
+    ): Call<HashMap<String, String>>
+
     // 댓글 조회
     @GET("reply/{boardid}")
     fun getReplyList(
@@ -65,6 +79,9 @@ interface RetrofitService {
         @Path("boardid") board_id: String,
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
+
+    @GET("board/scrap")
+    fun getScrapPostList(): Call<PostList>
 
     // 로그인
     @POST("user/login")
@@ -106,4 +123,10 @@ interface RetrofitService {
     fun findPassword(
         @Body params: HashMap<String, String>
     ):Call<HashMap<String, String>>
+
+    @GET("school/cafeteria?")
+    fun loadMeal(
+        @Query ("MLSV_FROM_YMD") start: String,
+        @Query ("MLSV_TO_YMD") end: String
+    ): Call<HashMap<String, Any>>
 }

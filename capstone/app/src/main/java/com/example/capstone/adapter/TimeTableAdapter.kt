@@ -31,7 +31,7 @@ class TimeTableAdapter(
             } else {
                 classNum?.text = stuClass.classNum.toString()
             }
-            if (stuClass.className == "") {
+            if (stuClass.className == "" || stuClass.className == null) {
                 className?.text = "공강"
             }
             else {

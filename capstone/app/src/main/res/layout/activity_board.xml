@@ -19,10 +19,8 @@
             android:layout_gravity="center"
             android:text="게시판"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="174dp"
-            tools:layout_editor_absoluteY="13dp" />
+            android:textColor="@color/basic"
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView

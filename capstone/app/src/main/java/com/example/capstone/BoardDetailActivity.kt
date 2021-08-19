@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.Reply
@@ -25,6 +27,7 @@ import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
+    val BASE_URL = "http://192.168.0.2:3000"
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
@@ -94,7 +97,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val post = response.body()!!.data[0]
-                        val postImg = response.body()!!.imagepath
+                        val postImgList = response.body()!!.imagepath
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
                         boardDetailType = post.type
@@ -120,10 +123,17 @@ class BoardDetailActivity : AppCompatActivity() {
                         }
 
                         // 사진이 있을 경우
-                        if (postImg.size > 1) {
+                        if (postImgList.size > 0) {
+                            val uriPaths: ArrayList<Uri> = ArrayList()
+                            for (i in 0 until postImgList.size)
+                                uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
 
+                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity))
+                            board_detail_img_recyclerview.adapter = adapter
+                            board_detail_img_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity).also {
+                                it.orientation = LinearLayoutManager.HORIZONTAL
+                            }
                         }
-
                     } else {
                         toast("게시글 조회 실패")
                     }
@@ -213,8 +223,8 @@ class BoardDetailActivity : AppCompatActivity() {
                 call: Call<HashMap<String, String>>,
                 response: Response<HashMap<String, String>>
             ) {
-                if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                    val stat = response.body()!!.get("stat")
+                if (response.isSuccessful && response.body()!!["success"] == "true") {
+                    val stat = response.body()!!["stat"]
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
                         detailLike = 1
@@ -248,8 +258,8 @@ class BoardDetailActivity : AppCompatActivity() {
                 call: Call<HashMap<String, String>>,
                 response: Response<HashMap<String, String>>
             ) {
-                if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                    val stat = response.body()!!.get("stat")
+                if (response.isSuccessful && response.body()!!["success"] == "true") {
+                    val stat = response.body()!!["stat"]
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
                         detailLike = 1

@@ -117,21 +117,17 @@ class BoardWriteActivity : AppCompatActivity() {
     private fun submitWritePost(title: String, body: String) {
         val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
         val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
-        var images = ArrayList<MultipartBody.Part>()
+        val images = ArrayList<MultipartBody.Part>()
 
         for (i in 0 until filePaths.size) {
             // File(찾을 파일 주소) -> File 클래스가 알아서 파일을 찾아줌
             val file = File(filePaths[i])
             // image라는 타입 정해주고, 실제 찾은 file을 넣어줌
             val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-            // "image" -> 서버한테 보낼 때 사용할 이름
-            // MultipartBody -> Body가 여러개
-            // 이미지를 보낼 때 하나만 딱 보내는 게 아니고 여러개 쪼개서 보냄
-            val part = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
+            // "images" -> 서버한테 보낼 때 사용할 이름
+            val part = MultipartBody.Part.createFormData("image", file.name, fileRequestBody)
             images.add(part)
         }
-
-        Log.d("abc", images.toString())
 
         // 새 글 작성의 경우 입력받은 title, body, images POST
         if (intentBoardWriteId == "-1") retrofitCreatePost(postTitle, postBody, images)
@@ -149,7 +145,7 @@ class BoardWriteActivity : AppCompatActivity() {
     }
 
     // 선택한 이미지 파일의 절대 경로 구하는 함수
-    private fun getImageFilePath(contentUri: Uri): String {
+    fun getImageFilePath(contentUri: Uri): String {
         var columnIndex = 0
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(contentUri, projection, null, null, null)
@@ -188,9 +184,8 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 이미지 미리보기 화면
         val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this))
-        // val adapter = PostImageAdapter(filePaths, LayoutInflater.from(this))
-        post_img_recyclerview.adapter = adapter
-        post_img_recyclerview.layoutManager = LinearLayoutManager(this).also {
+        board_write_img_recyclerview.adapter = adapter
+        board_write_img_recyclerview.layoutManager = LinearLayoutManager(this).also {
             it.orientation = LinearLayoutManager.HORIZONTAL
         }
     }

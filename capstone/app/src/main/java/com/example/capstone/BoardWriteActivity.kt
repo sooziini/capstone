@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -91,24 +93,17 @@ class BoardWriteActivity : AppCompatActivity() {
     private fun setWriteDialog(title: String, body: String) {
         val builder = AlertDialog.Builder(this)
             .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
-            .create()
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         when (intentBoardWriteId) {
             "-1" -> dialogText.text = "게시글을 작성하시겠습니까?"
             else -> dialogText.text = "게시글을 수정하시겠습니까?"
         }
-        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
-        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
 
-        // 확인 버튼 눌렀을 때
-        okBtn.setOnClickListener {
-            submitWritePost(title, body)
-        }
-        // 취소 버튼 눌렀을 때
-        cancelBtn.setOnClickListener {
-            builder.dismiss()
-        }
+        builder.setPositiveButton("확인") { dialog, it ->
+                submitWritePost(title, body)
+            }
+            .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
     }

@@ -342,15 +342,11 @@ class BoardDetailActivity : AppCompatActivity() {
     private fun setDeleteDialog() {
         val builder = AlertDialog.Builder(this)
             .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
-            .create()
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "게시글을 삭제하시겠습니까?"
-        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
-        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
 
-        // 확인 버튼 눌렀을 때
-        okBtn.setOnClickListener {
+        builder.setPositiveButton("확인") { dialog, it ->
             (application as MasterApplication).service.deletePostDetail(intentBoardId)
                 .enqueue(object : Callback<HashMap<String, String>> {
                     override fun onResponse(
@@ -374,10 +370,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
                 })
         }
-        // 취소 버튼 눌렀을 때
-        cancelBtn.setOnClickListener {
-            builder.dismiss()
-        }
+            .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
     }

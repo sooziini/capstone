@@ -122,4 +122,10 @@ interface RetrofitService {
     fun findPassword(
         @Body params: HashMap<String, String>
     ):Call<HashMap<String, String>>
+
+    @GET("school/cafeteria?")
+    fun loadMeal(
+        @Query ("MLSV_FROM_YMD") start: String,
+        @Query ("MLSV_TO_YMD") end: String
+    ): Call<HashMap<String, Any>>
 }

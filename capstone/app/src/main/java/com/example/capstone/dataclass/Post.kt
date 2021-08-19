@@ -19,6 +19,7 @@ data class Post (
     val body: String,
     val user_id: String,
     val regdate: String,
+    val type: String,
     val goodCount: Int,
     val replyCount: Int,
     val scrapCount: Int,

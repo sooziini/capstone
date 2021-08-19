@@ -33,8 +33,7 @@ class TimeTableAdapter(
             }
             if (stuClass.className == "") {
                 className?.text = "공강"
-            }
-            else {
+            } else {
                 className?.text = stuClass.className
             }
             startTime?.text = stuClass.startTime

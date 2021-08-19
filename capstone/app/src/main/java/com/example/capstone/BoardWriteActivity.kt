@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -33,6 +34,7 @@ import java.io.File
 class BoardWriteActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null         // 키보드 InputMethodManager 변수 선언
+    private lateinit var intentType: String
     private lateinit var intentBoardWriteId: String
     private lateinit var intentBoardWriteTitle: String
     private lateinit var intentBoardWriteBody: String
@@ -54,6 +56,7 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_write_id")) {
+            intentType = intent.getStringExtra("type")!!
             intentBoardWriteId = intent.getStringExtra("board_write_id")!!
             intentBoardWriteTitle = intent.getStringExtra("board_write_title")!!
             intentBoardWriteBody = intent.getStringExtra("board_write_body")!!
@@ -112,8 +115,8 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 글쓰기 완료 시 이미지 경로와 함께 포스팅하는 함수
     private fun submitWritePost(title: String, body: String) {
-        // val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
-        // val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
+        val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
+        val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
         var images = ArrayList<MultipartBody.Part>()
 
         for (i in 0 until filePaths.size) {
@@ -128,10 +131,12 @@ class BoardWriteActivity : AppCompatActivity() {
             images.add(part)
         }
 
+        Log.d("abc", images.toString())
+
         // 새 글 작성의 경우 입력받은 title, body, images POST
-        if (intentBoardWriteId == "-1") retrofitCreatePost(title, body, images)
+        if (intentBoardWriteId == "-1") retrofitCreatePost(postTitle, postBody, images)
         // 글 수정의 경우 board_id + 입력받은 title, body, images UPDATE
-        else retrofitPutPost(intentBoardWriteId, title, body, images)
+        else retrofitPutPost(intentBoardWriteId, postTitle, postBody, images)
     }
 
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수
@@ -192,15 +197,17 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
-    private fun retrofitCreatePost(title: String, body: String, images: ArrayList<MultipartBody.Part>) {
-        (application as MasterApplication).service.createPost(title, body, images)
-            .enqueue(object : Callback<HashMap<String, String>> {
+    private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
+        (application as MasterApplication).service.createPost(intentType, title, body, images)
+            .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        startActivity(Intent(this@BoardWriteActivity, BoardActivity::class.java))
+                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                        val intent = Intent(this@BoardWriteActivity, BoardActivity::class.java)
+                        intent.putExtra("type", intentType)
+                        startActivity(intent)
                         finish()
                     } else {
                         toast("게시글 작성 실패")
@@ -208,7 +215,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 }
 
                 // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
                     //finish()
                 }
@@ -217,7 +224,7 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 글 수정의 경우
     // board_id + 입력받은 title, body, images UPDATE
-    private fun retrofitPutPost(board_id: String, title: String, body: String, images: ArrayList<MultipartBody.Part>) {
+    private fun retrofitPutPost(board_id: String, title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
         (application as MasterApplication).service.putPostDetail(board_id, title, body, images)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
@@ -225,7 +232,10 @@ class BoardWriteActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        startActivity(Intent(this@BoardWriteActivity, BoardDetailActivity::class.java))
+                        val intent = Intent(this@BoardWriteActivity, BoardDetailActivity::class.java)
+                        intent.putExtra("board_id", board_id)
+                        intent.putExtra("activity_num", "0")
+                        startActivity(intent)
                         finish()
                     } else {
                         toast("게시글 수정 실패")
@@ -249,14 +259,7 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 경우
             android.R.id.home -> {
-//                if (intentBoardWriteId == "-1")
-//                    startActivity(Intent(this, BoardActivity::class.java))
-//                else {
-//                    val intent = Intent(this, BoardDetailActivity::class.java)
-//                    intent.putExtra("board_id", intentBoardWriteId)
-//                    startActivity(intent)
-//                }
-                finish()
+                onBackPressed()
                 return true
             }
             // 사진 첨부 버튼을 클릭했을 경우
@@ -275,6 +278,20 @@ class BoardWriteActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (intentBoardWriteId == "-1") {
+            val intent = Intent(this, BoardActivity::class.java)
+            intent.putExtra("type", intentType)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, BoardDetailActivity::class.java)
+            intent.putExtra("board_id", intentBoardWriteId)
+            intent.putExtra("activity_num", "0")
+            startActivity(intent)
+        }
+        finish()
     }
 
     // 이벤트 메서드 생성

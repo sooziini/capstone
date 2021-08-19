@@ -28,19 +28,24 @@ import kotlin.math.round
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
-    lateinit var sp: SharedPreferences
-    lateinit var accessToken: String
+    // lateinit var sp: SharedPreferences
+    private lateinit var dayn: String
+    lateinit var studentId: String
+    lateinit var studentName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // toolbar 설정
+        setSupportActionBar(main_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
+        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
         val instance = Calendar.getInstance()
         val month = (instance.get(Calendar.MONTH) + 1).toString()
         val day = instance.get(Calendar.DATE).toString()
-        lateinit var dayn: String
-        sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        accessToken = sp?.getString("access_token", "null").toString()
-        Log.d("sp_access : ", accessToken)
 
         when (instance.get(Calendar.DAY_OF_WEEK)) {
             1 -> dayn = "일"
@@ -54,10 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         Home_DateText.setText(month + "월 " + day + "일 (" + dayn + ")")
 
-        lateinit var studentId: String
-        lateinit var studentName: String
-
-        (application as MasterApplication).service.authorization(accessToken)
+        (application as MasterApplication).service.authorization()
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
                     call: Call<HashMap<String, Any>>,
@@ -91,13 +93,6 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             })
-
-
-        // toolbar 설정
-        setSupportActionBar(main_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
-        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
@@ -213,20 +208,16 @@ class MainActivity : AppCompatActivity() {
             }
             // 로그아웃
             R.id.main_menu_myinfo_logout -> {
-                (application as MasterApplication).service.logout(accessToken)
+                (application as MasterApplication).service.logout()
                     .enqueue(object : Callback<HashMap<String, String>> {
                         override fun onResponse(
                             call: Call<HashMap<String, String>>,
                             response: Response<HashMap<String, String>>
                         ) {
-                            if (response.isSuccessful) {
-                                if(response.body()!!.get("success") == "true") {
-                                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                                    finish()
-                                    toast("로그아웃 되었습니다.")
-                                } else {
-                                    toast("로그아웃 실패")
-                                }
+                            if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                finish()
+                                toast("로그아웃 되었습니다.")
                             } else {
                                 toast("로그아웃 실패")
                             }

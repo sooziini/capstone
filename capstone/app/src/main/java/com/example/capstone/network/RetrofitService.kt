@@ -17,15 +17,15 @@ interface RetrofitService {
     ): Call<PostList>
 
     // 게시글 생성
-    @Headers("content-type: application/json")
+    // @Headers("content-type: application/json")
     @Multipart
     @POST("board/")
     fun createPost(
         @Query("type") type: String,
-        @Part("title") title: String,
-        @Part("body") body: String,
+        @Part("title") title: RequestBody,
+        @Part("body") body: RequestBody,
         @Part images: ArrayList<MultipartBody.Part>
-    ): Call<HashMap<String, String>>
+    ): Call<HashMap<String, Any>>
 
     // 게시글 자세히보기
     @GET("board/{boardid}/")
@@ -45,8 +45,8 @@ interface RetrofitService {
     @PUT("board/{boardid}")
     fun putPostDetail(
         @Path("boardid") board_id: String,
-        @Part("title") title: String,
-        @Part("body") body: String,
+        @Part("title") title: RequestBody,
+        @Part("body") body: RequestBody,
         @Part images: ArrayList<MultipartBody.Part>
     ): Call<HashMap<String, String>>
 
@@ -111,14 +111,11 @@ interface RetrofitService {
 
     // 로그아웃
     @POST("user/logout")
-    fun logout(
-        @Header("Authorization") token: String
-    ): Call<HashMap<String, String>>
+    fun logout(): Call<HashMap<String, String>>
 
     // 토큰 검증 (회원 데이터 조회)
     @GET("auth/valid")
-    fun authorization(
-    ):Call<HashMap<String, Any>>
+    fun authorization():Call<HashMap<String, Any>>
 
     @POST("user/password/find")
     fun findPassword(

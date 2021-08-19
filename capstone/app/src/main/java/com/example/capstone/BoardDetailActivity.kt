@@ -30,6 +30,8 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
     private lateinit var boardDetailBody: String
+    private lateinit var boardDetailGoodCnt: String
+    private lateinit var boardDetailScrapCnt: String
     var detailLike = 0
     var detailScrap = 0
     private lateinit var replyAdapter: ReplyAdapter
@@ -96,13 +98,15 @@ class BoardDetailActivity : AppCompatActivity() {
                         val postImg = response.body()!!.imagepath
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
-                        board_detail_title.setText(post.title).toString()
-                        board_detail_body.setText(post.body).toString()
+                        board_detail_title.setText(boardDetailTitle).toString()
+                        board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
                         // board_detail_nickname.setText(post.user_id).toString()
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
-                        board_detail_like_cnt.setText(post.goodCount.toString()).toString()
-                        board_detail_scrap_cnt.setText(post.scrapCount.toString()).toString()
+                        boardDetailGoodCnt = post.goodCount.toString()
+                        boardDetailScrapCnt = post.scrapCount.toString()
+                        board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
+                        board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
 
                         if (post.goodCheck == "N") detailLike = 0
                         else {
@@ -214,12 +218,16 @@ class BoardDetailActivity : AppCompatActivity() {
                     val stat = response.body()!!.get("stat")
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         detailLike = 1
+                        boardDetailGoodCnt = (boardDetailGoodCnt.toInt()+1).toString()
+                        board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        board_detail_like_btn.setImageResource(R.drawable.detail_like)
                         detailLike = 0
+                        boardDetailGoodCnt = (boardDetailGoodCnt.toInt()-1).toString()
+                        board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like)
                     }
                 } else {
                     toast("게시글 좋아요 실패")
@@ -245,12 +253,16 @@ class BoardDetailActivity : AppCompatActivity() {
                     val stat = response.body()!!.get("stat")
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                         detailLike = 1
+                        boardDetailScrapCnt = (boardDetailScrapCnt.toInt()+1).toString()
+                        board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
+                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
                         detailLike = 0
+                        boardDetailScrapCnt = (boardDetailScrapCnt.toInt()-1).toString()
+                        board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
+                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
                     }
                 } else {
                     toast("게시글 스크랩 실패")

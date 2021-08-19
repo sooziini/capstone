@@ -115,8 +115,8 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 글쓰기 완료 시 이미지 경로와 함께 포스팅하는 함수
     private fun submitWritePost(title: String, body: String) {
-        // val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
-        // val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
+        val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
+        val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
         var images = ArrayList<MultipartBody.Part>()
 
         for (i in 0 until filePaths.size) {
@@ -131,10 +131,12 @@ class BoardWriteActivity : AppCompatActivity() {
             images.add(part)
         }
 
+        Log.d("abc", images.toString())
+
         // 새 글 작성의 경우 입력받은 title, body, images POST
-        if (intentBoardWriteId == "-1") retrofitCreatePost(title, body, images)
+        if (intentBoardWriteId == "-1") retrofitCreatePost(postTitle, postBody, images)
         // 글 수정의 경우 board_id + 입력받은 title, body, images UPDATE
-        else retrofitPutPost(intentBoardWriteId, title, body, images)
+        else retrofitPutPost(intentBoardWriteId, postTitle, postBody, images)
     }
 
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수
@@ -195,14 +197,14 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
-    private fun retrofitCreatePost(title: String, body: String, images: ArrayList<MultipartBody.Part>) {
+    private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
         (application as MasterApplication).service.createPost(intentType, title, body, images)
-            .enqueue(object : Callback<HashMap<String, String>> {
+            .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
                         val intent = Intent(this@BoardWriteActivity, BoardActivity::class.java)
                         intent.putExtra("type", intentType)
                         startActivity(intent)
@@ -213,7 +215,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 }
 
                 // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
                     //finish()
                 }
@@ -222,7 +224,7 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 글 수정의 경우
     // board_id + 입력받은 title, body, images UPDATE
-    private fun retrofitPutPost(board_id: String, title: String, body: String, images: ArrayList<MultipartBody.Part>) {
+    private fun retrofitPutPost(board_id: String, title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
         (application as MasterApplication).service.putPostDetail(board_id, title, body, images)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(

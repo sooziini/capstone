@@ -82,11 +82,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/main_color"
+            android:background="@drawable/shape_btn"
             android:padding="10dp"
             android:text="로그인"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/white"
+            android:textColor="@color/basic_white"
             android:textStyle="bold" />
 
         <TextView

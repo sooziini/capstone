@@ -6,5 +6,6 @@
     <color name="reply_child">#EDEDED</color>
     <color name="scrap">#FFE500</color>
     <color name="basic">#121212</color>
+    <color name="basic_white">#FCFCFC</color>
     <color name="warn_red">#FF0000</color>
 </resources>

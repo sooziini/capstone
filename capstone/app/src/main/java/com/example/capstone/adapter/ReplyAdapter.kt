@@ -99,6 +99,12 @@ class ReplyAdapter(
         }
     }
 
+    fun setItems(reply: Reply) {
+        replyList.clear()
+
+        notifyDataSetChanged()
+    }
+
     override fun getItemViewType(position: Int): Int {
         return replyList[position].level
     }
@@ -133,4 +139,6 @@ class ReplyAdapter(
             }
         }
     }
+
+
 }

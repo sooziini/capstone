@@ -28,19 +28,24 @@ import kotlin.math.round
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
-    lateinit var sp: SharedPreferences
-    lateinit var accessToken: String
+    // lateinit var sp: SharedPreferences
+    private lateinit var dayn: String
+    lateinit var studentId: String
+    lateinit var studentName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // toolbar 설정
+        setSupportActionBar(main_toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
+        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
         val instance = Calendar.getInstance()
         val month = (instance.get(Calendar.MONTH) + 1).toString()
         val day = instance.get(Calendar.DATE).toString()
-        lateinit var dayn: String
-        sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        accessToken = sp?.getString("access_token", "null").toString()
-        Log.d("sp_access : ", accessToken)
 
         when (instance.get(Calendar.DAY_OF_WEEK)) {
             1 -> dayn = "일"
@@ -54,10 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         Home_DateText.setText(month + "월 " + day + "일 (" + dayn + ")")
 
-        lateinit var studentId: String
-        lateinit var studentName: String
-
-        (application as MasterApplication).service.authorization(accessToken)
+        (application as MasterApplication).service.authorization()
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
                     call: Call<HashMap<String, Any>>,
@@ -69,9 +71,9 @@ class MainActivity : AppCompatActivity() {
                             val stug = (data.get("schoolgrade") as Double).roundToInt().toString()
                             var stuc = (data.get("schoolclass") as Double).roundToInt().toString()
                             var stun = (data.get("schoolnumber") as Double).roundToInt().toString()
-                            if (stuc.length < 10)
+                            if (stuc.toInt() < 10)
                                 stuc = "0$stuc"
-                            if (stun.length < 10)
+                            if (stun.toInt() < 10)
                                 stun = "0$stun"
                             studentId = stug + stuc + stun
                             studentName = data.get("name").toString()
@@ -92,13 +94,6 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-
-        // toolbar 설정
-        setSupportActionBar(main_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.home_menu)
-        supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
             .commit()
@@ -110,48 +105,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_MealFrameLayout, SchoolMealFragment())
             .commit()
-
-//        replaceFragment(HomeFragment())
-//        main_toolbar.visibility = View.GONE
-//
-//        // bottom navigation item이 선택되면
-//        // 해당되는 fragment로 전환
-//        bottom_nav.setOnNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.bottom_nav_home -> {
-//                    replaceFragment(HomeFragment())
-//                    main_toolbar.visibility = View.GONE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_timetable -> {
-//                    replaceFragment(TimeTableFragment())
-//                    main_toolbar_title.text = "시간표"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_board_list -> {
-//                    replaceFragment(BoardListFragment())
-//                    main_toolbar_title.text = "게시판"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_notice -> {
-//                    replaceFragment(NoticeFragment())
-//                    main_toolbar_title.text = "알림"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.bottom_nav_myinfo -> {
-//                    replaceFragment(MyInfoFragment())
-//                    main_toolbar_title.text = "내 정보"
-//                    main_toolbar.visibility = View.VISIBLE
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                else -> {
-//                    return@setOnNavigationItemSelectedListener false
-//                }
-//            }
-//        }
 
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -255,20 +208,16 @@ class MainActivity : AppCompatActivity() {
             }
             // 로그아웃
             R.id.main_menu_myinfo_logout -> {
-                (application as MasterApplication).service.logout(accessToken)
+                (application as MasterApplication).service.logout()
                     .enqueue(object : Callback<HashMap<String, String>> {
                         override fun onResponse(
                             call: Call<HashMap<String, String>>,
                             response: Response<HashMap<String, String>>
                         ) {
-                            if (response.isSuccessful) {
-                                if(response.body()!!.get("success") == "true") {
-                                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                                    finish()
-                                    toast("로그아웃 되었습니다.")
-                                } else {
-                                    toast("로그아웃 실패")
-                                }
+                            if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                finish()
+                                toast("로그아웃 되었습니다.")
                             } else {
                                 toast("로그아웃 실패")
                             }

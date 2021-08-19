@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="32dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -63,7 +62,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="18dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -99,7 +98,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -134,7 +133,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -163,7 +162,8 @@
                     android:id="@+id/Home_MealFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"></FrameLayout>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp" ></FrameLayout>
             </LinearLayout>
         </ScrollView>
 

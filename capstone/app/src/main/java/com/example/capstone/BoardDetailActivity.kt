@@ -3,6 +3,7 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -28,8 +29,12 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
     private lateinit var boardDetailBody: String
+    private lateinit var boardDetailType: String
+    private lateinit var boardDetailGoodCnt: String
+    private lateinit var boardDetailScrapCnt: String
     var detailLike = 0
     var detailScrap = 0
+    private lateinit var replyAdapter: ReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,10 @@ class BoardDetailActivity : AppCompatActivity() {
         setSupportActionBar(board_detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+    }
 
+    override fun onResume() {
+        super.onResume()
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
             intentBoardId = intent.getStringExtra("board_id")!!
@@ -50,6 +58,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 댓글 GET
             retrofitGetReplyList(intentBoardId)
+
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -68,17 +77,14 @@ class BoardDetailActivity : AppCompatActivity() {
         // 댓글 등록 버튼을 클릭했을 경우
         board_detail_comment_btn.setOnClickListener {
             val body = board_detail_comment.text.toString()
-            val reply = HashMap<String, String>()
 
             if (body == "") {
                 toast("댓글을 입력해주세요")
             } else {
-                reply.put("body", body)
                 // 댓글 작성 POST
-                retrofitCreateReply(intentBoardId, reply)
+                retrofitCreateReply(intentBoardId, body)
             }
         }
-
     }
 
     // 받은 board_id로 게시글 detail GET하는 함수
@@ -91,13 +97,16 @@ class BoardDetailActivity : AppCompatActivity() {
                         val postImg = response.body()!!.imagepath
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
-                        board_detail_title.setText(post.title).toString()
-                        board_detail_body.setText(post.body).toString()
+                        boardDetailType = post.type
+                        boardDetailGoodCnt = post.goodCount.toString()
+                        boardDetailScrapCnt = post.scrapCount.toString()
+                        board_detail_title.setText(boardDetailTitle).toString()
+                        board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
                         // board_detail_nickname.setText(post.user_id).toString()
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
-                        board_detail_like_cnt.setText(post.goodCount.toString()).toString()
-                        board_detail_scrap_cnt.setText(post.scrapCount.toString()).toString()
+                        board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
+                        board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
 
                         if (post.goodCheck == "N") detailLike = 0
                         else {
@@ -142,14 +151,14 @@ class BoardDetailActivity : AppCompatActivity() {
 
                         if (replyList != null && replyList.size > 0) {
                             // 새로운 replyList 생성
+                            reply.clear()
                             for (i in 0 until replyList.size) {
                                 reply.add(replyList[i].parent)
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-
-                            val adapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
-                            reply_recyclerview.adapter = adapter
+                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
+                            reply_recyclerview.adapter = replyAdapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                             reply_recyclerview.setHasFixedSize(true)
                         }
@@ -167,26 +176,31 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     // 입력받은 댓글 POST하는 함수
-    private fun retrofitCreateReply(board_id: String, body: HashMap<String, String>) {
+    private fun retrofitCreateReply(board_id: String, body: String) {
         (application as MasterApplication).service.createReply(board_id, body)
-            .enqueue(object : Callback<HashMap<String, String>> {
+            .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                        // 댓글 작성 성공
-                        // 댓글 recyclerview 갱신해야 함
+                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                        // replyAdapter.notifyDataSetChanged()
 
+                        // 임시방편
+                        finish()
+                        val intent = Intent(this@BoardDetailActivity, BoardDetailActivity::class.java)
+                        intent.putExtra("board_id", intentBoardId)
+                        intent.putExtra("activity_num", "0")
+                        startActivity(intent)
                     } else {
                         toast("댓글 작성 실패")
                     }
                 }
 
                 // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
-                    // finish()
+                    finish()
                 }
             })
     }
@@ -203,12 +217,16 @@ class BoardDetailActivity : AppCompatActivity() {
                     val stat = response.body()!!.get("stat")
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         detailLike = 1
+                        boardDetailGoodCnt = (boardDetailGoodCnt.toInt()+1).toString()
+                        board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        board_detail_like_btn.setImageResource(R.drawable.detail_like)
                         detailLike = 0
+                        boardDetailGoodCnt = (boardDetailGoodCnt.toInt()-1).toString()
+                        board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like)
                     }
                 } else {
                     toast("게시글 좋아요 실패")
@@ -217,7 +235,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                 toast("network error")
-                // finish()
+                finish()
             }
         })
     }
@@ -234,12 +252,16 @@ class BoardDetailActivity : AppCompatActivity() {
                     val stat = response.body()!!.get("stat")
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                         detailLike = 1
+                        boardDetailScrapCnt = (boardDetailScrapCnt.toInt()+1).toString()
+                        board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
+                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
                         detailLike = 0
+                        boardDetailScrapCnt = (boardDetailScrapCnt.toInt()-1).toString()
+                        board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
+                        board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
                     }
                 } else {
                     toast("게시글 스크랩 실패")
@@ -248,7 +270,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                 toast("network error")
-                // finish()
+                finish()
             }
         })
     }
@@ -263,16 +285,12 @@ class BoardDetailActivity : AppCompatActivity() {
         when (item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                when (intentActivityNum) {
-                    "0" -> startActivity(Intent(this, BoardActivity::class.java))
-                    "1" -> startActivity(Intent(this, SearchActivity::class.java))
-                    "2" -> startActivity(Intent(this, ScrapActivity::class.java))
-                }
-                finish()
+                onBackPressed()
                 return true
             }
             R.id.board_detail_edit -> {
                 val intent = Intent(this, BoardWriteActivity::class.java)
+                intent.putExtra("type", boardDetailType)
                 intent.putExtra("board_write_id", intentBoardId)     // 글 수정의 경우 board_id 전달
                 intent.putExtra("board_write_title", boardDetailTitle)
                 intent.putExtra("board_write_body", boardDetailBody)
@@ -289,6 +307,25 @@ class BoardDetailActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        when (intentActivityNum) {
+            "0" -> {
+                val intent = Intent(this, BoardActivity::class.java)
+                intent.putExtra("type", boardDetailType)
+                startActivity(intent)
+            }
+            "1" -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("type", boardDetailType)
+                startActivity(intent)
+            }
+            "2" -> {
+                startActivity(Intent(this, ScrapActivity::class.java))
+            }
+        }
+        finish()
     }
 
     // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
@@ -311,7 +348,9 @@ class BoardDetailActivity : AppCompatActivity() {
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                            startActivity(Intent(this@BoardDetailActivity, BoardActivity::class.java))
+                            val intent = Intent(this@BoardDetailActivity, BoardActivity::class.java)
+                            intent.putExtra("type", boardDetailType)
+                            startActivity(intent)
                             finish()
                         } else {
                             toast("게시글 삭제 실패")

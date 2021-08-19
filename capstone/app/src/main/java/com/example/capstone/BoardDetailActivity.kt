@@ -25,11 +25,11 @@ import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
-    private lateinit var intentType: String
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
     private lateinit var boardDetailBody: String
+    private lateinit var boardDetailType: String
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
     var detailLike = 0
@@ -50,7 +50,6 @@ class BoardDetailActivity : AppCompatActivity() {
         super.onResume()
         // 성공적으로 intent 전달값을 받았을 경우
         if (intent.hasExtra("board_id")) {
-            intentType = intent.getStringExtra("type")!!
             intentBoardId = intent.getStringExtra("board_id")!!
             intentActivityNum = intent.getStringExtra("activity_num")!!
 
@@ -98,13 +97,14 @@ class BoardDetailActivity : AppCompatActivity() {
                         val postImg = response.body()!!.imagepath
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
+                        boardDetailType = post.type
+                        boardDetailGoodCnt = post.goodCount.toString()
+                        boardDetailScrapCnt = post.scrapCount.toString()
                         board_detail_title.setText(boardDetailTitle).toString()
                         board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
                         // board_detail_nickname.setText(post.user_id).toString()
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
-                        boardDetailGoodCnt = post.goodCount.toString()
-                        boardDetailScrapCnt = post.scrapCount.toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
 
@@ -189,7 +189,6 @@ class BoardDetailActivity : AppCompatActivity() {
                         // 임시방편
                         finish()
                         val intent = Intent(this@BoardDetailActivity, BoardDetailActivity::class.java)
-                        intent.putExtra("type", intentType)
                         intent.putExtra("board_id", intentBoardId)
                         intent.putExtra("activity_num", "0")
                         startActivity(intent)
@@ -291,7 +290,7 @@ class BoardDetailActivity : AppCompatActivity() {
             }
             R.id.board_detail_edit -> {
                 val intent = Intent(this, BoardWriteActivity::class.java)
-                intent.putExtra("type", intentType)
+                intent.putExtra("type", boardDetailType)
                 intent.putExtra("board_write_id", intentBoardId)     // 글 수정의 경우 board_id 전달
                 intent.putExtra("board_write_title", boardDetailTitle)
                 intent.putExtra("board_write_body", boardDetailBody)
@@ -314,16 +313,16 @@ class BoardDetailActivity : AppCompatActivity() {
         when (intentActivityNum) {
             "0" -> {
                 val intent = Intent(this, BoardActivity::class.java)
-                intent.putExtra("type", intentType)
+                intent.putExtra("type", boardDetailType)
                 startActivity(intent)
             }
             "1" -> {
                 val intent = Intent(this, SearchActivity::class.java)
-                intent.putExtra("type", intentType)
+                intent.putExtra("type", boardDetailType)
                 startActivity(intent)
             }
             "2" -> {
-
+                startActivity(Intent(this, ScrapActivity::class.java))
             }
         }
         finish()
@@ -350,7 +349,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful && response.body()!!.get("success") == "true") {
                             val intent = Intent(this@BoardDetailActivity, BoardActivity::class.java)
-                            intent.putExtra("type", intentType)
+                            intent.putExtra("type", boardDetailType)
                             startActivity(intent)
                             finish()
                         } else {

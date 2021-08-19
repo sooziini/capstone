@@ -82,6 +82,7 @@ interface RetrofitService {
         @Field("body") body: String
     ): Call<HashMap<String, Any>>
 
+    // 스크랩한 게시글 목록 조회
     @GET("board/scrap")
     fun getScrapPostList(): Call<PostList>
 

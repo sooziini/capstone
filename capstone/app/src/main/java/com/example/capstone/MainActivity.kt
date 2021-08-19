@@ -94,9 +94,9 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
-//            .commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
+            .commit()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_TodoListFrameLayout, TodoListFragment())

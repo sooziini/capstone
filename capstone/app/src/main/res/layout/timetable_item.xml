@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@drawable/round_border"
-    android:backgroundTint="@color/white"
+    android:backgroundTint="@color/basic_white"
     android:orientation="vertical">
 
     <TextView
@@ -24,9 +24,9 @@
         android:id="@+id/timetable_item_classname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_gravity="center"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/main_color"
         android:textStyle="bold"
         tools:text="기하" />
@@ -44,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView"
             tools:text="11:00" />
 
         <TextView
@@ -52,15 +51,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" ~ "
-            tools:text=" ~ " />
+            android:text=" ~ " />
 
         <TextView
             android:id="@+id/timetable_item_endtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView"
             tools:text="11:50" />
     </LinearLayout>
 

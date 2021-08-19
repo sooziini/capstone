@@ -233,7 +233,6 @@ class BoardWriteActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.get("success") == "true") {
                         val intent = Intent(this@BoardWriteActivity, BoardDetailActivity::class.java)
-                        intent.putExtra("type", intentType)
                         intent.putExtra("board_id", board_id)
                         intent.putExtra("activity_num", "0")
                         startActivity(intent)
@@ -260,14 +259,7 @@ class BoardWriteActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 경우
             android.R.id.home -> {
-//                if (intentBoardWriteId == "-1")
-//                    startActivity(Intent(this, BoardActivity::class.java))
-//                else {
-//                    val intent = Intent(this, BoardDetailActivity::class.java)
-//                    intent.putExtra("board_id", intentBoardWriteId)
-//                    startActivity(intent)
-//                }
-                finish()
+                onBackPressed()
                 return true
             }
             // 사진 첨부 버튼을 클릭했을 경우
@@ -286,6 +278,20 @@ class BoardWriteActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (intentBoardWriteId == "-1") {
+            val intent = Intent(this, BoardActivity::class.java)
+            intent.putExtra("type", intentType)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, BoardDetailActivity::class.java)
+            intent.putExtra("board_id", intentBoardWriteId)
+            intent.putExtra("activity_num", "0")
+            startActivity(intent)
+        }
+        finish()
     }
 
     // 이벤트 메서드 생성

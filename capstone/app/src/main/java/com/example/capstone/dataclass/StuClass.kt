@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class StuClass (
     var classNum : Int?,
-    var className : String,
+    var className : String?,
     var startTime : String,
     var endTime : String
 ): Serializable

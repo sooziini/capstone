@@ -82,6 +82,19 @@ interface RetrofitService {
         @Field("body") body: String
     ): Call<HashMap<String, Any>>
 
+    // 댓글 삭제
+    @DELETE("reply/{boardid}/{replyid}")
+    fun deleteReply(
+        @Path("boardid") board_id: String,
+        @Path("replyid") reply_id: String
+    ): Call<HashMap<String, String>>
+
+    // 댓글 좋아요
+    @GET("reply/good/{replyid}")
+    fun goodReply(
+        @Path("replyid") reply_id: String
+    ): Call<HashMap<String, String>>
+
     // 스크랩한 게시글 목록 조회
     @GET("board/scrap")
     fun getScrapPostList(): Call<PostList>

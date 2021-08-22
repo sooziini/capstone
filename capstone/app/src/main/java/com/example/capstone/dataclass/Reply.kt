@@ -20,5 +20,6 @@ data class Reply (
     val board_id: Int,
     val parent_id: Int,
     val level: Int,
-    val goodCount: Int
+    val goodCount: Int,
+    val goodCheck: String
 ): Serializable

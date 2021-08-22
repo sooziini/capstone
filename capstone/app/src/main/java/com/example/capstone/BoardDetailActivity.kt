@@ -35,8 +35,6 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailType: String
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
-    var detailLike = 0
-    var detailScrap = 0
     private lateinit var replyAdapter: ReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,16 +109,10 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
 
-                        if (post.goodCheck == "N") detailLike = 0
-                        else {
+                        if (post.goodCheck == "Y")
                             board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
-                            detailLike = 1
-                        }
-                        if (post.scrapCheck == "N") detailScrap = 0
-                        else {
+                        if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
-                            detailScrap = 1
-                        }
 
                         // 사진이 있을 경우
                         if (postImgList.size > 0) {
@@ -157,7 +149,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val replyList = response.body()?.data
-                        var reply = ArrayList<Reply>()
+                        val reply = ArrayList<Reply>()
 
                         if (replyList != null && replyList.size > 0) {
                             // 새로운 replyList 생성
@@ -167,7 +159,7 @@ class BoardDetailActivity : AppCompatActivity() {
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
+                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
                             reply_recyclerview.adapter = replyAdapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                             reply_recyclerview.setHasFixedSize(true)
@@ -227,13 +219,11 @@ class BoardDetailActivity : AppCompatActivity() {
                     val stat = response.body()!!["stat"]
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        detailLike = 1
                         boardDetailGoodCnt = (boardDetailGoodCnt.toInt()+1).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        detailLike = 0
                         boardDetailGoodCnt = (boardDetailGoodCnt.toInt()-1).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_like_btn.setImageResource(R.drawable.detail_like)
@@ -262,13 +252,11 @@ class BoardDetailActivity : AppCompatActivity() {
                     val stat = response.body()!!["stat"]
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        detailLike = 1
                         boardDetailScrapCnt = (boardDetailScrapCnt.toInt()+1).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        detailLike = 0
                         boardDetailScrapCnt = (boardDetailScrapCnt.toInt()-1).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)

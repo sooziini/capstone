@@ -303,6 +303,9 @@ class BoardDetailActivity : AppCompatActivity() {
                     setDeleteDialog()
                 return true
             }
+            R.id.board_detail_report -> {
+                
+            }
         }
         return super.onOptionsItemSelected(item)
     }

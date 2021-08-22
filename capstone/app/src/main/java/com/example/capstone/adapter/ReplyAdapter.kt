@@ -1,7 +1,9 @@
 package com.example.capstone.adapter
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
@@ -10,7 +12,10 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.BoardActivity
+import com.example.capstone.BoardDetailActivity
 import com.example.capstone.R
 import com.example.capstone.dataclass.Reply
 import com.example.capstone.network.MasterApplication
@@ -47,6 +52,11 @@ class ReplyAdapter(
                 replyVer = true
             }
 
+            // 대댓글 버튼 눌렀을 경우
+            replyCommentBtn.setOnClickListener {
+
+            }
+
             // 댓글 좋아요 버튼 눌렀을 경우
             replyLikeBtn.setOnClickListener {
                 retrofitGoodReply(reply.reply_id.toString(), reply.goodCount, replyLikeCnt, replyLikeBtn, replyVer)
@@ -61,7 +71,7 @@ class ReplyAdapter(
                     when (item.itemId) {
                         // 댓글 삭제하기 버튼
                         R.id.board_reply_popup_delete -> {
-
+                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString())
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
@@ -107,7 +117,7 @@ class ReplyAdapter(
                     when (item.itemId) {
                         // 댓글 삭제하기 버튼
                         R.id.board_reply_popup_delete -> {
-
+                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString())
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
@@ -148,32 +158,45 @@ class ReplyAdapter(
                 }
 
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                    // finish()
+                    (context as Activity).finish()
                 }
             })
     }
 
-    // 댓글 삭제하는 함수
-    fun retrofitDeleteReply(board_id: String, reply_id: String) {
-        (application as MasterApplication).service.deleteReply(board_id, reply_id)
-            .enqueue(object : Callback<HashMap<String, String>> {
-                override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
-                ) {
-                    if (response.isSuccessful && response.body()!!["success"] == "true") {
-                        // 삭제 dialog
+    //댓글 삭제하기 버튼 클릭 시 뜨는 dialog 설정 함수
+    fun setReplyDeleteDialog(board_id: String, reply_id: String) {
+        val builder = AlertDialog.Builder(context)
+            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+        val dialogView = inflater.inflate(R.layout.dialog_board, null)
+        val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
+        dialogText.text = "해당 댓글을 삭제하시겠습니까?"
 
-
-                    } else {
-                        // toast("댓글 삭제 실패")
+        builder.setPositiveButton("확인") { dialog, it ->
+            (application as MasterApplication).service.deleteReply(board_id, reply_id)
+                .enqueue(object : Callback<HashMap<String, String>> {
+                    override fun onResponse(
+                        call: Call<HashMap<String, String>>,
+                        response: Response<HashMap<String, String>>
+                    ) {
+                        if (response.isSuccessful && response.body()!!["success"] == "true") {
+                            (context as Activity).finish()
+                            val intent = Intent(context, BoardDetailActivity::class.java)
+                            intent.putExtra("board_id", board_id)
+                            intent.putExtra("activity_num", "0")
+                            context.startActivity(intent)
+                        } else {
+                            // toast("댓글 삭제 실패")
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                    // finish()
-                }
-            })
+                    override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                        (context as Activity).finish()
+                    }
+                })
+        }
+            .setNegativeButton("취소", null)
+        builder.setView(dialogView)
+        builder.show()
     }
 
     override fun getItemViewType(position: Int): Int {

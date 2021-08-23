@@ -13,7 +13,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:text="text"
+        android:text="@string/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/basic"
         app:layout_constraintBottom_toBottomOf="parent"

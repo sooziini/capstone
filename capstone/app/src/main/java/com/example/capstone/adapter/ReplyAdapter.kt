@@ -53,7 +53,7 @@ class ReplyAdapter(
 
             // 대댓글 버튼 눌렀을 경우
             replyCommentBtn.setOnClickListener {
-                setReplyDialog(reply.board_id.toString(), reply.reply_id.toString())
+                setReplyDialog(reply, true)
             }
 
             // 댓글 좋아요 버튼 눌렀을 경우
@@ -74,7 +74,7 @@ class ReplyAdapter(
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
-
+                            setReplyDialog(reply, false)
                         }
                     }
                     false
@@ -120,7 +120,7 @@ class ReplyAdapter(
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
-
+                            setReplyDialog(reply, false)
                         }
                     }
                     false
@@ -152,7 +152,7 @@ class ReplyAdapter(
                             replyLikeBtn.setImageResource(R.drawable.detail_like)
                         }
                     } else {
-                        // toast("댓글 좋아요 실패")
+                        context.toast("댓글 좋아요 실패")
                     }
                 }
 
@@ -165,7 +165,6 @@ class ReplyAdapter(
     //댓글 삭제하기 버튼 클릭 시 뜨는 dialog 설정 함수
     fun setReplyDeleteDialog(board_id: String, reply_id: String) {
         val builder = AlertDialog.Builder(context)
-            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
         val dialogView = inflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "해당 댓글을 삭제하시겠습니까?"
@@ -184,7 +183,7 @@ class ReplyAdapter(
                             intent.putExtra("activity_num", "0")
                             context.startActivity(intent)
                         } else {
-                            // toast("댓글 삭제 실패")
+                            context.toast("댓글 삭제 실패")
                         }
                     }
 
@@ -198,40 +197,71 @@ class ReplyAdapter(
         builder.show()
     }
 
-    //대댓글 작성하기 버튼 클릭 시 뜨는 dialog 설정 함수
-    fun setReplyDialog(board_id: String, reply_id: String) {
+    // 대댓글 & 댓글 신고하기 버튼 클릭 시 뜨는 dialog 설정 함수
+    fun setReplyDialog(reply: Reply, ver: Boolean) {
         val builder = AlertDialog.Builder(context)
-            // .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
         val dialogView = inflater.inflate(R.layout.dialog_reply, null)
         val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
+        dialogEditText.hint = if (ver) "대댓글을 입력해 주세요" else "신고 사유를 입력해 주세요"
 
         builder.setPositiveButton("확인") { dialog, it ->
             val body = dialogEditText.text.toString()
-            (application as MasterApplication).service.createReplyReply(board_id, reply_id, body)
-                .enqueue(object : Callback<HashMap<String, Any>> {
-                    override fun onResponse(
-                        call: Call<HashMap<String, Any>>,
-                        response: Response<HashMap<String, Any>>
-                    ) {
-                        if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
-                            (context as BoardDetailActivity).finish()
-                            val intent = Intent(context, BoardDetailActivity::class.java)
-                            intent.putExtra("board_id", board_id)
-                            intent.putExtra("activity_num", "0")
-                            context.startActivity(intent)
-                        } else {
-                            // toast("대댓글 작성 실패")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                        (context as BoardDetailActivity).finish()
-                    }
-                })
+            if (ver) retrofitCreateReplyReply(reply.board_id.toString(), reply.reply_id.toString(), body)
+            else retrofitReportReply(reply.reply_id.toString(), reply.user_id, body)
         }
             .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
+    }
+
+    // 대댓글 작성 함수
+    private fun retrofitCreateReplyReply(board_id: String, reply_id: String, body: String) {
+        (application as MasterApplication).service.createReplyReply(board_id, reply_id, body)
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
+                        (context as BoardDetailActivity).finish()
+                        val intent = Intent(context, BoardDetailActivity::class.java)
+                        intent.putExtra("board_id", board_id)
+                        intent.putExtra("activity_num", "0")
+                        context.startActivity(intent)
+                    } else {
+                        context.toast("대댓글 작성 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    (context as BoardDetailActivity).finish()
+                }
+            })
+    }
+
+    // 댓글 신고 함수
+    private fun retrofitReportReply(reply_id: String, recv_id: String, body: String) {
+        val params = HashMap<String, Any>()
+        params["reply_id"] = reply_id
+        params["recv_id"] = recv_id
+        params["body"] = body
+        (application as MasterApplication).service.reportReply(params)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
+                        context.toast("신고가 접수되었습니다")
+                    } else {
+                        context.toast("댓글 신고 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    (context as BoardDetailActivity).finish()
+                }
+            })
     }
 
     override fun getItemViewType(position: Int): Int {

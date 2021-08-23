@@ -38,6 +38,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailTitle: String
     private lateinit var boardDetailBody: String
     private lateinit var boardDetailType: String
+    private lateinit var boardDetailUserId: String
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
     private lateinit var replyAdapter: ReplyAdapter
@@ -106,12 +107,12 @@ class BoardDetailActivity : AppCompatActivity() {
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
                         boardDetailType = post.type
+                        boardDetailUserId = post.user_id
                         boardDetailGoodCnt = post.goodCount.toString()
                         boardDetailScrapCnt = post.scrapCount.toString()
                         board_detail_title.setText(boardDetailTitle).toString()
                         board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
-                        // board_detail_nickname.setText(post.user_id).toString()
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
@@ -311,7 +312,9 @@ class BoardDetailActivity : AppCompatActivity() {
                 return true
             }
             R.id.board_detail_report -> {
-
+                if (!this.isFinishing)
+                    setReportDialog()
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
@@ -339,7 +342,6 @@ class BoardDetailActivity : AppCompatActivity() {
     // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
     private fun setDeleteDialog() {
         val builder = AlertDialog.Builder(this)
-            // .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "게시글을 삭제하시겠습니까?"
@@ -362,6 +364,43 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
 
                     // 응답 실패 시
+                    override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                        toast("network error")
+                        finish()
+                    }
+                })
+        }
+            .setNegativeButton("취소", null)
+        builder.setView(dialogView)
+        builder.show()
+    }
+
+    // 게시글 신고하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
+    fun setReportDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reply, null)
+        val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
+        dialogEditText.hint = "신고 사유를 입력해 주세요"
+
+        builder.setPositiveButton("확인") { dialog, it ->
+            val body = dialogEditText.text.toString()
+            val params = HashMap<String, Any>()
+            params["board_id"] = intentBoardId
+            params["recv_id"] = boardDetailUserId
+            params["body"] = body
+            (application as MasterApplication).service.reportPost(params)
+                .enqueue(object : Callback<HashMap<String, String>> {
+                    override fun onResponse(
+                        call: Call<HashMap<String, String>>,
+                        response: Response<HashMap<String, String>>
+                    ) {
+                        if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                            toast("신고가 접수되었습니다")
+                        } else {
+                            toast("게시글 신고 실패")
+                        }
+                    }
+
                     override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                         toast("network error")
                         finish()

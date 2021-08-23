@@ -4,14 +4,13 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.BoardActivity
@@ -54,7 +53,7 @@ class ReplyAdapter(
 
             // 대댓글 버튼 눌렀을 경우
             replyCommentBtn.setOnClickListener {
-
+                setReplyDialog(reply.board_id.toString(), reply.reply_id.toString())
             }
 
             // 댓글 좋아요 버튼 눌렀을 경우
@@ -179,7 +178,7 @@ class ReplyAdapter(
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
-                            (context as Activity).finish()
+                            (context as BoardDetailActivity).finish()
                             val intent = Intent(context, BoardDetailActivity::class.java)
                             intent.putExtra("board_id", board_id)
                             intent.putExtra("activity_num", "0")
@@ -190,7 +189,43 @@ class ReplyAdapter(
                     }
 
                     override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                        (context as Activity).finish()
+                        (context as BoardDetailActivity).finish()
+                    }
+                })
+        }
+            .setNegativeButton("취소", null)
+        builder.setView(dialogView)
+        builder.show()
+    }
+
+    //대댓글 작성하기 버튼 클릭 시 뜨는 dialog 설정 함수
+    fun setReplyDialog(board_id: String, reply_id: String) {
+        val builder = AlertDialog.Builder(context)
+            // .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+        val dialogView = inflater.inflate(R.layout.dialog_reply, null)
+        val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
+
+        builder.setPositiveButton("확인") { dialog, it ->
+            val body = dialogEditText.text.toString()
+            (application as MasterApplication).service.createReplyReply(board_id, reply_id, body)
+                .enqueue(object : Callback<HashMap<String, Any>> {
+                    override fun onResponse(
+                        call: Call<HashMap<String, Any>>,
+                        response: Response<HashMap<String, Any>>
+                    ) {
+                        if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
+                            (context as BoardDetailActivity).finish()
+                            val intent = Intent(context, BoardDetailActivity::class.java)
+                            intent.putExtra("board_id", board_id)
+                            intent.putExtra("activity_num", "0")
+                            context.startActivity(intent)
+                        } else {
+                            // toast("대댓글 작성 실패")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                        (context as BoardDetailActivity).finish()
                     }
                 })
         }

@@ -82,6 +82,15 @@ interface RetrofitService {
         @Field("body") body: String
     ): Call<HashMap<String, Any>>
 
+    // 대댓글 등록
+    @POST("reply/{boardid}/{replyid}")
+    @FormUrlEncoded
+    fun createReplyReply(
+        @Path("boardid") board_id: String,
+        @Path("replyid") reply_id: String,
+        @Field("body") body: String
+    ): Call<HashMap<String, Any>>
+
     // 댓글 삭제
     @DELETE("reply/{boardid}/{replyid}")
     fun deleteReply(

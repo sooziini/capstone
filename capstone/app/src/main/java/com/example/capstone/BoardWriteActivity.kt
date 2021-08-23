@@ -92,7 +92,7 @@ class BoardWriteActivity : AppCompatActivity() {
     // 글쓰기 완료 버튼 눌렀을 때 뜨는 dialog 설정 함수
     private fun setWriteDialog(title: String, body: String) {
         val builder = AlertDialog.Builder(this)
-            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+            // .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         when (intentBoardWriteId) {
@@ -288,7 +288,6 @@ class BoardWriteActivity : AppCompatActivity() {
     // 액티비티 최상위 layout에 onClick 세팅
     // 해당 layout 내 view 클릭 시 함수 실행
     fun hideKeyboard(v: View) {
-        if (v != null)
-            imm?.hideSoftInputFromWindow(v.windowToken, 0)
+        imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

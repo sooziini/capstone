@@ -8,9 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
@@ -28,6 +32,7 @@ import kotlin.collections.ArrayList
 class BoardDetailActivity : AppCompatActivity() {
 
     val BASE_URL = "http://192.168.0.2:3000"
+    var imm: InputMethodManager? = null
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
@@ -45,6 +50,9 @@ class BoardDetailActivity : AppCompatActivity() {
         setSupportActionBar(board_detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
+        // 키보드 InputMethodManager 세팅
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     }
 
     override fun onResume() {
@@ -59,7 +67,6 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 댓글 GET
             retrofitGetReplyList(intentBoardId)
-
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -304,7 +311,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 return true
             }
             R.id.board_detail_report -> {
-                
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -332,7 +339,7 @@ class BoardDetailActivity : AppCompatActivity() {
     // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
     private fun setDeleteDialog() {
         val builder = AlertDialog.Builder(this)
-            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
+            // .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "게시글을 삭제하시겠습니까?"
@@ -364,5 +371,9 @@ class BoardDetailActivity : AppCompatActivity() {
             .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
+    }
+
+    fun hideKeyboard(v: View) {
+        imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

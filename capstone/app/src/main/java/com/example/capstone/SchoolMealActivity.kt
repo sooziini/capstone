@@ -14,21 +14,19 @@ import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_school_meal.*
-import kotlinx.android.synthetic.main.activity_todo_list.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.Month
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SchoolMealActivity : AppCompatActivity() {
-    val cal = Calendar.getInstance()
-    var year = cal.get(Calendar.YEAR)
-    var month = cal.get(Calendar.MONTH)
-    var day = cal.get(Calendar.DAY_OF_MONTH)
-    lateinit var date: String
+    private val cal = Calendar.getInstance()
+    private var year = cal.get(Calendar.YEAR)
+    private var month = cal.get(Calendar.MONTH)
+    private var day = cal.get(Calendar.DAY_OF_MONTH)
+    private lateinit var date: String
     val mealList = ArrayList<Meal>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +53,13 @@ class SchoolMealActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         mealList.clear()
 
-                        val dataArray = response.body()!!.get("mealInfo") as ArrayList<LinkedTreeMap<String, String>>
+                        val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
                         Log.d("meal", dataArray.toString())
                         val todaymeal = dataArray[0]
-                        val mealData = todaymeal.get("DDISH_NM")
+                        val mealData = todaymeal["DDISH_NM"]
                         val mealArray = mealData?.split("<br/>")
                         Log.d("mealArray", mealArray.toString())
-                        val kcal = todaymeal.get("CAL_INFO")
+                        val kcal = todaymeal["CAL_INFO"]
 
                         for (element in mealArray!!) {
                             mealList.add(Meal(element))
@@ -113,12 +111,12 @@ class SchoolMealActivity : AppCompatActivity() {
 
     // 메뉴 캘린더 버튼
     fun selectDate(item: MenuItem) {
-        var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
+        val listener = DatePickerDialog.OnDateSetListener { _, i, i2, i3 ->
             // i년 i2월 i3일
             val tempi2 = setDateSize((i2 + 1).toString())
             val tempi3 = setDateSize(i3.toString())
             School_Meal_DateText.text = "${i}년 ${tempi2}월 ${tempi3}일"
-            date = "${year}" + tempi2 + tempi3
+            date = "$year" + tempi2 + tempi3
 
             (application as MasterApplication).service.loadMeal(date, date)
                 .enqueue(object : Callback<HashMap<String, Any>> {
@@ -129,13 +127,13 @@ class SchoolMealActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             mealList.clear()
 
-                            val dataArray = response.body()!!.get("mealInfo") as ArrayList<LinkedTreeMap<String, String>>
+                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
                             Log.d("meal", dataArray.toString())
                             val todaymeal = dataArray[0]
-                            val mealData = todaymeal.get("DDISH_NM")
+                            val mealData = todaymeal["DDISH_NM"]
                             val mealArray = mealData?.split("<br/>")
                             Log.d("mealArray", mealArray.toString())
-                            val kcal = todaymeal.get("CAL_INFO")
+                            val kcal = todaymeal["CAL_INFO"]
 
                             for (element in mealArray!!) {
                                 mealList.add(Meal(element))
@@ -164,18 +162,17 @@ class SchoolMealActivity : AppCompatActivity() {
                 })
         }
 
-        var picker = DatePickerDialog(this, listener, year, month, day)
+        val picker = DatePickerDialog(this, listener, year, month, day)
         picker.show()
     }
 
     // 날짜 형식화
     private fun setDateSize(data: String): String {
-        if (data.length < 2) {
+        return if (data.length < 2) {
             val temp = "0${data}"
-            return temp
-        }
-        else
-            return data
+            temp
+        } else
+            data
     }
 
 }

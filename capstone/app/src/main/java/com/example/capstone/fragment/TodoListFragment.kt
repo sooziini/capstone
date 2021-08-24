@@ -16,9 +16,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TodoListFragment : Fragment() {
-    lateinit var dbHelper: TodoListDBHelper
-    lateinit var todoList: ArrayList<Todo>
-
+    private lateinit var dbHelper: TodoListDBHelper
+    private lateinit var todoList: ArrayList<Todo>
+    lateinit var date: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +33,7 @@ class TodoListFragment : Fragment() {
 
         todoList = getList()
 
-        TodoFrg_Recycleriew.adapter = TodoListAdapter(todoList, LayoutInflater.from(this.activity), requireContext())
+        TodoFrg_Recycleriew.adapter = TodoListAdapter(todoList, LayoutInflater.from(this.activity), requireContext(), date)
         TodoFrg_Recycleriew.layoutManager = LinearLayoutManager(this.activity)
         TodoFrg_Recycleriew.setHasFixedSize(true)
     }
@@ -42,14 +42,14 @@ class TodoListFragment : Fragment() {
         val todoList = ArrayList<Todo>()
 
         val instance = Calendar.getInstance()
-        var year = instance.get(Calendar.YEAR).toString()
+        val year = instance.get(Calendar.YEAR).toString()
         var month = (instance.get(Calendar.MONTH) + 1).toString()
         var day = instance.get(Calendar.DAY_OF_MONTH).toString()
         if (month.length < 2)
             month = "0${month}"
         if (day.length < 2)
             day = "0${day}"
-        val date = year + month + day
+        date = year + month + day
 
         val db = dbHelper.readableDatabase
         val projection = arrayOf(TodoEntry.COLUMN_NAME_TODOLIST, TodoEntry.COLUMN_NAME_CHECK)

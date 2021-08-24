@@ -13,7 +13,7 @@ import com.example.capstone.database.FeedEntry
 import kotlinx.android.synthetic.main.activity_time_table.*
 
 class TimeTableActivity : AppCompatActivity() {
-    lateinit var dbHelper: FeedReaderDBHelper
+    private lateinit var dbHelper: FeedReaderDBHelper
     private var editMode = false
 
     private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
@@ -134,14 +134,14 @@ class TimeTableActivity : AppCompatActivity() {
     }
 
     fun timetableOnClick(item: MenuItem) {
-        if(!editMode) {
+        editMode = if(!editMode) {
             setEditMode()
             item.setIcon(R.drawable.timetable_done)
-            editMode = true
+            true
         } else {
             doneEditMode()
             item.setIcon(R.drawable.timetable_edit)
-            editMode = false
+            false
         }
     }
 

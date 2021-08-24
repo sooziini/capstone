@@ -12,10 +12,8 @@ import com.example.capstone.adapter.MealActAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
-import kotlinx.android.synthetic.main.activity_school_meal.*
 import kotlinx.android.synthetic.main.fragment_school_meal.*
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +22,7 @@ import kotlin.collections.ArrayList
 
 class SchoolMealFragment : Fragment() {
     var mealList = ArrayList<Meal>()
-    val cal = Calendar.getInstance()
+    private val cal = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +42,8 @@ class SchoolMealFragment : Fragment() {
 //        MealFrag_RecyclerView.setHasFixedSize(true)
     }
 
-    fun getMealList() {
-        var year = cal.get(Calendar.YEAR).toString()
+    private fun getMealList() {
+        val year = cal.get(Calendar.YEAR).toString()
         var month = (cal.get(Calendar.MONTH) + 1).toString()
         var day = cal.get(Calendar.DAY_OF_MONTH).toString()
         if (month.length < 2)
@@ -63,10 +61,10 @@ class SchoolMealFragment : Fragment() {
                     if (response.isSuccessful) {
                         mealList.clear()
 
-                        val dataArray = response.body()!!.get("mealInfo") as ArrayList<LinkedTreeMap<String, String>>
+                        val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
                         Log.d("meal", dataArray.toString())
                         val todaymeal = dataArray[0]
-                        val mealData = todaymeal.get("DDISH_NM")
+                        val mealData = todaymeal["DDISH_NM"]
                         val mealArray = mealData?.split("<br/>")
                         Log.d("mealArray", mealArray.toString())
 

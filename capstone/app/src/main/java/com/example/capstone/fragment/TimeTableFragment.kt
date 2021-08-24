@@ -15,13 +15,12 @@ import com.example.capstone.database.FeedEntry
 import com.example.capstone.database.FeedReaderDBHelper
 import com.example.capstone.dataclass.StuClass
 import kotlinx.android.synthetic.main.fragment_time_table.*
-import org.jetbrains.anko.support.v4.toast
 import java.util.*
 import kotlin.collections.ArrayList
 
 class TimeTableFragment: Fragment() {
-    lateinit var dbHelper: FeedReaderDBHelper
-    var classList: ArrayList<StuClass>? = null
+    private lateinit var dbHelper: FeedReaderDBHelper
+    private var classList: ArrayList<StuClass>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,11 +57,8 @@ class TimeTableFragment: Fragment() {
         lateinit var likeText: String
 
         when(dayNum) {
-            1 -> {
-//                day = "일"
+            1 ->
                 likeText = "Sun%"
-//                return null
-            }
             2 ->
                 likeText = "Mon%"
             3 ->
@@ -76,10 +72,10 @@ class TimeTableFragment: Fragment() {
             7 ->
                 likeText = "Sat%"
         }
-        if (likeText == "Sun%") {
-            return null
+        return if (likeText == "Sun%") {
+            null
         } else {
-            return loadDept(likeText)
+            loadDept(likeText)
         }
     }
 
@@ -97,38 +93,42 @@ class TimeTableFragment: Fragment() {
         with(cursor) {
             var i = 0
             while(moveToNext()) {
-                if (i < 4) {
-                    val stuClass = StuClass(
-                        classNum = i + 1,
-                        className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
-                        startTime = start[i],
-                        endTime = end[i]
-                    )
-                    classList.add(stuClass)
-                } else if (i == 4) {
-                    val stuClass = StuClass(
-                        classNum = null,
-                        className = "점심시간",
-                        startTime = start[i],
-                        endTime = end[i]
-                    )
-                    classList.add(stuClass)
-                    i = i + 1
-                    val stuClass2 = StuClass(
-                        classNum = i,
-                        className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
-                        startTime = start[i],
-                        endTime = end[i]
-                    )
-                    classList.add(stuClass2)
-                } else {
-                    val stuClass = StuClass(
-                        classNum = i,
-                        className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
-                        startTime = start[i],
-                        endTime = end[i]
-                    )
-                    classList.add(stuClass)
+                when {
+                    i < 4 -> {
+                        val stuClass = StuClass(
+                            classNum = i + 1,
+                            className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
+                            startTime = start[i],
+                            endTime = end[i]
+                        )
+                        classList.add(stuClass)
+                    }
+                    i == 4 -> {
+                        val stuClass = StuClass(
+                            classNum = null,
+                            className = "점심시간",
+                            startTime = start[i],
+                            endTime = end[i]
+                        )
+                        classList.add(stuClass)
+                        i += 1
+                        val stuClass2 = StuClass(
+                            classNum = i,
+                            className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
+                            startTime = start[i],
+                            endTime = end[i]
+                        )
+                        classList.add(stuClass2)
+                    }
+                    else -> {
+                        val stuClass = StuClass(
+                            classNum = i,
+                            className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
+                            startTime = start[i],
+                            endTime = end[i]
+                        )
+                        classList.add(stuClass)
+                    }
                 }
                 i += 1
             }

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -21,14 +20,14 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     // 키보드 InputMethodManager 변수 선언
-    var imm: InputMethodManager? = null
+    private var imm: InputMethodManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         // 키보드 InputMethodManager 세팅
-        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         // 회원가입 클릭
         LoginRegisterBtn.setOnClickListener {
@@ -47,58 +46,60 @@ class LoginActivity : AppCompatActivity() {
             val password = LoginPasswordEditText.text.toString()
             val post = HashMap<String, String>()
 
-            if (id == "") {
-                toast("ID를 입력해주세요")
-            } else if (password == "") {
-                toast("비밀번호를 입력해주세요")
-            } else {
-                post.put("id", id)
-                post.put("password", password)
+            when {
+                id == "" -> {
+                    toast("ID를 입력해주세요")
+                }
+                password == "" -> {
+                    toast("비밀번호를 입력해주세요")
+                }
+                else -> {
+                    post["id"] = id
+                    post["password"] = password
 
-                // 입력받은 id와 password POST
-                (application as MasterApplication).service.login(post)
-                    .enqueue(object : Callback<HashMap<String, Any>> {
-                        override fun onResponse(
-                            call: Call<HashMap<String, Any>>,
-                            response: Response<HashMap<String, Any>>
-                        ) {
-                            if (response.isSuccessful) {
-                                val result = response.body()
-                                var tokenMap: LinkedTreeMap<String, String>
-                                var accessToken: String? = null
-                                var refreshToken: String? = null
+                    // 입력받은 id와 password POST
+                    (application as MasterApplication).service.login(post)
+                        .enqueue(object : Callback<HashMap<String, Any>> {
+                            override fun onResponse(
+                                call: Call<HashMap<String, Any>>,
+                                response: Response<HashMap<String, Any>>
+                            ) {
+                                if (response.isSuccessful) {
+                                    val result = response.body()
+                                    val tokenMap: LinkedTreeMap<String, String>
+                                    var accessToken: String? = null
+                                    var refreshToken: String? = null
 
-                                if (result!!.get("token") != null) {
-                                    tokenMap = result!!.get("token") as LinkedTreeMap<String, String>
-                                    accessToken = tokenMap?.get("access_token").toString()
-                                    refreshToken = tokenMap?.get("refresh_token").toString()
+                                    if (result!!["token"] != null) {
+                                        tokenMap = result["token"] as LinkedTreeMap<String, String>
+                                        accessToken = tokenMap["access_token"].toString()
+                                        refreshToken = tokenMap["refresh_token"].toString()
+                                    }
+
+                                    if (accessToken == null || refreshToken == null) {
+                                        Toast.makeText(this@LoginActivity, "아이디, 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        // access_token 저장
+                                        saveUserToken("access_token", accessToken, this@LoginActivity)
+                                        // refresh_token 저장
+                                        saveUserToken("refresh_token", refreshToken, this@LoginActivity)
+
+                                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                        finish()
+                                    }
+
+                                } else {        // 3xx, 4xx 를 받은 경우
+                                    toast("로그인 실패")
                                 }
-
-                                if (accessToken == null || refreshToken == null) {
-                                    Toast.makeText(this@LoginActivity, "아이디, 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
-                                } else {
-                                    // access_token 저장
-                                    saveUserToken("access_token", accessToken, this@LoginActivity)
-                                    Log.d("abc", "access : " + accessToken)
-                                    // refresh_token 저장
-                                    saveUserToken("refresh_token", refreshToken, this@LoginActivity)
-                                    Log.d("abc", "refresh : " + refreshToken)
-
-                                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                                    finish()
-                                }
-
-                            } else {        // 3xx, 4xx 를 받은 경우
-                                toast("로그인 실패")
                             }
-                        }
 
-                        // 응답 실패 시
-                        override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                            toast("network error")
-                            finish()
-                        }
-                    })
+                            // 응답 실패 시
+                            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                                toast("network error")
+                                finish()
+                            }
+                        })
+                }
             }
 
         }

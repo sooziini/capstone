@@ -1,6 +1,5 @@
 package com.example.capstone.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,28 +41,21 @@ class TimeTableAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StuClassViewHolder {
-        lateinit var view : View
-        if(classList == null) {
-            view = inflater.inflate(R.layout.timetable_null_item, parent, false)
-        }
-        else {
-            view = inflater.inflate(R.layout.timetable_item, parent, false)
+        val view : View = if(classList == null) {
+            inflater.inflate(R.layout.timetable_null_item, parent, false)
+        } else {
+            inflater.inflate(R.layout.timetable_item, parent, false)
         }
         return StuClassViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        if(classList != null) {
-            return classList.size
-        }
-        else {
-            return 1
-        }
+        return classList?.size ?: 1
     }
 
     override fun onBindViewHolder(holder: StuClassViewHolder, position: Int) {
         if (classList != null) {
-            holder.bind(classList!![position])
+            holder.bind(classList[position])
         }
     }
 }

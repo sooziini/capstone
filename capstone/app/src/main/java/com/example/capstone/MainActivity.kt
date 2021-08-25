@@ -3,6 +3,7 @@ package com.example.capstone
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -114,6 +115,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.drawer_main_menu_school -> {
                     main_drawerlayout.closeDrawers()
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://sangmyung-agh.sen.hs.kr/index.do"))
+                    startActivity(intent)
                     true
                 }
                 // 전교생 자유게시판

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.capstone" >
+    package="com.example.capstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,9 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true" >
-        <activity android:name=".FindPasswordActivity" >
-        </activity>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ChangeProfileImageActivity"></activity>
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".FindPasswordActivity" />
         <activity android:name=".SchoolMealActivity" />
         <activity android:name=".TodoListActivity" />
         <activity android:name=".TimeTableActivity" />
@@ -23,7 +24,7 @@
         <activity android:name=".NoticeActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".MessageActivity" />
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

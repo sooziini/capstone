@@ -118,14 +118,28 @@ interface RetrofitService {
     @GET("auth/valid")
     fun authorization():Call<HashMap<String, Any>>
 
+    // 비밀번호 찾기
     @POST("user/password/find")
     fun findPassword(
         @Body params: HashMap<String, String>
     ):Call<HashMap<String, String>>
 
+    // 식단표 받아오기
     @GET("school/cafeteria?")
     fun loadMeal(
         @Query ("MLSV_FROM_YMD") start: String,
         @Query ("MLSV_TO_YMD") end: String
     ): Call<HashMap<String, Any>>
+
+    // 비밀번호 확인
+    @POST("user/password/check")
+    fun checkPassword(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    // 비밀번호 변경
+    @POST("user/password/change")
+    fun changePassword(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
 }

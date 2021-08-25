@@ -16,8 +16,22 @@ class SettingActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-
-
+        SettingChangeImageImage.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, ChangeProfileImageActivity::class.java))
+            finish()
+        }
+        SettingChangeImageText.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, ChangeProfileImageActivity::class.java))
+            finish()
+        }
+        SettingChangePasswordImage.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, ChangePasswordActivity::class.java))
+            finish()
+        }
+        SettingChangePasswordText.setOnClickListener{
+            startActivity(Intent(this@SettingActivity, ChangePasswordActivity::class.java))
+            finish()
+        }
 
     }
 

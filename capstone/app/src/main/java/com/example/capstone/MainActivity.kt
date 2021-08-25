@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             7 -> dayn = "토"
         }
 
-        Home_DateText.setText(month + "월 " + day + "일 (" + dayn + ")")
+        Home_DateText.text = month + "월 " + day + "일 (" + dayn + ")"
 
         (application as MasterApplication).service.authorization()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -66,17 +66,17 @@ class MainActivity : AppCompatActivity() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        if(response.body()!!.get("success").toString() == "true") {
-                            val data = response.body()!!.get("data") as LinkedTreeMap<String, Any>
-                            val stug = (data.get("schoolgrade") as Double).roundToInt().toString()
-                            var stuc = (data.get("schoolclass") as Double).roundToInt().toString()
-                            var stun = (data.get("schoolnumber") as Double).roundToInt().toString()
+                        if(response.body()!!["success"].toString() == "true") {
+                            val data = response.body()!!["data"] as LinkedTreeMap<String, Any>
+                            val stug = (data["schoolgrade"] as Double).roundToInt().toString()
+                            var stuc = (data["schoolclass"] as Double).roundToInt().toString()
+                            var stun = (data["schoolnumber"] as Double).roundToInt().toString()
                             if (stuc.toInt() < 10)
                                 stuc = "0$stuc"
                             if (stun.toInt() < 10)
                                 stun = "0$stun"
                             studentId = stug + stuc + stun
-                            studentName = data.get("name").toString()
+                            studentName = data["name"].toString()
                             Home_WelcomeText.text = studentId + " " + studentName + "님, 환영합니다!"
                         } else {
                             toast("success != true")
@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
                             call: Call<HashMap<String, String>>,
                             response: Response<HashMap<String, String>>
                         ) {
-                            if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                            if (response.isSuccessful && response.body()!!["success"] == "true") {
                                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                                 finish()
                                 toast("로그아웃 되었습니다.")

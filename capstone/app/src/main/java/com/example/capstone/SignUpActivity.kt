@@ -14,16 +14,14 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
-import org.jetbrains.anko.yesButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     // 키보드 InputMethodManager 변수 선언
-    var imm: InputMethodManager? = null
+    private var imm: InputMethodManager? = null
     var idConfirm: Boolean = false
     var stuAuth = false
 
@@ -126,20 +124,6 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-
-//        // 통신사 드롭다운 스피너
-//        val phoneList = arrayOf("통신사", "SKT", "KT", "LG")      // 통신사 드롭다운 배열
-//        SignUpPhoneDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, phoneList)
-//        SignUpPhoneDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onNothingSelected(p0: AdapterView<*>?) {
-////                println("통신사")
-//            }
-//
-//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-////                println("$p2")
-//            }
-//        }
-
         val idWatcher = IdEditWatcher()
         SignUpIdEditTextView.addTextChangedListener(idWatcher)
 
@@ -173,13 +157,13 @@ class SignUpActivity : AppCompatActivity() {
         val name = SignUpNameEditTextView.text.toString()
         val phoneNum = SignUpPhoneEditText.text.toString()
         val birth = SignUpBirthEditText.text.toString()
-        var stuGrade = 0
-        var stuClass = 0
-        var stuNum = 0
-        var stuYear = 0
+        val stuGrade: Int
+        val stuClass: Int
+        val stuNum: Int
+        val stuYear: Int
         val email = SignUpEmailEditText.text.toString()
 
-        if (idConfirm == false) {
+        if (!idConfirm) {
             toast("ID 중복확인을 해주세요")
             return
         }
@@ -221,7 +205,7 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        if (stuAuth == false) {
+        if (!stuAuth) {
             toast("학번인증을 해주세요")
             return
         }
@@ -238,16 +222,16 @@ class SignUpActivity : AppCompatActivity() {
 
         val regData = HashMap<String, Any>()
 
-        regData.put("id", id)
-        regData.put("password", password)
-        regData.put("name", name)
-        regData.put("phone", phoneNum)
-        regData.put("birth", birth)
-        regData.put("schoolgrade", stuGrade)
-        regData.put("schoolclass", stuClass)
-        regData.put("schoolnumber", stuNum)
-        regData.put("role", "student")
-        regData.put("year", stuYear)
+        regData["id"] = id
+        regData["password"] = password
+        regData["name"] = name
+        regData["phone"] = phoneNum
+        regData["birth"] = birth
+        regData["schoolgrade"] = stuGrade
+        regData["schoolclass"] = stuClass
+        regData["schoolnumber"] = stuNum
+        regData["role"] = "student"
+        regData["year"] = stuYear
 //        regData.put("email", email)
 
 //        val agency = SignUpPhoneDropdown.selectedItem.toString()
@@ -262,7 +246,7 @@ class SignUpActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
                         startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
                     } else {
                         toast("회원가입 실패")
@@ -283,7 +267,7 @@ class SignUpActivity : AppCompatActivity() {
         val id = SignUpIdEditTextView.text.toString()
 
         if (id != "") {
-            idMap.put("id", id)
+            idMap["id"] = id
         } else {
             toast("ID를 입력해주세요")
             return
@@ -297,7 +281,7 @@ class SignUpActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful) {
-                        if(response.body()!!.get("success") == "true") {
+                        if(response.body()!!["success"] == "true") {
 //                            alert("사용할 수 없는 ID입니다.") {
 //                                yesButton { }
 //                            }
@@ -335,16 +319,16 @@ class SignUpActivity : AppCompatActivity() {
         var stuNum = SignUpStuNumEditText.text.toString()
 
         if (stuClass.length == 1) {
-            stuClass = "0" + stuClass
+            stuClass = "0$stuClass"
         }
         if (stuNum.length == 1) {
-            stuNum = "0" + stuNum
+            stuNum = "0$stuNum"
         }
 
         val authNum = year + stuGrade + stuClass + stuNum
 
-        authMap.put("name", name)
-        authMap.put("studentId", authNum)
+        authMap["name"] = name
+        authMap["studentId"] = authNum
 
         (application as MasterApplication).service.authStudent(authMap)
             .enqueue(object : Callback<HashMap<String, String>> {
@@ -353,7 +337,7 @@ class SignUpActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful) {
-                        if(response.body()!!.get("success") == "true") {
+                        if(response.body()!!["success"] == "true") {
                             SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
                             SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
                             SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)

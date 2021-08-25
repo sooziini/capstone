@@ -3,13 +3,10 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.example.capstone.network.MasterApplication
-import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_find_password.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -18,7 +15,7 @@ import retrofit2.Response
 
 class FindPasswordActivity : AppCompatActivity() {
     // 키보드 InputMethodManager 변수 선언
-    var imm: InputMethodManager? = null
+    private var imm: InputMethodManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,17 +57,17 @@ class FindPasswordActivity : AppCompatActivity() {
     private fun sendTempPassword() {
         val id = FindPasswordIdEditText.text.toString()
         val name = FindPasswordNameEditText.text.toString()
-        val stuId = FindPasswordStuIdEditText.text.toString()
+        val stuId = FindPasswordStuYearEditText.text.toString() + FindPasswordStuIdEditText.text.toString()
         val map = HashMap<String, String>()
 
-        if (id.length == 0 || name.length == 0 || stuId.length == 0) {
+        if (id.isEmpty() || name.isEmpty() || stuId.isEmpty()) {
             toast("빈칸 없이 입력해주세요")
             return
         }
 
-        map.put("id", id)
-        map.put("name", name)
-        map.put("studentId", stuId)
+        map["id"] = id
+        map["name"] = name
+        map["studentId"] = stuId
 
         (application as MasterApplication).service.findPassword(map)
             .enqueue(object : Callback<HashMap<String, String>> {

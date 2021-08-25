@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
-import kotlinx.android.synthetic.main.school_meal_item.view.*
 
 class MealActAdapter(
     private val mealList: ArrayList<Meal>,
@@ -25,11 +24,10 @@ class MealActAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealActViewHolder {
-        lateinit var view: View
-        if (mealList.size != 0)
-            view = inflater.inflate(R.layout.school_meal_item, parent, false)
+        val view: View = if (mealList.size != 0)
+            inflater.inflate(R.layout.school_meal_item, parent, false)
         else
-            view = inflater.inflate(R.layout.school_meal_null_item, parent, false)
+            inflater.inflate(R.layout.school_meal_null_item, parent, false)
         return MealActViewHolder(view)
     }
 

@@ -1,16 +1,22 @@
 package com.example.capstone
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.Reply
@@ -25,15 +31,16 @@ import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
+    val BASE_URL = "http://192.168.0.2:3000"
+    var imm: InputMethodManager? = null
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
     private lateinit var boardDetailBody: String
     private lateinit var boardDetailType: String
+    private lateinit var boardDetailUserId: String
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
-    var detailLike = 0
-    var detailScrap = 0
     private lateinit var replyAdapter: ReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +51,9 @@ class BoardDetailActivity : AppCompatActivity() {
         setSupportActionBar(board_detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
+        // 키보드 InputMethodManager 세팅
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     }
 
     override fun onResume() {
@@ -58,7 +68,6 @@ class BoardDetailActivity : AppCompatActivity() {
 
             // 받은 board_id로 댓글 GET
             retrofitGetReplyList(intentBoardId)
-
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -94,36 +103,38 @@ class BoardDetailActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val post = response.body()!!.data[0]
-                        val postImg = response.body()!!.imagepath
+                        val postImgList = response.body()!!.imagepath
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
                         boardDetailType = post.type
+                        boardDetailUserId = post.user_id
                         boardDetailGoodCnt = post.goodCount.toString()
                         boardDetailScrapCnt = post.scrapCount.toString()
                         board_detail_title.setText(boardDetailTitle).toString()
                         board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
-                        // board_detail_nickname.setText(post.user_id).toString()
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
 
-                        if (post.goodCheck == "N") detailLike = 0
-                        else {
+                        if (post.goodCheck == "Y")
                             board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
-                            detailLike = 1
-                        }
-                        if (post.scrapCheck == "N") detailScrap = 0
-                        else {
+                        if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
-                            detailScrap = 1
-                        }
 
                         // 사진이 있을 경우
-                        if (postImg.size > 1) {
+                        if (postImgList.size > 0) {
+                            val uriPaths: ArrayList<Uri> = ArrayList()
+                            for (i in 0 until postImgList.size)
+                                uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
 
+                            Log.d("abc", uriPaths.toString())
+                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity))
+                            board_detail_img_recyclerview.adapter = adapter
+                            board_detail_img_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity).also {
+                                it.orientation = LinearLayoutManager.HORIZONTAL
+                            }
                         }
-
                     } else {
                         toast("게시글 조회 실패")
                     }
@@ -147,7 +158,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val replyList = response.body()?.data
-                        var reply = ArrayList<Reply>()
+                        val reply = ArrayList<Reply>()
 
                         if (replyList != null && replyList.size > 0) {
                             // 새로운 replyList 생성
@@ -157,7 +168,7 @@ class BoardDetailActivity : AppCompatActivity() {
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater)
+                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
                             reply_recyclerview.adapter = replyAdapter
                             reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                             reply_recyclerview.setHasFixedSize(true)
@@ -183,7 +194,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     call: Call<HashMap<String, Any>>,
                     response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         // replyAdapter.notifyDataSetChanged()
 
                         // 임시방편
@@ -213,17 +224,15 @@ class BoardDetailActivity : AppCompatActivity() {
                 call: Call<HashMap<String, String>>,
                 response: Response<HashMap<String, String>>
             ) {
-                if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                    val stat = response.body()!!.get("stat")
+                if (response.isSuccessful && response.body()!!["success"] == "true") {
+                    val stat = response.body()!!["stat"]
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        detailLike = 1
                         boardDetailGoodCnt = (boardDetailGoodCnt.toInt()+1).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        detailLike = 0
                         boardDetailGoodCnt = (boardDetailGoodCnt.toInt()-1).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_like_btn.setImageResource(R.drawable.detail_like)
@@ -248,17 +257,15 @@ class BoardDetailActivity : AppCompatActivity() {
                 call: Call<HashMap<String, String>>,
                 response: Response<HashMap<String, String>>
             ) {
-                if (response.isSuccessful && response.body()!!.get("success") == "true") {
-                    val stat = response.body()!!.get("stat")
+                if (response.isSuccessful && response.body()!!["success"] == "true") {
+                    val stat = response.body()!!["stat"]
                     // 안 누름 -> 누름
                     if (stat == "INSERT") {
-                        detailLike = 1
                         boardDetailScrapCnt = (boardDetailScrapCnt.toInt()+1).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                     } else if (stat == "DELETE") {
                         // 누름 -> 안 누름
-                        detailLike = 0
                         boardDetailScrapCnt = (boardDetailScrapCnt.toInt()-1).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
@@ -282,7 +289,7 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
                 onBackPressed()
@@ -303,6 +310,11 @@ class BoardDetailActivity : AppCompatActivity() {
                 // 현재 activity가 종료되었을 경우 dialog를 설정하지 않음
                 if (!this.isFinishing)
                     setDeleteDialog()
+                return true
+            }
+            R.id.board_detail_report -> {
+                if (!this.isFinishing)
+                    setReportDialog()
                 return true
             }
         }
@@ -331,23 +343,18 @@ class BoardDetailActivity : AppCompatActivity() {
     // 게시글 삭제하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
     private fun setDeleteDialog() {
         val builder = AlertDialog.Builder(this)
-            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
-            .create()
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "게시글을 삭제하시겠습니까?"
-        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
-        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
 
-        // 확인 버튼 눌렀을 때
-        okBtn.setOnClickListener {
+        builder.setPositiveButton("확인") { dialog, it ->
             (application as MasterApplication).service.deletePostDetail(intentBoardId)
                 .enqueue(object : Callback<HashMap<String, String>> {
                     override fun onResponse(
                         call: Call<HashMap<String, String>>,
                         response: Response<HashMap<String, String>>
                     ) {
-                        if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        if (response.isSuccessful && response.body()!!["success"] == "true") {
                             val intent = Intent(this@BoardDetailActivity, BoardActivity::class.java)
                             intent.putExtra("type", boardDetailType)
                             startActivity(intent)
@@ -364,11 +371,49 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
                 })
         }
-        // 취소 버튼 눌렀을 때
-        cancelBtn.setOnClickListener {
-            builder.dismiss()
-        }
+            .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
+    }
+
+    // 게시글 신고하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
+    private fun setReportDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reply, null)
+        val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
+        dialogEditText.hint = "신고 사유를 입력해 주세요"
+
+        builder.setPositiveButton("확인") { dialog, it ->
+            val body = dialogEditText.text.toString()
+            val params = HashMap<String, Any>()
+            params["board_id"] = intentBoardId
+            params["recv_id"] = boardDetailUserId
+            params["body"] = body
+            (application as MasterApplication).service.reportPost(params)
+                .enqueue(object : Callback<HashMap<String, String>> {
+                    override fun onResponse(
+                        call: Call<HashMap<String, String>>,
+                        response: Response<HashMap<String, String>>
+                    ) {
+                        if (response.isSuccessful && response.body()!!["success"] == "true") {
+                            toast("신고가 접수되었습니다")
+                        } else {
+                            toast("게시글 신고 실패")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                        toast("network error")
+                        finish()
+                    }
+                })
+        }
+            .setNegativeButton("취소", null)
+        builder.setView(dialogView)
+        builder.show()
+    }
+
+    fun hideKeyboard(v: View) {
+        imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

@@ -9,4 +9,8 @@
         android:id="@+id/board_detail_delete"
         android:title="@string/delete"
         app:showAsAction="withText" />
+    <item
+        android:id="@+id/board_detail_report"
+        android:title="@string/report"
+        app:showAsAction="withText" />
 </menu>

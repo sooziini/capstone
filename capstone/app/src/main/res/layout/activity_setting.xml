@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
-                app:srcCompat="@drawable/home_myinfo" />
+                app:srcCompat="@drawable/ic_photo" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,6 +72,28 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="   비밀번호 변경"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/SettingMyInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/underline"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                app:srcCompat="@drawable/home_myinfo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="   내 정보"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 

@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChangeProfileImageActivity"></activity>
+        <activity android:name=".MyInfoActivity"></activity>
+        <activity android:name=".ChangeProfileImageActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".FindPasswordActivity" />
         <activity android:name=".SchoolMealActivity" />

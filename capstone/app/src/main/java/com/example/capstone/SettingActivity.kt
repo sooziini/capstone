@@ -26,13 +26,21 @@ class SettingActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
+        // 프로필 사진 변경
         SettingChangeImageLayout.setOnClickListener {
             startActivity(Intent(this@SettingActivity, ChangeProfileImageActivity::class.java))
             finish()
         }
 
+        // 비밀번호 변경
         SettingChangePasswordLayout.setOnClickListener {
             startActivity(Intent(this@SettingActivity, ChangePasswordActivity::class.java))
+            finish()
+        }
+
+        // 내 정보
+        SettingMyInfoLayout.setOnClickListener {
+            startActivity((Intent(this, MyInfoActivity::class.java)))
             finish()
         }
 

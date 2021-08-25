@@ -176,4 +176,8 @@ interface RetrofitService {
     fun changePassword(
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
+
+    // 회원탈퇴
+    @DELETE("user/delete")
+    fun deleteUser():Call<HashMap<String, String>>
 }

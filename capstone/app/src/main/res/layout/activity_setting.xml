@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#FFFFFF"
     tools:context=".SettingActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -34,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/setting_toolbar">
 
         <LinearLayout
+            android:id="@+id/SettingChangeImageLayout"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/underline"
@@ -41,14 +41,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/SettingChangeImageImage"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
                 app:srcCompat="@drawable/home_myinfo" />
 
             <TextView
-                android:id="@+id/SettingChangeImageText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -57,20 +55,19 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/SettingChangePasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/underline"
             android:gravity="center_vertical">
 
             <ImageView
-                android:id="@+id/SettingChangePasswordImage"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
                 app:srcCompat="@drawable/ic_change_password" />
 
             <TextView
-                android:id="@+id/SettingChangePasswordText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -79,9 +76,26 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/SettinguserDeleteLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_height="45dp"
+            android:background="@drawable/underline"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                app:srcCompat="@drawable/ic_personoff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="   회원탈퇴"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        </LinearLayout>
 
     </LinearLayout>
 

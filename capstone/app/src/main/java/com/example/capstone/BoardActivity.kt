@@ -36,8 +36,11 @@ class BoardActivity : AppCompatActivity() {
         if (intent.hasExtra("type")) {
             type = intent.getStringExtra("type")!!
 
-            // 해당 게시판 전체 게시글 GET
-            retrofitGetPostList(type)
+            if (type == "error") {
+                toast("접근 권한이 없습니다")
+                finish()
+            } else
+                retrofitGetPostList(type)   // 해당 게시판 전체 게시글 GET
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()

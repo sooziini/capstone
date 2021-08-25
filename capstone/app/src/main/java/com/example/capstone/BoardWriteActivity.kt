@@ -92,7 +92,6 @@ class BoardWriteActivity : AppCompatActivity() {
     // 글쓰기 완료 버튼 눌렀을 때 뜨는 dialog 설정 함수
     private fun setWriteDialog(title: String, body: String) {
         val builder = AlertDialog.Builder(this)
-            // .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         when (intentBoardWriteId) {
@@ -120,7 +119,7 @@ class BoardWriteActivity : AppCompatActivity() {
             // image라는 타입 정해주고, 실제 찾은 file을 넣어줌
             val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), file)
             // "images" -> 서버한테 보낼 때 사용할 이름
-            val part = MultipartBody.Part.createFormData("image", file.name, fileRequestBody)
+            val part = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
             images.add(part)
         }
 
@@ -185,6 +184,7 @@ class BoardWriteActivity : AppCompatActivity() {
         }
     }
 
+    //images: ArrayList<MultipartBody.Part>
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
     private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
@@ -194,7 +194,7 @@ class BoardWriteActivity : AppCompatActivity() {
                     call: Call<HashMap<String, Any>>,
                     response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         val intent = Intent(this@BoardWriteActivity, BoardActivity::class.java)
                         intent.putExtra("type", intentType)
                         startActivity(intent)
@@ -221,7 +221,7 @@ class BoardWriteActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
                         val intent = Intent(this@BoardWriteActivity, BoardDetailActivity::class.java)
                         intent.putExtra("board_id", board_id)
                         intent.putExtra("activity_num", "0")

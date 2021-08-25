@@ -115,4 +115,10 @@ class SearchActivity : AppCompatActivity() {
                 }
             })
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this@SearchActivity, BoardActivity::class.java)
+        intent.putExtra("type", type)
+        startActivity(intent)
+    }
 }

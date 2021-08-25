@@ -128,6 +128,7 @@ class BoardDetailActivity : AppCompatActivity() {
                             for (i in 0 until postImgList.size)
                                 uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
 
+                            Log.d("abc", uriPaths.toString())
                             val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity))
                             board_detail_img_recyclerview.adapter = adapter
                             board_detail_img_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity).also {
@@ -193,7 +194,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     call: Call<HashMap<String, Any>>,
                     response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         // replyAdapter.notifyDataSetChanged()
 
                         // 임시방편
@@ -288,7 +289,7 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
                 onBackPressed()
@@ -353,7 +354,7 @@ class BoardDetailActivity : AppCompatActivity() {
                         call: Call<HashMap<String, String>>,
                         response: Response<HashMap<String, String>>
                     ) {
-                        if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        if (response.isSuccessful && response.body()!!["success"] == "true") {
                             val intent = Intent(this@BoardDetailActivity, BoardActivity::class.java)
                             intent.putExtra("type", boardDetailType)
                             startActivity(intent)
@@ -376,7 +377,7 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     // 게시글 신고하기 버튼 눌렀을 때 뜨는 dialog 설정 함수
-    fun setReportDialog() {
+    private fun setReportDialog() {
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.dialog_reply, null)
         val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
@@ -394,7 +395,7 @@ class BoardDetailActivity : AppCompatActivity() {
                         call: Call<HashMap<String, String>>,
                         response: Response<HashMap<String, String>>
                     ) {
-                        if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                        if (response.isSuccessful && response.body()!!["success"] == "true") {
                             toast("신고가 접수되었습니다")
                         } else {
                             toast("게시글 신고 실패")

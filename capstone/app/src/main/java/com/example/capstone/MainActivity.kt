@@ -3,6 +3,7 @@ package com.example.capstone
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,10 +29,10 @@ import kotlin.math.round
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
-    // lateinit var sp: SharedPreferences
     private lateinit var dayn: String
     lateinit var studentId: String
     lateinit var studentName: String
+    lateinit var studentYear: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         if(response.body()!!["success"].toString() == "true") {
                             val data = response.body()!!["data"] as LinkedTreeMap<String, Any>
+                            studentYear = (data["year"] as Double).roundToInt().toString()
+                            
                             val stug = (data["schoolgrade"] as Double).roundToInt().toString()
                             var stuc = (data["schoolclass"] as Double).roundToInt().toString()
                             var stun = (data["schoolnumber"] as Double).roundToInt().toString()
@@ -80,7 +83,6 @@ class MainActivity : AppCompatActivity() {
                             Home_WelcomeText.text = studentId + " " + studentName + "님, 환영합니다!"
                         } else {
                             toast("success != true")
-//                            toast("데이터 로드 실패")
                         }
                     } else {
                         toast("데이터 로드 실패")
@@ -114,6 +116,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.drawer_main_menu_school -> {
                     main_drawerlayout.closeDrawers()
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://sangmyung-agh.sen.hs.kr/index.do"))
+                    startActivity(intent)
                     true
                 }
                 // 전교생 자유게시판
@@ -127,21 +131,39 @@ class MainActivity : AppCompatActivity() {
                 // 학년별 자유게시판
                 R.id.drawer_board_menu_grade -> {
                     main_drawerlayout.closeDrawers()
+                    val intent = Intent(this, BoardActivity::class.java)
+                    val type = when(studentYear) {
+                        "2021" -> "1st_free"
+                        "2020" -> "2nd_free"
+                        "2019" -> "3rd_free"
+                        else -> "error"
+                    }
+                    intent.putExtra("type", type)
+                    startActivity(intent)
                     true
                 }
                 // 학생 건의함
                 R.id.drawer_activity_menu_sug -> {
                     main_drawerlayout.closeDrawers()
+                    val intent = Intent(this, BoardActivity::class.java)
+                    intent.putExtra("type", "sug")
+                    startActivity(intent)
                     true
                 }
                 // 학생회 공지
                 R.id.drawer_activity_menu_notice -> {
                     main_drawerlayout.closeDrawers()
+                    val intent = Intent(this, BoardActivity::class.java)
+                    intent.putExtra("type", "notice")
+                    startActivity(intent)
                     true
                 }
                 // 동아리 활동
                 R.id.drawer_activity_menu_club -> {
                     main_drawerlayout.closeDrawers()
+                    val intent = Intent(this, BoardActivity::class.java)
+                    intent.putExtra("type", "club")
+                    startActivity(intent)
                     true
                 }
                 // 선생님과의 대화
@@ -217,7 +239,7 @@ class MainActivity : AppCompatActivity() {
                             if (response.isSuccessful && response.body()!!["success"] == "true") {
                                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                                 finish()
-                                toast("로그아웃 되었습니다.")
+                                toast("로그아웃 되었습니다")
                             } else {
                                 toast("로그아웃 실패")
                             }
@@ -243,11 +265,4 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-    // fragment를 교체하는 함수
-//    private fun replaceFragment(fragment: Fragment) {
-//        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()    // 시작
-//        fragmentTransaction.replace(R.id.frameLayout_main_fragment, fragment)    // 할 일
-//        fragmentTransaction.commit()    // 끝
-//    }
 }

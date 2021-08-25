@@ -15,5 +15,6 @@
         android:backgroundTint="@color/reply_child"
         android:nestedScrollingEnabled="false"
         android:orientation="horizontal"
-        android:scrollbars="horizontal" />
+        android:scrollbars="horizontal"
+        android:overScrollMode="never"/>
 </FrameLayout>

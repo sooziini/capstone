@@ -6,9 +6,4 @@
         android:onClick="todoAddOnClick"
         android:title="Todo_Menu_Add"
         app:showAsAction="always" />
-    <item
-        android:icon="@drawable/ic_todo_menu_edit"
-        android:onClick="todoEditOnClick"
-        android:title="Todo_Menu"
-        app:showAsAction="always" />
 </menu>

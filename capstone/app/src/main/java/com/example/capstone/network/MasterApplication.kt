@@ -43,7 +43,7 @@ class MasterApplication: Application() {
 
         // retrofit 생성
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.2:3000/api/")
+            .baseUrl("http://192.168.56.1:3000/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

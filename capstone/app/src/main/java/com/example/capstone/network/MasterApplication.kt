@@ -1,9 +1,15 @@
 package com.example.capstone.network
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import com.example.capstone.LoginActivity
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -56,7 +62,7 @@ class MasterApplication: Application() {
     // -> token 값이 없으면 login X
     private fun checkIsLogin(): Boolean {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        var token = sp.getString("access_token", null)
+        val token = sp.getString("access_token", null)
 
         return token != null
     }
@@ -67,5 +73,32 @@ class MasterApplication: Application() {
 
         return if (token == "null") null
         else token
+    }
+
+    // 토큰 재발급 함수
+    fun retrofitSetRefreshToken(token: String) {
+        service.setRefreshToken(token).enqueue(object : Callback<HashMap<String, String>> {
+            override fun onResponse(
+                call: Call<HashMap<String, String>>,
+                response: Response<HashMap<String, String>>
+            ) {
+                if (response.isSuccessful) {
+                    val accessToken = response.body()!!["access_token"]
+                    val refreshToken = response.body()!!["refresh_token"]
+
+                    val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+                    val editor = sp.edit()
+                    editor.putString("access_token", accessToken)
+                    editor.putString("refresh_token", refreshToken)
+                    editor.apply()
+                } else {
+                    //
+                }
+            }
+
+            override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                //
+            }
+        })
     }
 }

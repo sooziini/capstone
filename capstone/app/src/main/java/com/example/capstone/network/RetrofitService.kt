@@ -178,10 +178,16 @@ interface RetrofitService {
     ): Call<HashMap<String, String>>
 
     // 회원탈퇴
-    @DELETE("user/delete")
+    @DELETE("user/quit")
     fun deleteUser():Call<HashMap<String, String>>
 
     // 본인 정보 조회
     @GET("user/info")
     fun readInfo():Call<HashMap<String, Any>>
+
+    // 본인 정보 수정
+    @PUT("user/info")
+    fun updateInfo(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, Any>>
 }

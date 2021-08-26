@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/round_border"
         android:backgroundTint="@color/reply_child"
+        android:padding="4dp"
         android:nestedScrollingEnabled="false"
         android:orientation="horizontal"
         android:scrollbars="horizontal"

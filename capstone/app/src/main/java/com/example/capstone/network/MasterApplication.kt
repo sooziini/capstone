@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MasterApplication: Application() {
     lateinit var service: RetrofitService
+    val BASE_URL = "http://192.168.0.2:3000"
 
     override fun onCreate() {
         super.onCreate()
@@ -42,7 +43,7 @@ class MasterApplication: Application() {
 
         // retrofit 생성
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.56.1:3000/api/")
+            .baseUrl("$BASE_URL/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

@@ -45,9 +45,8 @@
                 android:id="@+id/SignUpIdTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="ID"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:text="중복확인"
                     android:textAlignment="center"
+                    android:textColor="@color/basic"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="비밀번호"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <EditText
                 android:id="@+id/SignUpPasswordEditTextView"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="비밀번호 확인"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <EditText
                 android:id="@+id/SignUpPassWordCheckEditTextView"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="이름"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <EditText
                 android:id="@+id/SignUpNameEditTextView"
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="생년월일"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <EditText
                 android:id="@+id/SignUpBirthEditText"
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="학년 / 반 / 번호"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,7 +197,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="1"
-                    android:text="학번인증" />
+                    android:text="학번인증"
+                    android:textColor="@color/basic"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
 
             <TextView
@@ -206,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="전화번호"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/basic" />
 
             <LinearLayout
                 android:layout_width="match_parent"

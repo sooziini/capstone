@@ -26,13 +26,11 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="24dp"
-        android:overScrollMode="never"
         android:nestedScrollingEnabled="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/todolist_toolbar">
@@ -48,37 +46,44 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     app:srcCompat="@drawable/ic_baseline_star_24"
                     app:tint="@color/scrap" />
 
                 <TextView
                     android:id="@+id/TodoList_DateTextView"
-                    android:layout_width="246dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="6dp"
                     android:gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/basic"
                     tools:text="0월 0일 (월)" />
 
-                <ImageButton
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
                     android:id="@+id/TodoList_CalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
+                    app:srcCompat="@drawable/ic_baseline_calendar_today_24"
+                    app:tint="@color/main_color" />
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/TodoAct_RecyclerView"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_search"
-                android:overScrollMode="never"
-                android:nestedScrollingEnabled="false"/>
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:background="@drawable/shape_reply_child"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
 
         </LinearLayout>
     </ScrollView>

@@ -26,49 +26,38 @@
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
-        android:padding="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toBottomOf="@+id/timetable_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
 
             <TableLayout
                 android:id="@+id/TimeTable_Table"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/main_color"
-                android:backgroundTint="@color/main_color"
-                android:padding="1dp"
+                android:background="@color/reply_child"
                 android:shrinkColumns="*"
                 android:stretchColumns="1,2,3,4,5,6,7">
 
                 <TableRow
                     android:id="@+id/TimeTable_DayRow"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/main_color"
-                    android:paddingEnd="1dp">
+                    android:background="@color/no_select">
 
                     <View
                         android:id="@+id/view"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="48sp" />
 
                     <TextView
                         android:id="@+id/TimeTable_Mon"
@@ -76,11 +65,12 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="월"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Tue"
@@ -88,11 +78,12 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="화"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Wed"
@@ -100,11 +91,12 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="수"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Thu"
@@ -112,11 +104,12 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="목"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Fri"
@@ -124,11 +117,12 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="금"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Sat"
@@ -136,11 +130,12 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="토"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                 </TableRow>
 
@@ -148,89 +143,97 @@
                     android:id="@+id/TimeTable_Row1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="1dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time1"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="1교시" />
+                        android:text="1교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon1"
                         android:layout_width="match_parent"
-                        android:layout_height="28dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                 </TableRow>
 
@@ -238,529 +241,582 @@
                     android:id="@+id/TimeTable_Row2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time2"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:inputType="text"
-                        android:text="2교시" />
+                        android:text="2교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/TimeTable_Row3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time3"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="3교시" />
+                        android:text="3교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/TimeTable_Row4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time4"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="4교시" />
+                        android:text="4교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/TimeTable_Row5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time5"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="5교시" />
+                        android:text="5교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/TimeTable_Row6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time6"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="6교시" />
+                        android:text="6교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/TimeTable_Row7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@color/no_select">
 
                     <TextView
                         android:id="@+id/TimeTable_Time7"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="48sp"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="7교시" />
+                        android:text="7교시"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Mon7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Tue7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Wed7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Thu7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Fri7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
 
                     <EditText
                         android:id="@+id/TimeTable_Sat7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
-                        android:background="@color/design_default_color_background"
+                        android:background="@color/basic_white"
                         android:ems="1"
                         android:enabled="false"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/basic" />
                 </TableRow>
 
             </TableLayout>

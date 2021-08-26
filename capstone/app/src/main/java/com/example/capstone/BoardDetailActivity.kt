@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,7 @@ import kotlin.collections.ArrayList
 class BoardDetailActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null
+    private var menuUserCheck = true
     private lateinit var BASE_URL: String
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
@@ -118,11 +120,13 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
+                        if (boardDetailType == "notice") board_detail_nickname.setText(boardDetailUserId).toString()
 
                         if (post.goodCheck == "Y")
                             board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+                        if (post.userCheck == "N") menuUserCheck = false
 
                         // 사진이 있을 경우
                         if (postImgList.size > 0) {
@@ -286,6 +290,8 @@ class BoardDetailActivity : AppCompatActivity() {
     // menu xml에서 설정한 menu를 붙임
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.board_detail_menu, menu)
+        if (!menuUserCheck) menu?.setGroupVisible(R.id.board_detail_true, false)
+        else menu?.findItem(R.id.board_detail_report)?.isVisible = false
         return true
     }
 

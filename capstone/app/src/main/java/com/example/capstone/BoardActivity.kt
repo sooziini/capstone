@@ -39,8 +39,19 @@ class BoardActivity : AppCompatActivity() {
             if (type == "error") {
                 toast("접근 권한이 없습니다")
                 finish()
-            } else
+            } else {
+                val text = when (type) {
+                    "1st_free" -> "1학년 자유게시판"
+                    "2nd_free" -> "2학년 자유게시판"
+                    "3rd_free" -> "3학년 자유게시판"
+                    "sug" -> "학생 건의함"
+                    "notice" -> "학생회 공지"
+                    "club" -> "동아리 활동"
+                    else -> "자유게시판"
+                }
+                board_toolbar_text.setText(text).toString()
                 retrofitGetPostList(type)   // 해당 게시판 전체 게시글 GET
+            }
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()

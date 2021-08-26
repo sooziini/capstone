@@ -40,6 +40,7 @@ class ReplyAdapter(
         private val replyLikeBtn: ImageView = itemView.findViewById(R.id.parent_reply_item_like_btn)
         private val replyReportBtn: ImageView = itemView.findViewById(R.id.parent_reply_item_report_btn)
         private var replyVer: Boolean = false
+        private var popUserCheck: Boolean = true
 
         fun bind(reply: Reply) {
             replyBody.text = reply.body
@@ -50,6 +51,7 @@ class ReplyAdapter(
                 replyLikeBtn.setImageResource(R.drawable.detail_like_selected)
                 replyVer = true
             }
+            if (reply.userCheck == "N") popUserCheck = false
 
             // 대댓글 버튼 눌렀을 경우
             replyCommentBtn.setOnClickListener {
@@ -65,6 +67,9 @@ class ReplyAdapter(
             replyReportBtn.setOnClickListener {
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
+
+                if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
+                else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
 
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -91,6 +96,7 @@ class ReplyAdapter(
         private val replyLikeBtn: ImageView = itemView.findViewById(R.id.child_reply_item_like_btn)
         private val replyReportBtn: ImageView = itemView.findViewById(R.id.child_reply_item_report_btn)
         private var replyVer: Boolean = false
+        private var popUserCheck: Boolean = true
 
         fun bind(reply: Reply) {
             replyBody.text = reply.body
@@ -101,6 +107,7 @@ class ReplyAdapter(
                 replyLikeBtn.setImageResource(R.drawable.detail_like_selected)
                 replyVer = true
             }
+            if (reply.userCheck == "N") popUserCheck = false
 
             // 댓글 좋아요 버튼 눌렀을 경우
             replyLikeBtn.setOnClickListener {
@@ -111,6 +118,9 @@ class ReplyAdapter(
             replyReportBtn.setOnClickListener {
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
+
+                if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
+                else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
 
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {

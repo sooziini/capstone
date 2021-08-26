@@ -20,6 +20,7 @@ class PostImageAdapter(
             Glide.with(itemView.context)
                 .load(postUri)
                 .override(300)
+                .placeholder(R.color.reply_child)
                 .into(postImage)
         }
     }

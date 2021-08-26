@@ -26,62 +26,38 @@ class SignUpActivity : AppCompatActivity() {
     var stuAuth = false
 
     inner class IdEditWatcher: TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            Log.d("", "beforeTextChanged: $s")
-        }
-        override fun afterTextChanged(s: Editable?) {
-            Log.d("", "afterTextChanged: $s")
-        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             idConfirm = false
             SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-            toast(idConfirm.toString())
-            Log.d("", "onTextChanged: $s")
         }
     }
 
     inner class NameEditWatcher: TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            Log.d("", "beforeTextChanged: $s")
-        }
-        override fun afterTextChanged(s: Editable?) {
-            Log.d("", "afterTextChanged: $s")
-        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             stuAuth = false
             SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-            toast(stuAuth.toString())
-            Log.d("", "onTextChanged: $s")
         }
     }
 
     inner class YearEditWatcher: TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            Log.d("", "beforeTextChanged: $s")
-        }
-        override fun afterTextChanged(s: Editable?) {
-            Log.d("", "afterTextChanged: $s")
-        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             stuAuth = false
             SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-            toast(stuAuth.toString())
-            Log.d("", "onTextChanged: $s")
         }
     }
 
     inner class StuNumEditWatcher: TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            Log.d("", "beforeTextChanged: $s")
-        }
-        override fun afterTextChanged(s: Editable?) {
-            Log.d("", "afterTextChanged: $s")
-        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             stuAuth = false
             SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-            toast(stuAuth.toString())
-            Log.d("", "onTextChanged: $s")
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,50 +77,29 @@ class SignUpActivity : AppCompatActivity() {
         val gradeList = arrayOf("학년", "1", "2", "3")
         SignUpGradeDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gradeList)
         SignUpGradeDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-//                println("학년")
-            }
-
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                println("$p2")
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) { }
         }
 
         // 반 드롭다운 스피너
-//        val classList = Array(8, {i -> i + 1})     // 반 드롭다운 배열
         val classList = arrayOf("반", "1", "2", "3", "4", "5", "6", "7", "8")
         SignUpClassDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, classList)
         SignUpClassDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-//                println("반")
-            }
-
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                println("$p2")
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) { }
         }
-
-        val idWatcher = IdEditWatcher()
-        SignUpIdEditTextView.addTextChangedListener(idWatcher)
-
-        val nameWatcher = NameEditWatcher()
-        SignUpNameEditTextView.addTextChangedListener(nameWatcher)
-
-        val yearEditWatcher = YearEditWatcher()
-        SignUpYearEditText.addTextChangedListener(yearEditWatcher)
-
-        val stuNumEditWatcher = StuNumEditWatcher()
-        SignUpStuNumEditText.addTextChangedListener(stuNumEditWatcher)
 
         // ID 중복확인 버튼
         SignUpIdButton.setOnClickListener {
             checkIdDup()
         }
 
-        SignUpButton.setOnClickListener {       // 회원가입 버튼
+        // 회원가입 버튼
+        SignUpButton.setOnClickListener {
             signUp()        // 가입 메소드
         }
 
+        // 학번인증 버튼
         SignUpAuthButton.setOnClickListener {
             auth()
         }
@@ -209,10 +164,10 @@ class SignUpActivity : AppCompatActivity() {
             toast("학번인증을 해주세요")
             return
         }
-//        if(SignUpEmailEditText.text.isEmpty()) {
-//            toast("이메일을 입력해 주세요")
-//            return
-//        }
+        if(SignUpEmailEditText.text.isEmpty()) {
+            toast("이메일을 입력해 주세요")
+            return
+        }
 
         // 모든 칸에 빈칸이 없다면
         if (name == "" || phoneNum == "" || birth == "" || email == "") {
@@ -232,12 +187,7 @@ class SignUpActivity : AppCompatActivity() {
         regData["schoolnumber"] = stuNum
         regData["role"] = "student"
         regData["year"] = stuYear
-//        regData.put("email", email)
-
-//        val agency = SignUpPhoneDropdown.selectedItem.toString()
-
-        // 가입 구현
-        // 닉네임, ID, (학년,반), (통신사, 휴대폰 번호) 중복되지 않을 시
+        regData["email"] = email
 
         // 입력받은 회원정보 POST
         (application as MasterApplication).service.signUp(regData)
@@ -282,19 +232,15 @@ class SignUpActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         if(response.body()!!["success"] == "true") {
-//                            alert("사용할 수 없는 ID입니다.") {
-//                                yesButton { }
-//                            }
                             idConfirm = false
                             toast("사용할 수 없는 ID 입니다.")
                             SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
                         } else {
-//                            alert("사용할 수 있는 ID입니다.") {
-//                                yesButton {  }
-//                            }
                             idConfirm = true
                             toast("사용할 수 있는 ID입니다.")
                             SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                            val idWatcher = IdEditWatcher()
+                            SignUpIdEditTextView.addTextChangedListener(idWatcher)
                         }
                     } else {
                         toast("중복확인 실패")
@@ -343,6 +289,14 @@ class SignUpActivity : AppCompatActivity() {
                             SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
                             stuAuth = true
                             toast("학생인증 성공")
+                            val nameWatcher = NameEditWatcher()
+                            SignUpNameEditTextView.addTextChangedListener(nameWatcher)
+
+                            val yearEditWatcher = YearEditWatcher()
+                            SignUpYearEditText.addTextChangedListener(yearEditWatcher)
+
+                            val stuNumEditWatcher = StuNumEditWatcher()
+                            SignUpStuNumEditText.addTextChangedListener(stuNumEditWatcher)
                         } else {
                             SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
                             SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)

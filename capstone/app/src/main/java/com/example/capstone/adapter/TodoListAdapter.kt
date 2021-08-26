@@ -50,11 +50,10 @@ class TodoListAdapter(
 
             box?.setOnLongClickListener {
                 val builder = AlertDialog.Builder(context)
-                builder.setTitle("삭제")
+                builder.setTitle("일정 삭제")
                 builder.setMessage("해당 일정을 삭제하시겠습니까?")
                 builder.setIcon(R.drawable.ic_todo_delete)
 
-                // 버튼 클릭시에 무슨 작업을 할 것인가!
                 val listener = object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         when (p1) {

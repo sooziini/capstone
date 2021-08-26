@@ -2,7 +2,6 @@ package com.example.capstone.network
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

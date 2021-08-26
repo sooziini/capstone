@@ -10,6 +10,7 @@ import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
+    // @Headers("content-type: application/json")
     // 게시글 목록 조회
     @GET("board/")
     fun getPostList(
@@ -17,7 +18,6 @@ interface RetrofitService {
     ): Call<PostList>
 
     // 게시글 생성
-    // @Headers("content-type: application/json")
     @Multipart
     @POST("board/")
     fun createPost(
@@ -68,6 +68,12 @@ interface RetrofitService {
         @Path("boardid") board_id: String
     ): Call<HashMap<String, String>>
 
+    // 게시글 신고
+    @POST("board/report")
+    fun reportPost(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
     // 댓글 조회
     @GET("reply/{boardid}")
     fun getReplyList(
@@ -81,6 +87,34 @@ interface RetrofitService {
         @Path("boardid") board_id: String,
         @Field("body") body: String
     ): Call<HashMap<String, Any>>
+
+    // 대댓글 등록
+    @POST("reply/{boardid}/{replyid}")
+    @FormUrlEncoded
+    fun createReplyReply(
+        @Path("boardid") board_id: String,
+        @Path("replyid") reply_id: String,
+        @Field("body") body: String
+    ): Call<HashMap<String, Any>>
+
+    // 댓글 삭제
+    @DELETE("reply/{boardid}/{replyid}")
+    fun deleteReply(
+        @Path("boardid") board_id: String,
+        @Path("replyid") reply_id: String
+    ): Call<HashMap<String, String>>
+
+    // 댓글 좋아요
+    @GET("reply/good/{replyid}")
+    fun goodReply(
+        @Path("replyid") reply_id: String
+    ): Call<HashMap<String, String>>
+
+    // 댓글 신고
+    @POST("reply/report")
+    fun reportReply(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
 
     // 스크랩한 게시글 목록 조회
     @GET("board/scrap")
@@ -118,14 +152,36 @@ interface RetrofitService {
     @GET("auth/valid")
     fun authorization():Call<HashMap<String, Any>>
 
+    // 비밀번호 찾기
     @POST("user/password/find")
     fun findPassword(
         @Body params: HashMap<String, String>
     ):Call<HashMap<String, String>>
 
+    // 식단표 받아오기
     @GET("school/cafeteria?")
     fun loadMeal(
         @Query ("MLSV_FROM_YMD") start: String,
         @Query ("MLSV_TO_YMD") end: String
     ): Call<HashMap<String, Any>>
+
+    // 비밀번호 확인
+    @POST("user/password/check")
+    fun checkPassword(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    // 비밀번호 변경
+    @POST("user/password/change")
+    fun changePassword(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    // 회원탈퇴
+    @DELETE("user/delete")
+    fun deleteUser():Call<HashMap<String, String>>
+
+    // 본인 정보 조회
+    @GET("user/info")
+    fun readInfo():Call<HashMap<String, Any>>
 }

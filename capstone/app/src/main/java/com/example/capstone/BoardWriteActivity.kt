@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -90,25 +92,17 @@ class BoardWriteActivity : AppCompatActivity() {
     // 글쓰기 완료 버튼 눌렀을 때 뜨는 dialog 설정 함수
     private fun setWriteDialog(title: String, body: String) {
         val builder = AlertDialog.Builder(this)
-            .setCancelable(false)       // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않음
-            .create()
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         when (intentBoardWriteId) {
             "-1" -> dialogText.text = "게시글을 작성하시겠습니까?"
             else -> dialogText.text = "게시글을 수정하시겠습니까?"
         }
-        val okBtn = dialogView.findViewById<Button>(R.id.dialog_board_ok_btn)
-        val cancelBtn = dialogView.findViewById<Button>(R.id.dialog_board_cancel_btn)
 
-        // 확인 버튼 눌렀을 때
-        okBtn.setOnClickListener {
-            submitWritePost(title, body)
-        }
-        // 취소 버튼 눌렀을 때
-        cancelBtn.setOnClickListener {
-            builder.dismiss()
-        }
+        builder.setPositiveButton("확인") { dialog, it ->
+                submitWritePost(title, body)
+            }
+            .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
     }
@@ -117,21 +111,17 @@ class BoardWriteActivity : AppCompatActivity() {
     private fun submitWritePost(title: String, body: String) {
         val postTitle = RequestBody.create(MediaType.parse("text/plain"), title)
         val postBody = RequestBody.create(MediaType.parse("text/plain"), body)
-        var images = ArrayList<MultipartBody.Part>()
+        val images = ArrayList<MultipartBody.Part>()
 
         for (i in 0 until filePaths.size) {
             // File(찾을 파일 주소) -> File 클래스가 알아서 파일을 찾아줌
             val file = File(filePaths[i])
             // image라는 타입 정해주고, 실제 찾은 file을 넣어줌
             val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-            // "image" -> 서버한테 보낼 때 사용할 이름
-            // MultipartBody -> Body가 여러개
-            // 이미지를 보낼 때 하나만 딱 보내는 게 아니고 여러개 쪼개서 보냄
+            // "images" -> 서버한테 보낼 때 사용할 이름
             val part = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
             images.add(part)
         }
-
-        Log.d("abc", images.toString())
 
         // 새 글 작성의 경우 입력받은 title, body, images POST
         if (intentBoardWriteId == "-1") retrofitCreatePost(postTitle, postBody, images)
@@ -149,7 +139,7 @@ class BoardWriteActivity : AppCompatActivity() {
     }
 
     // 선택한 이미지 파일의 절대 경로 구하는 함수
-    private fun getImageFilePath(contentUri: Uri): String {
+    fun getImageFilePath(contentUri: Uri): String {
         var columnIndex = 0
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(contentUri, projection, null, null, null)
@@ -188,13 +178,13 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 이미지 미리보기 화면
         val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this))
-        // val adapter = PostImageAdapter(filePaths, LayoutInflater.from(this))
-        post_img_recyclerview.adapter = adapter
-        post_img_recyclerview.layoutManager = LinearLayoutManager(this).also {
+        board_write_img_recyclerview.adapter = adapter
+        board_write_img_recyclerview.layoutManager = LinearLayoutManager(this).also {
             it.orientation = LinearLayoutManager.HORIZONTAL
         }
     }
 
+    //images: ArrayList<MultipartBody.Part>
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
     private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
@@ -204,7 +194,7 @@ class BoardWriteActivity : AppCompatActivity() {
                     call: Call<HashMap<String, Any>>,
                     response: Response<HashMap<String, Any>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success").toString() == "true") {
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         val intent = Intent(this@BoardWriteActivity, BoardActivity::class.java)
                         intent.putExtra("type", intentType)
                         startActivity(intent)
@@ -231,7 +221,7 @@ class BoardWriteActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful && response.body()!!.get("success") == "true") {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
                         val intent = Intent(this@BoardWriteActivity, BoardDetailActivity::class.java)
                         intent.putExtra("board_id", board_id)
                         intent.putExtra("activity_num", "0")
@@ -298,7 +288,6 @@ class BoardWriteActivity : AppCompatActivity() {
     // 액티비티 최상위 layout에 onClick 세팅
     // 해당 layout 내 view 클릭 시 함수 실행
     fun hideKeyboard(v: View) {
-        if (v != null)
-            imm?.hideSoftInputFromWindow(v.windowToken, 0)
+        imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

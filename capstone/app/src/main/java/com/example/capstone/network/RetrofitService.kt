@@ -11,6 +11,7 @@ import retrofit2.http.*
 
 interface RetrofitService {
     // @Headers("content-type: application/json")
+
     // 게시글 목록 조회
     @GET("board/")
     fun getPostList(
@@ -152,6 +153,13 @@ interface RetrofitService {
     @GET("auth/valid")
     fun authorization():Call<HashMap<String, Any>>
 
+    // 토큰 재발급
+    @FormUrlEncoded
+    @POST("auth/refresh")
+    fun setRefreshToken(
+        @Field("token") token: String
+    ): Call<HashMap<String, String>>
+
     // 비밀번호 찾기
     @POST("user/password/find")
     fun findPassword(
@@ -184,4 +192,21 @@ interface RetrofitService {
     // 본인 정보 조회
     @GET("user/info")
     fun readInfo():Call<HashMap<String, Any>>
+
+    // 프로필 사진 설정
+    @Multipart
+    @POST("user/profile")
+    fun setUserProfile(
+        @Part profile: MultipartBody.Part
+    ): Call<HashMap<String, String>>
+
+    // 프로필 사진 조회
+    @GET("user/profile")
+    fun getUserProfile(
+        @Query("id") user_id: String,
+    ): Call<HashMap<String, String>>
+
+    // 프로필 사진 삭제
+    @DELETE("user/profile")
+    fun deleteUserProfile(): Call<HashMap<String, String>>
 }

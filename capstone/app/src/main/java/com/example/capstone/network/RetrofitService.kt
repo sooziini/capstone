@@ -2,11 +2,11 @@ package com.example.capstone.network
 
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -87,7 +87,7 @@ interface RetrofitService {
     fun createReply(
         @Path("boardid") board_id: String,
         @Field("body") body: String
-    ): Call<HashMap<String, Any>>
+    ): Call<ReplyChange>
 
     // 대댓글 등록
     @POST("reply/{boardid}/{replyid}")
@@ -96,7 +96,7 @@ interface RetrofitService {
         @Path("boardid") board_id: String,
         @Path("replyid") reply_id: String,
         @Field("body") body: String
-    ): Call<HashMap<String, Any>>
+    ): Call<ReplyChange>
 
     // 댓글 삭제
     @DELETE("reply/{boardid}/{replyid}")

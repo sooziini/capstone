@@ -21,6 +21,7 @@ import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.Reply
+import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_detail.*
@@ -173,11 +174,12 @@ class BoardDetailActivity : AppCompatActivity() {
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
-                            reply_recyclerview.adapter = replyAdapter
-                            reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
-                            reply_recyclerview.setHasFixedSize(true)
                         }
+                        replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
+                        reply_recyclerview.adapter = replyAdapter
+                        reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
+                        reply_recyclerview.setHasFixedSize(true)
+
                     } else {
                         toast("댓글 조회 실패")
                     }
@@ -194,27 +196,23 @@ class BoardDetailActivity : AppCompatActivity() {
     // 입력받은 댓글 POST하는 함수
     private fun retrofitCreateReply(board_id: String, body: String) {
         (application as MasterApplication).service.createReply(board_id, body)
-            .enqueue(object : Callback<HashMap<String, Any>> {
+            .enqueue(object : Callback<ReplyChange> {
                 override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
+                    call: Call<ReplyChange>,
+                    response: Response<ReplyChange>
                 ) {
-                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
-                        // replyAdapter.notifyDataSetChanged()
-
-                        // 임시방편
-                        finish()
-                        val intent = Intent(this@BoardDetailActivity, BoardDetailActivity::class.java)
-                        intent.putExtra("board_id", intentBoardId)
-                        intent.putExtra("activity_num", "0")
-                        startActivity(intent)
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        val reply = response.body()!!.data
+                        replyAdapter.addReplyItem(reply)
+                        board_detail_comment.setText("").toString()
+                        hideKeyboard(board_detail_hidekeyboard)
                     } else {
                         toast("댓글 작성 실패")
                     }
                 }
 
                 // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                override fun onFailure(call: Call<ReplyChange>, t: Throwable) {
                     toast("network error")
                     finish()
                 }

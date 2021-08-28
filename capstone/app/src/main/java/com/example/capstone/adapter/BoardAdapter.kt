@@ -1,5 +1,6 @@
 package com.example.capstone.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import com.example.capstone.dataclass.Post
 import com.example.capstone.R
 
 class BoardAdapter (
-    private val postList: ArrayList<Post>,
+    private var postList: ArrayList<Post>,
     private val inflater: LayoutInflater,
     private val itemClick: (Post) -> Unit
 ): RecyclerView.Adapter<BoardAdapter.PostViewHolder>() {
@@ -35,6 +36,11 @@ class BoardAdapter (
 
             itemView.setOnClickListener { itemClick(post) }
         }
+    }
+
+    fun refreshPostItem(posts: ArrayList<Post>) {
+        postList = posts
+        notifyDataSetChanged()
     }
 
     // 뷰홀더 생성

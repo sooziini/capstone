@@ -3,11 +3,13 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.BoardAdapter
+import com.example.capstone.dataclass.Post
 import com.example.capstone.dataclass.PostList
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board.*
@@ -19,6 +21,8 @@ import retrofit2.Response
 class BoardActivity : AppCompatActivity() {
 
     lateinit var type: String
+    private lateinit var boardAdapter: BoardAdapter
+    var postList = ArrayList<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +54,7 @@ class BoardActivity : AppCompatActivity() {
                     else -> "자유게시판"
                 }
                 board_toolbar_text.setText(text).toString()
-                retrofitGetPostList(type)   // 해당 게시판 전체 게시글 GET
+                retrofitGetPostList(false)   // 해당 게시판 전체 게시글 GET
             }
         } else {
             // intent 실패할 경우 현재 액티비티 종료
@@ -65,28 +69,38 @@ class BoardActivity : AppCompatActivity() {
             intent.putExtra("board_write_body", "-1")
             startActivity(intent)
         }
+
+        // swipe refresh
+        post_swipeRefresh.setOnRefreshListener {
+            retrofitGetPostList(true)   // 비동기 필요한듯?
+            post_swipeRefresh.isRefreshing = false
+        }
     }
 
     // 게시판 전체 게시글 GET하는 함수
-    private fun retrofitGetPostList(type: String) {
+    private fun retrofitGetPostList(swipe: Boolean) {
         (application as MasterApplication).service.getPostList(type)
             .enqueue(object : Callback<PostList> {
                 override fun onResponse(call: Call<PostList>, response: Response<PostList>) {
                     // 응답 성공 시
                     if (response.isSuccessful && response.body()!!.success == "true") {
-                        val postList = response.body()!!.data
+                        postList = response.body()!!.data
 
-                        // 게시판 글 목록 화면 뷰 작성
-                        // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
-                        val adapter = BoardAdapter(postList, LayoutInflater.from(this@BoardActivity)) { post ->
-                            val intent = Intent(this@BoardActivity, BoardDetailActivity::class.java)
-                            intent.putExtra("board_id", post.board_id.toString())
-                            intent.putExtra("activity_num", "0")
-                            startActivity(intent)
+                        if (!swipe) {
+                            // 게시판 글 목록 화면 뷰 작성
+                            // item 클릭 시 board_id 넘겨줌 + detail 화면으로 전환
+                            boardAdapter = BoardAdapter(postList, LayoutInflater.from(this@BoardActivity)) { post ->
+                                val intent = Intent(this@BoardActivity, BoardDetailActivity::class.java)
+                                intent.putExtra("board_id", post.board_id.toString())
+                                intent.putExtra("activity_num", "0")
+                                startActivity(intent)
+                            }
+                            post_recyclerview.adapter = boardAdapter
+                            post_recyclerview.layoutManager = LinearLayoutManager(this@BoardActivity)
+                            post_recyclerview.setHasFixedSize(true)
+                        } else {
+                            boardAdapter.refreshPostItem(postList)
                         }
-                        post_recyclerview.adapter = adapter
-                        post_recyclerview.layoutManager = LinearLayoutManager(this@BoardActivity)
-                        post_recyclerview.setHasFixedSize(true)
                     } else {
                         toast("게시글 목록 조회 실패")
                     }

@@ -11,15 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import com.example.capstone.R
 import com.example.capstone.adapter.TimeTableAdapter
-import com.example.capstone.database.FeedEntry
-import com.example.capstone.database.FeedReaderDBHelper
 import com.example.capstone.dataclass.StuClass
+import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.fragment_time_table.*
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class TimeTableFragment: Fragment() {
-    private lateinit var dbHelper: FeedReaderDBHelper
     private var classList: ArrayList<StuClass>? = null
 
     override fun onCreateView(
@@ -27,14 +30,13 @@ class TimeTableFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        dbHelper = FeedReaderDBHelper(requireContext())
         return inflater.inflate(R.layout.fragment_time_table, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        classList = getTimeTable()
+//        classList = getTimeTable()
         Log.d(TAG, "classList: " + classList.toString())
 
         val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
@@ -50,88 +52,80 @@ class TimeTableFragment: Fragment() {
     private fun getTimeTable(): ArrayList<StuClass>? {
         val instance = Calendar.getInstance()
         val dayNum = instance.get(Calendar.DAY_OF_WEEK)
-        return loadData(dayNum)
-    }
 
-    private fun loadData(dayNum: Int): ArrayList<StuClass>? {
-        lateinit var likeText: String
+        val dayList = arrayOf("sun", "mon", "tue", "wed", "thu", "fri", "sat")
 
-        when(dayNum) {
-            1 ->
-                likeText = "Sun%"
-            2 ->
-                likeText = "Mon%"
-            3 ->
-                likeText = "Tue%"
-            4 ->
-                likeText = "Wed%"
-            5 ->
-                likeText = "Thu%"
-            6 ->
-                likeText = "Fri%"
-            7 ->
-                likeText = "Sat%"
-        }
-        return if (likeText == "Sun%") {
+        val dayText = dayList[dayNum - 1]
+
+        return if (dayText == "sun") {
             null
         } else {
-            loadDept(likeText)
+            loadDept(dayText)
         }
     }
 
-    private fun loadDept(likeText: String): ArrayList<StuClass> {
-        val db = dbHelper.readableDatabase
-        val projection = arrayOf(FeedEntry.COLUMN_NAME_DAYTIME, FeedEntry.COLUMN_NAME_DEPT)
-        val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} LIKE ?"
-        val selectionArgs = arrayOf(likeText)
-        val sortOrder = "${FeedEntry.COLUMN_NAME_DAYTIME} ASC"
-        val start = arrayOf("8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00")
-        val end = arrayOf("8:50", "9:50", "10:50", "11:50", "12:50", "13:50", "14:50", "15:50")
+    private fun loadDept(dayText: String): ArrayList<StuClass> {
         val classList = ArrayList<StuClass>()
+        lateinit var todayList: HashMap<String, String>
 
-        val cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                when {
-                    i < 4 -> {
-                        val stuClass = StuClass(
-                            classNum = i + 1,
-                            className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
-                            startTime = start[i],
-                            endTime = end[i]
-                        )
-                        classList.add(stuClass)
-                    }
-                    i == 4 -> {
-                        val stuClass = StuClass(
-                            classNum = null,
-                            className = "점심시간",
-                            startTime = start[i],
-                            endTime = end[i]
-                        )
-                        classList.add(stuClass)
-                        i += 1
-                        val stuClass2 = StuClass(
-                            classNum = i,
-                            className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
-                            startTime = start[i],
-                            endTime = end[i]
-                        )
-                        classList.add(stuClass2)
-                    }
-                    else -> {
-                        val stuClass = StuClass(
-                            classNum = i,
-                            className = cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)),
-                            startTime = start[i],
-                            endTime = end[i]
-                        )
-                        classList.add(stuClass)
+        (activity?.application as MasterApplication).service.readTimeTable()
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!["table"] as HashMap<String, HashMap<String, String>>
+                        todayList = data[dayText]!!
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        requireContext().toast("데이터 로드 실패")
                     }
                 }
-                i += 1
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+//                    requireContext().toast("network error")
+                }
+            })
+
+        var i = 0
+        while (i <= 6) {
+            val temp = "t${i + 1}"
+            val subject = todayList[temp]
+
+            when {
+                i < 4 -> {
+                    val stuClass = StuClass(
+                        period = i + 1,
+                        day = dayText,
+                        subject = subject
+                    )
+                    classList.add(stuClass)
+                }
+                i == 4 -> {
+                    val stuClass = StuClass(
+                        period = null,
+                        day = dayText,
+                        subject = "점심시간"
+                    )
+                    classList.add(stuClass)
+                    val stuClass2 = StuClass(
+                        period = i + 1,
+                        day = dayText,
+                        subject = subject
+                    )
+                    classList.add(stuClass2)
+                }
+                else -> {
+                    val stuClass = StuClass(
+                        period = i + 1,
+                        day = dayText,
+                        subject = subject
+                    )
+                    classList.add(stuClass)
+                }
             }
+            i += 1
         }
         return classList
     }

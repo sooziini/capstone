@@ -8,6 +8,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.*
+import java.time.Month
 
 interface RetrofitService {
     // @Headers("content-type: application/json")
@@ -215,4 +216,59 @@ interface RetrofitService {
     // 프로필 사진 삭제
     @DELETE("user/profile")
     fun deleteUserProfile(): Call<HashMap<String, String>>
+
+    // TodoList 날짜별 불러오기
+    @GET("school/todo?")
+    fun readTodo(
+        @Query ("year") year: Int,
+        @Query ("month") month: Int,
+        @Query ("day") day: Int
+    ): Call<HashMap<String, Any>>
+
+    // TodoList 등록
+    @POST("school/todo")
+    fun createTodo(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
+    // TodoList 수정
+    @PUT ("school/todo/{list_id}")
+    fun updateTodo(
+        @Path ("list_id") list_id: Int,
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    // TodoList 삭제
+    @DELETE ("school/todo/{list_id}")
+    fun deleteTodo(
+        @Path ("list_id") list_id: Int
+    ):Call<HashMap<String, String>>
+
+    // TodoList 체크
+    @GET ("school/todo/{list_id}")
+    fun checkTodo(
+        @Path ("list_id") list_id: Int
+    ): Call<HashMap<String, String>>
+
+    // 시간표 등록
+    @POST ("school/timetable")
+    fun enrollTimeTable(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
+    // 시간표 조회
+    @GET ("school/timetable")
+    fun readTimeTable(): Call<HashMap<String, Any>>
+
+    // 시간표 수정
+    @PUT ("school/timetable")
+    fun updateTimeTable(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
+    // 시간표 삭제
+    @DELETE ("school/timetable")
+    fun deleteTimeTable(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
 }

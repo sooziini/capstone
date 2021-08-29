@@ -24,6 +24,7 @@ data class Post (
     val replyCount: Int,
     val scrapCount: Int,
     val goodCheck: String,
-    val scrapCheck: String
+    val scrapCheck: String,
+    val userCheck: String
 ): Serializable
 

@@ -17,6 +17,7 @@ import com.example.capstone.BoardActivity
 import com.example.capstone.BoardDetailActivity
 import com.example.capstone.R
 import com.example.capstone.dataclass.Reply
+import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
@@ -40,8 +41,9 @@ class ReplyAdapter(
         private val replyLikeBtn: ImageView = itemView.findViewById(R.id.parent_reply_item_like_btn)
         private val replyReportBtn: ImageView = itemView.findViewById(R.id.parent_reply_item_report_btn)
         private var replyVer: Boolean = false
+        private var popUserCheck: Boolean = true
 
-        fun bind(reply: Reply) {
+        fun bind(reply: Reply, position: Int) {
             replyBody.text = reply.body
             replyDate.text = reply.regdate.substring(5, 16)
             replyLikeCnt.text = reply.goodCount.toString()
@@ -50,6 +52,7 @@ class ReplyAdapter(
                 replyLikeBtn.setImageResource(R.drawable.detail_like_selected)
                 replyVer = true
             }
+            if (reply.userCheck == "N") popUserCheck = false
 
             // 대댓글 버튼 눌렀을 경우
             replyCommentBtn.setOnClickListener {
@@ -66,11 +69,14 @@ class ReplyAdapter(
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
+                if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
+                else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         // 댓글 삭제하기 버튼
                         R.id.board_reply_popup_delete -> {
-                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString())
+                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString(), position)
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
@@ -91,8 +97,9 @@ class ReplyAdapter(
         private val replyLikeBtn: ImageView = itemView.findViewById(R.id.child_reply_item_like_btn)
         private val replyReportBtn: ImageView = itemView.findViewById(R.id.child_reply_item_report_btn)
         private var replyVer: Boolean = false
+        private var popUserCheck: Boolean = true
 
-        fun bind(reply: Reply) {
+        fun bind(reply: Reply, position: Int) {
             replyBody.text = reply.body
             replyDate.text = reply.regdate.substring(5, 16)
             replyLikeCnt.text = reply.goodCount.toString()
@@ -101,6 +108,7 @@ class ReplyAdapter(
                 replyLikeBtn.setImageResource(R.drawable.detail_like_selected)
                 replyVer = true
             }
+            if (reply.userCheck == "N") popUserCheck = false
 
             // 댓글 좋아요 버튼 눌렀을 경우
             replyLikeBtn.setOnClickListener {
@@ -112,11 +120,14 @@ class ReplyAdapter(
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
+                if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
+                else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         // 댓글 삭제하기 버튼
                         R.id.board_reply_popup_delete -> {
-                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString())
+                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString(), position)
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
@@ -162,8 +173,18 @@ class ReplyAdapter(
             })
     }
 
+    fun addReplyItem(reply: Reply) {
+        replyList.add(reply)
+        notifyDataSetChanged()
+    }
+
+    fun removeReplyItem(position: Int) {
+        replyList.removeAt(position)
+        notifyDataSetChanged()
+    }
+
     //댓글 삭제하기 버튼 클릭 시 뜨는 dialog 설정 함수
-    fun setReplyDeleteDialog(board_id: String, reply_id: String) {
+    fun setReplyDeleteDialog(board_id: String, reply_id: String, position: Int) {
         val builder = AlertDialog.Builder(context)
         val dialogView = inflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
@@ -177,11 +198,7 @@ class ReplyAdapter(
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
-                            (context as BoardDetailActivity).finish()
-                            val intent = Intent(context, BoardDetailActivity::class.java)
-                            intent.putExtra("board_id", board_id)
-                            intent.putExtra("activity_num", "0")
-                            context.startActivity(intent)
+                            removeReplyItem(position)
                         } else {
                             context.toast("댓글 삭제 실패")
                         }
@@ -217,12 +234,14 @@ class ReplyAdapter(
     // 대댓글 작성 함수
     private fun retrofitCreateReplyReply(board_id: String, reply_id: String, body: String) {
         (application as MasterApplication).service.createReplyReply(board_id, reply_id, body)
-            .enqueue(object : Callback<HashMap<String, Any>> {
+            .enqueue(object : Callback<ReplyChange> {
                 override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
+                    call: Call<ReplyChange>,
+                    response: Response<ReplyChange>
                 ) {
-                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        // val reply = response.body()!!.data
+                        // addReplyItem(reply)
                         (context as BoardDetailActivity).finish()
                         val intent = Intent(context, BoardDetailActivity::class.java)
                         intent.putExtra("board_id", board_id)
@@ -233,7 +252,7 @@ class ReplyAdapter(
                     }
                 }
 
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                override fun onFailure(call: Call<ReplyChange>, t: Throwable) {
                     (context as BoardDetailActivity).finish()
                 }
             })
@@ -289,11 +308,11 @@ class ReplyAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (replyList[position].level) {
             0 -> {
-                (holder as ParentViewHolder).bind(replyList[position])
+                (holder as ParentViewHolder).bind(replyList[position], position)
                 holder.setIsRecyclable(false)
             }
             else -> {
-                (holder as ChildViewHolder).bind(replyList[position])
+                (holder as ChildViewHolder).bind(replyList[position], position)
                 holder.setIsRecyclable(false)
             }
         }

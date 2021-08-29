@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         // 아이디, 비밀번호 찾기 클릭
         LoginFindIdPassword.setOnClickListener {
             startActivity(Intent(this@LoginActivity, FindPasswordActivity::class.java))
+            finish()
         }
 
         // 로그인 버튼   
@@ -87,12 +88,10 @@ class LoginActivity : AppCompatActivity() {
                                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                         finish()
                                     }
-
                                 } else {        // 3xx, 4xx 를 받은 경우
-                                    toast("로그인 실패")
+                                    toast("아이디, 비밀번호가 일치하지 않습니다.")
                                 }
                             }
-
                             // 응답 실패 시
                             override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                                 toast("network error")

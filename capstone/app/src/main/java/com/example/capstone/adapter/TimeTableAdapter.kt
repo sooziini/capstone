@@ -25,15 +25,15 @@ class TimeTableAdapter(
                 return
             }
 
-            if (stuClass.classNum == null) {
+            if (stuClass.period == null) {
                 classNum?.text = ""
             } else {
-                classNum?.text = stuClass.classNum.toString()
+                classNum?.text = stuClass.period.toString()
             }
-            if (stuClass.className == "" || stuClass.className == null) {
+            if (stuClass.subject == "" || stuClass.subject == null) {
                 className?.text = "공강"
             } else {
-                className?.text = stuClass.className
+                className?.text = stuClass.subject
             }
             startTime?.text = stuClass.startTime
             endTime?.text = stuClass.endTime

@@ -23,9 +23,9 @@ import kotlin.collections.ArrayList
 
 class SchoolMealActivity : AppCompatActivity() {
     private val cal = Calendar.getInstance()
-    private var year = cal.get(Calendar.YEAR)
-    private var month = cal.get(Calendar.MONTH)
-    private var day = cal.get(Calendar.DAY_OF_MONTH)
+    private val year = cal.get(Calendar.YEAR)
+    private val month = cal.get(Calendar.MONTH)
+    private val day = cal.get(Calendar.DAY_OF_MONTH)
     private lateinit var date: String
     val mealList = ArrayList<Meal>()
 

@@ -2,7 +2,6 @@ package com.example.capstone
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -15,34 +14,39 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.TodoListAdapter
-import com.example.capstone.database.TodoEntry
-import com.example.capstone.database.TodoListDBHelper
 import com.example.capstone.dataclass.Todo
+import com.example.capstone.network.MasterApplication
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_todo_list.*
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.math.roundToInt
 
 class TodoListActivity : AppCompatActivity() {
     private var imm: InputMethodManager? = null
-    private lateinit var dbHelper: TodoListDBHelper
     private val calendar = Calendar.getInstance()
     private val todoList = ArrayList<Todo>()
-    lateinit var date: String
     lateinit var adapter: TodoListAdapter
+
+    private val todayYear = calendar.get(Calendar.YEAR)
+    private val todayMonth = calendar.get(Calendar.MONTH)
+    private val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+    private var year = todayYear
+    private var month = todayMonth
+    private var day = todayDay
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_list)
 
-        dbHelper = TodoListDBHelper(this)
-
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
         val tempMon = setDateSize((month + 1).toString())
         val tempDay = setDateSize(day.toString())
-        date = "$year" + tempMon + tempDay
 
         TodoList_DateTextView.text = "${year}년 ${tempMon}월 ${tempDay}일"
 
@@ -54,7 +58,7 @@ class TodoListActivity : AppCompatActivity() {
         // 키보드 InputMethodManager 세팅
         imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
-        loadTodo(date)
+        loadTodo(todayYear, todayMonth, todayDay)
 
         // Calendar 버튼 설정 (Dialog)
         TodoList_CalButton.setOnClickListener {
@@ -63,11 +67,14 @@ class TodoListActivity : AppCompatActivity() {
                 val tempi2 = setDateSize((i2 + 1).toString())
                 val tempi3 = setDateSize(i3.toString())
                 TodoList_DateTextView.text = "${i}년 ${tempi2}월 ${tempi3}일"
-                date = "$year" + tempi2 + tempi3
-                loadTodo(date)
+                year = i
+                month = i2
+                day = i3
+
+                loadTodo(year, month, day)
             }
 
-            val picker = DatePickerDialog(this, listener, year, month, day)
+            val picker = DatePickerDialog(this, listener, todayYear, todayMonth, todayDay)
             picker.show()
         }
     }
@@ -96,35 +103,77 @@ class TodoListActivity : AppCompatActivity() {
             imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
-    private fun saveTodo(date: String, body: String) {
-        val db = dbHelper.writableDatabase
+    private fun saveTodo(year: Int, month: Int, day: Int, body: String) {
+        val map = HashMap<String, Any>()
 
-        val contentVal = ContentValues()
-        contentVal.put(TodoEntry.COLUMN_NAME_DATE, date)
-        contentVal.put(TodoEntry.COLUMN_NAME_CHECK, false.toString())
-        contentVal.put(TodoEntry.COLUMN_NAME_TODOLIST, body)
+        map["body"] = body
+        map["year"] = year
+        map["month"] = month
+        map["day"] = day
 
-        db.insert(TodoEntry.TABLE_NAME, null, contentVal)
+        (application as MasterApplication).service.createTodo(map)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful) {
+                        loadTodo(year, month - 1, day)
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("TodoList 등록 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
+
     }
 
-    private fun loadTodo(date: String) {
-        val db = dbHelper.readableDatabase
-
+    private fun loadTodo(year: Int, month: Int, day: Int) {
         todoList.clear()
 
-        val projection = arrayOf(TodoEntry.COLUMN_NAME_TODOLIST, TodoEntry.COLUMN_NAME_CHECK)
-        val selection = "${TodoEntry.COLUMN_NAME_DATE} = ?"
-        val selectionArgs = arrayOf(date)
+        (application as MasterApplication).service.readTodo(year, month + 1, day)
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!["todoList"] as ArrayList<LinkedTreeMap<String, Any>>
 
-        val cursor = db.query(TodoEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null)
-        with(cursor) {
-            while(moveToNext()) {
-                val todo = Todo(cursor.getString(getColumnIndexOrThrow(TodoEntry.COLUMN_NAME_TODOLIST)), cursor.getString(getColumnIndexOrThrow(TodoEntry.COLUMN_NAME_CHECK)))
-                todoList.add(todo)
-            }
-        }
-        adapter = TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this, date)
-        TodoAct_RecyclerView.adapter = adapter
+                        for (map in data) {
+                            val list_id = (map["list_id"] as Double).roundToInt()
+                            val body = map["body"] as String
+                            val check = if ((map["listCheck"] as Double).roundToInt() == 0)
+                                "false"
+                            else
+                                "true"
+
+                            todoList.add(Todo(list_id, body, check))
+                        }
+                        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this@TodoListActivity, application)
+                        TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
+                        TodoAct_RecyclerView.setHasFixedSize(true)
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this@TodoListActivity, application)
+                        TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
+                        TodoAct_RecyclerView.setHasFixedSize(true)
+                        toast("TodoList 로드 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
+
+        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this, application)
         TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
         TodoAct_RecyclerView.setHasFixedSize(true)
     }
@@ -149,10 +198,7 @@ class TodoListActivity : AppCompatActivity() {
             val alert = p0 as AlertDialog
             val edit: EditText? = alert.findViewById(R.id.TodoBody)
 
-//            tv1.text = "${edit1?.text}"
-//            tv1.append("${edit2?.text}")
-            saveTodo(date, edit?.text.toString())
-            loadTodo(date)
+            saveTodo(year, month + 1, day, edit?.text.toString())
         }
 
         builder.setPositiveButton("확인", listener)

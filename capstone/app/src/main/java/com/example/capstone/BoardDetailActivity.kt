@@ -31,8 +31,8 @@ import kotlin.collections.ArrayList
 
 class BoardDetailActivity : AppCompatActivity() {
 
-    val BASE_URL = "http://192.168.0.2:3000"
     var imm: InputMethodManager? = null
+    private lateinit var BASE_URL: String
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
     private lateinit var boardDetailTitle: String
@@ -46,6 +46,8 @@ class BoardDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_detail)
+
+        BASE_URL = (application as MasterApplication).BASE_URL
 
         // toolbar 설정
         setSupportActionBar(board_detail_toolbar)
@@ -128,7 +130,6 @@ class BoardDetailActivity : AppCompatActivity() {
                             for (i in 0 until postImgList.size)
                                 uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
 
-                            Log.d("abc", uriPaths.toString())
                             val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity))
                             board_detail_img_recyclerview.adapter = adapter
                             board_detail_img_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity).also {

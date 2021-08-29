@@ -8,9 +8,11 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.*
+import java.time.Month
 
 interface RetrofitService {
     // @Headers("content-type: application/json")
+
     // 게시글 목록 조회
     @GET("board/")
     fun getPostList(
@@ -152,6 +154,13 @@ interface RetrofitService {
     @GET("auth/valid")
     fun authorization():Call<HashMap<String, Any>>
 
+    // 토큰 재발급
+    @FormUrlEncoded
+    @POST("auth/refresh")
+    fun setRefreshToken(
+        @Field("token") token: String
+    ): Call<HashMap<String, String>>
+
     // 비밀번호 찾기
     @POST("user/password/find")
     fun findPassword(
@@ -178,10 +187,88 @@ interface RetrofitService {
     ): Call<HashMap<String, String>>
 
     // 회원탈퇴
-    @DELETE("user/delete")
+    @DELETE("user/quit")
     fun deleteUser():Call<HashMap<String, String>>
 
     // 본인 정보 조회
     @GET("user/info")
     fun readInfo():Call<HashMap<String, Any>>
+
+    // 본인 정보 수정
+    @PUT("user/info")
+    fun updateInfo(
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, Any>>
+
+    // 프로필 사진 설정
+    @Multipart
+    @POST("user/profile")
+    fun setUserProfile(
+        @Part profile: MultipartBody.Part
+    ): Call<HashMap<String, String>>
+
+    // 프로필 사진 조회
+    @GET("user/profile")
+    fun getUserProfile(
+        @Query("id") user_id: String,
+    ): Call<HashMap<String, String>>
+
+    // 프로필 사진 삭제
+    @DELETE("user/profile")
+    fun deleteUserProfile(): Call<HashMap<String, String>>
+
+    // TodoList 날짜별 불러오기
+    @GET("school/todo?")
+    fun readTodo(
+        @Query ("year") year: Int,
+        @Query ("month") month: Int,
+        @Query ("day") day: Int
+    ): Call<HashMap<String, Any>>
+
+    // TodoList 등록
+    @POST("school/todo")
+    fun createTodo(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
+    // TodoList 수정
+    @PUT ("school/todo/{list_id}")
+    fun updateTodo(
+        @Path ("list_id") list_id: Int,
+        @Body params: HashMap<String, String>
+    ): Call<HashMap<String, String>>
+
+    // TodoList 삭제
+    @DELETE ("school/todo/{list_id}")
+    fun deleteTodo(
+        @Path ("list_id") list_id: Int
+    ):Call<HashMap<String, String>>
+
+    // TodoList 체크
+    @GET ("school/todo/{list_id}")
+    fun checkTodo(
+        @Path ("list_id") list_id: Int
+    ): Call<HashMap<String, String>>
+
+    // 시간표 등록
+    @POST ("school/timetable")
+    fun enrollTimeTable(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
+    // 시간표 조회
+    @GET ("school/timetable")
+    fun readTimeTable(): Call<HashMap<String, Any>>
+
+    // 시간표 수정
+    @PUT ("school/timetable")
+    fun updateTimeTable(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
+
+    // 시간표 삭제
+    @DELETE ("school/timetable")
+    fun deleteTimeTable(
+        @Body params: HashMap<String, Any>
+    ): Call<HashMap<String, String>>
 }

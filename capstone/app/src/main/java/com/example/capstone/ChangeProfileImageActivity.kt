@@ -32,6 +32,5 @@ class ChangeProfileImageActivity : AppCompatActivity() {
     override fun onBackPressed() {
         startActivity(Intent(this, SettingActivity::class.java))
         finish()
-        super.onBackPressed()
     }
 }

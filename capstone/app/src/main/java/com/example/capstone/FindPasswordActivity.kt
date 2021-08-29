@@ -38,8 +38,7 @@ class FindPasswordActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                onBackPressed()
                 return true
             }
         }
@@ -76,11 +75,11 @@ class FindPasswordActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful) {
-                        toast("임시 비밀번호가 발급되었습니다.")
+                        toast("임시 비밀번호가 발급되었습니다")
                         startActivity(Intent(this@FindPasswordActivity, LoginActivity::class.java))
                         finish()
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("입력정보를 확인해주세요.")
+                        toast("입력정보를 확인해주세요")
                     }
                 }
 
@@ -90,5 +89,10 @@ class FindPasswordActivity : AppCompatActivity() {
                     finish()
                 }
             })
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 }

@@ -8,12 +8,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import com.example.capstone.database.FeedReaderDBHelper
-import com.example.capstone.database.FeedEntry
+import com.example.capstone.network.MasterApplication
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_time_table.*
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TimeTableActivity : AppCompatActivity() {
-    private lateinit var dbHelper: FeedReaderDBHelper
     private var editMode = false
 
     private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
@@ -23,20 +26,18 @@ class TimeTableActivity : AppCompatActivity() {
     private val friList = arrayOf("Fri1", "Fri2", "Fri3", "Fri4", "Fri5", "Fri6", "Fri7")
     private val satList = arrayOf("Sat1", "Sat2", "Sat3", "Sat4", "Sat5", "Sat6", "Sat7")
 
-    private var monday = ArrayList<EditText>()
-    private var tuesday = ArrayList<EditText>()
-    private var wednesday = ArrayList<EditText>()
-    private var thursday = ArrayList<EditText>()
-    private var friday = ArrayList<EditText>()
-    private var saturday = ArrayList<EditText>()
+    private lateinit var monday: ArrayList<EditText>
+    private lateinit var tuesday: ArrayList<EditText>
+    private lateinit var wednesday: ArrayList<EditText>
+    private lateinit var thursday: ArrayList<EditText>
+    private lateinit var friday: ArrayList<EditText>
+    private lateinit var saturday: ArrayList<EditText>
 
     private var dayArray = ArrayList<ArrayList<EditText>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_table)
-
-        dbHelper = FeedReaderDBHelper(this)     // DB
 
         // toolbar 설정
         setSupportActionBar(timetable_toolbar)
@@ -61,7 +62,6 @@ class TimeTableActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        dbHelper.close()
         super.onDestroy()
     }
 
@@ -81,53 +81,71 @@ class TimeTableActivity : AppCompatActivity() {
         }
         saveData()
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 시간표 저장하는 함수
     private fun saveData() {
-        val db: SQLiteDatabase = dbHelper.writableDatabase
         val dayList = arrayOf(monList, tueList, wedList, thuList, friList, satList)
-
-        for (i in 0..5) {
-            saveDept(db, dayArray[i], dayList[i])
-        }
+//
+//        for (i in dayList.indices) {
+//            saveDept(db, dayArray[i], dayList[i])
+//        }
     }
 
     // 시간표 조회하는 함수
     private fun loadData() {
-        val db: SQLiteDatabase = dbHelper.readableDatabase
-        val likeText = arrayOf("Mon%", "Tue%", "Wed%", "Thu%", "Fri%", "Sat%")
+        val dayText = arrayOf("mon", "tue", "wed", "thu", "fri", "sat")
 
-        for (i in 0..5) {
-            loadDept(db, dayArray[i], likeText[i])
-        }
+//        for (i in 0..5) {
+//            loadDept(db, dayArray[i], likeText[i])
+//        }
+
+        (application as MasterApplication).service.readTimeTable()
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!["table"] as LinkedTreeMap<String, HashMap<String, String>>
+                        for (i in 0..5) {
+                            val todayList = data[dayText[i]] ?: return
+
+                            val dayEditList = when(dayText[i]) {
+                                "mon" -> monday
+                                "tue" -> tuesday
+                                "wed" -> wednesday
+                                "thu" -> thursday
+                                "fri" -> friday
+                                "sat" -> saturday
+                                else -> ArrayList()
+                            }
+
+                            for (i in 0..6)
+                                dayEditList[i].setText(todayList["t${i + 1}"].toString())
+                        }
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("데이터 로드 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("network error")
+                }
+            })
     }
 
     private fun saveDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, dTextList: Array<String>) {
-        for (i in 0..6) {
-            val contentVal = ContentValues()
-            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, dayList[i].text.toString())
-
-            val arg = arrayOf(dTextList[i])
-            db.update(FeedEntry.TABLE_NAME, contentVal, "${FeedEntry.COLUMN_NAME_DAYTIME} = ?", arg)
-        }
+//        for (i in 0..6) {
+//            val contentVal = ContentValues()
+//            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, dayList[i].text.toString())
+//
+//            val arg = arrayOf(dTextList[i])
+//            db.update(FeedEntry.TABLE_NAME, contentVal, "${FeedEntry.COLUMN_NAME_DAYTIME} = ?", arg)
+//        }
     }
-
-    private fun loadDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, likeText: String) {
-        val projection = arrayOf(FeedEntry.COLUMN_NAME_DAYTIME, FeedEntry.COLUMN_NAME_DEPT)
-        val selection = "${FeedEntry.COLUMN_NAME_DAYTIME} LIKE ?"
-        val selectionArgs = arrayOf(likeText)
-        val sortOrder = "${FeedEntry.COLUMN_NAME_DAYTIME} ASC"
-
-        val cursor = db.query(FeedEntry.TABLE_NAME, projection, selection, selectionArgs,null,null, sortOrder)
-        with(cursor) {
-            var i = 0
-            while(moveToNext()) {
-                dayList[i].setText(cursor.getString(getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DEPT)))
-                i += 1
-            }
-        }
-    }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.timetable_menu, menu)
         return true

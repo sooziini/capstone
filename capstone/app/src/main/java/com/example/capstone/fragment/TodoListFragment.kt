@@ -1,6 +1,7 @@
 package com.example.capstone.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,65 +9,74 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.adapter.TodoListAdapter
-import com.example.capstone.database.TodoEntry
-import com.example.capstone.database.TodoListDBHelper
 import com.example.capstone.dataclass.Todo
+import com.example.capstone.network.MasterApplication
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.fragment_todo_list.*
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 class TodoListFragment : Fragment() {
-    private lateinit var dbHelper: TodoListDBHelper
-    private lateinit var todoList: ArrayList<Todo>
-    lateinit var date: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        dbHelper = TodoListDBHelper(requireContext())
         return inflater.inflate(R.layout.fragment_todo_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        todoList = getList()
-
-        TodoFrg_Recycleriew.adapter = TodoListAdapter(todoList, LayoutInflater.from(this.activity), requireContext(), date)
-        TodoFrg_Recycleriew.layoutManager = LinearLayoutManager(this.activity)
-        TodoFrg_Recycleriew.setHasFixedSize(true)
+        getList()
     }
 
-    private fun getList(): ArrayList<Todo> {
-        val todoList = ArrayList<Todo>()
-
+    private fun getList() {
+        val list = ArrayList<Todo>()
         val instance = Calendar.getInstance()
-        val year = instance.get(Calendar.YEAR).toString()
-        var month = (instance.get(Calendar.MONTH) + 1).toString()
-        var day = instance.get(Calendar.DAY_OF_MONTH).toString()
-        if (month.length < 2)
-            month = "0${month}"
-        if (day.length < 2)
-            day = "0${day}"
-        date = year + month + day
+        val year = instance.get(Calendar.YEAR)
+        val month = (instance.get(Calendar.MONTH) + 1)
+        val day = instance.get(Calendar.DAY_OF_MONTH)
 
-        val db = dbHelper.readableDatabase
-        val projection = arrayOf(TodoEntry.COLUMN_NAME_TODOLIST, TodoEntry.COLUMN_NAME_CHECK)
-        val selection = "${TodoEntry.COLUMN_NAME_DATE} = ?"
-        val selectionArgs = arrayOf(date)
+        (activity?.application as MasterApplication).service.readTodo(year, month, day)
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!["todoList"] as ArrayList<LinkedTreeMap<String, Any>>
 
-        val cursor = db.query(TodoEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null)
-        with(cursor) {
-            while(moveToNext()) {
-                val todo = Todo(
-                    body = cursor.getString(getColumnIndexOrThrow(TodoEntry.COLUMN_NAME_TODOLIST)),
-                    checked = cursor.getString(getColumnIndexOrThrow(TodoEntry.COLUMN_NAME_CHECK))
-                )
-                todoList.add(todo)
-            }
-        }
-        return todoList
+                        for (map in data) {
+                            val list_id = (map["list_id"] as Double).roundToInt()
+                            val body = map["body"] as String
+                            val check = if ((map["listCheck"] as Double).roundToInt() == 0)
+                                "false"
+                            else
+                                "true"
+
+                            list.add(Todo(list_id, body, check))
+                        }
+                        TodoFrg_Recycleriew.adapter = TodoListAdapter(list, LayoutInflater.from(activity), requireContext(), activity?.application!!)
+                        TodoFrg_Recycleriew.layoutManager = LinearLayoutManager(activity)
+                        TodoFrg_Recycleriew.setHasFixedSize(true)
+                        Log.d("list1", list.toString())
+
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("TodoList 로드 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("todolist network error")
+                }
+            })
     }
-
 }

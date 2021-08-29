@@ -37,9 +37,9 @@ class SchoolMealFragment : Fragment() {
 
         getMealList()
 
-//        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
-//        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        MealFrag_RecyclerView.setHasFixedSize(true)
+        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
+        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        MealFrag_RecyclerView.setHasFixedSize(true)
     }
 
     private fun getMealList() {
@@ -85,7 +85,7 @@ class SchoolMealFragment : Fragment() {
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                    toast("network error")
+//                    toast("network error3")
                 }
             })
     }

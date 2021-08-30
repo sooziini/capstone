@@ -185,16 +185,19 @@ class MainActivity : AppCompatActivity() {
         Home_TimeTableButton.setOnClickListener {
             val intent = Intent(this, TimeTableActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         Home_TodoListButton.setOnClickListener {
             val intent = Intent(this, TodoListActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         Home_MealButton.setOnClickListener {
             val intent = Intent(this, SchoolMealActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

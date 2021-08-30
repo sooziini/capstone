@@ -13,6 +13,7 @@ import com.example.capstone.R
 import com.example.capstone.adapter.TimeTableAdapter
 import com.example.capstone.dataclass.StuClass
 import com.example.capstone.network.MasterApplication
+import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.fragment_time_table.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -23,8 +24,6 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class TimeTableFragment: Fragment() {
-    private var classList: ArrayList<StuClass>? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,37 +35,31 @@ class TimeTableFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        classList = getTimeTable()
-        Log.d(TAG, "classList: " + classList.toString())
-
-        val deptAdapter = TimeTableAdapter(classList, LayoutInflater.from(this.activity))
-        TimeTable_RecyclerView?.adapter = deptAdapter
-        val layoutmanager = LinearLayoutManager(this.activity)
-        layoutmanager.orientation = HORIZONTAL
-        layoutmanager.canScrollHorizontally()
-
-        TimeTable_RecyclerView?.layoutManager = layoutmanager
-        TimeTable_RecyclerView?.setHasFixedSize(true)
+        getTimeTable()
     }
 
-    private fun getTimeTable(): ArrayList<StuClass>? {
+    private fun getTimeTable(){
         val instance = Calendar.getInstance()
-        val dayNum = instance.get(Calendar.DAY_OF_WEEK)
 
-        val dayList = arrayOf("sun", "mon", "tue", "wed", "thu", "fri", "sat")
-
-        val dayText = dayList[dayNum - 1]
-
-        return if (dayText == "sun") {
-            null
-        } else {
-            loadDept(dayText)
+        val dayText = when(instance.get(Calendar.DAY_OF_WEEK)) {
+            1 -> "sun"
+            2 -> "mon"
+            3 -> "tue"
+            4 -> "wed"
+            5 -> "thu"
+            6 -> "fri"
+            7 -> "sat"
+            else -> ""
         }
+       if (dayText == "sun" || dayText == "")
+           return
+
+        loadDept(dayText)
     }
 
-    private fun loadDept(dayText: String): ArrayList<StuClass> {
+    private fun loadDept(dayText: String){
         val classList = ArrayList<StuClass>()
-        lateinit var todayList: HashMap<String, String>
+        lateinit var todayList: LinkedTreeMap<String, String>
 
         (activity?.application as MasterApplication).service.readTimeTable()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -75,8 +68,17 @@ class TimeTableFragment: Fragment() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        val data = response.body()!!["table"] as HashMap<String, HashMap<String, String>>
+                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>
                         todayList = data[dayText]!!
+                        Log.d("todayList", todayList.toString())
+                        insertVal(classList, todayList, dayText)
+
+                        TimeTable_RecyclerView.adapter = TimeTableAdapter(classList, LayoutInflater.from(activity))
+                        val layoutmanager = LinearLayoutManager(activity)
+                        layoutmanager.orientation = HORIZONTAL
+                        layoutmanager.canScrollHorizontally()
+                        TimeTable_RecyclerView.layoutManager = layoutmanager
+                        TimeTable_RecyclerView.setHasFixedSize(true)
                     } else {        // 3xx, 4xx 를 받은 경우
                         requireContext().toast("데이터 로드 실패")
                     }
@@ -84,14 +86,21 @@ class TimeTableFragment: Fragment() {
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-//                    requireContext().toast("network error")
+                    requireContext().toast("network error")
                 }
             })
+    }
 
+    private fun insertVal(classList: ArrayList<StuClass>, todayList: LinkedTreeMap<String, String>, dayText: String) {
         var i = 0
         while (i <= 6) {
             val temp = "t${i + 1}"
-            val subject = todayList[temp]
+            val subject = todayList[temp] ?: null
+
+            if (subject == null) {
+                i += 1
+                continue
+            }
 
             when {
                 i < 4 -> {
@@ -114,6 +123,7 @@ class TimeTableFragment: Fragment() {
                         day = dayText,
                         subject = subject
                     )
+                    Log.d("subject", subject.toString())
                     classList.add(stuClass2)
                 }
                 else -> {
@@ -127,6 +137,5 @@ class TimeTableFragment: Fragment() {
             }
             i += 1
         }
-        return classList
     }
 }

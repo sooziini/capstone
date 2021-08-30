@@ -4,6 +4,7 @@ import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
 import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
+import com.google.gson.internal.LinkedTreeMap
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -250,25 +251,19 @@ interface RetrofitService {
         @Path ("list_id") list_id: Int
     ): Call<HashMap<String, String>>
 
-    // 시간표 등록
+    // 시간표 등록 / 수정
     @POST ("school/timetable")
-    fun enrollTimeTable(
-        @Body params: HashMap<String, Any>
+    fun updateTimeTable(
+        @Body params: HashMap<String, ArrayList<HashMap<String, Any>>>
     ): Call<HashMap<String, String>>
 
     // 시간표 조회
     @GET ("school/timetable")
     fun readTimeTable(): Call<HashMap<String, Any>>
 
-    // 시간표 수정
-    @PUT ("school/timetable")
-    fun updateTimeTable(
-        @Body params: HashMap<String, Any>
-    ): Call<HashMap<String, String>>
-
     // 시간표 삭제
-    @DELETE ("school/timetable")
+    @HTTP (method = "DELETE", path = "school/timetable", hasBody = true)
     fun deleteTimeTable(
-        @Body params: HashMap<String, Any>
+        @Body params: HashMap<String, ArrayList<HashMap<String, Any>>>
     ): Call<HashMap<String, String>>
 }

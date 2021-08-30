@@ -9,8 +9,7 @@
         android:id="@+id/MealFrag_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/round_border"
-        android:backgroundTint="@color/reply_child"
+        android:background="@drawable/shape_reply_child"
         android:nestedScrollingEnabled="false"
         android:padding="4dp"
         android:overScrollMode="never"/>

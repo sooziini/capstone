@@ -24,6 +24,7 @@ import com.example.capstone.dataclass.Reply
 import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
 import com.example.capstone.network.MasterApplication
+import kotlinx.android.synthetic.main.activity_board.*
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -42,6 +43,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailBody: String
     private lateinit var boardDetailType: String
     private lateinit var boardDetailUserId: String
+    lateinit var boardDetailCommentCnt: String
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
     private lateinit var replyAdapter: ReplyAdapter
@@ -99,6 +101,13 @@ class BoardDetailActivity : AppCompatActivity() {
                 retrofitCreateReply(intentBoardId, body)
             }
         }
+
+        // swipe refresh
+        board_detail_swipeRefresh.setOnRefreshListener {
+            retrofitGetPostDetail(intentBoardId)
+            retrofitGetReplyList(intentBoardId)
+            board_detail_swipeRefresh.isRefreshing = false
+        }
     }
 
     // 받은 board_id로 게시글 detail GET하는 함수
@@ -113,12 +122,13 @@ class BoardDetailActivity : AppCompatActivity() {
                         boardDetailBody = post.body
                         boardDetailType = post.type
                         boardDetailUserId = post.user_id
+                        boardDetailCommentCnt = post.replyCount.toString()
                         boardDetailGoodCnt = post.goodCount.toString()
                         boardDetailScrapCnt = post.scrapCount.toString()
                         board_detail_title.setText(boardDetailTitle).toString()
                         board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
-                        board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
+                        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
                         if (boardDetailType == "notice") board_detail_nickname.setText(boardDetailUserId).toString()
@@ -179,7 +189,6 @@ class BoardDetailActivity : AppCompatActivity() {
                         reply_recyclerview.adapter = replyAdapter
                         reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                         reply_recyclerview.setHasFixedSize(true)
-
                     } else {
                         toast("댓글 조회 실패")
                     }
@@ -204,6 +213,8 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         replyAdapter.addReplyItem(reply)
+                        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()+1).toString()
+                        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
                         board_detail_comment.setText("").toString()
                         hideKeyboard(board_detail_hidekeyboard)
                     } else {
@@ -217,6 +228,11 @@ class BoardDetailActivity : AppCompatActivity() {
                     finish()
                 }
             })
+    }
+
+    fun deleteReply() {
+        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()-1).toString()
+        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
     }
 
     // 게시글 좋아요하는 함수

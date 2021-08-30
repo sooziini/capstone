@@ -71,9 +71,9 @@ class BoardActivity : AppCompatActivity() {
         }
 
         // swipe refresh
-        post_swipeRefresh.setOnRefreshListener {
+        board_swipeRefresh.setOnRefreshListener {
             retrofitGetPostList(true)   // 비동기 필요한듯?
-            post_swipeRefresh.isRefreshing = false
+            board_swipeRefresh.isRefreshing = false
         }
     }
 

@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
+import com.example.capstone.SchoolMealActivity
 import com.example.capstone.adapter.MealActAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
+import kotlinx.android.synthetic.main.activity_school_meal.*
 import kotlinx.android.synthetic.main.fragment_school_meal.*
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,10 +39,6 @@ class SchoolMealFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getMealList()
-
-        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
-        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        MealFrag_RecyclerView.setHasFixedSize(true)
     }
 
     private fun getMealList() {
@@ -59,33 +58,28 @@ class SchoolMealFragment : Fragment() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        mealList.clear()
+                        if (response.body()!!["success"].toString() == "true") {
+                            mealList.clear()
+                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
+                            val todaymeal = dataArray[0]
+                            val mealData = todaymeal["DDISH_NM"]
+                            val mealArray = mealData?.split("<br/>")
 
-                        val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
-                        Log.d("meal", dataArray.toString())
-                        val todaymeal = dataArray[0]
-                        val mealData = todaymeal["DDISH_NM"]
-                        val mealArray = mealData?.split("<br/>")
-                        Log.d("mealArray", mealArray.toString())
-
-                        for (element in mealArray!!) {
-                            mealList.add(Meal(element))
+                            for (element in mealArray!!) mealList.add(Meal(element))
+                        } else {
+                            mealList.clear()
                         }
-
                         MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
                         MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
                         MealFrag_RecyclerView.setHasFixedSize(true)
                     } else {
-                        mealList.clear()
-                        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
-                        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                        MealFrag_RecyclerView.setHasFixedSize(true)
+                        toast("급식표 조회 실패")
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-//                    toast("network error3")
+                    toast("network error")
                 }
             })
     }

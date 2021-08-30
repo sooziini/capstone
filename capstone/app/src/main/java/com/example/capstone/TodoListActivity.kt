@@ -155,14 +155,16 @@ class TodoListActivity : AppCompatActivity() {
 
                             todoList.add(Todo(list_id, body, check))
                         }
-                        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this@TodoListActivity, application)
-                        TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
-                        TodoAct_RecyclerView.setHasFixedSize(true)
                     } else {        // 3xx, 4xx 를 받은 경우
-                        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this@TodoListActivity, application)
+                        toast("TodoList 로드 실패")
+                    }
+                    if (todoList.isEmpty()) {
+                        setChange(true)
+                    } else {
+                        setChange(false)
+                        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this@TodoListActivity, application, 0)
                         TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
                         TodoAct_RecyclerView.setHasFixedSize(true)
-                        toast("TodoList 로드 실패")
                     }
                 }
 
@@ -172,24 +174,26 @@ class TodoListActivity : AppCompatActivity() {
                     finish()
                 }
             })
-
-        TodoAct_RecyclerView.adapter =  TodoListAdapter(todoList, LayoutInflater.from(this@TodoListActivity), this, application)
-        TodoAct_RecyclerView.layoutManager = LinearLayoutManager(this@TodoListActivity)
-        TodoAct_RecyclerView.setHasFixedSize(true)
     }
 
+    fun setChange(ch: Boolean) {
+        if (ch) {   // 할 일 없음
+            TodoAct_RecyclerView.visibility = View.GONE
+            todoList_null_item.visibility = View.VISIBLE
+        } else {    // 할 일 있음
+            TodoAct_RecyclerView.visibility = View.VISIBLE
+            todoList_null_item.visibility = View.GONE
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.todolist_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
-    // 할일 추가 버튼
+    // 할 일 추가 버튼
     fun todoAddOnClick(item: MenuItem) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("할 일 추가")
-        builder.setIcon(R.drawable.ic_baseline_star_24)
-
         val view = layoutInflater.inflate(R.layout.todoadd_dialog, null)
         builder.setView(view)
 

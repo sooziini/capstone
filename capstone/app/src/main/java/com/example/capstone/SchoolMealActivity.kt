@@ -27,7 +27,7 @@ class SchoolMealActivity : AppCompatActivity() {
     private val month = cal.get(Calendar.MONTH)
     private val day = cal.get(Calendar.DAY_OF_MONTH)
     private lateinit var date: String
-    val mealList = ArrayList<Meal>()
+    var mealList = ArrayList<Meal>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,50 +42,8 @@ class SchoolMealActivity : AppCompatActivity() {
         val tday = setDateSize(day.toString())
 
         date = tyear + tmonth + tday
-        School_Meal_DateText.text = "${tyear}년 ${tmonth}월 ${tday}일 급식"
-
-        (application as MasterApplication).service.loadMeal(date, date)
-            .enqueue(object : Callback<HashMap<String, Any>> {
-                override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
-                ) {
-                    if (response.isSuccessful) {
-                        mealList.clear()
-
-                        val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
-                        Log.d("meal", dataArray.toString())
-                        val todaymeal = dataArray[0]
-                        val mealData = todaymeal["DDISH_NM"]
-                        val mealArray = mealData?.split("<br/>")
-                        Log.d("mealArray", mealArray.toString())
-                        val kcal = todaymeal["CAL_INFO"]
-
-                        for (element in mealArray!!) {
-                            mealList.add(Meal(element))
-                        }
-                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
-                        SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
-                        SchoolMeal_RecyclerView.setHasFixedSize(true)
-
-                        SchoolMeal_CalText.text = "열량 : $kcal"
-                    } else {
-                        mealList.clear()
-
-                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
-                        SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
-                        SchoolMeal_RecyclerView.setHasFixedSize(true)
-
-                        SchoolMeal_CalText.text = ""
-                    }
-                }
-
-                // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                    toast("network error")
-                    finish()
-                }
-            })
+        School_Meal_DateText.text = "${tyear}년 ${tmonth}월 ${tday}일"
+        retrofitLoadMeal(date)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -109,6 +67,44 @@ class SchoolMealActivity : AppCompatActivity() {
         finish()
     }
 
+    fun retrofitLoadMeal(date: String) {
+        (application as MasterApplication).service.loadMeal(date, date)
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body()!!["success"].toString() == "true") {
+                            mealList.clear()
+                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
+                            val todaymeal = dataArray[0]
+                            val mealData = todaymeal["DDISH_NM"]
+                            val mealArray = mealData?.split("<br/>")
+                            val kcal = todaymeal["CAL_INFO"]
+
+                            for (element in mealArray!!) mealList.add(Meal(element))
+                            SchoolMeal_CalText.text = "열량 : $kcal"
+                        } else {
+                            mealList.clear()
+                            SchoolMeal_CalText.text = ""
+                        }
+                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
+                        SchoolMeal_RecyclerView.setHasFixedSize(true)
+                    } else {
+                        toast("급식표 조회 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
+    }
+
     // 메뉴 캘린더 버튼
     fun selectDate(item: MenuItem) {
         val listener = DatePickerDialog.OnDateSetListener { _, i, i2, i3 ->
@@ -117,49 +113,7 @@ class SchoolMealActivity : AppCompatActivity() {
             val tempi3 = setDateSize(i3.toString())
             School_Meal_DateText.text = "${i}년 ${tempi2}월 ${tempi3}일"
             date = "$year" + tempi2 + tempi3
-
-            (application as MasterApplication).service.loadMeal(date, date)
-                .enqueue(object : Callback<HashMap<String, Any>> {
-                    override fun onResponse(
-                        call: Call<HashMap<String, Any>>,
-                        response: Response<HashMap<String, Any>>
-                    ) {
-                        if (response.isSuccessful) {
-                            mealList.clear()
-
-                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
-                            Log.d("meal", dataArray.toString())
-                            val todaymeal = dataArray[0]
-                            val mealData = todaymeal["DDISH_NM"]
-                            val mealArray = mealData?.split("<br/>")
-                            Log.d("mealArray", mealArray.toString())
-                            val kcal = todaymeal["CAL_INFO"]
-
-                            for (element in mealArray!!) {
-                                mealList.add(Meal(element))
-                            }
-                            SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
-                            SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
-                            SchoolMeal_RecyclerView.setHasFixedSize(true)
-
-                            SchoolMeal_CalText.text = "열량 : $kcal"
-                        } else {
-                            mealList.clear()
-
-                            SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
-                            SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
-                            SchoolMeal_RecyclerView.setHasFixedSize(true)
-
-                            SchoolMeal_CalText.text = ""
-                        }
-                    }
-
-                    // 응답 실패 시
-                    override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                        toast("network error")
-                        finish()
-                    }
-                })
+            retrofitLoadMeal(date)
         }
 
         val picker = DatePickerDialog(this, listener, year, month, day)

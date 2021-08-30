@@ -1,6 +1,5 @@
 package com.example.capstone.fragment
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -80,12 +79,8 @@ class TimeTableFragment: Fragment() {
                         val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>?
                         if (data != null) {
                             todayList = data[dayText]
-
-                            Log.d("todayList", todayList.toString())
-
                             todayList?.let { insertVal(classList, it, dayText) }
                         }
-
                         TimeTable_RecyclerView.adapter = TimeTableAdapter(classList, LayoutInflater.from(activity))
                         val layoutmanager = LinearLayoutManager(activity)
                         layoutmanager.orientation = HORIZONTAL

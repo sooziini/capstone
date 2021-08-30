@@ -4,22 +4,18 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.BoardActivity
 import com.example.capstone.BoardDetailActivity
 import com.example.capstone.R
 import com.example.capstone.dataclass.Reply
 import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.network.MasterApplication
-import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,7 +72,7 @@ class ReplyAdapter(
                     when (item.itemId) {
                         // 댓글 삭제하기 버튼
                         R.id.board_reply_popup_delete -> {
-                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString(), position)
+                            setDeleteReplyDialog(reply.board_id.toString(), reply.reply_id.toString(), position)
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
@@ -127,7 +123,7 @@ class ReplyAdapter(
                     when (item.itemId) {
                         // 댓글 삭제하기 버튼
                         R.id.board_reply_popup_delete -> {
-                            setReplyDeleteDialog(reply.board_id.toString(), reply.reply_id.toString(), position)
+                            setDeleteReplyDialog(reply.board_id.toString(), reply.reply_id.toString(), position)
                         }
                         // 댓글 신고하기 버튼
                         R.id.board_reply_popup_report -> {
@@ -184,7 +180,7 @@ class ReplyAdapter(
     }
 
     //댓글 삭제하기 버튼 클릭 시 뜨는 dialog 설정 함수
-    fun setReplyDeleteDialog(board_id: String, reply_id: String, position: Int) {
+    fun setDeleteReplyDialog(board_id: String, reply_id: String, position: Int) {
         val builder = AlertDialog.Builder(context)
         val dialogView = inflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
@@ -199,6 +195,7 @@ class ReplyAdapter(
                     ) {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
                             removeReplyItem(position)
+                            (context as BoardDetailActivity).deleteReply()
                         } else {
                             context.toast("댓글 삭제 실패")
                         }

@@ -20,7 +20,6 @@ class TimeTableAdapter(
         private val endTime : TextView? = itemView.findViewById(R.id.timetable_item_endtime)
 
         fun bind(stuClass: StuClass) {
-
             if (classList == null) {
                 return
             }
@@ -28,13 +27,10 @@ class TimeTableAdapter(
             if (stuClass.period == null) {
                 classNum?.text = ""
             } else {
-                classNum?.text = stuClass.period.toString()
+                classNum?.text = stuClass.period.toString() + "교시"
             }
-            if (stuClass.subject == "" || stuClass.subject == null) {
-                className?.text = "공강"
-            } else {
-                className?.text = stuClass.subject
-            }
+
+            className?.text = stuClass.subject
             startTime?.text = stuClass.startTime
             endTime?.text = stuClass.endTime
         }
@@ -55,7 +51,9 @@ class TimeTableAdapter(
 
     override fun onBindViewHolder(holder: StuClassViewHolder, position: Int) {
         if (classList != null) {
-            holder.bind(classList[position])
+            if (classList[position].subject != "" || classList[position].subject != null) {
+                holder.bind(classList[position])
+            }
         }
     }
 }

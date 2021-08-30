@@ -5,6 +5,7 @@ import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -19,12 +20,14 @@ import retrofit2.Response
 class TimeTableActivity : AppCompatActivity() {
     private var editMode = false
 
-    private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
-    private val tueList = arrayOf("Tue1", "Tue2", "Tue3", "Tue4", "Tue5", "Tue6", "Tue7")
-    private val wedList = arrayOf("Wed1", "Wed2", "Wed3", "Wed4", "Wed5", "Wed6", "Wed7")
-    private val thuList = arrayOf("Thu1", "Thu2", "Thu3", "Thu4", "Thu5", "Thu6", "Thu7")
-    private val friList = arrayOf("Fri1", "Fri2", "Fri3", "Fri4", "Fri5", "Fri6", "Fri7")
-    private val satList = arrayOf("Sat1", "Sat2", "Sat3", "Sat4", "Sat5", "Sat6", "Sat7")
+//    private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
+//    private val tueList = arrayOf("Tue1", "Tue2", "Tue3", "Tue4", "Tue5", "Tue6", "Tue7")
+//    private val wedList = arrayOf("Wed1", "Wed2", "Wed3", "Wed4", "Wed5", "Wed6", "Wed7")
+//    private val thuList = arrayOf("Thu1", "Thu2", "Thu3", "Thu4", "Thu5", "Thu6", "Thu7")
+//    private val friList = arrayOf("Fri1", "Fri2", "Fri3", "Fri4", "Fri5", "Fri6", "Fri7")
+//    private val satList = arrayOf("Sat1", "Sat2", "Sat3", "Sat4", "Sat5", "Sat6", "Sat7")
+
+    private val dayText = arrayOf("mon", "tue", "wed", "thu", "fri", "sat")
 
     private lateinit var monday: ArrayList<EditText>
     private lateinit var tuesday: ArrayList<EditText>
@@ -85,20 +88,55 @@ class TimeTableActivity : AppCompatActivity() {
 
     // 시간표 저장하는 함수
     private fun saveData() {
-        val dayList = arrayOf(monList, tueList, wedList, thuList, friList, satList)
-//
-//        for (i in dayList.indices) {
-//            saveDept(db, dayArray[i], dayList[i])
-//        }
+        val saveArray = ArrayList<HashMap<String, Any>>()
+        val deleteArray = ArrayList<HashMap<String, Any>>()
+
+        for (i in 0..5) {
+            var j = 1
+            for (textView in dayArray[i]) {
+                val map = HashMap<String, Any>()
+                if(textView.text.isNotEmpty()) {
+                    map["subject"] = textView.text.toString()
+                    map["days"] = dayText[i]
+                    map["period"] = j
+                    saveArray.add(map)
+                } else if(textView.text.isEmpty() || textView.text.toString() == "") {
+                    map["subject"] = "delete"
+                    map["days"] = dayText[i]
+                    map["period"] = j
+                    deleteArray.add(map)
+                }
+                j += 1
+            }
+        }
+
+        deleteData(deleteArray)
+
+        val dataMap = HashMap<String, ArrayList<HashMap<String, Any>>>()
+        dataMap["list"] = saveArray
+
+        (application as MasterApplication).service.updateTimeTable(dataMap)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful) {
+
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("데이터 저장 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                }
+            })
     }
 
     // 시간표 조회하는 함수
     private fun loadData() {
-        val dayText = arrayOf("mon", "tue", "wed", "thu", "fri", "sat")
-
-//        for (i in 0..5) {
-//            loadDept(db, dayArray[i], likeText[i])
-//        }
 
         (application as MasterApplication).service.readTimeTable()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -107,9 +145,9 @@ class TimeTableActivity : AppCompatActivity() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        val data = response.body()!!["table"] as LinkedTreeMap<String, HashMap<String, String>>
+                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>
                         for (i in 0..5) {
-                            val todayList = data[dayText[i]] ?: return
+                            val todayList = data[dayText[i]] ?: continue
 
                             val dayEditList = when(dayText[i]) {
                                 "mon" -> monday
@@ -121,8 +159,11 @@ class TimeTableActivity : AppCompatActivity() {
                                 else -> ArrayList()
                             }
 
-                            for (i in 0..6)
-                                dayEditList[i].setText(todayList["t${i + 1}"].toString())
+                            Log.d("Listname", dayEditList.toString())
+                            for (j in 0..6) {
+                                if (todayList["t${j + 1}"] != null || todayList["t${j + 1}"] != "")
+                                    dayEditList[j].setText(todayList["t${j + 1}"])
+                            }
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
                         toast("데이터 로드 실패")
@@ -134,16 +175,6 @@ class TimeTableActivity : AppCompatActivity() {
                     toast("network error")
                 }
             })
-    }
-
-    private fun saveDept(db: SQLiteDatabase, dayList: ArrayList<EditText>, dTextList: Array<String>) {
-//        for (i in 0..6) {
-//            val contentVal = ContentValues()
-//            contentVal.put(FeedEntry.COLUMN_NAME_DEPT, dayList[i].text.toString())
-//
-//            val arg = arrayOf(dTextList[i])
-//            db.update(FeedEntry.TABLE_NAME, contentVal, "${FeedEntry.COLUMN_NAME_DAYTIME} = ?", arg)
-//        }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -177,5 +208,29 @@ class TimeTableActivity : AppCompatActivity() {
     override fun onBackPressed() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    private fun deleteData(array: ArrayList<HashMap<String, Any>>) {
+        val deleteMap = HashMap<String, ArrayList<HashMap<String, Any>>>()
+
+        deleteMap["list"] = array
+
+        (application as MasterApplication).service.deleteTimeTable(deleteMap)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful) { }
+                    else {        // 3xx, 4xx 를 받은 경우
+                        toast("데이터 로드 실패")
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                }
+            })
     }
 }

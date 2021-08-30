@@ -51,15 +51,24 @@ class TimeTableFragment: Fragment() {
             7 -> "sat"
             else -> ""
         }
-       if (dayText == "sun" || dayText == "")
-           return
 
         loadDept(dayText)
     }
 
     private fun loadDept(dayText: String){
         val classList = ArrayList<StuClass>()
-        lateinit var todayList: LinkedTreeMap<String, String>
+        var todayList: LinkedTreeMap<String, String>?
+        classList.clear()
+
+        if (dayText == "sun" || dayText == "") {
+            TimeTable_RecyclerView.adapter = TimeTableAdapter(classList, LayoutInflater.from(activity))
+            val layoutmanager = LinearLayoutManager(activity)
+            layoutmanager.orientation = HORIZONTAL
+            layoutmanager.canScrollHorizontally()
+            TimeTable_RecyclerView.layoutManager = layoutmanager
+            TimeTable_RecyclerView.setHasFixedSize(true)
+            return
+        }
 
         (activity?.application as MasterApplication).service.readTimeTable()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -68,10 +77,14 @@ class TimeTableFragment: Fragment() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>
-                        todayList = data[dayText]!!
-                        Log.d("todayList", todayList.toString())
-                        insertVal(classList, todayList, dayText)
+                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>?
+                        if (data != null) {
+                            todayList = data[dayText]
+
+                            Log.d("todayList", todayList.toString())
+
+                            todayList?.let { insertVal(classList, it, dayText) }
+                        }
 
                         TimeTable_RecyclerView.adapter = TimeTableAdapter(classList, LayoutInflater.from(activity))
                         val layoutmanager = LinearLayoutManager(activity)

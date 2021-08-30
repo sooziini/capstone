@@ -20,7 +20,7 @@ class TimeTableAdapter(
         private val endTime : TextView? = itemView.findViewById(R.id.timetable_item_endtime)
 
         fun bind(stuClass: StuClass) {
-            if (classList == null) {
+            if (classList == null || classList.size == 0) {
                 return
             }
 
@@ -37,7 +37,7 @@ class TimeTableAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StuClassViewHolder {
-        val view : View = if(classList == null) {
+        val view : View = if(classList == null || classList.size == 0) {
             inflater.inflate(R.layout.timetable_null_item, parent, false)
         } else {
             inflater.inflate(R.layout.timetable_item, parent, false)
@@ -46,14 +46,15 @@ class TimeTableAdapter(
     }
 
     override fun getItemCount(): Int {
-        return classList?.size ?: 1
+        if (classList == null || classList.size == 0)
+            return 1
+
+        return classList.size
     }
 
     override fun onBindViewHolder(holder: StuClassViewHolder, position: Int) {
-        if (classList != null) {
-            if (classList[position].subject != "" || classList[position].subject != null) {
-                holder.bind(classList[position])
-            }
+        if (classList != null && classList?.size != 0) {
+            holder.bind(classList[position])
         }
     }
 }

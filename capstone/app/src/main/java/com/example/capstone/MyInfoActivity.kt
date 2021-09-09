@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
-import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.activity_my_info.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -74,9 +72,6 @@ class MyInfoActivity : AppCompatActivity() {
                 finish()
                 return true
             }
-            R.id.myinfo_edit -> {
-                editInfo(item)
-            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -88,19 +83,19 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.myinfo_menu, menu)
+        menuInflater.inflate(R.menu.editmode_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun editInfo(item: MenuItem) {
+    fun editModeOnClick(item: MenuItem) {
         if (editMode) {
-            item.title = "수정"
+            item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray)
                 view.isEnabled = false
             updateInfo()
             editMode = !editMode
         } else {
-            item.title = "완료"
+            item.setIcon(R.drawable.editmode_done)
             for (view in viewArray)
                 view.isEnabled = true
             editMode = ! editMode

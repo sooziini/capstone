@@ -52,6 +52,11 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
 
+        // 프로필 사진 변경
+        SettingChangeProfileLayout.setOnClickListener {
+
+        }
+
         // 비밀번호 변경
         SettingChangePasswordLayout.setOnClickListener {
             startActivity(Intent(this@SettingActivity, ChangePasswordActivity::class.java))

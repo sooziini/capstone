@@ -1,8 +1,6 @@
 package com.example.capstone
 
-import android.content.ContentValues
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -178,18 +176,18 @@ class TimeTableActivity : AppCompatActivity() {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.timetable_menu, menu)
+        menuInflater.inflate(R.menu.editmode_menu, menu)
         return true
     }
 
-    fun timetableOnClick(item: MenuItem) {
+    fun editModeOnClick(item: MenuItem) {
         editMode = if(!editMode) {
             setEditMode()
-            item.setIcon(R.drawable.timetable_done)
+            item.setIcon(R.drawable.editmode_done)
             true
         } else {
             doneEditMode()
-            item.setIcon(R.drawable.timetable_edit)
+            item.setIcon(R.drawable.editmode_edit)
             false
         }
     }

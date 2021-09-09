@@ -1,15 +1,11 @@
 package com.example.capstone
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.example.capstone.fragment.SchoolMealFragment
 import com.example.capstone.fragment.TimeTableFragment
@@ -17,22 +13,20 @@ import com.example.capstone.fragment.TodoListFragment
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.HashMap
-import kotlin.math.floor
-import kotlin.math.round
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dayn: String
-    lateinit var studentId: String
-    lateinit var studentName: String
-    lateinit var studentYear: String
+    lateinit var studentGradeId: String     // 학번
+    lateinit var studentName: String        // 이름
+    lateinit var studentYear: String        // 입학년도
+    lateinit var studentId: String          // 아이디
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +72,10 @@ class MainActivity : AppCompatActivity() {
                                 stuc = "0$stuc"
                             if (stun.toInt() < 10)
                                 stun = "0$stun"
-                            studentId = stug + stuc + stun
+                            studentGradeId = stug + stuc + stun
                             studentName = data["name"].toString()
-                            Home_WelcomeText.text = studentId + " " + studentName + "님, 환영합니다!"
+                            studentId = data["id"].toString()
+                            Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다!"
                         } else {
                             toast("success != true")
                         }
@@ -228,7 +223,11 @@ class MainActivity : AppCompatActivity() {
             }
             // 설정
             R.id.main_menu_myinfo_setting -> {
-                startActivity(Intent(this, SettingActivity::class.java))
+                val intent = Intent(this, SettingActivity::class.java)
+                intent.putExtra("user_id", studentId)
+                intent.putExtra("user_name", studentName)
+                intent.putExtra("user_student_id", studentGradeId)
+                startActivity(intent)
                 return true
             }
             // 로그아웃

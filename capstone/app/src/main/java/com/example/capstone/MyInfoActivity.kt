@@ -143,11 +143,11 @@ class MyInfoActivity : AppCompatActivity() {
                             saveUserToken("access_token", accessToken, this@MyInfoActivity)
                             // refresh_token 저장
                             saveUserToken("refresh_token", refreshToken, this@MyInfoActivity)
-                            toast("회원정보가 수정되었습니다.")
+                            toast("회원정보가 수정되었습니다")
                         }
 
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("회원정보 수정에 실패했습니다.")
+                        toast("회원정보 수정에 실패했습니다")
                     }
                 }
 

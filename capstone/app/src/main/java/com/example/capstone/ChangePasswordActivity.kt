@@ -71,9 +71,9 @@ class ChangePasswordActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         ChangePasswordLayout.visibility = View.VISIBLE
                         ChangePasswordButton.visibility = View.VISIBLE
-                        toast("비밀번호가 확인되었습니다.")
+                        toast("비밀번호가 확인되었습니다")
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("패스워드가 일치하지 않습니다.")
+                        toast("비밀번호가 일치하지 않습니다")
                     }
                 }
 
@@ -91,7 +91,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val pass2 = ChangePasswordAuthEditText.text.toString()
 
         if (pass1 != pass2){
-            toast("입력한 비밀번호를 확인해주세요.")
+            toast("입력한 비밀번호를 확인해주세요")
             return
         }
 
@@ -104,11 +104,11 @@ class ChangePasswordActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful) {
-                        toast("비밀번호가 변경되었습니다.")
-                        startActivity(Intent(this@ChangePasswordActivity, SettingActivity::class.java))
+                        toast("비밀번호가 변경되었습니다")
+                        startActivity(Intent(this@ChangePasswordActivity, MainActivity::class.java))
                         finish()
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("비밀번호 변경에 실패했습니다.")
+                        toast("비밀번호 변경에 실패했습니다")
                     }
                 }
 

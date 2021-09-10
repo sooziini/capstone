@@ -1,10 +1,7 @@
 package com.example.capstone.network
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.util.Log
-import com.example.capstone.LoginActivity
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

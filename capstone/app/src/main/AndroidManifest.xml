@@ -15,19 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MasterReportActivity"></activity>
-        <activity android:name=".StudentListActivity" />
-        <activity android:name=".EnrollStudentActivity" />
-        <activity android:name=".MainActivity2" />
-        <activity android:name=".MyInfoActivity" />
-        <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".FindPasswordActivity" />
-        <activity android:name=".SchoolMealActivity" />
-        <activity android:name=".TodoListActivity" />
-        <activity android:name=".TimeTableActivity" />
-        <activity android:name=".ReportActivity" />
+        <activity android:name=".master.MasterReportActivity"></activity>
+        <activity android:name=".master.StudentListActivity" />
+        <activity android:name=".master.EnrollStudentActivity" />
+        <activity android:name=".master.MainActivity2" />
+        <activity android:name=".setting.MyInfoActivity" />
+        <activity android:name=".setting.ChangePasswordActivity" />
+        <activity android:name=".user.FindPasswordActivity" />
+        <activity android:name=".main.SchoolMealActivity" />
+        <activity android:name=".main.TodoListActivity" />
+        <activity android:name=".main.TimeTableActivity" />
+        <activity android:name=".setting.ReportActivity" />
         <activity android:name=".NoticeActivity" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".setting.SettingActivity" />
         <activity android:name=".MessageActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -37,19 +37,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".board.SearchActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ScrapActivity" />
+        <activity android:name=".board.ScrapActivity" />
         <activity
-            android:name=".BoardWriteActivity"
+            android:name=".board.BoardWriteActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".BoardDetailActivity"
+            android:name=".board.BoardDetailActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".BoardActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".board.BoardActivity" />
+        <activity android:name=".user.SignUpActivity" />
+        <activity android:name=".user.LoginActivity" />
+        <activity android:name=".main.MainActivity" />
     </application>
 
 </manifest>

@@ -1,14 +1,14 @@
-package com.example.capstone
+package com.example.capstone.main
 
 import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.MealActAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication

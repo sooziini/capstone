@@ -1,22 +1,19 @@
-package com.example.capstone
+package com.example.capstone.board
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
@@ -24,7 +21,6 @@ import com.example.capstone.dataclass.Reply
 import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
 import com.example.capstone.network.MasterApplication
-import kotlinx.android.synthetic.main.activity_board.*
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call

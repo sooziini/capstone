@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.setting
 
 import android.app.Activity
 import android.content.Context
@@ -9,7 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_my_info.*

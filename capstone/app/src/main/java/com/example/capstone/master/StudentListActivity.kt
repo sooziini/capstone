@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.master
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.StuListAdapter
 import com.example.capstone.dataclass.MasterStudent
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
-import kotlinx.android.synthetic.main.activity_enroll_student.*
 import kotlinx.android.synthetic.main.activity_student_list.*
 import org.jetbrains.anko.toast
 import retrofit2.Call

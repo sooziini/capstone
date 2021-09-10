@@ -1,22 +1,18 @@
-package com.example.capstone.fragment
+package com.example.capstone.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
-import com.example.capstone.SchoolMealActivity
 import com.example.capstone.adapter.MealActAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
-import kotlinx.android.synthetic.main.activity_school_meal.*
 import kotlinx.android.synthetic.main.fragment_school_meal.*
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

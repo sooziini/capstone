@@ -1,5 +1,6 @@
 package com.example.capstone.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import com.example.capstone.dataclass.Post
 import com.example.capstone.R
 
 class BoardAdapter (
-    private val postList: ArrayList<Post>,
+    private var postList: ArrayList<Post>,
     private val inflater: LayoutInflater,
     private val itemClick: (Post) -> Unit
 ): RecyclerView.Adapter<BoardAdapter.PostViewHolder>() {
@@ -22,20 +23,24 @@ class BoardAdapter (
         private val postUser: TextView = itemView.findViewById(R.id.post_item_nickname)
         private val postComment: TextView = itemView.findViewById(R.id.post_item_comment_cnt)
         private val postLike: TextView = itemView.findViewById(R.id.post_item_like_cnt)
-private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt)
+        private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt)
 
-        fun bind(post: Post, index: Int) {
-            // var i = index
+        fun bind(post: Post) {
             postTitle.text = post.title
             postBody.text = post.body
             postDate.text = post.regdate.substring(5, 16)
-            postUser.text = post.user_id
             postComment.text = post.replyCount.toString()
             postLike.text = post.goodCount.toString()
             postScrap.text = post.scrapCount.toString()
+            if (post.type == "notice") postUser.text = post.user_id
 
             itemView.setOnClickListener { itemClick(post) }
         }
+    }
+
+    fun refreshPostItem(posts: ArrayList<Post>) {
+        postList = posts
+        notifyDataSetChanged()
     }
 
     // 뷰홀더 생성
@@ -52,6 +57,6 @@ private val postScrap: TextView = itemView.findViewById(R.id.post_item_scrap_cnt
     // 뷰홀더에 post 하나씩 바인딩
     // onCreateViewHolder에서 만든 view와 실제 입력되는 각각의 데이터 연결
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(postList[position], position)
+        holder.bind(postList[position])
     }
 }

@@ -2,12 +2,12 @@ package com.example.capstone.network
 
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
 import com.google.gson.internal.LinkedTreeMap
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 import java.time.Month
 
@@ -89,7 +89,7 @@ interface RetrofitService {
     fun createReply(
         @Path("boardid") board_id: String,
         @Field("body") body: String
-    ): Call<HashMap<String, Any>>
+    ): Call<ReplyChange>
 
     // 대댓글 등록
     @POST("reply/{boardid}/{replyid}")
@@ -98,7 +98,7 @@ interface RetrofitService {
         @Path("boardid") board_id: String,
         @Path("replyid") reply_id: String,
         @Field("body") body: String
-    ): Call<HashMap<String, Any>>
+    ): Call<ReplyChange>
 
     // 댓글 삭제
     @DELETE("reply/{boardid}/{replyid}")
@@ -211,7 +211,7 @@ interface RetrofitService {
     // 프로필 사진 조회
     @GET("user/profile")
     fun getUserProfile(
-        @Query("id") user_id: String,
+        @Query("id") user_id: String
     ): Call<HashMap<String, String>>
 
     // 프로필 사진 삭제
@@ -265,5 +265,22 @@ interface RetrofitService {
     @HTTP (method = "DELETE", path = "school/timetable", hasBody = true)
     fun deleteTimeTable(
         @Body params: HashMap<String, ArrayList<HashMap<String, Any>>>
+    ): Call<HashMap<String, String>>
+
+    // 학생정보 파일 등록
+    @Multipart
+    @POST ("user/auth/student")
+    fun uploadAuthFile(
+        @Part file: MultipartBody.Part
+    ): Call<HashMap<String, String>>
+
+    // master 학생조회
+    @GET ("user/auth/master/student")
+    fun loadStudent(): Call<HashMap<String, Any>>
+
+    // role 변경
+    @PUT ("user/update/role")
+    fun changeRole(
+        @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
 }

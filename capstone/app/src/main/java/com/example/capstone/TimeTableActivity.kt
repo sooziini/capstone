@@ -19,14 +19,6 @@ import retrofit2.Response
 
 class TimeTableActivity : AppCompatActivity() {
     private var editMode = false
-
-//    private val monList = arrayOf("Mon1", "Mon2", "Mon3", "Mon4", "Mon5", "Mon6", "Mon7")
-//    private val tueList = arrayOf("Tue1", "Tue2", "Tue3", "Tue4", "Tue5", "Tue6", "Tue7")
-//    private val wedList = arrayOf("Wed1", "Wed2", "Wed3", "Wed4", "Wed5", "Wed6", "Wed7")
-//    private val thuList = arrayOf("Thu1", "Thu2", "Thu3", "Thu4", "Thu5", "Thu6", "Thu7")
-//    private val friList = arrayOf("Fri1", "Fri2", "Fri3", "Fri4", "Fri5", "Fri6", "Fri7")
-//    private val satList = arrayOf("Sat1", "Sat2", "Sat3", "Sat4", "Sat5", "Sat6", "Sat7")
-
     private val dayText = arrayOf("mon", "tue", "wed", "thu", "fri", "sat")
 
     private lateinit var monday: ArrayList<EditText>
@@ -64,10 +56,6 @@ class TimeTableActivity : AppCompatActivity() {
         loadData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     // 시간표 편집
     private fun setEditMode() {
         for (day in dayArray) {
@@ -84,7 +72,6 @@ class TimeTableActivity : AppCompatActivity() {
         }
         saveData()
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 시간표 저장하는 함수
     private fun saveData() {
@@ -121,9 +108,8 @@ class TimeTableActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful) {
-
-                    } else {        // 3xx, 4xx 를 받은 경우
+                    if (response.isSuccessful) { }
+                    else {        // 3xx, 4xx 를 받은 경우
                         toast("데이터 저장 실패")
                     }
                 }
@@ -159,7 +145,6 @@ class TimeTableActivity : AppCompatActivity() {
                                 else -> ArrayList()
                             }
 
-                            Log.d("Listname", dayEditList.toString())
                             for (j in 0..6) {
                                 if (todayList["t${j + 1}"] != null || todayList["t${j + 1}"] != "")
                                     dayEditList[j].setText(todayList["t${j + 1}"])
@@ -176,7 +161,7 @@ class TimeTableActivity : AppCompatActivity() {
                 }
             })
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.timetable_menu, menu)
         return true

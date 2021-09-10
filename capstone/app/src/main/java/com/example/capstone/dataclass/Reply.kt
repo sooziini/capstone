@@ -12,6 +12,11 @@ data class ReplyList (
     val child: ArrayList<Reply>
 ): Serializable
 
+data class ReplyChange (
+    val success: String,
+    val data: Reply
+): Serializable
+
 data class Reply (
     val reply_id: Int,
     val body: String,
@@ -21,5 +26,6 @@ data class Reply (
     val parent_id: Int,
     val level: Int,
     val goodCount: Int,
-    val goodCheck: String
+    val goodCheck: String,
+    val userCheck: String
 ): Serializable

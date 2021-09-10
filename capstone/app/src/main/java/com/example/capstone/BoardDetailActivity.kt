@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +21,10 @@ import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
 import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.Reply
+import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
 import com.example.capstone.network.MasterApplication
+import kotlinx.android.synthetic.main.activity_board.*
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -32,6 +35,7 @@ import kotlin.collections.ArrayList
 class BoardDetailActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null
+    private var menuUserCheck = true
     private lateinit var BASE_URL: String
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
@@ -39,6 +43,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailBody: String
     private lateinit var boardDetailType: String
     private lateinit var boardDetailUserId: String
+    lateinit var boardDetailCommentCnt: String
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
     private lateinit var replyAdapter: ReplyAdapter
@@ -96,6 +101,13 @@ class BoardDetailActivity : AppCompatActivity() {
                 retrofitCreateReply(intentBoardId, body)
             }
         }
+
+        // swipe refresh
+        board_detail_swipeRefresh.setOnRefreshListener {
+            retrofitGetPostDetail(intentBoardId)
+            retrofitGetReplyList(intentBoardId)
+            board_detail_swipeRefresh.isRefreshing = false
+        }
     }
 
     // 받은 board_id로 게시글 detail GET하는 함수
@@ -110,19 +122,22 @@ class BoardDetailActivity : AppCompatActivity() {
                         boardDetailBody = post.body
                         boardDetailType = post.type
                         boardDetailUserId = post.user_id
+                        boardDetailCommentCnt = post.replyCount.toString()
                         boardDetailGoodCnt = post.goodCount.toString()
                         boardDetailScrapCnt = post.scrapCount.toString()
                         board_detail_title.setText(boardDetailTitle).toString()
                         board_detail_body.setText(boardDetailBody).toString()
                         board_detail_date.setText(post.regdate.substring(0, 16)).toString()
-                        board_detail_comment_cnt.setText(post.replyCount.toString()).toString()
+                        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
                         board_detail_like_cnt.setText(boardDetailGoodCnt).toString()
                         board_detail_scrap_cnt.setText(boardDetailScrapCnt).toString()
+                        if (boardDetailType == "notice") board_detail_nickname.setText(boardDetailUserId).toString()
 
                         if (post.goodCheck == "Y")
                             board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
+                        if (post.userCheck == "N") menuUserCheck = false
 
                         // 사진이 있을 경우
                         if (postImgList.size > 0) {
@@ -169,11 +184,11 @@ class BoardDetailActivity : AppCompatActivity() {
                                 for (j in 0 until replyList[i].child.size)
                                     reply.add(replyList[i].child[j])
                             }
-                            replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
-                            reply_recyclerview.adapter = replyAdapter
-                            reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
-                            reply_recyclerview.setHasFixedSize(true)
                         }
+                        replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
+                        reply_recyclerview.adapter = replyAdapter
+                        reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
+                        reply_recyclerview.setHasFixedSize(true)
                     } else {
                         toast("댓글 조회 실패")
                     }
@@ -190,31 +205,34 @@ class BoardDetailActivity : AppCompatActivity() {
     // 입력받은 댓글 POST하는 함수
     private fun retrofitCreateReply(board_id: String, body: String) {
         (application as MasterApplication).service.createReply(board_id, body)
-            .enqueue(object : Callback<HashMap<String, Any>> {
+            .enqueue(object : Callback<ReplyChange> {
                 override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
+                    call: Call<ReplyChange>,
+                    response: Response<ReplyChange>
                 ) {
-                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
-                        // replyAdapter.notifyDataSetChanged()
-
-                        // 임시방편
-                        finish()
-                        val intent = Intent(this@BoardDetailActivity, BoardDetailActivity::class.java)
-                        intent.putExtra("board_id", intentBoardId)
-                        intent.putExtra("activity_num", "0")
-                        startActivity(intent)
+                    if (response.isSuccessful && response.body()!!.success == "true") {
+                        val reply = response.body()!!.data
+                        replyAdapter.addReplyItem(reply)
+                        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()+1).toString()
+                        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
+                        board_detail_comment.setText("").toString()
+                        hideKeyboard(board_detail_hidekeyboard)
                     } else {
                         toast("댓글 작성 실패")
                     }
                 }
 
                 // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                override fun onFailure(call: Call<ReplyChange>, t: Throwable) {
                     toast("network error")
                     finish()
                 }
             })
+    }
+
+    fun deleteReply() {
+        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()-1).toString()
+        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
     }
 
     // 게시글 좋아요하는 함수
@@ -286,6 +304,8 @@ class BoardDetailActivity : AppCompatActivity() {
     // menu xml에서 설정한 menu를 붙임
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.board_detail_menu, menu)
+        if (!menuUserCheck) menu?.setGroupVisible(R.id.board_detail_true, false)
+        else menu?.findItem(R.id.board_detail_report)?.isVisible = false
         return true
     }
 

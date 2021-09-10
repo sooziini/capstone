@@ -1,7 +1,6 @@
 package com.example.capstone.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.fragment_todo_list.*
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,11 +61,15 @@ class TodoListFragment : Fragment() {
 
                             list.add(Todo(list_id, body, check))
                         }
-                        TodoFrg_Recycleriew.adapter = TodoListAdapter(list, LayoutInflater.from(activity), requireContext(), activity?.application!!)
-                        TodoFrg_Recycleriew.layoutManager = LinearLayoutManager(activity)
-                        TodoFrg_Recycleriew.setHasFixedSize(true)
-                        Log.d("list1", list.toString())
 
+                        if (list.isEmpty()) {
+                            setChange(true)
+                        } else {
+                            setChange(false)
+                            TodoFrg_Recycleriew.adapter = TodoListAdapter(list, LayoutInflater.from(activity), requireContext(), activity?.application!!, 1)
+                            TodoFrg_Recycleriew.layoutManager = LinearLayoutManager(activity)
+                            TodoFrg_Recycleriew.setHasFixedSize(true)
+                        }
                     } else {        // 3xx, 4xx 를 받은 경우
                         toast("TodoList 로드 실패")
                     }
@@ -75,8 +77,18 @@ class TodoListFragment : Fragment() {
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                    toast("todolist network error")
+                    toast("network error")
                 }
             })
+    }
+
+    fun setChange(ch: Boolean) {
+        if (ch) {   // 할 일 없음
+            TodoFrg_Recycleriew.visibility = View.GONE
+            todoList_null_item_frag.visibility = View.VISIBLE
+        } else {    // 할 일 있음
+            TodoFrg_Recycleriew.visibility = View.VISIBLE
+            todoList_null_item_frag.visibility = View.GONE
+        }
     }
 }

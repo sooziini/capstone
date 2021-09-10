@@ -97,7 +97,11 @@ class SettingActivity : AppCompatActivity() {
 
         // 내 정보
         SettingMyInfoLayout.setOnClickListener {
-            startActivity((Intent(this, MyInfoActivity::class.java)))
+            val intent = Intent(this, MyInfoActivity::class.java)
+            intent.putExtra("user_id", intentUserId)
+            intent.putExtra("user_name", intentUserName)
+            intent.putExtra("user_student_id", intentUserStudentId)
+            startActivity(intent)
             finish()
         }
 

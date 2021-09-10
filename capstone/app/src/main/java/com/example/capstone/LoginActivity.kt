@@ -85,8 +85,14 @@ class LoginActivity : AppCompatActivity() {
                                         // refresh_token 저장
                                         saveUserToken("refresh_token", refreshToken, this@LoginActivity)
 
-                                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                                        finish()
+                                        if (result["role"] == "master") {   // master 로그인
+                                            startActivity(Intent(this@LoginActivity, MainActivity2::class.java))
+                                            finish()
+                                        }
+                                        else {      // 일반계정 로그인 (학생, 학생회)
+                                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                            finish()
+                                        }
                                     }
                                 } else {        // 3xx, 4xx 를 받은 경우
                                     toast("아이디, 비밀번호가 일치하지 않습니다.")

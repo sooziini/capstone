@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                             studentId = data["id"].toString()
                             Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다!"
                         } else {
-                            toast("success != true")
+                            toast("데이터 로드 실패")
                         }
                     } else {
                         toast("데이터 로드 실패")

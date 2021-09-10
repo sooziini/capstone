@@ -16,7 +16,6 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         <activity android:name=".MyInfoActivity" />
-        <activity android:name=".ChangeProfileImageActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".FindPasswordActivity" />
         <activity android:name=".SchoolMealActivity" />

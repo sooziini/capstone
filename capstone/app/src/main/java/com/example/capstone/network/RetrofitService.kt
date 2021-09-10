@@ -204,7 +204,7 @@ interface RetrofitService {
     // 프로필 사진 설정
     @Multipart
     @POST("user/profile")
-    fun setUserProfile(
+    fun createUserProfile(
         @Part profile: MultipartBody.Part
     ): Call<HashMap<String, String>>
 

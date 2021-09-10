@@ -1,12 +1,12 @@
-package com.example.capstone
+package com.example.capstone.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_time_table.*

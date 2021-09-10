@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.master
 
 import android.Manifest
 import android.content.Intent
@@ -12,11 +12,10 @@ import android.view.MenuItem
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.FileAdapter
 import kotlinx.android.synthetic.main.activity_enroll_student.*
-import kotlinx.android.synthetic.main.activity_main2.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import java.io.File
 
 class EnrollStudentActivity : AppCompatActivity() {

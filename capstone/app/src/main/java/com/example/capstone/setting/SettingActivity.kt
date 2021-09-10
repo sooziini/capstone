@@ -1,16 +1,12 @@
-package com.example.capstone
+package com.example.capstone.setting
 
 import android.Manifest
-import android.app.Activity
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,7 +17,10 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.capstone.R
+import com.example.capstone.main.MainActivity
 import com.example.capstone.network.MasterApplication
+import com.example.capstone.user.LoginActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody

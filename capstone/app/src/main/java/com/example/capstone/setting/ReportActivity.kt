@@ -1,21 +1,24 @@
-package com.example.capstone
+package com.example.capstone.setting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_master_report.*
+import com.example.capstone.R
+import com.example.capstone.main.MainActivity
 import kotlinx.android.synthetic.main.activity_report.*
 
-class MasterReportActivity : AppCompatActivity() {
+class ReportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_master_report)
+        setContentView(R.layout.activity_report)
 
         // toolbar 설정
-        setSupportActionBar(master_report_toolbar)
+        setSupportActionBar(report_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+
+
 
 
     }
@@ -24,15 +27,11 @@ class MasterReportActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                onBackPressed()
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        startActivity(Intent(this, MainActivity2::class.java))
-        finish()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.main
 
 import android.content.Intent
 import android.net.Uri
@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import com.example.capstone.fragment.SchoolMealFragment
-import com.example.capstone.fragment.TimeTableFragment
-import com.example.capstone.fragment.TodoListFragment
+import com.example.capstone.*
+import com.example.capstone.board.BoardActivity
+import com.example.capstone.board.ScrapActivity
 import com.example.capstone.network.MasterApplication
+import com.example.capstone.setting.ReportActivity
+import com.example.capstone.setting.SettingActivity
+import com.example.capstone.user.LoginActivity
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast

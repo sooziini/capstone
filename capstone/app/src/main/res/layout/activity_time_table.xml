@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/main_color"
-    tools:context=".TimeTableActivity">
+    tools:context=".main.TimeTableActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/timetable_toolbar"

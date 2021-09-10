@@ -11,7 +11,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
-import com.example.capstone.TodoListActivity
+import com.example.capstone.main.TodoListActivity
 import com.example.capstone.dataclass.Todo
 import com.example.capstone.network.MasterApplication
 import org.jetbrains.anko.toast

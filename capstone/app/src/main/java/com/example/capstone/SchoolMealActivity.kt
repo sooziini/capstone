@@ -93,7 +93,11 @@ class SchoolMealActivity : AppCompatActivity() {
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
                     } else {
-                        toast("급식표 조회 실패")
+                        mealList.clear()
+                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
+                        SchoolMeal_RecyclerView.setHasFixedSize(true)
+                        SchoolMeal_CalText.text = ""
                     }
                 }
 

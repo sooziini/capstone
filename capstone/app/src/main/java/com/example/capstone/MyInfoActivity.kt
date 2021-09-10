@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_change_password.*
@@ -95,14 +96,19 @@ class MyInfoActivity : AppCompatActivity() {
     private fun editInfo(item: MenuItem) {
         if (editMode) {
             item.title = "수정"
-            for (view in viewArray)
+            for (view in viewArray) {
                 view.isEnabled = false
+                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
+            }
             updateInfo()
             editMode = !editMode
         } else {
             item.title = "완료"
-            for (view in viewArray)
+            for (view in viewArray) {
                 view.isEnabled = true
+//                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.)
+                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+            }
             editMode = ! editMode
         }
     }

@@ -211,7 +211,7 @@ interface RetrofitService {
     // 프로필 사진 조회
     @GET("user/profile")
     fun getUserProfile(
-        @Query("id") user_id: String,
+        @Query("id") user_id: String
     ): Call<HashMap<String, String>>
 
     // 프로필 사진 삭제
@@ -265,5 +265,22 @@ interface RetrofitService {
     @HTTP (method = "DELETE", path = "school/timetable", hasBody = true)
     fun deleteTimeTable(
         @Body params: HashMap<String, ArrayList<HashMap<String, Any>>>
+    ): Call<HashMap<String, String>>
+
+    // 학생정보 파일 등록
+    @Multipart
+    @POST ("user/auth/student")
+    fun uploadAuthFile(
+        @Part file: MultipartBody.Part
+    ): Call<HashMap<String, String>>
+
+    // master 학생조회
+    @GET ("user/auth/master/student")
+    fun loadStudent(): Call<HashMap<String, Any>>
+
+    // role 변경
+    @PUT ("user/update/role")
+    fun changeRole(
+        @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
 }

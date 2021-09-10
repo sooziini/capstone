@@ -73,7 +73,10 @@ class SchoolMealFragment : Fragment() {
                         MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
                         MealFrag_RecyclerView.setHasFixedSize(true)
                     } else {
-                        toast("급식표 조회 실패")
+                        mealList.clear()
+                        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
+                        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                        MealFrag_RecyclerView.setHasFixedSize(true)
                     }
                 }
 

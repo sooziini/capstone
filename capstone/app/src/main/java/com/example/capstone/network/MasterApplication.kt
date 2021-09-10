@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.capstone.LoginActivity
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MasterApplication: Application() {
     lateinit var service: RetrofitService
-    val BASE_URL = "http://192.168.0.2:3000"
+    val BASE_URL = "http://192.168.56.1:3000"
 
     override fun onCreate() {
         super.onCreate()

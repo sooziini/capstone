@@ -7,13 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
-import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.activity_my_info.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -24,6 +22,9 @@ import kotlin.math.roundToInt
 class MyInfoActivity : AppCompatActivity() {
     var editMode = false
     private lateinit var viewArray: ArrayList<EditText>
+    lateinit var intentUserId: String
+    lateinit var intentUserName: String
+    lateinit var intentUserStudentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,20 @@ class MyInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
         viewArray = arrayListOf(MyInfoPhoneText, MyInfoBirthText, MyInfoGradeText, MyInfoClassText, MyInfoNumText, MyInfoEmailText)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 성공적으로 intent 전달값을 받았을 경우
+        if (intent.hasExtra("user_id")) {
+            intentUserId = intent.getStringExtra("user_id")!!
+            intentUserName = intent.getStringExtra("user_name")!!
+            intentUserStudentId = intent.getStringExtra("user_student_id")!!
+        } else {
+            // intent 실패할 경우 현재 액티비티 종료
+            finish()
+        }
 
         (application as MasterApplication).service.readInfo()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -71,43 +86,41 @@ class MyInfoActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, SettingActivity::class.java))
-                finish()
+                onBackPressed()
                 return true
-            }
-            R.id.myinfo_edit -> {
-                editInfo(item)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this, SettingActivity::class.java))
+        val intent = Intent(this, SettingActivity::class.java)
+        intent.putExtra("user_id", intentUserId)
+        intent.putExtra("user_name", intentUserName)
+        intent.putExtra("user_student_id", intentUserStudentId)
+        startActivity(intent)
         finish()
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.myinfo_menu, menu)
+        menuInflater.inflate(R.menu.editmode_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun editInfo(item: MenuItem) {
+    fun editModeOnClick(item: MenuItem) {
         if (editMode) {
-            item.title = "수정"
+            item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray) {
                 view.isEnabled = false
-                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
+                // view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
             }
             updateInfo()
             editMode = !editMode
         } else {
-            item.title = "완료"
+            item.setIcon(R.drawable.editmode_done)
             for (view in viewArray) {
                 view.isEnabled = true
-//                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.)
-                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                // view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
             }
             editMode = ! editMode
         }
@@ -149,11 +162,11 @@ class MyInfoActivity : AppCompatActivity() {
                             saveUserToken("access_token", accessToken, this@MyInfoActivity)
                             // refresh_token 저장
                             saveUserToken("refresh_token", refreshToken, this@MyInfoActivity)
-                            toast("회원정보가 수정되었습니다.")
+                            toast("회원정보가 수정되었습니다")
                         }
 
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("회원정보 수정에 실패했습니다.")
+                        toast("회원정보 수정에 실패했습니다")
                     }
                 }
 

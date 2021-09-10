@@ -20,7 +20,6 @@
         <activity android:name=".EnrollStudentActivity" />
         <activity android:name=".MainActivity2" />
         <activity android:name=".MyInfoActivity" />
-        <activity android:name=".ChangeProfileImageActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".FindPasswordActivity" />
         <activity android:name=".SchoolMealActivity" />

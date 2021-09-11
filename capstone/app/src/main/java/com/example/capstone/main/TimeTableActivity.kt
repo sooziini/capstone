@@ -1,14 +1,12 @@
-package com.example.capstone
+package com.example.capstone.main
 
-import android.content.ContentValues
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_time_table.*
@@ -163,18 +161,18 @@ class TimeTableActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.timetable_menu, menu)
+        menuInflater.inflate(R.menu.editmode_menu, menu)
         return true
     }
 
-    fun timetableOnClick(item: MenuItem) {
+    fun editModeOnClick(item: MenuItem) {
         editMode = if(!editMode) {
             setEditMode()
-            item.setIcon(R.drawable.timetable_done)
+            item.setIcon(R.drawable.editmode_done)
             true
         } else {
             doneEditMode()
-            item.setIcon(R.drawable.timetable_edit)
+            item.setIcon(R.drawable.editmode_edit)
             false
         }
     }

@@ -1,17 +1,17 @@
-package com.example.capstone
+package com.example.capstone.user
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.jetbrains.anko.toast
@@ -30,7 +30,9 @@ class SignUpActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             idConfirm = false
-            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                R.color.warn_red
+            )
         }
     }
 
@@ -39,7 +41,9 @@ class SignUpActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             stuAuth = false
-            SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+            SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                R.color.warn_red
+            )
         }
     }
 
@@ -48,7 +52,9 @@ class SignUpActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             stuAuth = false
-            SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+            SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                R.color.warn_red
+            )
         }
     }
 
@@ -57,7 +63,9 @@ class SignUpActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable?) { }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             stuAuth = false
-            SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+            SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                R.color.warn_red
+            )
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -234,11 +242,15 @@ class SignUpActivity : AppCompatActivity() {
                         if(response.body()!!["success"] == "true") {
                             idConfirm = false
                             toast("사용할 수 없는 ID 입니다.")
-                            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+                            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.warn_red
+                            )
                         } else {
                             idConfirm = true
                             toast("사용할 수 있는 ID입니다.")
-                            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                            SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.colorPrimary
+                            )
                             val idWatcher = IdEditWatcher()
                             SignUpIdEditTextView.addTextChangedListener(idWatcher)
                         }
@@ -284,9 +296,15 @@ class SignUpActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         if(response.body()!!["success"] == "true") {
-                            SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
-                            SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
-                            SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                            SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.colorPrimary
+                            )
+                            SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.colorPrimary
+                            )
+                            SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.colorPrimary
+                            )
                             stuAuth = true
                             toast("학생인증 성공")
                             val nameWatcher = NameEditWatcher()
@@ -298,16 +316,28 @@ class SignUpActivity : AppCompatActivity() {
                             val stuNumEditWatcher = StuNumEditWatcher()
                             SignUpStuNumEditText.addTextChangedListener(stuNumEditWatcher)
                         } else {
-                            SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-                            SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-                            SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+                            SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.warn_red
+                            )
+                            SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.warn_red
+                            )
+                            SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                                R.color.warn_red
+                            )
                             stuAuth = false
                             toast("학생인증 실패\n이름, 학년, 반, 번호, 입학년도를 확인해주세요.")
                         }
                     } else {
-                        SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-                        SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
-                        SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.warn_red)
+                        SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                            R.color.warn_red
+                        )
+                        SignUpYearEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                            R.color.warn_red
+                        )
+                        SignUpStuNumEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
+                            R.color.warn_red
+                        )
                         stuAuth = false
                         toast("학생인증 실패\n이름, 학년, 반, 번호, 입학년도를 확인해주세요.")
                     }

@@ -62,6 +62,56 @@
                 app:srcCompat="@drawable/ic_arrow_down" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/BoardReportButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/BoardReportPreviewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/arrow_backward" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이전" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="270dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/BoardReportNextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다음" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/arrow_forward" />
+            </LinearLayout>
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/BoardReportrcv"
             android:layout_width="match_parent"
@@ -106,6 +156,57 @@
                 android:layout_height="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:srcCompat="@drawable/ic_arrow_down" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ReplyReportButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ReplyReportPreviewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/arrow_backward" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이전" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="270dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/ReplyReportNextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다음" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/arrow_forward" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

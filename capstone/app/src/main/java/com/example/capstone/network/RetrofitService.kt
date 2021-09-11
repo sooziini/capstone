@@ -283,4 +283,16 @@ interface RetrofitService {
     fun changeRole(
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
+
+    // 게시판 신고 조회
+    @GET ("board/report/{page_num}")
+    fun readBoardReport(
+        @Path ("page_num") page_num: Int
+    ): Call<HashMap<String, Any>>
+
+    // 댓글 신고 조회
+    @GET ("reply/report/{page_num}")
+    fun readReplyReport(
+        @Path ("page_num") page_num: Int
+    ): Call<HashMap<String, Any>>
 }

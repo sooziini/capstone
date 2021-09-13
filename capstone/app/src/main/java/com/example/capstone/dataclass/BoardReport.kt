@@ -1,7 +1,7 @@
 package com.example.capstone.dataclass
 
 data class BoardReport (
-    val boardId: String,
+    val boardId: Int,
     val sendId: String,
     val recvId: String,
     val body: String,

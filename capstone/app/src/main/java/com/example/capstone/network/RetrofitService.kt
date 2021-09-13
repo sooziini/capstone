@@ -267,7 +267,7 @@ interface RetrofitService {
         @Body params: HashMap<String, ArrayList<HashMap<String, Any>>>
     ): Call<HashMap<String, String>>
 
-    // 학생정보 파일 등록
+    // master 학생정보 파일 등록
     @Multipart
     @POST ("user/auth/student")
     fun uploadAuthFile(
@@ -278,9 +278,41 @@ interface RetrofitService {
     @GET ("user/auth/master/student")
     fun loadStudent(): Call<HashMap<String, Any>>
 
-    // role 변경
+    // master role 변경
     @PUT ("user/update/role")
     fun changeRole(
         @Body params: HashMap<String, String>
     ): Call<HashMap<String, String>>
+
+    // master 게시판 신고 조회
+    @GET ("board/report/{page_num}")
+    fun readBoardReport(
+        @Path ("page_num") page_num: Int
+    ): Call<HashMap<String, Any>>
+
+    // master 댓글 신고 조회
+    @GET ("reply/report/{page_num}")
+    fun readReplyReport(
+        @Path ("page_num") page_num: Int
+    ): Call<HashMap<String, Any>>
+
+    // master 댓글 신고받은 횟수 조회
+    @GET ("reply/report/count")
+    fun readReplyReportCount(): Call<HashMap<String, Any>>
+
+    // master 게시판 신고받은 횟수 조회
+    @GET ("board/report/count")
+    fun readBoardReportCount(): Call<HashMap<String, Any>>
+
+    // master 게시판 신고내용 조회
+    @GET ("board/report?")
+    fun masterLoadBoardReport(
+        @Query ("id") id: String
+    ): Call<HashMap<String, Any>>
+
+    // master 댓글 신고내용 조회
+    @GET ("reply/report?")
+    fun masterLoadReplyReport(
+        @Query ("id") id: String
+    ): Call<HashMap<String, Any>>
 }

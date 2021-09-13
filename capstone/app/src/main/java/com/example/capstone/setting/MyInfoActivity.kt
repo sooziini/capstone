@@ -71,7 +71,8 @@ class MyInfoActivity : AppCompatActivity() {
                         MyInfoNumText.setText((data["schoolnumber"] as Double).roundToInt().toString())
                         MyInfoEmailText.setText(data["email"])
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("데이터 로드 실패")
+                        toast("데이터를 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -167,7 +168,8 @@ class MyInfoActivity : AppCompatActivity() {
                         }
 
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("회원정보 수정에 실패했습니다")
+                        toast("회원정보를 수정할 수 없습니다")
+                        finish()
                     }
                 }
 

@@ -91,7 +91,7 @@ class BoardDetailActivity : AppCompatActivity() {
             val body = board_detail_comment.text.toString()
 
             if (body == "") {
-                toast("댓글을 입력해주세요")
+                toast("댓글을 입력해 주세요")
             } else {
                 // 댓글 작성 POST
                 retrofitCreateReply(intentBoardId, body)
@@ -148,7 +148,8 @@ class BoardDetailActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        toast("게시글 조회 실패")
+                        toast("게시글을 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -186,7 +187,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                         reply_recyclerview.setHasFixedSize(true)
                     } else {
-                        toast("댓글 조회 실패")
+                        toast("댓글을 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -214,7 +216,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_comment.setText("").toString()
                         hideKeyboard(board_detail_hidekeyboard)
                     } else {
-                        toast("댓글 작성 실패")
+                        toast("댓글을 작성할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -253,7 +256,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_like_btn.setImageResource(R.drawable.detail_like)
                     }
                 } else {
-                    toast("게시글 좋아요 실패")
+                    toast("게시글 좋아요를 할 수 없습니다")
+                    finish()
                 }
             }
 
@@ -286,7 +290,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap)
                     }
                 } else {
-                    toast("게시글 스크랩 실패")
+                    toast("게시글 스크랩을 할 수 없습니다")
+                    finish()
                 }
             }
 
@@ -377,7 +382,8 @@ class BoardDetailActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         } else {
-                            toast("게시글 삭제 실패")
+                            toast("게시글을 삭제할 수 없습니다")
+                            finish()
                         }
                     }
 
@@ -415,7 +421,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
                             toast("신고가 접수되었습니다")
                         } else {
-                            toast("게시글 신고 실패")
+                            toast("게시글을 신고할 수 없습니다")
+                            finish()
                         }
                     }
 

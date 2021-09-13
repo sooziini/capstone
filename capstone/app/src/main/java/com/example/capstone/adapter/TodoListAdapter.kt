@@ -1,5 +1,6 @@
 package com.example.capstone.adapter
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
@@ -81,13 +82,15 @@ class TodoListAdapter(
                                             if (response.isSuccessful) {
                                                 box.text = edit.text
                                             } else {        // 3xx, 4xx 를 받은 경우
-                                                context.toast("할 일 수정 실패")
+                                                context.toast("할 일을 수정할 수 없습니다")
+                                                (context as Activity).finish()
                                             }
                                         }
 
                                         // 응답 실패 시
                                         override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                                             context.toast("network error")
+                                            (context as Activity).finish()
                                         }
                                     })
                             }
@@ -103,13 +106,15 @@ class TodoListAdapter(
                                             if (response.isSuccessful) {
                                                 removeTodoItem(position)
                                             } else {        // 3xx, 4xx 를 받은 경우
-                                                context.toast("할 일 삭제 실패")
+                                                context.toast("할 일을 삭제할 수 없습니다")
+                                                (context as Activity).finish()
                                             }
                                         }
 
                                         // 응답 실패 시
                                         override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                                             context.toast("network error")
+                                            (context as Activity).finish()
                                         }
                                     })
                             }
@@ -134,15 +139,17 @@ class TodoListAdapter(
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful) {
-
+                        //
                     } else {        // 3xx, 4xx 를 받은 경우
                         context.toast("체크 실패")
+                        (context as Activity).finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     context.toast("network error")
+                    (context as Activity).finish()
                 }
             })
     }

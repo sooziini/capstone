@@ -52,10 +52,10 @@ class LoginActivity : AppCompatActivity() {
 
             when {
                 id == "" -> {
-                    toast("ID를 입력해주세요")
+                    toast("아이디를 입력해 주세요")
                 }
                 password == "" -> {
-                    toast("비밀번호를 입력해주세요")
+                    toast("비밀번호를 입력해 주세요")
                 }
                 else -> {
                     post["id"] = id
@@ -81,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
                                     }
 
                                     if (accessToken == null || refreshToken == null) {
-                                        Toast.makeText(this@LoginActivity, "아이디, 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(this@LoginActivity, "아이디와 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
                                     } else {
                                         // access_token 저장
                                         saveUserToken("access_token", accessToken, this@LoginActivity)
@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
                                         }
                                     }
                                 } else {        // 3xx, 4xx 를 받은 경우
-                                    toast("아이디, 비밀번호가 일치하지 않습니다.")
+                                    toast("아이디와 비밀번호가 일치하지 않습니다")
                                 }
                             }
                             // 응답 실패 시

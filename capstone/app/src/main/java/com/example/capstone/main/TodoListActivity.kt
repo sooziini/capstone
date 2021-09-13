@@ -121,7 +121,8 @@ class TodoListActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         loadTodo(year, month - 1, day)
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("TodoList 등록 실패")
+                        toast("할 일을 추가할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -157,7 +158,8 @@ class TodoListActivity : AppCompatActivity() {
                             todoList.add(Todo(list_id, body, check))
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("TodoList 로드 실패")
+                        toast("할 일을 조회할 수 없습니다")
+                        finish()
                     }
                     if (todoList.isEmpty()) {
                         setChange(true)

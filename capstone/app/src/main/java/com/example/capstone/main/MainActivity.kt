@@ -80,10 +80,12 @@ class MainActivity : AppCompatActivity() {
                             studentId = data["id"].toString()
                             Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다!"
                         } else {
-                            toast("데이터 로드 실패")
+                            toast("데이터를 조회할 수 없습니다")
+                            finish()
                         }
                     } else {
-                        toast("데이터 로드 실패")
+                        toast("데이터를 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -246,7 +248,8 @@ class MainActivity : AppCompatActivity() {
                                 finish()
                                 toast("로그아웃 되었습니다")
                             } else {
-                                toast("로그아웃 실패")
+                                toast("로그아웃을 할 수 없습니다")
+                                finish()
                             }
                         }
 

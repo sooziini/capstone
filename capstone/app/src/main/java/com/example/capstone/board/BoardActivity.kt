@@ -103,7 +103,8 @@ class BoardActivity : AppCompatActivity() {
                             boardAdapter.refreshPostItem(postList)
                         }
                     } else {
-                        toast("게시글 목록 조회 실패")
+                        toast("게시글 목록을 조회할 수 없습니다")
+                        finish()
                     }
                 }
 

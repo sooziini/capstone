@@ -159,7 +159,8 @@ class ReplyAdapter(
                             replyLikeBtn.setImageResource(R.drawable.detail_like)
                         }
                     } else {
-                        context.toast("댓글 좋아요 실패")
+                        context.toast("댓글 좋아요를 할 수 없습니다")
+                        (context as Activity).finish()
                     }
                 }
 
@@ -197,12 +198,13 @@ class ReplyAdapter(
                             removeReplyItem(position)
                             (context as BoardDetailActivity).deleteReply()
                         } else {
-                            context.toast("댓글 삭제 실패")
+                            context.toast("댓글을 삭제할 수 없습니다.")
+                            (context as Activity).finish()
                         }
                     }
 
                     override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                        (context as BoardDetailActivity).finish()
+                        (context as Activity).finish()
                     }
                 })
         }
@@ -245,12 +247,13 @@ class ReplyAdapter(
                         intent.putExtra("activity_num", "0")
                         context.startActivity(intent)
                     } else {
-                        context.toast("대댓글 작성 실패")
+                        context.toast("대댓글을 작성할 수 없습니다")
+                        (context as Activity).finish()
                     }
                 }
 
                 override fun onFailure(call: Call<ReplyChange>, t: Throwable) {
-                    (context as BoardDetailActivity).finish()
+                    (context as Activity).finish()
                 }
             })
     }
@@ -270,12 +273,13 @@ class ReplyAdapter(
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
                         context.toast("신고가 접수되었습니다")
                     } else {
-                        context.toast("댓글 신고 실패")
+                        context.toast("댓글을 신고할 수 없습니다")
+                        (context as Activity).finish()
                     }
                 }
 
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                    (context as BoardDetailActivity).finish()
+                    (context as Activity).finish()
                 }
             })
     }

@@ -1,5 +1,6 @@
 package com.example.capstone.main
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -79,6 +80,7 @@ class SchoolMealFragment : Fragment() {
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
+                    (context as Activity).finish()
                 }
             })
     }

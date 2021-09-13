@@ -77,9 +77,9 @@ class BoardWriteActivity : AppCompatActivity() {
             val body = board_write_body.text.toString()
 
             if (title == "") {
-                toast("제목을 입력해주세요")
+                toast("제목을 입력해 주세요")
             } else if (body == "") {
-                toast("내용을 입력해주세요")
+                toast("내용을 입력해 주세요")
             } else {
                 setWriteDialog(title, body)
             }
@@ -196,14 +196,15 @@ class BoardWriteActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        toast("게시글 작성 실패")
+                        toast("게시글을 작성할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
-                    //finish()
+                    finish()
                 }
             })
     }
@@ -224,14 +225,15 @@ class BoardWriteActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        toast("게시글 수정 실패")
+                        toast("게시글을 수정할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
-                    //finish()
+                    finish()
                 }
             })
     }

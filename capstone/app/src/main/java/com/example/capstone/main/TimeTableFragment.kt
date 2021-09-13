@@ -1,5 +1,6 @@
 package com.example.capstone.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -87,13 +88,15 @@ class TimeTableFragment: Fragment() {
                         TimeTable_RecyclerView.layoutManager = layoutmanager
                         TimeTable_RecyclerView.setHasFixedSize(true)
                     } else {        // 3xx, 4xx 를 받은 경우
-                        requireContext().toast("데이터 로드 실패")
+                        requireContext().toast("데이터를 조회할 수 없습니다")
+                        (context as Activity).finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     requireContext().toast("network error")
+                    (context as Activity).finish()
                 }
             })
     }

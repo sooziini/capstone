@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.user
 
 import android.app.Activity
 import android.content.Context
@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.example.capstone.R
+import com.example.capstone.main.MainActivity
+import com.example.capstone.master.MainActivity2
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_login.*

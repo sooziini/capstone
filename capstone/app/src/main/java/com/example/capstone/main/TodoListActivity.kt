@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.main
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -13,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.TodoListAdapter
 import com.example.capstone.dataclass.Todo
 import com.example.capstone.network.MasterApplication

@@ -1,26 +1,22 @@
-package com.example.capstone
+package com.example.capstone.master
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.capstone.user.LoginActivity
+import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main2.*
-import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class MainActivity2 : AppCompatActivity() {
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000

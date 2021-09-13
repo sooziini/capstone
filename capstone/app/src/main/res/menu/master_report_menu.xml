@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/myinfo_edit"
-        android:title="수정"
+        android:id="@+id/report_search"
+        android:icon="@drawable/board_search"
+        android:title="search"
         app:showAsAction="always" />
 </menu>

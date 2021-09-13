@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.BoardDetailActivity
+import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.R
 import com.example.capstone.dataclass.Reply
 import com.example.capstone.dataclass.ReplyChange

@@ -1,4 +1,4 @@
-package com.example.capstone.fragment
+package com.example.capstone.main
 
 import android.os.Bundle
 import android.util.Log

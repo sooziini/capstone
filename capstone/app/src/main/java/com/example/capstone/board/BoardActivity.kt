@@ -1,16 +1,17 @@
-package com.example.capstone
+package com.example.capstone.board
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.Post
 import com.example.capstone.dataclass.PostList
+import com.example.capstone.main.MainActivity
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board.*
 import org.jetbrains.anko.toast

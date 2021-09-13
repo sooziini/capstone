@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.board
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.adapter.BoardAdapter
 import com.example.capstone.dataclass.PostList
 import com.example.capstone.network.MasterApplication

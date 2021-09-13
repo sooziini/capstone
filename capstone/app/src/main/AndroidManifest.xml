@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".master.MasterReportActivity"></activity>
+        <activity android:name=".master.ReportSearchActivity"></activity>
+        <activity android:name=".master.MasterReportActivity" />
         <activity android:name=".master.StudentListActivity" />
         <activity android:name=".master.EnrollStudentActivity" />
         <activity android:name=".master.MainActivity2" />

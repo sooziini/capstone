@@ -3,7 +3,9 @@ package com.example.capstone.master
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +22,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.math.roundToInt
 import com.example.capstone.R
+import com.example.capstone.dataclass.Reply
+import com.example.capstone.user.LoginActivity
 
 class MasterReportActivity : AppCompatActivity() {
     private var boardShow = false
@@ -28,6 +32,8 @@ class MasterReportActivity : AppCompatActivity() {
     private val replyReportList = ArrayList<ReplyReport>()
     private var boardPage = 1
     private var replyPage = 1
+    private var boardNoData = false
+    private var replyNoData = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +47,54 @@ class MasterReportActivity : AppCompatActivity() {
         readBoardReport()
         readReplyReport()
 
-        BoardReportrcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this))
-        BoardReportrcv.layoutManager = LinearLayoutManager(this)
-        BoardReportrcv.setHasFixedSize(true)
+        setBoardPage(boardPage)
+        setReplyPage(replyPage)
 
-        ReplyReportrcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this))
-        ReplyReportrcv.layoutManager = LinearLayoutManager(this)
-        ReplyReportrcv.setHasFixedSize(true)
+        // 게시판 신고 이전 버튼
+        BoardReportPreviewButton.setOnClickListener {
+            if (boardPage != 1) {
+                boardPage -= 1
+                boardNoData = false
+            }
+            else if (boardPage == 1)
+                return@setOnClickListener
+
+            readBoardReport()
+        }
+
+        // 게시판 신고 다음 버튼
+        BoardReportNextButton.setOnClickListener {
+            if (boardPage == 1 && boardNoData) {
+                toast("마지막 페이지입니다.")
+                return@setOnClickListener
+            }
+            boardPage += 1
+
+            readBoardReport()
+        }
+
+        // 댓글 신고 이전 버튼
+        ReplyReportPreviewButton.setOnClickListener {
+            if(replyPage != 1) {
+                replyPage -= 1
+                replyNoData = false
+            }
+            else if (replyPage == 1)
+                return@setOnClickListener
+
+            readReplyReport()
+        }
+
+        // 댓글 신고 다음 버튼
+        ReplyReportNextButton.setOnClickListener {
+            if (replyPage == 1 && replyNoData) {
+                toast("마지막 페이지입니다.")
+                return@setOnClickListener
+            }
+            replyPage += 1
+
+            readReplyReport()
+        }
 
         BoardReportButton.setOnClickListener {
             if(!boardShow) {
@@ -83,6 +130,10 @@ class MasterReportActivity : AppCompatActivity() {
                 onBackPressed()
                 return true
             }
+            R.id.report_search -> {
+                startActivity(Intent(this, ReportSearchActivity::class.java))
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -93,8 +144,6 @@ class MasterReportActivity : AppCompatActivity() {
     }
 
     private fun readBoardReport() {
-        boardReportList.clear()
-
         (application as MasterApplication).service.readBoardReport(boardPage)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
@@ -104,6 +153,20 @@ class MasterReportActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         val reportArray = response.body()!!["board"] as ArrayList<LinkedTreeMap<String, Any>>
 
+                        if(reportArray.size == 0) {
+                            if (boardPage != 1) {
+                                boardPage -= 1
+                                toast("마지막 페이지입니다.")
+                            }
+                            else if (boardPage == 1)
+                                boardNoData = true
+                            return
+                        }
+
+                        if (!boardNoData) setBoardPage(boardPage)
+
+                        boardReportList.clear()
+
                         for (item in reportArray) {
                             val board_id = (item["board_id"] as Double).roundToInt()
                             val send_id = item["send_id"] as String
@@ -112,8 +175,12 @@ class MasterReportActivity : AppCompatActivity() {
                             val regDate = item["regdate"] as String
                             boardReportList.add(BoardReport(board_id, send_id, recv_id, body, regDate))
                         }
+
+                        BoardReportrcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@MasterReportActivity))
+                        BoardReportrcv.layoutManager = LinearLayoutManager(this@MasterReportActivity)
+                        BoardReportrcv.setHasFixedSize(true)
                     } else {
-                        toast("로그아웃 실패")
+                        toast("로드 실패")
                     }
                 }
                 // 응답 실패 시
@@ -125,7 +192,6 @@ class MasterReportActivity : AppCompatActivity() {
     }
 
     private fun readReplyReport() {
-        replyReportList.clear()
 
         (application as MasterApplication).service.readReplyReport(replyPage)
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -136,6 +202,20 @@ class MasterReportActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         val reportArray = response.body()!!["reply"] as ArrayList<LinkedTreeMap<String, Any>>
 
+                        if(reportArray.size == 0) {
+                            if (replyPage != 1) {
+                                replyPage -= 1
+                                toast("마지막 페이지입니다.")
+                            }
+                            else if (replyPage == 1)
+                                replyNoData = true
+                            return
+                        }
+
+                        if (!replyNoData) setReplyPage(replyPage)
+
+                        replyReportList.clear()
+
                         for (item in reportArray) {
                             val reply_id = (item["reply_id"] as Double).roundToInt()
                             val send_id = item["send_id"] as String
@@ -144,8 +224,12 @@ class MasterReportActivity : AppCompatActivity() {
                             val regDate = item["regdate"] as String
                             replyReportList.add(ReplyReport(reply_id, send_id, recv_id, body, regDate))
                         }
+
+                        ReplyReportrcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@MasterReportActivity))
+                        ReplyReportrcv.layoutManager = LinearLayoutManager(this@MasterReportActivity)
+                        ReplyReportrcv.setHasFixedSize(true)
                     } else {
-                        toast("로그아웃 실패")
+                        toast("로드 실패")
                     }
                 }
                 // 응답 실패 시
@@ -154,5 +238,18 @@ class MasterReportActivity : AppCompatActivity() {
                     finish()
                 }
             })
+    }
+
+    private fun setBoardPage(page: Int) {
+        BoardReportPage.text = "$page 페이지"
+    }
+
+    private fun setReplyPage(page: Int) {
+        ReplyReportPage.text = "$page 페이지"
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.master_report_menu, menu)
+        return true
     }
 }

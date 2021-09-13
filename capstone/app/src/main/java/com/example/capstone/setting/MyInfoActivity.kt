@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
@@ -112,7 +113,7 @@ class MyInfoActivity : AppCompatActivity() {
             item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray) {
                 view.isEnabled = false
-                // view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
+                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
             }
             updateInfo()
             editMode = !editMode
@@ -120,7 +121,7 @@ class MyInfoActivity : AppCompatActivity() {
             item.setIcon(R.drawable.editmode_done)
             for (view in viewArray) {
                 view.isEnabled = true
-                // view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.main_color)
             }
             editMode = ! editMode
         }

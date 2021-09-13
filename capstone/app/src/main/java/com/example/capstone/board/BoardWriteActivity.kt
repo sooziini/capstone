@@ -181,7 +181,6 @@ class BoardWriteActivity : AppCompatActivity() {
         }
     }
 
-    //images: ArrayList<MultipartBody.Part>
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
     private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {

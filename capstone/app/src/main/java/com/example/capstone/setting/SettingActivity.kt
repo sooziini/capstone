@@ -179,6 +179,10 @@ class SettingActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_READ_EXTERNAL_STORAGE)
+            // 다시 체크
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED)
+                getImages()
         } else {
             // 권한이 있을 경우
             getImages()

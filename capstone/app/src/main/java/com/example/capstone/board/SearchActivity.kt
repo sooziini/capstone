@@ -121,5 +121,6 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(this@SearchActivity, BoardActivity::class.java)
         intent.putExtra("type", type)
         startActivity(intent)
+        finish()
     }
 }

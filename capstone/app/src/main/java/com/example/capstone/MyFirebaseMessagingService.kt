@@ -6,12 +6,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.capstone.main.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.jetbrains.anko.activityManager
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -27,13 +27,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val editor = sp.edit()
         editor.putString("token", token).apply()
         editor.commit()
-
-        sendRegistrationToServer(token)
-    }
-
-    // 받은 토큰을 서버로 전송
-    private fun sendRegistrationToServer(token: String?) {
-        Log.d(TAG, "sendRegistrationTokenToServer($token)")
     }
 
     // 메세지 수신 시 호출

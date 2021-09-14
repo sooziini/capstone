@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:background="@drawable/underline"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_post"
+    android:orientation="vertical"
+    android:padding="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="신고자 ID :"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold" />
@@ -24,7 +24,7 @@
             android:id="@+id/report_item_sendid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_weight="5"
             android:text="test"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold" />
@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_weight="1"
             android:text="신고받은 ID :"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold" />
@@ -41,7 +42,7 @@
             android:id="@+id/report_item_recvid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_weight="5"
             android:text="test"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold" />
@@ -50,9 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:padding="6dp"
         android:orientation="horizontal">
 
         <TextView
@@ -65,7 +64,7 @@
             android:id="@+id/report_item_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:text="report_ex"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     </LinearLayout>
@@ -73,9 +72,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:padding="6dp"
         android:orientation="horizontal">
 
         <TextView
@@ -88,7 +85,7 @@
             android:id="@+id/report_item_regdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:text="regdate_ex"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </LinearLayout>

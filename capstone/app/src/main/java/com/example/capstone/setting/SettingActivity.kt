@@ -211,9 +211,13 @@ class SettingActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
-            uriPath = data!!.data!!
-            val filePath = getImageFilePath(uriPath)
-            retrofitCreateUserProfile(filePath)
+            if (resultCode == RESULT_OK) {
+                uriPath = data!!.data!!
+                val filePath = getImageFilePath(uriPath)
+                retrofitCreateUserProfile(filePath)
+            } else if (resultCode == RESULT_CANCELED) {
+                // 사진 선택 취소
+            }
         }
     }
 

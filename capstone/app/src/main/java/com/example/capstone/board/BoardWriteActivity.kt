@@ -153,23 +153,27 @@ class BoardWriteActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
-            val count = data?.clipData!!.itemCount
-            uriPaths.clear()
-            filePaths.clear()
-            if (data.clipData != null && count > 1) {
-                // 이미지 다중 선택
-                for (i in 0 until count) {
-                    val uri = data.clipData!!.getItemAt(i).uri
+            if (resultCode == RESULT_OK) {
+                val count = data?.clipData!!.itemCount
+                uriPaths.clear()
+                filePaths.clear()
+                if (data.clipData != null && count > 1) {
+                    // 이미지 다중 선택
+                    for (i in 0 until count) {
+                        val uri = data.clipData!!.getItemAt(i).uri
+                        uriPaths.add(uri)
+                        val filePath = getImageFilePath(uri)
+                        filePaths.add(filePath)
+                    }
+                } else {
+                    // 이미지 단일 선택
+                    val uri = data.data!!
                     uriPaths.add(uri)
                     val filePath = getImageFilePath(uri)
                     filePaths.add(filePath)
                 }
-            } else {
-                // 이미지 단일 선택
-                val uri = data.data!!
-                uriPaths.add(uri)
-                val filePath = getImageFilePath(uri)
-                filePaths.add(filePath)
+            } else if (resultCode == RESULT_CANCELED) {
+                // 사진 선택 취소
             }
         }
 
@@ -253,12 +257,15 @@ class BoardWriteActivity : AppCompatActivity() {
             // 사진 첨부 버튼을 클릭했을 경우
             R.id.board_write_image -> {
                 val permissionChk = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-
                 if (permissionChk != PackageManager.PERMISSION_GRANTED) {
                     // 권한이 없을 경우
                     ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                         REQUEST_READ_EXTERNAL_STORAGE)
+                    // 다시 체크
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED)
+                        getImages()
                 } else {
                     // 권한이 있을 경우
                     getImages()

@@ -102,7 +102,7 @@
                     android:padding="4dp"
                     android:layout_marginBottom="24dp"
                     android:layout_marginStart="16dp"
-                    android:text="할 일이 없어요"
+                    android:text="할 일을 추가해 주세요"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@color/basic" />
             </LinearLayout>

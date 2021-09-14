@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="4dp"
-    android:paddingTop="4dp"
-    android:paddingEnd="4dp"
+    android:padding="4dp"
     tools:context=".master.ReportSearchActivity">
 
     <LinearLayout
@@ -90,7 +88,7 @@
         android:id="@+id/report_search_body_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:padding="8dp"
         android:overScrollMode="never"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,20 +104,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/round_border"
                 android:orientation="vertical"
-                android:paddingStart="6dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="6dp"
-                android:paddingBottom="8dp">
+                android:padding="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -146,6 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:padding="8dp"
                     android:overScrollMode="never"
                     android:visibility="gone" />
 
@@ -154,20 +149,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/round_border"
                 android:orientation="vertical"
-                android:paddingStart="6dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="6dp"
-                android:paddingBottom="8dp">
+                android:padding="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -195,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:overScrollMode="never"
+                    android:padding="8dp"
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>

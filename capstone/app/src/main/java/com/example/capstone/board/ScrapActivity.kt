@@ -50,7 +50,8 @@ class ScrapActivity : AppCompatActivity() {
                         scrap_recyclerview.layoutManager = LinearLayoutManager(this@ScrapActivity)
                         scrap_recyclerview.setHasFixedSize(true)
                     } else {
-                        toast("게시글 목록 조회 실패")
+                        toast("스크랩 게시글 목록을 조회할 수 없습니다")
+                        finish()
                     }
                 }
 

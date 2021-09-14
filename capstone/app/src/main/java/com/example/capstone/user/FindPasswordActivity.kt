@@ -61,7 +61,7 @@ class FindPasswordActivity : AppCompatActivity() {
         val map = HashMap<String, String>()
 
         if (id.isEmpty() || name.isEmpty() || stuId.isEmpty()) {
-            toast("빈칸 없이 입력해주세요")
+            toast("빈칸 없이 입력해 주세요")
             return
         }
 
@@ -80,7 +80,7 @@ class FindPasswordActivity : AppCompatActivity() {
                         startActivity(Intent(this@FindPasswordActivity, LoginActivity::class.java))
                         finish()
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("입력정보를 확인해주세요")
+                        toast("입력정보를 확인해 주세요")
                     }
                 }
 

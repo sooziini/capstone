@@ -40,6 +40,7 @@ class SettingActivity : AppCompatActivity() {
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
     lateinit var uriPath: Uri
     lateinit var view: ImageView
+    var ver: Boolean = false    // 프로필 사진X = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,15 +130,17 @@ class SettingActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.code() == 204) {
-                        // 프로필 사진이 없을 경우
+                    if (response.code() == 204) {   // 프로필 사진이 없을 경우
+                        ver = false
                     } else {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
+                            ver = true
                             val profileImg = response.body()!!["path"]
                             val profileUri = Uri.parse(BASE_URL+profileImg)
                             setProfile(profileUri)
                         } else {
-                            toast("프로필 사진 조회 실패")
+                            toast("프로필 사진을 조회할 수 없습니다")
+                            finish()
                         }
                     }
                 }
@@ -160,11 +163,11 @@ class SettingActivity : AppCompatActivity() {
             permissionCheck()
         }
             .setNegativeButton("취소", null)
-            .setNeutralButton("삭제") { dialog, it ->
+        if (ver)
+            builder.setNeutralButton("삭제") { dialog, it ->
                 retrofitDeleteUserProfile()
             }
-        builder.setView(dialogView)
-        builder.show()
+        builder.setView(dialogView).show()
     }
 
     // 권한 체크하는 함수
@@ -176,6 +179,10 @@ class SettingActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_READ_EXTERNAL_STORAGE)
+            // 다시 체크
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED)
+                getImages()
         } else {
             // 권한이 있을 경우
             getImages()
@@ -208,9 +215,13 @@ class SettingActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
-            uriPath = data!!.data!!
-            val filePath = getImageFilePath(uriPath)
-            retrofitCreateUserProfile(filePath)
+            if (resultCode == RESULT_OK) {
+                uriPath = data!!.data!!
+                val filePath = getImageFilePath(uriPath)
+                retrofitCreateUserProfile(filePath)
+            } else if (resultCode == RESULT_CANCELED) {
+                // 사진 선택 취소
+            }
         }
     }
 
@@ -228,9 +239,11 @@ class SettingActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
                         setProfile(uriPath)
+                        ver = true
                         toast("프로필 사진을 설정했습니다")
                     } else {
-                        toast("프로필 사진 설정 실패")
+                        toast("프로필 사진을 설정할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -251,9 +264,11 @@ class SettingActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
                         view.setImageResource(R.drawable.profile_cloud)
+                        ver = false
                         toast("프로필 사진이 삭제되었습니다")
                     } else {
-                        toast("프로필 사진 삭제 실패")
+                        toast("프로필 사진을 삭제할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -283,7 +298,8 @@ class SettingActivity : AppCompatActivity() {
                             startActivity((Intent(this@SettingActivity, LoginActivity::class.java)))
                             finish()
                         } else {        // 3xx, 4xx 를 받은 경우
-                            toast("회원탈퇴 실패")
+                            toast("회원탈퇴를 할 수 없습니다")
+                            finish()
                         }
                     }
 

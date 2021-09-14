@@ -36,7 +36,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@drawable/round_border"
             android:padding="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="12dp">
 
             <ImageView
@@ -130,102 +133,105 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/SettingChangeProfileLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_post"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:background="@drawable/round_border"
             android:padding="8dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="6dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="6dp"
-                app:srcCompat="@drawable/setting_photo" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/SettingChangeProfileLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="프로필 사진 변경"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-        </LinearLayout>
+                android:padding="10dp"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/SettingChangePasswordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_post"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="6dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/setting_photo" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="6dp"
-                app:srcCompat="@drawable/setting_change_password" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="프로필 사진 변경"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/SettingChangePasswordLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="비밀번호 변경"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-        </LinearLayout>
+                android:padding="10dp"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/SettingMyInfoLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_post"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:layout_marginBottom="6dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/setting_change_password" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="6dp"
-                app:srcCompat="@drawable/home_myinfo" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="비밀번호 변경"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/SettingMyInfoLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_marginStart="12dp"
-                android:text="내 정보"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/SettinguserDeleteLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_post"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/home_myinfo" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="6dp"
-                app:srcCompat="@drawable/setting_personoff" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:text="내 정보"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/SettinguserDeleteLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_marginStart="12dp"
-                android:text="회원탈퇴"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/setting_personoff" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:text="회원탈퇴"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

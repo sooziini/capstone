@@ -9,9 +9,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import com.example.capstone.user.LoginActivity
 import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main2.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -20,6 +22,7 @@ import retrofit2.Response
 
 class MainActivity2 : AppCompatActivity() {
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
+    private var mBackWait: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +81,7 @@ class MainActivity2 : AppCompatActivity() {
                                 finish()
                                 toast("로그아웃 되었습니다")
                             } else {
-                                toast("로그아웃 실패")
+                                toast("로그아웃을 할 수 없습니다")
                             }
                         }
                          // 응답 실패 시
@@ -91,5 +94,14 @@ class MainActivity2 : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if(System.currentTimeMillis() - mBackWait >= 2000 ) {
+            mBackWait = System.currentTimeMillis()
+            toast("뒤로가기 버튼을 한번 더 누르면 종료됩니다")
+        } else {
+            finish()
+        }
     }
 }

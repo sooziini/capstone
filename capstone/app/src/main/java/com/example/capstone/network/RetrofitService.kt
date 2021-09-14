@@ -12,8 +12,6 @@ import retrofit2.http.*
 import java.time.Month
 
 interface RetrofitService {
-    // @Headers("content-type: application/json")
-
     // 게시글 목록 조회
     @GET("board/")
     fun getPostList(
@@ -315,4 +313,10 @@ interface RetrofitService {
     fun masterLoadReplyReport(
         @Query ("id") id: String
     ): Call<HashMap<String, Any>>
+
+    @FormUrlEncoded
+    @POST("device")
+    fun setDeviceToken(
+        @Field("deviceToken") token: String
+    ): Call<HashMap<String, String>>
 }

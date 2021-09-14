@@ -67,7 +67,7 @@ class SchoolMealActivity : AppCompatActivity() {
         finish()
     }
 
-    fun retrofitLoadMeal(date: String) {
+    private fun retrofitLoadMeal(date: String) {
         (application as MasterApplication).service.loadMeal(date, date)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(

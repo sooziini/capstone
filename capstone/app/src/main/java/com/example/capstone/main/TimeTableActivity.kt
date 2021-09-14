@@ -108,13 +108,15 @@ class TimeTableActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) { }
                     else {        // 3xx, 4xx 를 받은 경우
-                        toast("데이터 저장 실패")
+                        toast("데이터를 수정할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    finish()
                 }
             })
     }
@@ -149,13 +151,15 @@ class TimeTableActivity : AppCompatActivity() {
                             }
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("데이터 로드 실패")
+                        toast("시간표를 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
+                    finish()
                 }
             })
     }
@@ -206,13 +210,15 @@ class TimeTableActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) { }
                     else {        // 3xx, 4xx 를 받은 경우
-                        toast("데이터 로드 실패")
+                        toast("시간표를 삭제할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    finish()
                 }
             })
     }

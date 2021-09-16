@@ -12,9 +12,8 @@
         android:id="@+id/board_search_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_search"
         android:orientation="vertical"
-        android:padding="2dp"
+        android:padding="4dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
-            app:mt_placeholder="검색할 단어를 입력하세요"
-            app:mt_hint="검색할 단어를 입력하세요"
+            app:mt_placeholder="검색어 입력"
+            app:mt_hint="검색어를 입력해 주세요"
+            android:background="@drawable/shape_post"
             app:mt_speechMode="false" />
     </LinearLayout>
 

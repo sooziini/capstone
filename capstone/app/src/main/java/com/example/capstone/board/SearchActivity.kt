@@ -102,6 +102,7 @@ class SearchActivity : AppCompatActivity() {
                                 intent.putExtra("board_id", post.board_id.toString())
                                 intent.putExtra("activity_num", "1")
                                 startActivity(intent)
+                                finish()
                             }
                             search_recyclerview.adapter = adapter
                             search_recyclerview.layoutManager = LinearLayoutManager(this@SearchActivity)

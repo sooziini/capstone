@@ -45,6 +45,7 @@ class ScrapActivity : AppCompatActivity() {
                             intent.putExtra("board_id", post.board_id.toString())
                             intent.putExtra("activity_num", "2")
                             startActivity(intent)
+                            finish()
                         }
                         scrap_recyclerview.adapter = adapter
                         scrap_recyclerview.layoutManager = LinearLayoutManager(this@ScrapActivity)

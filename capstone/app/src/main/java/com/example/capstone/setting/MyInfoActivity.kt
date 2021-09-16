@@ -14,6 +14,7 @@ import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_my_info.*
+import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -114,7 +115,7 @@ class MyInfoActivity : AppCompatActivity() {
             item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray) {
                 view.isEnabled = false
-                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
+                view.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post)
             }
             updateInfo()
             editMode = !editMode
@@ -122,7 +123,7 @@ class MyInfoActivity : AppCompatActivity() {
             item.setIcon(R.drawable.editmode_done)
             for (view in viewArray) {
                 view.isEnabled = true
-                view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.main_color)
+                view.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post_main_color)
             }
             editMode = ! editMode
         }

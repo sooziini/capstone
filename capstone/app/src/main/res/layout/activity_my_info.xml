@@ -36,6 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:text="ID"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -43,16 +44,19 @@
             android:id="@+id/MyInfoIdText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
             android:ems="10"
             android:enabled="false"
             android:inputType="textPersonName"
-            android:textColor="@color/basic" />
+            android:textColor="@color/basic"
+            android:background="@drawable/shape_post"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:text="이름"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -60,16 +64,19 @@
             android:id="@+id/MyInfoNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
             android:ems="10"
             android:enabled="false"
             android:inputType="textPersonName"
-            android:textColor="@color/basic" />
+            android:textColor="@color/basic"
+            android:background="@drawable/shape_post"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:text="전화번호"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -77,16 +84,19 @@
             android:id="@+id/MyInfoPhoneText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
             android:ems="10"
             android:enabled="false"
             android:inputType="number"
-            android:textColor="@color/basic" />
+            android:textColor="@color/basic"
+            android:background="@drawable/shape_post"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:text="생년월일"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -94,16 +104,19 @@
             android:id="@+id/MyInfoBirthText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
             android:ems="10"
             android:enabled="false"
             android:inputType="number"
-            android:textColor="@color/basic" />
+            android:textColor="@color/basic"
+            android:background="@drawable/shape_post"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:text="입학년도"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -111,11 +124,13 @@
             android:id="@+id/MyInfoYearText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
             android:ems="10"
             android:enabled="false"
             android:inputType="number"
-            android:textColor="@color/basic" />
+            android:textColor="@color/basic"
+            android:background="@drawable/shape_post"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,6 +140,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -132,6 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
                     android:text="학년"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -139,17 +156,20 @@
                     android:id="@+id/MyInfoGradeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/basic"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="number"
-                    android:textColor="@color/basic" />
+                    android:textColor="@color/basic"
+                    android:background="@drawable/shape_post"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -157,6 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
                     android:text="반"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -164,11 +185,13 @@
                     android:id="@+id/MyInfoClassText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/basic"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="number"
-                    android:textColor="@color/basic" />
+                    android:textColor="@color/basic"
+                    android:background="@drawable/shape_post"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             </LinearLayout>
 
@@ -182,6 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
                     android:text="번호"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -189,11 +213,13 @@
                     android:id="@+id/MyInfoNumText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/basic"
                     android:ems="10"
                     android:enabled="false"
                     android:inputType="number"
-                    android:textColor="@color/basic" />
+                    android:textColor="@color/basic"
+                    android:background="@drawable/shape_post"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             </LinearLayout>
         </LinearLayout>
@@ -202,6 +228,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:text="이메일"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -209,11 +236,12 @@
             android:id="@+id/MyInfoEmailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/basic"
             android:ems="10"
             android:enabled="false"
-            android:textColor="@color/basic" />
-
+            android:textColor="@color/basic"
+            android:background="@drawable/shape_post"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

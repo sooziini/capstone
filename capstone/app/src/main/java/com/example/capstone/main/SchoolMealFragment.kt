@@ -74,14 +74,16 @@ class SchoolMealFragment : Fragment() {
 
                             for (todayMealList in dataArray) {
                                 val mealDetailList = ArrayList<String>()
-                                val mealArray = todayMealList["DDISH_NM"] as ArrayList<String>
-                                val date = todayMealList["MLSV_YMD"] as String
+                                val mealArray = todayMealList["dish"] as ArrayList<String>
+                                val year = todayMealList["year"] as String
+                                val month = todayMealList["month"] as String
+                                val day = todayMealList["day"] as String
 
                                 for (mealData in mealArray) {
                                     val meal = mealData.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
                                     mealDetailList.add(meal[0])
                                 }
-                                mealList.add(Meal(date, mealDetailList))
+                                mealList.add(Meal(year, month, day, mealDetailList))
                             }
                             meal_fragment_rv1.adapter = MealFragmentAdapter(mealList, today, LayoutInflater.from(requireContext()), requireContext())
                             meal_fragment_rv1.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

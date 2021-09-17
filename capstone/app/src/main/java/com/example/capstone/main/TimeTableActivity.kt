@@ -336,7 +336,7 @@ class TimeTableActivity : AppCompatActivity() {
         map["location"] = if (location != null && location != "") location
         else ""
         map["teacher"] = if (teacher != null && teacher != "") teacher
-        else ""
+        else "default"
 
         val arrayList = ArrayList<HashMap<String, Any?>>()
         arrayList.add(map)

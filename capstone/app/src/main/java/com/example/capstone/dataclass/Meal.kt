@@ -1,6 +1,9 @@
 package com.example.capstone.dataclass
 
 data class Meal (
-    val date: String,
-    val mealFragmentItemList: ArrayList<String>
+    val year: String,
+    val month: String,
+    val day: String,
+    val mealFragmentItemList: ArrayList<String>,
+    val date: String = year + month + day
 )

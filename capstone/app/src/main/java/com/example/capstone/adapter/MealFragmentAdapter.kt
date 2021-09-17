@@ -2,6 +2,7 @@ package com.example.capstone.adapter
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Color.*
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.engine.Resource
 import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
 
@@ -26,13 +28,13 @@ class MealFragmentAdapter(
         val layout = itemView.findViewById<LinearLayout>(R.id.meal_fragment_layout)
 
         fun bind(meal: Meal) {
-            date.text = meal.date
+            date.text = "${meal.year}년 ${meal.month}월 ${meal.day}일"
             detailRv.adapter = MealDetailAdapter(meal.mealFragmentItemList, inflater)
             detailRv.layoutManager = LinearLayoutManager(context)
             detailRv.setHasFixedSize(true)
 
-//            if (meal.date == todayDate)
-//                layout.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.main_color))
+            if (meal.date == todayDate)
+                layout.background = context.resources.getDrawable(R.drawable.round_border_main_color)
         }
     }
 

@@ -1,172 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/underline"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_post"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
+        android:padding="12dp">
 
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
             android:text="수업이름" />
 
         <EditText
             android:id="@+id/timetable_dialog_dept"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="5"
+            android:background="@null"
             android:ems="10"
             android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/underline"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/shape_post"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="요일" />
+            android:layout_weight="1.2"
+            android:text="요일"
+            android:gravity="center"/>
 
         <RadioGroup
             android:id="@+id/timetable_dialog_radiogroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp">
 
             <RadioButton
                 android:id="@+id/radioMon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
                 android:text="월" />
 
             <RadioButton
                 android:id="@+id/radioTue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="2dp"
                 android:text="화" />
 
             <RadioButton
                 android:id="@+id/radioWed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="2dp"
                 android:text="수" />
 
             <RadioButton
                 android:id="@+id/radioThu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="2dp"
                 android:text="목" />
 
             <RadioButton
                 android:id="@+id/radioFri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="2dp"
                 android:text="금" />
         </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/underline"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/shape_post"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="교시" />
+            android:layout_weight="1.2"
+            android:text="교시"
+            android:gravity="center"/>
 
         <Spinner
             android:id="@+id/timetable_dialog_period_spinner"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp" />
+            android:layout_weight="1.7"
+            android:layout_marginStart="6dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="3.3"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/underline"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/shape_post"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="장소" />
+            android:layout_weight="1.2"
+            android:text="장소"
+            android:gravity="center"/>
 
         <EditText
             android:id="@+id/timetable_dialog_location"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@null"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/underline"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/shape_post"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
             android:text="선생님" />
 
         <EditText
             android:id="@+id/timetable_dialog_teacher"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@null"/>
     </LinearLayout>
 </LinearLayout>

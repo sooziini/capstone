@@ -107,7 +107,7 @@
                         android:id="@+id/Home_MealText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="오늘의 급식"
+                        android:text="이번 주 급식"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/main_color"
                         android:textStyle="bold" />

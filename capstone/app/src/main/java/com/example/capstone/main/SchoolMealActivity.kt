@@ -9,7 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
-import com.example.capstone.adapter.MealActAdapter
+import com.example.capstone.adapter.MealDetailAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
@@ -27,7 +27,7 @@ class SchoolMealActivity : AppCompatActivity() {
     private val month = cal.get(Calendar.MONTH)
     private val day = cal.get(Calendar.DAY_OF_MONTH)
     private lateinit var date: String
-    var mealList = ArrayList<Meal>()
+    var mealList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,18 +83,18 @@ class SchoolMealActivity : AppCompatActivity() {
                             val mealArray = mealData?.split("<br/>")
                             val kcal = todaymeal["CAL_INFO"]
 
-                            for (element in mealArray!!) mealList.add(Meal(element))
+                            for (element in mealArray!!) mealList.add(element)
                             SchoolMeal_CalText.text = "열량 : $kcal"
                         } else {
                             mealList.clear()
                             SchoolMeal_CalText.text = ""
                         }
-                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.adapter = MealDetailAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
                     } else {
                         mealList.clear()
-                        SchoolMeal_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.adapter = MealDetailAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
                         SchoolMeal_CalText.text = ""

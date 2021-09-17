@@ -6,29 +6,28 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
-import com.example.capstone.dataclass.Meal
 
-class MealActAdapter(
-    private val mealList: ArrayList<Meal>,
+class MealDetailAdapter(
+    private val mealList: ArrayList<String>,
     private val inflater: LayoutInflater
-): RecyclerView.Adapter<MealActAdapter.MealActViewHolder>() {
+): RecyclerView.Adapter<MealDetailAdapter.MealDetailViewHolder>() {
 
-    inner class MealActViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val comp: TextView? = itemView.findViewById(R.id.SchoolMeal_ItemText)
+    inner class MealDetailViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val comp: TextView? = itemView.findViewById(R.id.schoolmeal_itemtext)
 
-        fun bind(meal: Meal) {
+        fun bind(meal: String) {
             if(mealList.size == 0)
                 return
-            comp?.text = meal.comp
+            comp?.text = meal
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealActViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealDetailViewHolder {
         val view: View = if (mealList.size != 0)
-            inflater.inflate(R.layout.school_meal_item, parent, false)
+            inflater.inflate(R.layout.school_meal_itemdetail, parent, false)
         else
             inflater.inflate(R.layout.school_meal_null_item, parent, false)
-        return MealActViewHolder(view)
+        return MealDetailViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +36,7 @@ class MealActAdapter(
         return mealList.size
     }
 
-    override fun onBindViewHolder(holder: MealActViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MealDetailViewHolder, position: Int) {
         if (mealList.size != 0)
             holder.bind(mealList[position])
     }

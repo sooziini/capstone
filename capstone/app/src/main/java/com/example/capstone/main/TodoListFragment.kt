@@ -1,5 +1,6 @@
 package com.example.capstone.main
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -71,13 +72,15 @@ class TodoListFragment : Fragment() {
                             TodoFrg_Recycleriew.setHasFixedSize(true)
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("TodoList 로드 실패")
+                        toast("할 일을 조회할 수 없습니다")
+                        (context as Activity).finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
+                    (context as Activity).finish()
                 }
             })
     }

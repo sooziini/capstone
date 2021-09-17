@@ -1,5 +1,6 @@
 package com.example.capstone.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -40,13 +41,11 @@ class TimeTableFragment: Fragment() {
         val instance = Calendar.getInstance()
 
         val dayText = when(instance.get(Calendar.DAY_OF_WEEK)) {
-            1 -> "sun"
             2 -> "mon"
             3 -> "tue"
             4 -> "wed"
             5 -> "thu"
             6 -> "fri"
-            7 -> "sat"
             else -> ""
         }
 
@@ -55,10 +54,10 @@ class TimeTableFragment: Fragment() {
 
     private fun loadDept(dayText: String){
         val classList = ArrayList<StuClass>()
-        var todayList: LinkedTreeMap<String, String>?
+        var todayList: LinkedTreeMap<String, LinkedTreeMap<String, String>>?
         classList.clear()
 
-        if (dayText == "sun" || dayText == "") {
+        if (dayText == "") {
             TimeTable_RecyclerView.adapter = TimeTableAdapter(classList, LayoutInflater.from(activity))
             val layoutmanager = LinearLayoutManager(activity)
             layoutmanager.orientation = HORIZONTAL
@@ -75,7 +74,7 @@ class TimeTableFragment: Fragment() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>?
+                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, LinkedTreeMap<String, String>>>?
                         if (data != null) {
                             todayList = data[dayText]
                             todayList?.let { insertVal(classList, it, dayText) }
@@ -87,24 +86,26 @@ class TimeTableFragment: Fragment() {
                         TimeTable_RecyclerView.layoutManager = layoutmanager
                         TimeTable_RecyclerView.setHasFixedSize(true)
                     } else {        // 3xx, 4xx 를 받은 경우
-                        requireContext().toast("데이터 로드 실패")
+                        requireContext().toast("데이터를 조회할 수 없습니다")
+                        (context as Activity).finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     requireContext().toast("network error")
+                    (context as Activity).finish()
                 }
             })
     }
 
-    private fun insertVal(classList: ArrayList<StuClass>, todayList: LinkedTreeMap<String, String>, dayText: String) {
+    private fun insertVal(classList: ArrayList<StuClass>, todayList: LinkedTreeMap<String, LinkedTreeMap<String, String>>, dayText: String) {
         var i = 0
         while (i <= 6) {
             val temp = "t${i + 1}"
-            val subject = todayList[temp] ?: null
+            val time = todayList[temp] ?: null
 
-            if (subject == null) {
+            if (time == null) {
                 i += 1
                 continue
             }
@@ -114,7 +115,9 @@ class TimeTableFragment: Fragment() {
                     val stuClass = StuClass(
                         period = i + 1,
                         day = dayText,
-                        subject = subject
+                        subject = time["subject"],
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
                     classList.add(stuClass)
                 }
@@ -122,22 +125,27 @@ class TimeTableFragment: Fragment() {
                     val stuClass = StuClass(
                         period = null,
                         day = dayText,
-                        subject = "점심시간"
+                        subject = "점심시간",
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
                     classList.add(stuClass)
                     val stuClass2 = StuClass(
                         period = i + 1,
                         day = dayText,
-                        subject = subject
+                        subject = time["subject"],
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
-                    Log.d("subject", subject.toString())
                     classList.add(stuClass2)
                 }
                 else -> {
                     val stuClass = StuClass(
                         period = i + 1,
                         day = dayText,
-                        subject = subject
+                        subject = time["subject"],
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
                     classList.add(stuClass)
                 }

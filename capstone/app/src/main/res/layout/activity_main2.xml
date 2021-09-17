@@ -24,15 +24,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/round_border"
         android:orientation="vertical"
-        android:paddingStart="6dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="6dp"
-        android:paddingBottom="8dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main2_toolbar">
@@ -40,20 +37,19 @@
         <LinearLayout
             android:id="@+id/Main2_ReadStudentLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/underline"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 app:srcCompat="@drawable/home_myinfo" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:gravity="center_vertical"
                 android:text="학생 조회"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -62,21 +58,20 @@
         <LinearLayout
             android:id="@+id/Main2_EnrollStudentLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/underline"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 app:srcCompat="@drawable/ic_add_student" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:gravity="center_vertical"
                 android:text="학생파일 등록"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -85,21 +80,20 @@
         <LinearLayout
             android:id="@+id/Main2_ReadWarningLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/underline"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 app:srcCompat="@drawable/ic_warning" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:gravity="center_vertical"
                 android:text="신고 조회"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />

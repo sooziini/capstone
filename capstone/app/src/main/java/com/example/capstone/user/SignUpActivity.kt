@@ -81,8 +81,7 @@ class SignUpActivity : AppCompatActivity() {
         imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         // 학년 드롭다운 스피너
-//        val gradeList = Array(3, {i -> i + 1})     // 학년 드롭다운 배열
-        val gradeList = arrayOf("학년", "1", "2", "3")
+        val gradeList = arrayOf("학년", "1", "2", "3")     // 학년 드롭다운 배열
         SignUpGradeDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gradeList)
         SignUpGradeDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) { }
@@ -90,7 +89,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         // 반 드롭다운 스피너
-        val classList = arrayOf("반", "1", "2", "3", "4", "5", "6", "7", "8")
+        val classList = arrayOf("반", "1", "2", "3", "4", "5", "6", "7")
         SignUpClassDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, classList)
         SignUpClassDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) { }
@@ -127,7 +126,7 @@ class SignUpActivity : AppCompatActivity() {
         val email = SignUpEmailEditText.text.toString()
 
         if (!idConfirm) {
-            toast("ID 중복확인을 해주세요")
+            toast("아이디 중복확인을 해 주세요")
             return
         }
 
@@ -156,7 +155,7 @@ class SignUpActivity : AppCompatActivity() {
             stuNum = SignUpStuNumEditText.text.toString().toInt()
         }
         else {
-            toast("번호를 입력해주세요")
+            toast("번호를 입력해 주세요")
             return
         }
 
@@ -164,12 +163,12 @@ class SignUpActivity : AppCompatActivity() {
             stuYear = SignUpYearEditText.text.toString().toInt()
         }
         else {
-            toast("입학년도를 입력해주세요")
+            toast("입학년도를 입력해 주세요")
             return
         }
 
         if (!stuAuth) {
-            toast("학번인증을 해주세요")
+            toast("학번인증을 해 주세요")
             return
         }
         if(SignUpEmailEditText.text.isEmpty()) {
@@ -179,7 +178,7 @@ class SignUpActivity : AppCompatActivity() {
 
         // 모든 칸에 빈칸이 없다면
         if (name == "" || phoneNum == "" || birth == "" || email == "") {
-            toast("빈칸 없이 입력해주세요")
+            toast("빈칸 없이 입력해 주세요")
             return
         }
 
@@ -207,7 +206,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
                         startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
                     } else {
-                        toast("회원가입 실패")
+                        toast("회원가입을 할 수 없습니다")
                     }
                 }
 
@@ -227,7 +226,7 @@ class SignUpActivity : AppCompatActivity() {
         if (id != "") {
             idMap["id"] = id
         } else {
-            toast("ID를 입력해주세요")
+            toast("아이디를 입력해주세요")
             return
         }
 
@@ -241,13 +240,13 @@ class SignUpActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         if(response.body()!!["success"] == "true") {
                             idConfirm = false
-                            toast("사용할 수 없는 ID 입니다.")
+                            toast("사용할 수 없는 아이디 입니다")
                             SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
                                 R.color.warn_red
                             )
                         } else {
                             idConfirm = true
-                            toast("사용할 수 있는 ID입니다.")
+                            toast("사용할 수 있는 아이디 입니다")
                             SignUpIdEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
                                 R.color.colorPrimary
                             )
@@ -255,7 +254,7 @@ class SignUpActivity : AppCompatActivity() {
                             SignUpIdEditTextView.addTextChangedListener(idWatcher)
                         }
                     } else {
-                        toast("중복확인 실패")
+                        toast("중복확인을 할 수 없습니다")
                     }
                 }
 
@@ -326,7 +325,7 @@ class SignUpActivity : AppCompatActivity() {
                                 R.color.warn_red
                             )
                             stuAuth = false
-                            toast("학생인증 실패\n이름, 학년, 반, 번호, 입학년도를 확인해주세요.")
+                            toast("학생인증 실패\n이름, 학년, 반, 번호, 입학년도를 확인해 주세요")
                         }
                     } else {
                         SignUpNameEditTextView.backgroundTintList = ContextCompat.getColorStateList(applicationContext,
@@ -339,7 +338,7 @@ class SignUpActivity : AppCompatActivity() {
                             R.color.warn_red
                         )
                         stuAuth = false
-                        toast("학생인증 실패\n이름, 학년, 반, 번호, 입학년도를 확인해주세요.")
+                        toast("학생인증 실패\n이름, 학년, 반, 번호, 입학년도를 확인해 주세요")
                     }
                 }
 
@@ -355,8 +354,7 @@ class SignUpActivity : AppCompatActivity() {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
             android.R.id.home -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                onBackPressed()
                 return true
             }
         }
@@ -369,5 +367,10 @@ class SignUpActivity : AppCompatActivity() {
     fun hideKeyboard(v: View) {
         if (v != null)
             imm?.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 }

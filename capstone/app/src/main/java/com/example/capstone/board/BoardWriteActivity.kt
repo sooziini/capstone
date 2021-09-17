@@ -77,9 +77,9 @@ class BoardWriteActivity : AppCompatActivity() {
             val body = board_write_body.text.toString()
 
             if (title == "") {
-                toast("제목을 입력해주세요")
+                toast("제목을 입력해 주세요")
             } else if (body == "") {
-                toast("내용을 입력해주세요")
+                toast("내용을 입력해 주세요")
             } else {
                 setWriteDialog(title, body)
             }
@@ -153,23 +153,27 @@ class BoardWriteActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
-            val count = data?.clipData!!.itemCount
-            uriPaths.clear()
-            filePaths.clear()
-            if (data.clipData != null && count > 1) {
-                // 이미지 다중 선택
-                for (i in 0 until count) {
-                    val uri = data.clipData!!.getItemAt(i).uri
+            if (resultCode == RESULT_OK) {
+                val count = data?.clipData!!.itemCount
+                uriPaths.clear()
+                filePaths.clear()
+                if (data.clipData != null && count > 1) {
+                    // 이미지 다중 선택
+                    for (i in 0 until count) {
+                        val uri = data.clipData!!.getItemAt(i).uri
+                        uriPaths.add(uri)
+                        val filePath = getImageFilePath(uri)
+                        filePaths.add(filePath)
+                    }
+                } else {
+                    // 이미지 단일 선택
+                    val uri = data.data!!
                     uriPaths.add(uri)
                     val filePath = getImageFilePath(uri)
                     filePaths.add(filePath)
                 }
-            } else {
-                // 이미지 단일 선택
-                val uri = data.data!!
-                uriPaths.add(uri)
-                val filePath = getImageFilePath(uri)
-                filePaths.add(filePath)
+            } else if (resultCode == RESULT_CANCELED) {
+                // 사진 선택 취소
             }
         }
 
@@ -181,7 +185,6 @@ class BoardWriteActivity : AppCompatActivity() {
         }
     }
 
-    //images: ArrayList<MultipartBody.Part>
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
     private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
@@ -197,14 +200,15 @@ class BoardWriteActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        toast("게시글 작성 실패")
+                        toast("게시글을 작성할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                     toast("network error")
-                    //finish()
+                    finish()
                 }
             })
     }
@@ -225,14 +229,15 @@ class BoardWriteActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        toast("게시글 수정 실패")
+                        toast("게시글을 수정할 수 없습니다")
+                        finish()
                     }
                 }
 
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
-                    //finish()
+                    finish()
                 }
             })
     }
@@ -252,12 +257,15 @@ class BoardWriteActivity : AppCompatActivity() {
             // 사진 첨부 버튼을 클릭했을 경우
             R.id.board_write_image -> {
                 val permissionChk = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-
                 if (permissionChk != PackageManager.PERMISSION_GRANTED) {
                     // 권한이 없을 경우
                     ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                         REQUEST_READ_EXTERNAL_STORAGE)
+                    // 다시 체크
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED)
+                        getImages()
                 } else {
                     // 권한이 있을 경우
                     getImages()

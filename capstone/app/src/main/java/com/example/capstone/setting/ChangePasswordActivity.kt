@@ -112,7 +112,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val pass2 = ChangePasswordAuthEditText.text.toString()
 
         if (pass1 != pass2){
-            toast("입력한 비밀번호를 확인해주세요")
+            toast("입력한 비밀번호를 확인해 주세요")
             return
         }
 
@@ -130,6 +130,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                         finish()
                     } else {        // 3xx, 4xx 를 받은 경우
                         toast("비밀번호 변경에 실패했습니다")
+                        finish()
                     }
                 }
 

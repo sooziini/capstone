@@ -69,6 +69,7 @@ class BoardActivity : AppCompatActivity() {
             intent.putExtra("board_write_title", "-1")
             intent.putExtra("board_write_body", "-1")
             startActivity(intent)
+            finish()
         }
 
         // swipe refresh
@@ -95,6 +96,7 @@ class BoardActivity : AppCompatActivity() {
                                 intent.putExtra("board_id", post.board_id.toString())
                                 intent.putExtra("activity_num", "0")
                                 startActivity(intent)
+                                finish()
                             }
                             post_recyclerview.adapter = boardAdapter
                             post_recyclerview.layoutManager = LinearLayoutManager(this@BoardActivity)
@@ -103,7 +105,8 @@ class BoardActivity : AppCompatActivity() {
                             boardAdapter.refreshPostItem(postList)
                         }
                     } else {
-                        toast("게시글 목록 조회 실패")
+                        toast("게시글 목록을 조회할 수 없습니다")
+                        finish()
                     }
                 }
 

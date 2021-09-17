@@ -45,12 +45,14 @@ class ScrapActivity : AppCompatActivity() {
                             intent.putExtra("board_id", post.board_id.toString())
                             intent.putExtra("activity_num", "2")
                             startActivity(intent)
+                            finish()
                         }
                         scrap_recyclerview.adapter = adapter
                         scrap_recyclerview.layoutManager = LinearLayoutManager(this@ScrapActivity)
                         scrap_recyclerview.setHasFixedSize(true)
                     } else {
-                        toast("게시글 목록 조회 실패")
+                        toast("스크랩 게시글 목록을 조회할 수 없습니다")
+                        finish()
                     }
                 }
 

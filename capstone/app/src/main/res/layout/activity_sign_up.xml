@@ -45,8 +45,9 @@
                 android:id="@+id/SignUpIdTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID"
-                android:textColor="@color/basic" />
+                android:text="아이디"
+                android:textColor="@color/basic"
+                android:layout_marginStart="4dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,15 +58,21 @@
                     android:id="@+id/SignUpIdEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="3"
-                    android:hint="ID"
+                    android:background="@drawable/shape_post"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:hint="아이디"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <Button
                     android:id="@+id/SignUpIdButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40sp"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/ok_btn"
                     android:text="중복확인"
                     android:textAlignment="center"
                     android:textColor="@color/basic"
@@ -78,20 +85,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="비밀번호"
-                android:textColor="@color/basic" />
+                android:textColor="@color/basic"
+                android:layout_marginStart="4dp"/>
 
             <EditText
                 android:id="@+id/SignUpPasswordEditTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="text|textPassword" />
+                android:background="@drawable/shape_post"
+                android:hint="비밀번호"
+                android:inputType="text|textPassword"
+                android:padding="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <TextView
                 android:id="@+id/SignUpPasswordCheckTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="비밀번호 확인"
                 android:textColor="@color/basic" />
 
@@ -99,14 +111,18 @@
                 android:id="@+id/SignUpPassWordCheckEditTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="text|textPassword" />
+                android:hint="비밀번호 확인"
+                android:inputType="text|textPassword"
+                android:background="@drawable/shape_post"
+                android:padding="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
             <TextView
                 android:id="@+id/SignUpNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="이름"
                 android:textColor="@color/basic" />
 
@@ -115,13 +131,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="이름"
-                android:inputType="text" />
+                android:inputType="text"
+                android:background="@drawable/shape_post"
+                android:padding="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
             <TextView
                 android:id="@+id/SignUpBirthTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="생년월일"
                 android:textColor="@color/basic" />
 
@@ -129,14 +149,18 @@
                 android:id="@+id/SignUpBirthEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="생년월일 8자리 ex) 20050101"
-                android:inputType="number" />
+                android:hint="생년월일 8자리 ex) 20210101"
+                android:inputType="number"
+                android:background="@drawable/shape_post"
+                android:padding="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
             <TextView
                 android:id="@+id/SignUpGradeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="학년 / 반 / 번호"
                 android:textColor="@color/basic" />
 
@@ -150,13 +174,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <Spinner
                     android:id="@+id/SignUpClassDropdown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <EditText
                     android:id="@+id/SignUpStuNumEditText"
@@ -165,7 +191,10 @@
                     android:layout_weight="1"
                     android:ems="1"
                     android:hint="번호"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:background="@drawable/shape_post"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
             </LinearLayout>
 
@@ -174,6 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="입학년도"
                 android:textColor="@color/basic" />
 
@@ -190,12 +220,17 @@
                     android:layout_weight="1"
                     android:ems="2"
                     android:hint="ex) 2021"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:background="@drawable/shape_post"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <Button
                     android:id="@+id/SignUpAuthButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40sp"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/ok_btn"
                     android:ems="1"
                     android:text="학번인증"
                     android:textColor="@color/basic"
@@ -207,6 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="전화번호"
                 android:textColor="@color/basic" />
 
@@ -222,7 +258,10 @@
                     android:layout_weight="2"
                     android:ems="10"
                     android:hint="- 제외 입력"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:background="@drawable/shape_post"
+                    android:padding="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
             </LinearLayout>
 
             <TextView
@@ -230,6 +269,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:text="이메일"
                 android:textColor="@color/basic" />
 
@@ -238,7 +278,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="ex) example@example.com" />
+                android:hint="ex) example@example.com"
+                android:background="@drawable/shape_post"
+                android:padding="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
         </LinearLayout>
     </ScrollView>

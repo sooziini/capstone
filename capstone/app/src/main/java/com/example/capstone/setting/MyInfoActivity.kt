@@ -9,10 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_my_info.*
+import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,7 +72,8 @@ class MyInfoActivity : AppCompatActivity() {
                         MyInfoNumText.setText((data["schoolnumber"] as Double).roundToInt().toString())
                         MyInfoEmailText.setText(data["email"])
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("데이터 로드 실패")
+                        toast("데이터를 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -103,7 +106,7 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.editmode_menu, menu)
+        menuInflater.inflate(R.menu.timetable_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -112,7 +115,7 @@ class MyInfoActivity : AppCompatActivity() {
             item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray) {
                 view.isEnabled = false
-                // view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.basic)
+                view.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post)
             }
             updateInfo()
             editMode = !editMode
@@ -120,7 +123,7 @@ class MyInfoActivity : AppCompatActivity() {
             item.setIcon(R.drawable.editmode_done)
             for (view in viewArray) {
                 view.isEnabled = true
-                // view.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.colorPrimary)
+                view.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post_main_color)
             }
             editMode = ! editMode
         }
@@ -166,7 +169,8 @@ class MyInfoActivity : AppCompatActivity() {
                         }
 
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("회원정보 수정에 실패했습니다")
+                        toast("회원정보를 수정할 수 없습니다")
+                        finish()
                     }
                 }
 

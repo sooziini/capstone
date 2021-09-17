@@ -1,9 +1,11 @@
 package com.example.capstone.main
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var studentName: String        // 이름
     lateinit var studentYear: String        // 입학년도
     lateinit var studentId: String          // 아이디
+    private var mBackWait:Long = 0
+    private val TAG = "FirebaseService"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,10 +84,12 @@ class MainActivity : AppCompatActivity() {
                             studentId = data["id"].toString()
                             Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다!"
                         } else {
-                            toast("데이터 로드 실패")
+                            toast("데이터를 조회할 수 없습니다")
+                            finish()
                         }
                     } else {
-                        toast("데이터 로드 실패")
+                        toast("데이터를 조회할 수 없습니다")
+                        finish()
                     }
                 }
 
@@ -116,6 +122,7 @@ class MainActivity : AppCompatActivity() {
                     main_drawerlayout.closeDrawers()
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://sangmyung-agh.sen.hs.kr/index.do"))
                     startActivity(intent)
+                    finish()
                     true
                 }
                 // 전교생 자유게시판
@@ -124,6 +131,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, BoardActivity::class.java)
                     intent.putExtra("type", "all_free")
                     startActivity(intent)
+                    finish()
                     true
                 }
                 // 학년별 자유게시판
@@ -138,6 +146,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     intent.putExtra("type", type)
                     startActivity(intent)
+                    finish()
                     true
                 }
                 // 학생 건의함
@@ -146,6 +155,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, BoardActivity::class.java)
                     intent.putExtra("type", "sug")
                     startActivity(intent)
+                    finish()
                     true
                 }
                 // 학생회 공지
@@ -154,6 +164,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, BoardActivity::class.java)
                     intent.putExtra("type", "notice")
                     startActivity(intent)
+                    finish()
                     true
                 }
                 // 동아리 활동
@@ -162,18 +173,21 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, BoardActivity::class.java)
                     intent.putExtra("type", "club")
                     startActivity(intent)
+                    finish()
                     true
                 }
                 // 선생님과의 대화
                 R.id.drawer_my_menu_message -> {
                     main_drawerlayout.closeDrawers()
                     startActivity(Intent(this, MessageActivity::class.java))
+                    finish()
                     true
                 }
                 // 게시글 보관함
                 R.id.drawer_my_menu_scrap -> {
                     main_drawerlayout.closeDrawers()
                     startActivity(Intent(this, ScrapActivity::class.java))
+                    finish()
                     true
                 }
                 else -> false
@@ -214,6 +228,7 @@ class MainActivity : AppCompatActivity() {
             // 알림
             R.id.main_menu_notice -> {
                 startActivity(Intent(this, NoticeActivity::class.java))
+                finish()
                 return true
             }
             R.id.main_menu_myinfo -> {
@@ -222,6 +237,7 @@ class MainActivity : AppCompatActivity() {
             // 신고 및 경고
             R.id.main_menu_myinfo_report -> {
                 startActivity(Intent(this, ReportActivity::class.java))
+                finish()
                 return true
             }
             // 설정
@@ -231,6 +247,7 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("user_name", studentName)
                 intent.putExtra("user_student_id", studentGradeId)
                 startActivity(intent)
+                finish()
                 return true
             }
             // 로그아웃
@@ -246,14 +263,13 @@ class MainActivity : AppCompatActivity() {
                                 finish()
                                 toast("로그아웃 되었습니다")
                             } else {
-                                toast("로그아웃 실패")
+                                toast("로그아웃을 할 수 없습니다")
                             }
                         }
 
                         // 응답 실패 시
                         override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                             toast("network error")
-                            finish()
                         }
                     })
                 return true
@@ -267,7 +283,35 @@ class MainActivity : AppCompatActivity() {
         if (main_drawerlayout.isDrawerOpen(GravityCompat.START)) {
             main_drawerlayout.closeDrawers()
         } else {
-            super.onBackPressed()
+            if(System.currentTimeMillis() - mBackWait >= 2000 ) {
+                mBackWait = System.currentTimeMillis()
+                toast("뒤로가기 버튼을 한번 더 누르면 종료됩니다")
+            } else {
+                finish()
+            }
         }
+    }
+
+    // 받은 토큰을 서버로 전송
+    fun sendRegistrationToServer(token: String) {
+        (application as MasterApplication).service.setDeviceToken(token)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
+                        toast("서버 알림 토큰 저장 성공")
+                        Log.d(TAG, "suc: $token")
+                    } else {
+                        toast("서버 알림 토큰 저장 불가")
+                        Log.d(TAG, "fail: $token")
+                    }
+                }
+
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                }
+            })
     }
 }

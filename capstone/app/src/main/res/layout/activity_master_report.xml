@@ -39,22 +39,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/round_border"
                 android:orientation="vertical"
-                android:paddingStart="6dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="6dp"
-                android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/master_report_toolbar">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -78,10 +75,9 @@
                 <LinearLayout
                     android:id="@+id/BoardReportButtonLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/underline"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="2dp"
+                    android:padding="8dp"
                     android:visibility="gone">
 
                     <LinearLayout
@@ -100,17 +96,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="이전" />
+
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/BoardReportPage"
-                        android:layout_width="270dp"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="center" />
+                        android:orientation="vertical"
+                        android:layout_weight="3">
+                        <TextView
+                            android:id="@+id/BoardReportPage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/BoardReportNextButton"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -132,31 +135,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
+                    android:padding="8dp"
                     android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/round_border"
                 android:orientation="vertical"
-                android:paddingStart="6dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="6dp"
-                android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="142dp">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,10 +177,9 @@
                 <LinearLayout
                     android:id="@+id/ReplyReportButtonLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/underline"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="2dp"
+                    android:padding="8dp"
                     android:visibility="gone">
 
                     <LinearLayout
@@ -202,15 +200,21 @@
                             android:text="이전" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/ReplyReportPage"
-                        android:layout_width="270dp"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="center" />
+                        android:orientation="vertical"
+                        android:layout_weight="3">
+                        <TextView
+                            android:id="@+id/ReplyReportPage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ReplyReportNextButton"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -233,6 +237,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
+                    android:padding="8dp"
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>

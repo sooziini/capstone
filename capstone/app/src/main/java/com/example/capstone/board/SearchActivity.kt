@@ -49,7 +49,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onSearchConfirmed(text: CharSequence?) {
                 if (title == "") {
                     search_recyclerview.visibility = View.GONE
-                    toast("검색어를 입력해주세요")
+                    toast("검색어를 입력해 주세요")
                 } else {
                     // 키보드 InputMethodManager 세팅
                     // 버튼 클릭 시 키보드 내리기
@@ -102,6 +102,7 @@ class SearchActivity : AppCompatActivity() {
                                 intent.putExtra("board_id", post.board_id.toString())
                                 intent.putExtra("activity_num", "1")
                                 startActivity(intent)
+                                finish()
                             }
                             search_recyclerview.adapter = adapter
                             search_recyclerview.layoutManager = LinearLayoutManager(this@SearchActivity)
@@ -121,5 +122,6 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(this@SearchActivity, BoardActivity::class.java)
         intent.putExtra("type", type)
         startActivity(intent)
+        finish()
     }
 }

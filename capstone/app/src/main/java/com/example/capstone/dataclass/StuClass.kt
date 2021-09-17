@@ -6,21 +6,23 @@ data class StuClass (
     var subject : String?,
     var day: String,
     var period : Int?,
+    val location: String?,
+    val teacher: String?,
     var startTime : String = when (period) {
-        1 -> "8:00"
-        2 -> "9:00"
-        3 -> "10:00"
-        4 -> "11:00"
+        1 -> "8:10"
+        2 -> "9:10"
+        3 -> "10:10"
+        4 -> "11:10"
         5 -> "13:00"
         6 -> "14:00"
         7 -> "15:00"
         else -> "12:00"
     },
     var endTime : String = when (period) {
-        1 -> "8:50"
-        2 -> "9:50"
-        3 -> "10:50"
-        4 -> "11:50"
+        1 -> "9:00"
+        2 -> "10:00"
+        3 -> "11:00"
+        4 -> "12:00"
         5 -> "13:50"
         6 -> "14:50"
         7 -> "15:50"

@@ -106,7 +106,7 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.editmode_menu, menu)
+        menuInflater.inflate(R.menu.timetable_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

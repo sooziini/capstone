@@ -41,13 +41,11 @@ class TimeTableFragment: Fragment() {
         val instance = Calendar.getInstance()
 
         val dayText = when(instance.get(Calendar.DAY_OF_WEEK)) {
-            1 -> "sun"
             2 -> "mon"
             3 -> "tue"
             4 -> "wed"
             5 -> "thu"
             6 -> "fri"
-            7 -> "sat"
             else -> ""
         }
 
@@ -56,10 +54,10 @@ class TimeTableFragment: Fragment() {
 
     private fun loadDept(dayText: String){
         val classList = ArrayList<StuClass>()
-        var todayList: LinkedTreeMap<String, String>?
+        var todayList: LinkedTreeMap<String, LinkedTreeMap<String, String>>?
         classList.clear()
 
-        if (dayText == "sun" || dayText == "") {
+        if (dayText == "") {
             TimeTable_RecyclerView.adapter = TimeTableAdapter(classList, LayoutInflater.from(activity))
             val layoutmanager = LinearLayoutManager(activity)
             layoutmanager.orientation = HORIZONTAL
@@ -76,7 +74,7 @@ class TimeTableFragment: Fragment() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, String>>?
+                        val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, LinkedTreeMap<String, String>>>?
                         if (data != null) {
                             todayList = data[dayText]
                             todayList?.let { insertVal(classList, it, dayText) }
@@ -101,13 +99,13 @@ class TimeTableFragment: Fragment() {
             })
     }
 
-    private fun insertVal(classList: ArrayList<StuClass>, todayList: LinkedTreeMap<String, String>, dayText: String) {
+    private fun insertVal(classList: ArrayList<StuClass>, todayList: LinkedTreeMap<String, LinkedTreeMap<String, String>>, dayText: String) {
         var i = 0
         while (i <= 6) {
             val temp = "t${i + 1}"
-            val subject = todayList[temp] ?: null
+            val time = todayList[temp] ?: null
 
-            if (subject == null) {
+            if (time == null) {
                 i += 1
                 continue
             }
@@ -117,7 +115,9 @@ class TimeTableFragment: Fragment() {
                     val stuClass = StuClass(
                         period = i + 1,
                         day = dayText,
-                        subject = subject
+                        subject = time["subject"],
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
                     classList.add(stuClass)
                 }
@@ -125,22 +125,27 @@ class TimeTableFragment: Fragment() {
                     val stuClass = StuClass(
                         period = null,
                         day = dayText,
-                        subject = "점심시간"
+                        subject = "점심시간",
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
                     classList.add(stuClass)
                     val stuClass2 = StuClass(
                         period = i + 1,
                         day = dayText,
-                        subject = subject
+                        subject = time["subject"],
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
-                    Log.d("subject", subject.toString())
                     classList.add(stuClass2)
                 }
                 else -> {
                     val stuClass = StuClass(
                         period = i + 1,
                         day = dayText,
-                        subject = subject
+                        subject = time["subject"],
+                        location = time["location"],
+                        teacher = time["teacher"]
                     )
                     classList.add(stuClass)
                 }

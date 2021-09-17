@@ -252,7 +252,7 @@ interface RetrofitService {
     // 시간표 등록 / 수정
     @POST ("school/timetable")
     fun updateTimeTable(
-        @Body params: HashMap<String, ArrayList<HashMap<String, Any>>>
+        @Body params: HashMap<String, ArrayList<HashMap<String, Any?>>>
     ): Call<HashMap<String, String>>
 
     // 시간표 조회

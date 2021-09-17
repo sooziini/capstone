@@ -36,8 +36,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
             <TableLayout
@@ -62,7 +62,7 @@
 
                     <TextView
                         android:id="@+id/TimeTable_Mon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -75,7 +75,7 @@
 
                     <TextView
                         android:id="@+id/TimeTable_Tue"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -88,7 +88,7 @@
 
                     <TextView
                         android:id="@+id/TimeTable_Wed"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -101,7 +101,7 @@
 
                     <TextView
                         android:id="@+id/TimeTable_Thu"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -114,26 +114,13 @@
 
                     <TextView
                         android:id="@+id/TimeTable_Fri"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
                         android:gravity="center"
                         android:text="금"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/basic" />
-
-                    <TextView
-                        android:id="@+id/TimeTable_Sat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:layout_weight="1"
-                        android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:text="토"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
@@ -150,7 +137,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time1"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -158,83 +145,155 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon1"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon1_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon1_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon1_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat1"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue1_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue1_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue1_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed1_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed1_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed1_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu1_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu1_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu1_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri1_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri1_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri1_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
 
                 </TableRow>
 
@@ -248,7 +307,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time2"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -256,83 +315,156 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon2"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon2_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon2_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon2_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat2"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue2_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue2_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue2_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed2_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed2_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed2_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu2_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu2_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu2_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri2_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri2_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri2_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -345,7 +477,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time3"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -353,83 +485,156 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon3"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon3_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon3_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon3_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat3"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue3_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue3_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue3_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed3_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed3_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed3_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu3_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu3_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu3_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri3_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri3_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri3_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -442,7 +647,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time4"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -450,83 +655,156 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon4"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon4_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon4_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon4_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat4"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue4_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue4_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue4_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed4_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed4_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed4_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu4_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu4_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu4_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri4_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri4_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri4_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -539,7 +817,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time5"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -547,83 +825,156 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon5"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon5_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon5_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon5_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat5"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue5_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue5_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue5_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed5_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed5_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed5_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu5_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu5_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu5_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri5_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri5_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri5_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -636,7 +987,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time6"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -644,83 +995,156 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon6"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon6_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon6_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon6_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat6"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue6_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue6_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue6_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed6_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed6_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed6_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu6_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu6_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu6_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri6_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri6_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri6_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
                 </TableRow>
 
                 <TableRow
@@ -733,7 +1157,7 @@
                     <TextView
                         android:id="@+id/TimeTable_Time7"
                         android:layout_width="wrap_content"
-                        android:layout_height="48sp"
+                        android:layout_height="60sp"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
@@ -741,83 +1165,156 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Mon7"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/TimeTable_Tue7"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon7_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Wed7"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon7_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Thu7"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        <TextView
+                            android:id="@+id/Mon7_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
 
-                    <EditText
-                        android:id="@+id/TimeTable_Fri7"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/TimeTable_Sat7"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
+                        android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:ems="1"
-                        android:enabled="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textColor="@color/basic" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Tue7_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Tue7_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Tue7_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Wed7_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Wed7_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Wed7_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Thu7_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Thu7_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Thu7_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/basic_white"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Fri7_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/basic" />
+
+                        <TextView
+                            android:id="@+id/Fri7_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/Fri7_teach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
                 </TableRow>
 
             </TableLayout>

@@ -48,40 +48,40 @@ class SchoolMealFragment : Fragment() {
             day = "0${day}"
         val date = year + month + day
 
-        (activity?.application as MasterApplication).service.loadMeal(date, date)
-            .enqueue(object : Callback<HashMap<String, Any>> {
-                override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
-                ) {
-                    if (response.isSuccessful) {
-                        if (response.body()!!["success"].toString() == "true") {
-                            mealList.clear()
-                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
-                            val todaymeal = dataArray[0]
-                            val mealData = todaymeal["DDISH_NM"]
-                            val mealArray = mealData?.split("<br/>")
-
-                            for (element in mealArray!!) mealList.add(Meal(element))
-                        } else {
-                            mealList.clear()
-                        }
-                        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
-                        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                        MealFrag_RecyclerView.setHasFixedSize(true)
-                    } else {
-                        mealList.clear()
-                        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
-                        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                        MealFrag_RecyclerView.setHasFixedSize(true)
-                    }
-                }
-
-                // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                    toast("network error")
-                    (context as Activity).finish()
-                }
-            })
+//        (activity?.application as MasterApplication).service.loadMeal(date, date)
+//            .enqueue(object : Callback<HashMap<String, Any>> {
+//                override fun onResponse(
+//                    call: Call<HashMap<String, Any>>,
+//                    response: Response<HashMap<String, Any>>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        if (response.body()!!["success"].toString() == "true") {
+//                            mealList.clear()
+//                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
+//                            val todaymeal = dataArray[0]
+//                            val mealData = todaymeal["DDISH_NM"]
+//                            val mealArray = mealData?.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+//
+//                            for (element in mealArray!!) mealList.add(Meal(element))
+//                        } else {
+//                            mealList.clear()
+//                        }
+//                        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
+//                        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
+//                        MealFrag_RecyclerView.setHasFixedSize(true)
+//                    } else {
+//                        mealList.clear()
+//                        MealFrag_RecyclerView.adapter = MealActAdapter(mealList, LayoutInflater.from(requireContext()))
+//                        MealFrag_RecyclerView.layoutManager = LinearLayoutManager(requireContext())
+//                        MealFrag_RecyclerView.setHasFixedSize(true)
+//                    }
+//                }
+//
+//                // 응답 실패 시
+//                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+//                    toast("network error")
+//                    (context as Activity).finish()
+//                }
+//            })
     }
 }

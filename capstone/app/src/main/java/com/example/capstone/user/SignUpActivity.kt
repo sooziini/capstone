@@ -81,8 +81,7 @@ class SignUpActivity : AppCompatActivity() {
         imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         // 학년 드롭다운 스피너
-//        val gradeList = Array(3, {i -> i + 1})     // 학년 드롭다운 배열
-        val gradeList = arrayOf("학년", "1", "2", "3")
+        val gradeList = arrayOf("학년", "1", "2", "3")     // 학년 드롭다운 배열
         SignUpGradeDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gradeList)
         SignUpGradeDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) { }
@@ -90,7 +89,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         // 반 드롭다운 스피너
-        val classList = arrayOf("반", "1", "2", "3", "4", "5", "6", "7", "8")
+        val classList = arrayOf("반", "1", "2", "3", "4", "5", "6", "7")
         SignUpClassDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, classList)
         SignUpClassDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) { }

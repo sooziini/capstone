@@ -191,8 +191,18 @@ class TimeTableActivity : AppCompatActivity() {
                                 val map = todayList["t${j + 1}"] ?: continue
 
                                 deptList[j].text = map["subject"]
-                                placeList[j].text = map["location"]
-                                teacherList[j].text = map["teacher"]
+                                if (map["location"] == " ") {
+                                    placeList[j].visibility = View.GONE
+                                }
+                                else {
+                                    placeList[j].text = map["location"]
+                                    placeList[j].visibility = View. VISIBLE
+                                }
+                                if (map["teacher"] == " ") teacherList[j].visibility = View.GONE
+                                else {
+                                    teacherList[j].text = map["teacher"]
+                                    teacherList[j].visibility = View.VISIBLE
+                                }
                             }
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
@@ -214,7 +224,7 @@ class TimeTableActivity : AppCompatActivity() {
         return true
     }
 
-    fun addDeptOnClick() {
+    fun addDeptOnClick(item: MenuItem) {
         var day: String? = null
 
         val builder = AlertDialog.Builder(this)
@@ -319,9 +329,9 @@ class TimeTableActivity : AppCompatActivity() {
         map["days"] = day
         map["period"] = period
         map["location"] = if (location != null && location != "") location
-        else ""
+        else " "
         map["teacher"] = if (teacher != null && teacher != "") teacher
-        else "default"
+        else " "
 
         val arrayList = ArrayList<HashMap<String, Any?>>()
         arrayList.add(map)

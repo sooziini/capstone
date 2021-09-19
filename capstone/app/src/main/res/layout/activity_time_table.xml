@@ -146,6 +146,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -178,6 +179,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -210,6 +212,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -242,6 +245,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -274,6 +278,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -326,6 +331,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -358,6 +364,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -390,6 +397,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -422,6 +430,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -454,6 +463,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -506,6 +516,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -538,6 +549,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -570,6 +582,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -602,6 +615,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -634,6 +648,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -686,6 +701,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -718,6 +734,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -750,6 +767,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed4"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -782,6 +800,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -814,6 +833,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -866,6 +886,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -898,6 +919,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -930,6 +952,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -962,6 +985,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -994,6 +1018,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1046,6 +1071,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1078,6 +1104,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1110,6 +1137,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1142,6 +1170,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1174,6 +1203,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1226,6 +1256,7 @@
                         android:textColor="@color/basic" />
 
                     <LinearLayout
+                        android:id="@+id/layout_mon7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1258,6 +1289,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_tue7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1290,6 +1322,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_wed7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1322,6 +1355,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_thu7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -1354,6 +1388,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_fri7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"

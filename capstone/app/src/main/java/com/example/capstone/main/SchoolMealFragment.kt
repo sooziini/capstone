@@ -111,7 +111,6 @@ class SchoolMealFragment : Fragment() {
     }
 
     private fun setDate(year: Int, month: Int, day: Int) {
-//        val dateArray = eventDate.split("-").toTypedArray()
         val cal = Calendar.getInstance()
         cal[year, month - 1] = day
 

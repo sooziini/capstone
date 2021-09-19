@@ -165,13 +165,15 @@
                             android:id="@+id/Mon1_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon1_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -195,13 +197,15 @@
                             android:id="@+id/Tue1_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue1_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -225,13 +229,15 @@
                             android:id="@+id/Wed1_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed1_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -255,13 +261,15 @@
                             android:id="@+id/Thu1_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu1_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -285,13 +293,15 @@
                             android:id="@+id/Fri1_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri1_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -335,13 +345,15 @@
                             android:id="@+id/Mon2_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon2_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -365,13 +377,15 @@
                             android:id="@+id/Tue2_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue2_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -395,13 +409,15 @@
                             android:id="@+id/Wed2_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed2_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -425,13 +441,15 @@
                             android:id="@+id/Thu2_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu2_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -455,13 +473,15 @@
                             android:id="@+id/Fri2_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri2_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -505,13 +525,15 @@
                             android:id="@+id/Mon3_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon3_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -535,13 +557,15 @@
                             android:id="@+id/Tue3_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue3_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -565,13 +589,15 @@
                             android:id="@+id/Wed3_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed3_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -595,13 +621,15 @@
                             android:id="@+id/Thu3_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu3_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -625,13 +653,15 @@
                             android:id="@+id/Fri3_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri3_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -675,13 +705,15 @@
                             android:id="@+id/Mon4_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon4_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -705,13 +737,15 @@
                             android:id="@+id/Tue4_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue4_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -735,13 +769,15 @@
                             android:id="@+id/Wed4_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed4_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -765,13 +801,15 @@
                             android:id="@+id/Thu4_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu4_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -795,13 +833,15 @@
                             android:id="@+id/Fri4_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri4_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -845,13 +885,15 @@
                             android:id="@+id/Mon5_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon5_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -875,13 +917,15 @@
                             android:id="@+id/Tue5_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue5_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -905,13 +949,15 @@
                             android:id="@+id/Wed5_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed5_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -935,13 +981,15 @@
                             android:id="@+id/Thu5_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu5_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -965,13 +1013,15 @@
                             android:id="@+id/Fri5_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri5_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1015,13 +1065,15 @@
                             android:id="@+id/Mon6_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon6_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1045,13 +1097,15 @@
                             android:id="@+id/Tue6_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue6_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1075,13 +1129,15 @@
                             android:id="@+id/Wed6_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed6_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1105,13 +1161,15 @@
                             android:id="@+id/Thu6_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu6_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1135,13 +1193,15 @@
                             android:id="@+id/Fri6_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri6_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1185,13 +1245,15 @@
                             android:id="@+id/Mon7_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon7_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1215,13 +1277,15 @@
                             android:id="@+id/Tue7_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue7_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1245,13 +1309,15 @@
                             android:id="@+id/Wed7_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed7_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1275,13 +1341,15 @@
                             android:id="@+id/Thu7_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu7_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1305,13 +1373,15 @@
                             android:id="@+id/Fri7_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri7_teach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 

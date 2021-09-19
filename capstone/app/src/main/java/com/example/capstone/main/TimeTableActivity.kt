@@ -1,12 +1,9 @@
 package com.example.capstone.main
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,16 +11,13 @@ import android.widget.*
 import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_time_table.*
-import kotlinx.android.synthetic.main.timetableadd_dialog.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class TimeTableActivity : AppCompatActivity() {
-    private var editMode = false
     private val dayText = arrayOf("mon", "tue", "wed", "thu", "fri")
 
     private lateinit var mondaydept: ArrayList<TextView>
@@ -74,8 +68,6 @@ class TimeTableActivity : AppCompatActivity() {
         fridayteacher = arrayListOf(Fri1_teach, Fri2_teach, Fri3_teach, Fri4_teach, Fri5_teach, Fri6_teach, Fri7_teach)
 
         deptArray = arrayListOf(mondaydept, tuesdaydept, wednesdaydept, thursdaydept, fridaydept)
-
-        loadData()
     }
 
     override fun onResume() {
@@ -152,15 +144,14 @@ class TimeTableActivity : AppCompatActivity() {
 
     // 시간표 조회하는 함수
     private fun loadData() {
-
         (application as MasterApplication).service.readTimeTable()
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
+                    call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
                         val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, LinkedTreeMap<String, String>>>
+
                         for (i in 0..4) {
                             val todayList = data[dayText[i]] ?: continue
 
@@ -168,8 +159,8 @@ class TimeTableActivity : AppCompatActivity() {
                             lateinit var placeList: ArrayList<TextView>
                             lateinit var teacherList: ArrayList<TextView>
 
-                            when(dayText[i]) {
-                                "mon" ->  {
+                            when (dayText[i]) {
+                                "mon" -> {
                                     deptList = mondaydept
                                     placeList = mondayplace
                                     teacherList = mondayteacher
@@ -200,8 +191,18 @@ class TimeTableActivity : AppCompatActivity() {
                                 val map = todayList["t${j + 1}"] ?: continue
 
                                 deptList[j].text = map["subject"]
-                                placeList[j].text = map["location"]
-                                teacherList[j].text = map["teacher"]
+                                if (map["location"] == " ") {
+                                    placeList[j].visibility = View.GONE
+                                }
+                                else {
+                                    placeList[j].text = map["location"]
+                                    placeList[j].visibility = View. VISIBLE
+                                }
+                                if (map["teacher"] == " ") teacherList[j].visibility = View.GONE
+                                else {
+                                    teacherList[j].text = map["teacher"]
+                                    teacherList[j].visibility = View.VISIBLE
+                                }
                             }
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
@@ -228,6 +229,9 @@ class TimeTableActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         val view = layoutInflater.inflate(R.layout.timetableadd_dialog, null)
+        val deptEditText: EditText = view.findViewById(R.id.timetable_dialog_dept)
+        val locationEditText = view.findViewById<EditText>(R.id.timetable_dialog_location)
+        val teacherEditText = view.findViewById<EditText>(R.id.timetable_dialog_teacher)
 
         // 다이얼로그 스피너 설정
         val spinner = view.findViewById<Spinner>(R.id.timetable_dialog_period_spinner)
@@ -249,40 +253,31 @@ class TimeTableActivity : AppCompatActivity() {
                 R.id.radioFri -> day = "fri"
             }
         }
-
         builder.setView(view)
+            .setPositiveButton("확인", null)
+            .setNegativeButton("취소", null)
+            .create()
 
-        // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
-        val listener = DialogInterface.OnClickListener { p0, _ ->
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
 
-            val alert = p0 as AlertDialog
-            val deptEditText: EditText = alert.findViewById(R.id.timetable_dialog_dept)
-            val periodDropdown = alert.findViewById<Spinner>(R.id.timetable_dialog_period_spinner)
-            val locationEditText = alert.findViewById<EditText>(R.id.timetable_dialog_location)
-            val teacherEditText = alert.findViewById<EditText>(R.id.timetable_dialog_teacher)
+                if (deptEditText.text.toString() == "") {
+                    toast("수업 이름을 입력해 주세요")
+                } else if (day == null) {
+                    toast("요일을 선택해 주세요")
+                } else {
+                    val dept = deptEditText.text.toString()
+                    val period = spinner.selectedItem.toString().toInt()
+                    val location: String? = locationEditText.text.toString()
+                    val teacher: String? = teacherEditText.text.toString()
 
-            val dept = if (deptEditText.text != null && deptEditText.text.toString() != "") deptEditText.text.toString()
-            else {
-                toast("수업 이름을 입력해주세요.")
-                return@OnClickListener
+                    createTable(dept, day!!, period, location, teacher)
+                    dialog.dismiss()
+                }
             }
-
-            val period = periodDropdown.selectedItem.toString().toInt()
-            val location: String? = locationEditText.text.toString()
-            val teacher: String? = teacherEditText.text.toString()
-
-            if (day == null) {
-                toast("요일을 선택해주세요.")
-                return@OnClickListener
-            }
-
-            Log.d("TableComp", "dept: $dept, day: $day, period: $period, location: $location, teacher: $teacher")
-            createTable(dept, day!!, period, location, teacher)
         }
-
-        builder.setPositiveButton("확인", listener)
-        builder.setNegativeButton("취소", null)
-        builder.show()
+        dialog.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -334,9 +329,9 @@ class TimeTableActivity : AppCompatActivity() {
         map["days"] = day
         map["period"] = period
         map["location"] = if (location != null && location != "") location
-        else ""
+        else " "
         map["teacher"] = if (teacher != null && teacher != "") teacher
-        else "default"
+        else " "
 
         val arrayList = ArrayList<HashMap<String, Any?>>()
         arrayList.add(map)
@@ -350,11 +345,11 @@ class TimeTableActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
-                        toast("시간표 등록이 완료되었습니다.")
-
+                        toast("시간표 등록이 완료되었습니다")
                         loadData()
                     } else {        // 3xx, 4xx 를 받은 경우
-                        toast("시간표 등록에 실패했습니다.")
+                        toast("시간표 등록에 실패했습니다")
+                        finish()
                     }
                 }
 

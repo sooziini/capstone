@@ -1,9 +1,6 @@
 package com.example.capstone.network
 
-import com.example.capstone.dataclass.PostDetail
-import com.example.capstone.dataclass.PostList
-import com.example.capstone.dataclass.ReplyChange
-import com.example.capstone.dataclass.ReplyListList
+import com.example.capstone.dataclass.*
 import com.google.gson.internal.LinkedTreeMap
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

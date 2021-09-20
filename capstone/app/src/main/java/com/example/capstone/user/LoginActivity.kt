@@ -21,6 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
+    private var mBackWait:Long = 0
 
     // 키보드 InputMethodManager 변수 선언
     private var imm: InputMethodManager? = null
@@ -129,7 +130,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finishAffinity()
-        super.onBackPressed()
+        if(System.currentTimeMillis() - mBackWait >= 2000 ) {
+            mBackWait = System.currentTimeMillis()
+            toast("뒤로가기 버튼을 한번 더 누르면 종료됩니다")
+        } else {
+            finish()
+        }
     }
 }

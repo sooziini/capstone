@@ -281,7 +281,6 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:id="@+id/layout_fri1"
-                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"

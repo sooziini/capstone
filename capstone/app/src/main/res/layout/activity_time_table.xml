@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/main_color"
     tools:context=".main.TimeTableActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -42,8 +41,8 @@
 
             <TableLayout
                 android:id="@+id/TimeTable_Table"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@color/reply_child"
                 android:shrinkColumns="*"
                 android:stretchColumns="1,2,3,4,5,6,7">
@@ -51,18 +50,17 @@
                 <TableRow
                     android:id="@+id/TimeTable_DayRow"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="wrap_content">
 
                     <View
                         android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="48sp" />
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:background="@color/basic_white" />
 
                     <TextView
                         android:id="@+id/TimeTable_Mon"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -70,12 +68,12 @@
                         android:gravity="center"
                         android:text="월"
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Tue"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -83,12 +81,12 @@
                         android:gravity="center"
                         android:text="화"
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Wed"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -96,12 +94,12 @@
                         android:gravity="center"
                         android:text="수"
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Thu"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -109,12 +107,12 @@
                         android:gravity="center"
                         android:text="목"
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <TextView
                         android:id="@+id/TimeTable_Fri"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
@@ -122,7 +120,7 @@
                         android:gravity="center"
                         android:text="금"
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                 </TableRow>
@@ -130,168 +128,175 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/TimeTable_Time1"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="1교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="1"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon1_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon1_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon1_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
-
+                            android:maxLines="1" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue1_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue1_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue1_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed1_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed1_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed1_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu1_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu1_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu1_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri1_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri1_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri1_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
@@ -300,168 +305,176 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/TimeTable_Time2"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="2교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="2"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon2_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon2_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon2_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue2_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue2_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue2_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed2_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed2_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed2_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu2_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu2_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu2_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri2_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri2_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri2_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
@@ -470,168 +483,176 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/TimeTable_Time3"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="3교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="3"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon3_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon3_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon3_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue3_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue3_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue3_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed3_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed3_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed3_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
+                        android:padding="2dp"
+                        android:minHeight="70sp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/Thu3_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu3_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu3_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri3_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri3_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri3_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
@@ -640,168 +661,176 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/TimeTable_Time4"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="4교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="4"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon4_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon4_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon4_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue4_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue4_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue4_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed4_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed4_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed4_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu4_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu4_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu4_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri4_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri4_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri4_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
@@ -810,168 +839,176 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row5"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/TimeTable_Time5"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="5교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="5"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon5_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon5_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon5_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue5_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue5_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue5_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed5_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed5_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed5_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu5_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu5_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu5_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri5_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri5_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri5_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
@@ -980,168 +1017,176 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row6"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/TimeTable_Time6"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="6교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="6"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon6_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon6_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon6_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue6_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue6_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue6_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed6_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed6_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed6_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu6_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu6_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu6_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri6_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri6_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri6_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
@@ -1150,168 +1195,176 @@
                 <TableRow
                     android:id="@+id/TimeTable_Row7"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/no_select">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/TimeTable_Time7"
                         android:layout_width="wrap_content"
-                        android:layout_height="60sp"
+                        android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/basic_white"
                         android:gravity="center"
-                        android:text="7교시"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="7"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="@color/basic" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Mon7_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Mon7_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Mon7_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Tue7_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Tue7_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Tue7_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Wed7_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Wed7_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Wed7_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu7_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Thu7_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Thu7_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:minHeight="64sp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Fri7_dept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:maxLines="2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
                         <TextView
                             android:id="@+id/Fri7_place"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/Fri7_teach"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:maxLines="1" />
 
                     </LinearLayout>
 

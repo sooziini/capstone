@@ -60,7 +60,7 @@
                     android:gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/basic"
-                    tools:text="0월 0일 (월)" />
+                    tools:text="" />
 
                 <View
                     android:layout_width="0dp"
@@ -71,8 +71,7 @@
                     android:id="@+id/TodoList_CalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_baseline_calendar_today_24"
-                    app:tint="@color/main_color" />
+                    app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
 
             </LinearLayout>
 

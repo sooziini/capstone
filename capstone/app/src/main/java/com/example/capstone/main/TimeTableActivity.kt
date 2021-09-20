@@ -214,7 +214,7 @@ class TimeTableActivity : AppCompatActivity() {
         return true
     }
 
-    fun addDeptOnClick() {
+    fun addDeptOnClick(item: MenuItem) {
         var day: String? = null
 
         val builder = AlertDialog.Builder(this)

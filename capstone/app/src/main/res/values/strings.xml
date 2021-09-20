@@ -12,9 +12,9 @@
     <string name="drawer_my_menu_message">선생님과의 대화</string>
     <string name="drawer_my_menu_scrap">게시글 보관함</string>
     <string name="main_menu_notice">알림</string>
-    <string name="main_menu_myinfo">내정보</string>
+    <string name="main_menu_myinfo">마이페이지</string>
     <string name="main_menu_myinfo_report">신고 및 경고</string>
-    <string name="main_menu_myinfo_setting">설정</string>
+    <string name="main_menu_myinfo_setting">마이페이지</string>
     <string name="main_menu_myinfo_logout">로그아웃</string>
 
     <string name="timetable">시간표</string>

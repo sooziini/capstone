@@ -139,7 +139,24 @@
             android:background="@drawable/round_border"
             android:padding="8dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="설정"
+                    android:textColor="@color/basic"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/SettingChangeProfileLayout"
@@ -211,7 +228,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/SettinguserDeleteLayout"
+                android:id="@+id/SettingUserDeleteLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -232,6 +249,80 @@
                     android:text="회원탈퇴"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/round_border"
+            android:padding="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="신고 조회"
+                    android:textColor="@color/basic"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/SettingBoardReportLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/reply_report" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="게시판 신고 목록 조회"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/SettingReplyReportLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/reply_report" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:text="댓글 신고 목록 조회"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

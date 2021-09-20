@@ -231,47 +231,14 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+            // 마이페이지
             R.id.main_menu_myinfo -> {
-                return true
-            }
-            // 신고 및 경고
-            R.id.main_menu_myinfo_report -> {
-                startActivity(Intent(this, ReportActivity::class.java))
-                finish()
-                return true
-            }
-            // 설정
-            R.id.main_menu_myinfo_setting -> {
                 val intent = Intent(this, SettingActivity::class.java)
                 intent.putExtra("user_id", studentId)
                 intent.putExtra("user_name", studentName)
                 intent.putExtra("user_student_id", studentGradeId)
                 startActivity(intent)
                 finish()
-                return true
-            }
-            // 로그아웃
-            R.id.main_menu_myinfo_logout -> {
-                (application as MasterApplication).service.logout()
-                    .enqueue(object : Callback<HashMap<String, String>> {
-                        override fun onResponse(
-                            call: Call<HashMap<String, String>>,
-                            response: Response<HashMap<String, String>>
-                        ) {
-                            if (response.isSuccessful && response.body()!!["success"] == "true") {
-                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                                finish()
-                                toast("로그아웃 되었습니다")
-                            } else {
-                                toast("로그아웃을 할 수 없습니다")
-                            }
-                        }
-
-                        // 응답 실패 시
-                        override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                            toast("network error")
-                        }
-                    })
                 return true
             }
         }

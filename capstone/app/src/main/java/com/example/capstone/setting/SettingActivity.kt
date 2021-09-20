@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -106,8 +107,18 @@ class SettingActivity : AppCompatActivity() {
         }
 
         // 회원탈퇴
-        SettinguserDeleteLayout.setOnClickListener {
+        SettingUserDeleteLayout.setOnClickListener {
             setUserDeleteDialog()
+        }
+
+        // 게시판 신고 목록 조회
+        SettingBoardReportLayout.setOnClickListener {
+
+        }
+
+        // 댓글 신고 목록 조회
+        SettingReplyReportLayout.setOnClickListener {
+
         }
 
     }
@@ -315,6 +326,11 @@ class SettingActivity : AppCompatActivity() {
         builder.show()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main2_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
@@ -322,8 +338,36 @@ class SettingActivity : AppCompatActivity() {
                 onBackPressed()
                 return true
             }
+            R.id.main2_menu_logout -> {
+                retrofitLogout()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // 로그아웃하는 함수
+    private fun retrofitLogout() {
+        (application as MasterApplication).service.logout()
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
+                        startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
+                        finish()
+                        toast("로그아웃 되었습니다")
+                    } else {
+                        toast("로그아웃을 할 수 없습니다")
+                    }
+                }
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 
     override fun onBackPressed() {

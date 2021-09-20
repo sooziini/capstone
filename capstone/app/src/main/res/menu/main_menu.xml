@@ -9,16 +9,5 @@
         android:icon="@drawable/home_myinfo"
         android:title="@string/main_menu_myinfo"
         app:showAsAction="always" >
-        <menu>
-            <item android:id="@+id/main_menu_myinfo_report"
-                android:title="@string/main_menu_myinfo_report"
-                app:showAsAction="withText"/>
-            <item android:id="@+id/main_menu_myinfo_setting"
-                android:title="@string/main_menu_myinfo_setting"
-                app:showAsAction="withText"/>
-            <item android:id="@+id/main_menu_myinfo_logout"
-                android:title="@string/main_menu_myinfo_logout"
-                app:showAsAction="withText"/>
-        </menu>
     </item>
 </menu>

@@ -38,7 +38,12 @@ class TimeTableActivity : AppCompatActivity() {
     private lateinit var thursdayteacher: ArrayList<TextView>
     private lateinit var fridayteacher: ArrayList<TextView>
 
-    private var deptArray = ArrayList<ArrayList<TextView>>()
+    private lateinit var mondaylayout: ArrayList<LinearLayout>
+    private lateinit var tuesdaylayout: ArrayList<LinearLayout>
+    private lateinit var wednesdaylayout: ArrayList<LinearLayout>
+    private lateinit var thursdaylayout: ArrayList<LinearLayout>
+    private lateinit var fridaylayout: ArrayList<LinearLayout>
+    lateinit var layoutArray: ArrayList<ArrayList<LinearLayout>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,80 +72,22 @@ class TimeTableActivity : AppCompatActivity() {
         thursdayteacher = arrayListOf(Thu1_teach, Thu2_teach, Thu3_teach, Thu4_teach, Thu5_teach, Thu6_teach, Thu7_teach)
         fridayteacher = arrayListOf(Fri1_teach, Fri2_teach, Fri3_teach, Fri4_teach, Fri5_teach, Fri6_teach, Fri7_teach)
 
-        deptArray = arrayListOf(mondaydept, tuesdaydept, wednesdaydept, thursdaydept, fridaydept)
+        mondaylayout = arrayListOf(layout_mon1, layout_mon2, layout_mon3, layout_mon4, layout_mon5, layout_mon6, layout_mon7)
+        tuesdaylayout = arrayListOf(layout_tue1, layout_tue2, layout_tue3, layout_tue4, layout_tue5, layout_tue6, layout_tue7)
+        wednesdaylayout = arrayListOf(layout_wed1, layout_wed2, layout_wed3, layout_wed4, layout_wed5, layout_wed6, layout_wed7)
+        thursdaylayout = arrayListOf(layout_thu1, layout_thu2, layout_thu3, layout_thu4, layout_thu5, layout_thu6, layout_thu7)
+        fridaylayout = arrayListOf(layout_fri1, layout_fri2, layout_fri3, layout_fri4, layout_fri5, layout_fri6, layout_fri7)
+
+//        val deptArray = arrayListOf(mondaydept, tuesdaydept, wednesdaydept, thursdaydept, fridaydept)
+//        val placeArray = arrayListOf(mondayplace, tuesdayplace, wednesdayplace, thursdayplace, fridayplace)
+//        val teacherArray = arrayListOf(mondayteacher, tuesdayteacher, wednesdayteacher, thursdayteacher, fridayteacher)
+        layoutArray = arrayListOf(mondaylayout, tuesdaylayout, wednesdaylayout, thursdaylayout, fridaylayout)
     }
 
     override fun onResume() {
         super.onResume()
         loadData()
     }
-
-    // 시간표 편집
-//    private fun setEditMode() {
-//        for (day in dayArray) {
-//            for (textView in day)
-//                textView.isEnabled = true
-//        }
-//    }
-//
-//    // 시간표 편집 완료
-//    private fun doneEditMode() {
-//        for (day in dayArray) {
-//            for (textView in day)
-//                textView.isEnabled = false
-//        }
-//        saveData()
-//    }
-
-    // 시간표 저장하는 함수
-//    private fun saveData() {
-//        val saveArray = ArrayList<HashMap<String, Any>>()
-//        val deleteArray = ArrayList<HashMap<String, Any>>()
-//
-//        for (i in 0..5) {
-//            var j = 1
-//            for (textView in deptArray[i]) {
-//                val map = HashMap<String, Any>()
-//                if(textView.text.isNotEmpty()) {
-//                    map["subject"] = textView.text.toString()
-//                    map["days"] = dayText[i]
-//                    map["period"] = j
-//                    saveArray.add(map)
-//                } else if(textView.text.isEmpty() || textView.text.toString() == "") {
-//                    map["subject"] = "delete"
-//                    map["days"] = dayText[i]
-//                    map["period"] = j
-//                    deleteArray.add(map)
-//                }
-//                j += 1
-//            }
-//        }
-//
-//        deleteData(deleteArray)
-//
-//        val dataMap = HashMap<String, ArrayList<HashMap<String, Any>>>()
-//        dataMap["list"] = saveArray
-//
-//        (application as MasterApplication).service.updateTimeTable(dataMap)
-//            .enqueue(object : Callback<HashMap<String, String>> {
-//                override fun onResponse(
-//                    call: Call<HashMap<String, String>>,
-//                    response: Response<HashMap<String, String>>
-//                ) {
-//                    if (response.isSuccessful) { }
-//                    else {        // 3xx, 4xx 를 받은 경우
-//                        toast("데이터를 수정할 수 없습니다")
-//                        finish()
-//                    }
-//                }
-//
-//                // 응답 실패 시
-//                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-//                    toast("network error")
-//                    finish()
-//                }
-//            })
-//    }
 
     // 시간표 조회하는 함수
     private fun loadData() {
@@ -153,7 +100,7 @@ class TimeTableActivity : AppCompatActivity() {
                         val data = response.body()!!["table"] as LinkedTreeMap<String, LinkedTreeMap<String, LinkedTreeMap<String, String>>>
 
                         for (i in 0..4) {
-                            val todayList = data[dayText[i]] ?: continue
+                            val todayList = data[dayText[i]]
 
                             lateinit var deptList: ArrayList<TextView>
                             lateinit var placeList: ArrayList<TextView>
@@ -187,12 +134,52 @@ class TimeTableActivity : AppCompatActivity() {
                                 }
                             }
 
+                            if (todayList == null) {
+                                for (j in 0..6) {
+                                    deptList[j].text = ""
+                                    placeList[j].text = ""
+                                    teacherList[j].text = ""
+
+                                    layoutArray[i][j].setOnLongClickListener { true }
+                                }
+                                continue
+                            }
+
                             for (j in 0..6) {
-                                val map = todayList["t${j + 1}"] ?: continue
+                                val map: LinkedTreeMap<String, String>? = todayList["t${j + 1}"]
+
+                                if (map == null) {
+                                    deptList[j].text = ""
+                                    placeList[j].text = ""
+                                    teacherList[j].text = ""
+
+                                    layoutArray[i][j].setOnLongClickListener { true }
+
+                                    continue
+                                }
 
                                 deptList[j].text = map["subject"]
+
                                 placeList[j].text = map["location"]
+                                if (map["location"] == " ")
+                                    placeList[j].visibility = View.GONE
+                                else
+                                    placeList[j].visibility = View.VISIBLE
+
                                 teacherList[j].text = map["teacher"]
+                                if (map["teacher"] == " ")
+                                    teacherList[j].visibility = View.GONE
+                                else
+                                    teacherList[j].visibility = View.VISIBLE
+
+                                layoutArray[i][j].setOnLongClickListener {
+                                    val dept = deptList[j].text.toString()
+                                    val location = placeList[j].text.toString()
+                                    val teacher = teacherList[j].text.toString()
+
+                                    editTable(i, j, dept, location, teacher)
+                                    true
+                                }
                             }
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
@@ -270,6 +257,93 @@ class TimeTableActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // 시간표 수정
+    private fun editTable(dayNum: Int, periodParam: Int, dept: String, location: String, teacher: String) {
+        var day: String? = when(dayNum) {
+            0 -> "mon"
+            1 -> "tue"
+            2 -> "wed"
+            3 -> "thu"
+            4 -> "fri"
+            else -> null
+        }
+        val dayParam = day
+
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.timetableadd_dialog, null)
+        val deptEditText: EditText = view.findViewById(R.id.timetable_dialog_dept)
+        deptEditText.setText(dept)
+        val locationEditText = view.findViewById<EditText>(R.id.timetable_dialog_location)
+        if (location != " ")
+            locationEditText.setText(location)
+        val teacherEditText = view.findViewById<EditText>(R.id.timetable_dialog_teacher)
+        if (teacher != " ")
+            teacherEditText.setText(teacher)
+
+        // 다이얼로그 스피너 설정
+        val spinner = view.findViewById<Spinner>(R.id.timetable_dialog_period_spinner)
+        val periodList = arrayOf("1", "2", "3", "4", "5", "6", "7")
+        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, periodList)
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) { }
+        }
+        spinner.setSelection(periodParam)
+
+        // 다이얼로그 라디오그룹 설정
+        val radioGroup = view.findViewById<RadioGroup>(R.id.timetable_dialog_radiogroup)
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId) {
+                R.id.radioMon -> day = "mon"
+                R.id.radioTue -> day = "tue"
+                R.id.radioWed -> day = "wed"
+                R.id.radioThu -> day = "thu"
+                R.id.radioFri -> day = "fri"
+            }
+        }
+        when (dayNum) {
+            0 -> radioGroup.check(R.id.radioMon)
+            1 -> radioGroup.check(R.id.radioTue)
+            2 -> radioGroup.check(R.id.radioWed)
+            3 -> radioGroup.check(R.id.radioThu)
+            4 -> radioGroup.check(R.id.radioFri)
+        }
+
+        builder.setView(view)
+            .setPositiveButton("확인", null)
+            .setNegativeButton("취소", null)
+            .setNeutralButton("삭제", null)
+            .create()
+
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                if (deptEditText.text.toString() == "") {
+                    toast("수업 이름을 입력해 주세요")
+                } else if (day == null) {
+                    toast("요일을 선택해 주세요")
+                } else {
+                    val dept = deptEditText.text.toString()
+                    val period = spinner.selectedItem.toString().toInt()
+                    val location: String? = locationEditText.text.toString()
+                    val teacher: String? = teacherEditText.text.toString()
+
+                    deleteData(dayParam!!, periodParam + 1)
+                    createTable(dept, day!!, period, location, teacher)
+                    dialog.dismiss()
+                }
+            }
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+                val period = spinner.selectedItem.toString().toInt()
+
+                if (dayParam != null) deleteData(dayParam!!, periodParam + 1)
+
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId) {
             // toolbar의 뒤로가기 버튼을 눌렀을 때
@@ -286,10 +360,14 @@ class TimeTableActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun deleteData(array: ArrayList<HashMap<String, Any>>) {
-        val deleteMap = HashMap<String, ArrayList<HashMap<String, Any>>>()
+    private fun deleteData(day: String, period: Int) {
+        val map = HashMap<String, Any>()
+        map["days"] = day
+        map["period"] = period
+        val list = arrayListOf(map)
 
-        deleteMap["list"] = array
+        val deleteMap = HashMap<String, ArrayList<HashMap<String, Any>>>()
+        deleteMap["list"] = list
 
         (application as MasterApplication).service.deleteTimeTable(deleteMap)
             .enqueue(object : Callback<HashMap<String, String>> {
@@ -297,7 +375,9 @@ class TimeTableActivity : AppCompatActivity() {
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
-                    if (response.isSuccessful) { }
+                    if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
+                        loadData()
+                    }
                     else {        // 3xx, 4xx 를 받은 경우
                         toast("시간표를 삭제할 수 없습니다")
                         finish()
@@ -319,9 +399,9 @@ class TimeTableActivity : AppCompatActivity() {
         map["days"] = day
         map["period"] = period
         map["location"] = if (location != null && location != "") location
-        else ""
+        else " "
         map["teacher"] = if (teacher != null && teacher != "") teacher
-        else "default"
+        else " "
 
         val arrayList = ArrayList<HashMap<String, Any?>>()
         arrayList.add(map)

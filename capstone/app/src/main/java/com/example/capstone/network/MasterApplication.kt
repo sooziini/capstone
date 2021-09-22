@@ -63,6 +63,7 @@ class MasterApplication: Application() {
     }
 
     // SharedPreferences에 token 값 저장되어 있음
+    // accessToken으로 현재 로그인 상태인지 확인하는 함수
     fun checkIsLogin(): Boolean {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val token = sp.getString("access_token", null)
@@ -70,6 +71,8 @@ class MasterApplication: Application() {
         return token != null
     }
 
+    // ver == true accessToken return
+    // ver == false refreshToken return
     fun getUserToken(ver: Boolean): String? {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val token = if (ver) {
@@ -82,6 +85,15 @@ class MasterApplication: Application() {
         else token
     }
 
+    // 토큰 저장
+    fun saveUserToken(name: String, token: String) {
+        val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(name, token)
+        editor.apply()
+    }
+
+    // 토큰 삭제
     fun deleteUserToken() {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val editor = sp.edit()
@@ -92,26 +104,25 @@ class MasterApplication: Application() {
 
     // 토큰 재발급 함수
     fun retrofitSetRefreshToken(token: String) {
-        service.setRefreshToken(token).enqueue(object : Callback<HashMap<String, String>> {
-            override fun onResponse(
-                call: Call<HashMap<String, String>>,
-                response: Response<HashMap<String, String>>
-            ) {
-                if (response.isSuccessful) {
-                    val accessToken = response.body()!!["access_token"]
-                    val refreshToken = response.body()!!["refresh_token"]
+        service.setRefreshToken(token)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful) {
+                        val accessToken = response.body()!!["access_token"]
+                        val refreshToken = response.body()!!["refresh_token"]
 
-                    val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-                    val editor = sp.edit()
-                    editor.putString("access_token", accessToken)
-                    editor.putString("refresh_token", refreshToken)
-                    editor.apply()
+                        saveUserToken("access_token", accessToken!!)
+                        if (refreshToken != null && refreshToken != "")
+                            saveUserToken("refresh_token", refreshToken)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                toast("network error")
-            }
-        })
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                }
+            })
     }
 }

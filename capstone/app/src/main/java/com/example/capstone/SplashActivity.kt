@@ -20,12 +20,15 @@ class SplashActivity : AppCompatActivity() {
         val app = application as MasterApplication
 
         val intent = if (app.checkIsLogin()) {
-            app.getUserToken(false).let { token ->
-                if (token != null) {
-                    app.retrofitSetRefreshToken(token)
+            app.getUserToken(false).let { refreshToken ->
+                if (refreshToken != null && refreshToken != "") {
+                    app.retrofitSetRefreshToken(refreshToken)
+                    Intent(this, MainActivity::class.java)
+                } else {
+                    app.deleteUserToken()
+                    Intent(this, LoginActivity::class.java)
                 }
             }
-            Intent(this, MainActivity::class.java)
         } else {
             Intent(this, LoginActivity::class.java)
         }

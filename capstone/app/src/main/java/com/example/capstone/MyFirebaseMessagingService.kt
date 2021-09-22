@@ -23,10 +23,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "new Token: $token")
 
         // 토큰 값 저장
-        val sp = this.getSharedPreferences("firebase", Context.MODE_PRIVATE)
+        val sp = getSharedPreferences("firebase", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString("token", token).apply()
-        editor.commit()
     }
 
     // 메세지 수신 시 호출

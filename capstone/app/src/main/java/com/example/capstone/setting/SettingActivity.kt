@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -339,22 +340,39 @@ class SettingActivity : AppCompatActivity() {
                 return true
             }
             R.id.main2_menu_logout -> {
-                retrofitLogout()
+                setLogoutDialog()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    // 로그아웃 dialog 설정 함수
+    private fun setLogoutDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
+        val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
+        dialogText.text = "로그아웃 하시겠습니까?"
+
+        builder.setPositiveButton("확인") { dialog, it ->
+            retrofitLogout()
+        }
+            .setNegativeButton("취소", null)
+        builder.setView(dialogView)
+        builder.show()
+    }
+
     // 로그아웃하는 함수
     private fun retrofitLogout() {
-        (application as MasterApplication).service.logout()
+        val app = application as MasterApplication
+        app.service.logout()
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
+                        app.deleteUserToken()
                         startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
                         finish()
                         toast("로그아웃 되었습니다")

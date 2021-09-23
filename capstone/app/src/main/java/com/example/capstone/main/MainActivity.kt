@@ -1,6 +1,5 @@
 package com.example.capstone.main
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +12,7 @@ import com.example.capstone.*
 import com.example.capstone.board.BoardActivity
 import com.example.capstone.board.ScrapActivity
 import com.example.capstone.network.MasterApplication
-import com.example.capstone.setting.ReportActivity
 import com.example.capstone.setting.SettingActivity
-import com.example.capstone.user.LoginActivity
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
@@ -33,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var studentYear: String        // 입학년도
     lateinit var studentId: String          // 아이디
     private var mBackWait:Long = 0
-    private val TAG = "FirebaseService"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -257,28 +253,5 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
-    }
-
-    // 받은 토큰을 서버로 전송
-    fun sendRegistrationToServer(token: String) {
-        (application as MasterApplication).service.setDeviceToken(token)
-            .enqueue(object : Callback<HashMap<String, String>> {
-                override fun onResponse(
-                    call: Call<HashMap<String, String>>,
-                    response: Response<HashMap<String, String>>
-                ) {
-                    if (response.isSuccessful && response.body()!!["success"] == "true") {
-                        toast("서버 알림 토큰 저장 성공")
-                        Log.d(TAG, "suc: $token")
-                    } else {
-                        toast("서버 알림 토큰 저장 불가")
-                        Log.d(TAG, "fail: $token")
-                    }
-                }
-
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                    toast("network error")
-                }
-            })
     }
 }

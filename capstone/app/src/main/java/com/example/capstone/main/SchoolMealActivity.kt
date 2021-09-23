@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
+import com.example.capstone.adapter.MealActivityAdapter
 import com.example.capstone.adapter.MealDetailAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
@@ -27,7 +28,8 @@ class SchoolMealActivity : AppCompatActivity() {
     private val month = cal.get(Calendar.MONTH)
     private val day = cal.get(Calendar.DAY_OF_MONTH)
     private lateinit var date: String
-    var mealList = ArrayList<String>()
+    var itemList = ArrayList<ArrayList<Meal>>()
+    var mealList = ArrayList<Meal>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,6 @@ class SchoolMealActivity : AppCompatActivity() {
         val tday = setDateSize(day.toString())
 
         date = tyear + tmonth + tday
-        School_Meal_DateText.text = "${tyear}년 ${tmonth}월 ${tday}일"
         retrofitLoadMeal(date)
     }
 
@@ -77,27 +78,22 @@ class SchoolMealActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         if (response.body()!!["success"].toString() == "true") {
                             mealList.clear()
-                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
+                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, Any>>
                             val todaymeal = dataArray[0]
-                            val mealData = todaymeal["DDISH_NM"]
-                            val mealArray = mealData?.split("<br/>")
-                            val kcal = todaymeal["CAL_INFO"]
+                            val mealData = todaymeal["dish"] as ArrayList<String>
 
-                            for (element in mealArray!!) mealList.add(element)
-                            SchoolMeal_CalText.text = "열량 : $kcal"
+//                            for (element in mealArray!!) mealList.add(element)
                         } else {
                             mealList.clear()
-                            SchoolMeal_CalText.text = ""
                         }
-                        SchoolMeal_RecyclerView.adapter = MealDetailAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.adapter = MealActivityAdapter(itemList, "20210922", LayoutInflater.from(this@SchoolMealActivity), this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
                     } else {
                         mealList.clear()
-                        SchoolMeal_RecyclerView.adapter = MealDetailAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.adapter = MealActivityAdapter(itemList, "20210922", LayoutInflater.from(this@SchoolMealActivity), this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
-                        SchoolMeal_CalText.text = ""
                     }
                 }
 
@@ -115,7 +111,6 @@ class SchoolMealActivity : AppCompatActivity() {
             // i년 i2월 i3일
             val tempi2 = setDateSize((i2 + 1).toString())
             val tempi3 = setDateSize(i3.toString())
-            School_Meal_DateText.text = "${i}년 ${tempi2}월 ${tempi3}일"
             date = "$year" + tempi2 + tempi3
             retrofitLoadMeal(date)
         }

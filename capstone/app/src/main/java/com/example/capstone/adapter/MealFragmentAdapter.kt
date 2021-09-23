@@ -1,9 +1,6 @@
 package com.example.capstone.adapter
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.content.res.Resources
-import android.graphics.Color.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.engine.Resource
 import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
 
@@ -28,6 +24,9 @@ class MealFragmentAdapter(
         val layout = itemView.findViewById<LinearLayout>(R.id.meal_fragment_layout)
 
         fun bind(meal: Meal) {
+            if (itemList.size == 0)
+                return
+
             date.text = "${meal.year}년 ${meal.month}월 ${meal.day}일"
             detailRv.adapter = MealDetailAdapter(meal.mealFragmentItemList, inflater)
             detailRv.layoutManager = LinearLayoutManager(context)
@@ -39,15 +38,22 @@ class MealFragmentAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealFragmentViewHolder {
-        val view = inflater.inflate(R.layout.school_meal_item, parent, false)
+        val view = if (itemList.size != 0)
+            inflater.inflate(R.layout.school_meal_item, parent, false)
+        else
+            inflater.inflate(R.layout.school_meal_null_item, parent, false)
         return MealFragmentViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return itemList.size
+        return if (itemList.size == 0)
+            1
+        else
+            itemList.size
     }
 
     override fun onBindViewHolder(holder: MealFragmentViewHolder, position: Int) {
-        holder.bind(itemList[position])
+        if (itemList.size != 0)
+            holder.bind(itemList[position])
     }
 }

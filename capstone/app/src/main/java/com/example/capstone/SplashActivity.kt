@@ -11,7 +11,7 @@ import com.example.capstone.user.LoginActivity
 class SplashActivity : AppCompatActivity() {
 
     // 2초간 스플래시 화면 보여줌 (ms)
-    val SPLASH_VIEW_TIME: Long = 2000
+    private val SPLASH_VIEW_TIME: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = if (app.checkIsLogin()) {
             app.getUserToken(false).let { refreshToken ->
                 if (refreshToken != null && refreshToken != "") {
-                    app.retrofitSetRefreshToken(refreshToken)
+                    app.retrofitSetRefreshToken(refreshToken, this)
                     Intent(this, MainActivity::class.java)
                 } else {
                     app.deleteUserToken()

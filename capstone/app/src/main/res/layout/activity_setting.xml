@@ -166,16 +166,10 @@
                 android:padding="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
-                    app:srcCompat="@drawable/setting_photo" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:gravity="center_vertical"
                     android:text="프로필 사진 변경"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -189,16 +183,10 @@
                 android:padding="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
-                    app:srcCompat="@drawable/setting_change_password" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:gravity="center_vertical"
                     android:text="비밀번호 변경"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -212,17 +200,11 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
-                    app:srcCompat="@drawable/home_myinfo" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:text="내 정보"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
@@ -235,17 +217,11 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
-                    app:srcCompat="@drawable/setting_personoff" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:text="회원탈퇴"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
@@ -285,16 +261,10 @@
                 android:padding="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
-                    app:srcCompat="@drawable/reply_report" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:gravity="center_vertical"
                     android:text="게시판 신고 목록 조회"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -308,16 +278,10 @@
                 android:padding="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
-                    app:srcCompat="@drawable/reply_report" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:gravity="center_vertical"
                     android:text="댓글 신고 목록 조회"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />

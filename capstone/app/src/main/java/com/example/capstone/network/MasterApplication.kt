@@ -2,6 +2,7 @@ package com.example.capstone.network
 
 import android.app.Application
 import android.content.Context
+import com.example.capstone.SplashActivity
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -103,7 +104,7 @@ class MasterApplication: Application() {
     }
 
     // 토큰 재발급 함수
-    fun retrofitSetRefreshToken(token: String) {
+    fun retrofitSetRefreshToken(token: String, mContext: Context) {
         service.setRefreshToken(token)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
@@ -117,11 +118,14 @@ class MasterApplication: Application() {
                         saveUserToken("access_token", accessToken!!)
                         if (refreshToken != null && refreshToken != "")
                             saveUserToken("refresh_token", refreshToken)
+                    } else {
+                        (mContext as SplashActivity).finish()
                     }
                 }
 
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    (mContext as SplashActivity).finish()
                 }
             })
     }

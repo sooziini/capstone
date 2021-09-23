@@ -170,6 +170,13 @@ interface RetrofitService {
         @Query ("MLSV_TO_YMD") end: String
     ): Call<HashMap<String, Any>>
 
+    // 주차별 식단표
+    @GET("school/cafeteria/month?")
+    fun weekMeal(
+        @Query ("MLSV_FROM_YMD") start: String,
+        @Query ("MLSV_TO_YMD") end: String
+    ): Call<HashMap<String, Any>>
+
     // 비밀번호 확인
     @POST("user/password/check")
     fun checkPassword(

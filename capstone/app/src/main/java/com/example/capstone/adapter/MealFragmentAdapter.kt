@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
+import org.jetbrains.anko.padding
 
 class MealFragmentAdapter(
     private val itemList: ArrayList<Meal>,
@@ -32,8 +33,10 @@ class MealFragmentAdapter(
             detailRv.layoutManager = LinearLayoutManager(context)
             detailRv.setHasFixedSize(true)
 
-            if (meal.date == todayDate)
+            if (meal.date == todayDate) {
                 layout.background = context.resources.getDrawable(R.drawable.round_border_main_color)
+                layout.padding = 10
+            }
         }
     }
 

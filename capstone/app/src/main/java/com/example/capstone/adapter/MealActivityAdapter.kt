@@ -12,7 +12,7 @@ import com.example.capstone.dataclass.Meal
 
 class MealActivityAdapter(
     private val itemList: ArrayList<ArrayList<Meal>>,
-    private val todayDate: String,
+    private val weekList: ArrayList<Int>,
     private val inflater: LayoutInflater,
     private val context: Context
 ): RecyclerView.Adapter<MealActivityAdapter.MealActivityViewHolder>() {
@@ -21,9 +21,9 @@ class MealActivityAdapter(
         val activityRv = itemView.findViewById<RecyclerView>(R.id.meal_activity_rv2)
         val week = itemView.findViewById<TextView>(R.id.meal_activity_weektext)
 
-        fun bind(mealList: ArrayList<Meal>, position: Int) {
-            week.text = "${position + 1}주차"
-            activityRv.adapter = MealFragmentAdapter(mealList, todayDate, inflater, context)
+        fun bind(mealList: ArrayList<Meal>, weekNum: Int) {
+            week.text = "${weekNum}주차"
+            activityRv.adapter = MealFragmentAdapter(mealList, "00000000", inflater, context)
             activityRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             activityRv.setHasFixedSize(true)
         }
@@ -39,6 +39,6 @@ class MealActivityAdapter(
     }
 
     override fun onBindViewHolder(holder: MealActivityViewHolder, position: Int) {
-        holder.bind(itemList[position], position)
+        holder.bind(itemList[position], weekList[position])
     }
 }

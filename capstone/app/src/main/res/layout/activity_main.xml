@@ -83,7 +83,7 @@
 
                     <ImageButton
                         android:id="@+id/Home_TimeTableButton"
-                        android:layout_width="32sp"
+                        android:layout_width="24sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
                         app:srcCompat="@drawable/arrow_forward" />
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:scrollbars="horizontal"></FrameLayout>
+                    android:scrollbars="horizontal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -119,7 +119,7 @@
 
                     <ImageButton
                         android:id="@+id/Home_MealButton"
-                        android:layout_width="32sp"
+                        android:layout_width="24sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
                         app:srcCompat="@drawable/arrow_forward" />
@@ -129,7 +129,7 @@
                     android:id="@+id/Home_MealFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"></FrameLayout>
+                    android:layout_marginTop="8dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -153,7 +153,7 @@
 
                     <ImageButton
                         android:id="@+id/Home_TodoListButton"
-                        android:layout_width="32sp"
+                        android:layout_width="24sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
                         app:srcCompat="@drawable/arrow_forward" />
@@ -165,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"></FrameLayout>
+                    android:layout_marginBottom="16dp"/>
 
             </LinearLayout>
         </ScrollView>

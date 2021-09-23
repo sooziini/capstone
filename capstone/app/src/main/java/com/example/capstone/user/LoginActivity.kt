@@ -1,10 +1,10 @@
 package com.example.capstone.user
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -21,6 +21,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
+    private var mBackWait:Long = 0
+    private val TAG = "FirebaseService"
 
     // 키보드 InputMethodManager 변수 선언
     private var imm: InputMethodManager? = null
@@ -28,6 +30,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val app = application as MasterApplication
 
         // 키보드 InputMethodManager 세팅
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
@@ -62,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
                     post["password"] = password
 
                     // 입력받은 id와 password POST
-                    (application as MasterApplication).service.login(post)
+                    app.service.login(post)
                         .enqueue(object : Callback<HashMap<String, Any>> {
                             override fun onResponse(
                                 call: Call<HashMap<String, Any>>,
@@ -83,16 +87,15 @@ class LoginActivity : AppCompatActivity() {
                                     if (accessToken == null || refreshToken == null) {
                                         Toast.makeText(this@LoginActivity, "아이디와 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
                                     } else {
-                                        // access_token 저장
-                                        saveUserToken("access_token", accessToken, this@LoginActivity)
-                                        // refresh_token 저장
-                                        saveUserToken("refresh_token", refreshToken, this@LoginActivity)
+                                        sendRegistrationToServer()
+
+                                        app.saveUserToken("access_token", accessToken)
+                                        app.saveUserToken("refresh_token", refreshToken)
 
                                         if (result["role"] == "master") {   // master 로그인
                                             startActivity(Intent(this@LoginActivity, MainActivity2::class.java))
                                             finish()
-                                        }
-                                        else {      // 일반계정 로그인 (학생, 학생회)
+                                        } else {      // 일반계정 로그인 (학생, 학생회)
                                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                             finish()
                                         }
@@ -113,11 +116,28 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun saveUserToken(name: String, token: String, activity: Activity) {
-        val sp = activity.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString(name, token)
-        editor.apply()
+    // firebase 토큰을 서버로 전송
+    fun sendRegistrationToServer() {
+        val sp = getSharedPreferences("firebase", Context.MODE_PRIVATE)
+        val token = sp.getString("token", null)
+
+        (application as MasterApplication).service.setDeviceToken(token!!)
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
+                        Log.d(TAG, "suc: $token")
+                    } else {
+                        Log.d(TAG, "fail: $token")
+                    }
+                }
+
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                }
+            })
     }
 
     // 이벤트 메서드 생성
@@ -129,7 +149,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finishAffinity()
-        super.onBackPressed()
+        if(System.currentTimeMillis() - mBackWait >= 2000 ) {
+            mBackWait = System.currentTimeMillis()
+            toast("뒤로가기 버튼을 한번 더 누르면 종료됩니다")
+        } else {
+            finish()
+        }
     }
 }

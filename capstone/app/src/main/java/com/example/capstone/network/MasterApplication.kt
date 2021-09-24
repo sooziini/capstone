@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MasterApplication: Application() {
     lateinit var service: RetrofitService
-    val BASE_URL = "http://192.168.0.2:3000"
+    val BASE_URL = "http://220.149.31.104:3000"
     //220.149.31.104
 
     override fun onCreate() {
@@ -118,6 +118,8 @@ class MasterApplication: Application() {
                         saveUserToken("access_token", accessToken!!)
                         if (refreshToken != null && refreshToken != "")
                             saveUserToken("refresh_token", refreshToken)
+                    } else if (response.code() == 401) {
+                        deleteUserToken()
                     } else {
                         (mContext as SplashActivity).finish()
                     }

@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.engine.Resource
 import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
+import org.jetbrains.anko.backgroundDrawable
 
 class MealFragmentAdapter(
     private val itemList: ArrayList<Meal>,
@@ -33,8 +35,8 @@ class MealFragmentAdapter(
             detailRv.layoutManager = LinearLayoutManager(context)
             detailRv.setHasFixedSize(true)
 
-            if (meal.date == todayDate)
-                layout.background = context.resources.getDrawable(R.drawable.round_border_main_color)
+            //if (meal.date == todayDate)
+                //layout.backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.round_border_main_color)
         }
     }
 

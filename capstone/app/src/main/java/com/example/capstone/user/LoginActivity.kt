@@ -22,7 +22,6 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private var mBackWait:Long = 0
-    private val TAG = "FirebaseService"
 
     // 키보드 InputMethodManager 변수 선언
     private var imm: InputMethodManager? = null
@@ -87,10 +86,10 @@ class LoginActivity : AppCompatActivity() {
                                     if (accessToken == null || refreshToken == null) {
                                         Toast.makeText(this@LoginActivity, "아이디와 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
                                     } else {
-                                        sendRegistrationToServer()
-
                                         app.saveUserToken("access_token", accessToken)
                                         app.saveUserToken("refresh_token", refreshToken)
+
+                                        sendRegistrationToServer()
 
                                         if (result["role"] == "master") {   // master 로그인
                                             startActivity(Intent(this@LoginActivity, MainActivity2::class.java))
@@ -128,14 +127,16 @@ class LoginActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
-                        Log.d(TAG, "suc: $token")
+                        //
                     } else {
-                        Log.d(TAG, "fail: $token")
+                        toast("알림 설정 오류")
+                        finish()
                     }
                 }
 
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")
+                    finish()
                 }
             })
     }

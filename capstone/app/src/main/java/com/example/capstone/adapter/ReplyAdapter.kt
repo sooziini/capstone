@@ -37,7 +37,7 @@ class ReplyAdapter(
         private val replyLikeBtn: ImageView = itemView.findViewById(R.id.parent_reply_item_like_btn)
         private val replyReportBtn: ImageView = itemView.findViewById(R.id.parent_reply_item_report_btn)
         private var replyVer: Boolean = false
-        private var popUserCheck: Boolean = true
+        private var popUserCheck: Boolean = false        // 내 댓글일 경우 true
 
         fun bind(reply: Reply, position: Int) {
             replyBody.text = reply.body
@@ -48,7 +48,7 @@ class ReplyAdapter(
                 replyLikeBtn.setImageResource(R.drawable.detail_like_selected)
                 replyVer = true
             }
-            if (reply.userCheck == "N") popUserCheck = false
+            if (reply.userCheck == "Y") popUserCheck = true
 
             // 대댓글 버튼 눌렀을 경우
             replyCommentBtn.setOnClickListener {
@@ -104,7 +104,7 @@ class ReplyAdapter(
                 replyLikeBtn.setImageResource(R.drawable.detail_like_selected)
                 replyVer = true
             }
-            if (reply.userCheck == "N") popUserCheck = false
+            if (reply.userCheck == "Y") popUserCheck = true
 
             // 댓글 좋아요 버튼 눌렀을 경우
             replyLikeBtn.setOnClickListener {

@@ -148,6 +148,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -156,6 +157,7 @@
                             android:id="@+id/Mon1_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -164,15 +166,18 @@
                             android:id="@+id/Mon1_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon1_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="1"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -182,6 +187,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -190,6 +196,7 @@
                             android:id="@+id/Tue1_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -198,15 +205,19 @@
                             android:id="@+id/Tue1_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue1_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -217,6 +228,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -225,6 +237,7 @@
                             android:id="@+id/Wed1_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -233,15 +246,19 @@
                             android:id="@+id/Wed1_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed1_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -251,6 +268,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -259,6 +277,7 @@
                             android:id="@+id/Thu1_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -267,24 +286,29 @@
                             android:id="@+id/Thu1_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu1_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
                         android:id="@+id/layout_fri1"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -293,6 +317,7 @@
                             android:id="@+id/Fri1_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -301,15 +326,19 @@
                             android:id="@+id/Fri1_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri1_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
                 </TableRow>
 
@@ -336,6 +365,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -344,6 +374,7 @@
                             android:id="@+id/Mon2_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -352,15 +383,19 @@
                             android:id="@+id/Mon2_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon2_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -370,6 +405,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -378,6 +414,7 @@
                             android:id="@+id/Tue2_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -386,15 +423,19 @@
                             android:id="@+id/Tue2_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue2_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -404,6 +445,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -412,6 +454,7 @@
                             android:id="@+id/Wed2_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -420,15 +463,19 @@
                             android:id="@+id/Wed2_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed2_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -438,6 +485,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -446,6 +494,7 @@
                             android:id="@+id/Thu2_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -454,15 +503,19 @@
                             android:id="@+id/Thu2_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu2_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -472,6 +525,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -480,6 +534,7 @@
                             android:id="@+id/Fri2_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -488,15 +543,19 @@
                             android:id="@+id/Fri2_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri2_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                 </TableRow>
@@ -524,6 +583,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -532,6 +592,7 @@
                             android:id="@+id/Mon3_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -540,15 +601,19 @@
                             android:id="@+id/Mon3_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon3_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -558,6 +623,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -566,6 +632,7 @@
                             android:id="@+id/Tue3_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -574,15 +641,19 @@
                             android:id="@+id/Tue3_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue3_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -592,6 +663,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -600,6 +672,7 @@
                             android:id="@+id/Wed3_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -608,15 +681,19 @@
                             android:id="@+id/Wed3_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed3_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -626,14 +703,16 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:padding="2dp"
+                        android:gravity="center"
                         android:minHeight="70sp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="2dp">
 
                         <TextView
                             android:id="@+id/Thu3_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -642,15 +721,19 @@
                             android:id="@+id/Thu3_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu3_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -661,6 +744,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -669,6 +753,7 @@
                             android:id="@+id/Fri3_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -677,15 +762,19 @@
                             android:id="@+id/Fri3_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri3_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
                 </TableRow>
 
@@ -712,6 +801,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -720,6 +810,7 @@
                             android:id="@+id/Mon4_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -728,15 +819,19 @@
                             android:id="@+id/Mon4_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon4_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -746,6 +841,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -754,6 +850,7 @@
                             android:id="@+id/Tue4_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -762,15 +859,19 @@
                             android:id="@+id/Tue4_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue4_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -780,6 +881,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -788,6 +890,7 @@
                             android:id="@+id/Wed4_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -796,15 +899,19 @@
                             android:id="@+id/Wed4_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
-                      
+                        android:visibility="gone" />
+
                         <TextView
                             android:id="@+id/Wed4_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -814,6 +921,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -822,6 +930,7 @@
                             android:id="@+id/Thu4_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -830,15 +939,19 @@
                             android:id="@+id/Thu4_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu4_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -848,6 +961,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -856,6 +970,7 @@
                             android:id="@+id/Fri4_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -864,15 +979,19 @@
                             android:id="@+id/Fri4_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
-                      
+                        android:visibility="gone" />
+
                         <TextView
                             android:id="@+id/Fri4_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
                 </TableRow>
 
@@ -899,6 +1018,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -907,6 +1027,7 @@
                             android:id="@+id/Mon5_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -915,15 +1036,19 @@
                             android:id="@+id/Mon5_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon5_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -933,6 +1058,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -941,6 +1067,7 @@
                             android:id="@+id/Tue5_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -949,15 +1076,19 @@
                             android:id="@+id/Tue5_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue5_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -967,6 +1098,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -975,6 +1107,7 @@
                             android:id="@+id/Wed5_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -983,15 +1116,19 @@
                             android:id="@+id/Wed5_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed5_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1001,6 +1138,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1009,6 +1147,7 @@
                             android:id="@+id/Thu5_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1017,15 +1156,19 @@
                             android:id="@+id/Thu5_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu5_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -1036,6 +1179,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1044,6 +1188,7 @@
                             android:id="@+id/Fri5_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1052,15 +1197,19 @@
                             android:id="@+id/Fri5_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri5_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
                 </TableRow>
 
@@ -1087,6 +1236,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1095,6 +1245,7 @@
                             android:id="@+id/Mon6_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1103,15 +1254,19 @@
                             android:id="@+id/Mon6_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon6_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1121,6 +1276,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1129,6 +1285,7 @@
                             android:id="@+id/Tue6_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1137,15 +1294,19 @@
                             android:id="@+id/Tue6_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue6_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1155,6 +1316,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1163,6 +1325,7 @@
                             android:id="@+id/Wed6_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1171,15 +1334,19 @@
                             android:id="@+id/Wed6_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed6_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1189,6 +1356,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1197,6 +1365,7 @@
                             android:id="@+id/Thu6_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1205,15 +1374,19 @@
                             android:id="@+id/Thu6_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu6_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1223,6 +1396,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1231,6 +1405,7 @@
                             android:id="@+id/Fri6_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1239,15 +1414,19 @@
                             android:id="@+id/Fri6_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri6_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
                 </TableRow>
 
@@ -1274,6 +1453,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1282,6 +1462,7 @@
                             android:id="@+id/Mon7_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1290,15 +1471,19 @@
                             android:id="@+id/Mon7_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Mon7_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1308,6 +1493,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1316,6 +1502,7 @@
                             android:id="@+id/Tue7_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1324,15 +1511,19 @@
                             android:id="@+id/Tue7_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Tue7_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1342,6 +1533,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1350,6 +1542,7 @@
                             android:id="@+id/Wed7_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1358,15 +1551,19 @@
                             android:id="@+id/Wed7_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Wed7_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1376,6 +1573,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1384,6 +1582,7 @@
                             android:id="@+id/Thu7_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1392,15 +1591,19 @@
                             android:id="@+id/Thu7_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Thu7_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1410,6 +1613,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
+                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1418,6 +1622,7 @@
                             android:id="@+id/Fri7_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:maxLines="2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
@@ -1426,15 +1631,19 @@
                             android:id="@+id/Fri7_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/Fri7_teach"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1" />
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:visibility="gone" />
+                        android:visibility="gone" />
                     </LinearLayout>
                 </TableRow>
 

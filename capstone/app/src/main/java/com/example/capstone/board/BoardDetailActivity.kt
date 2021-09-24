@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -31,7 +32,8 @@ import kotlin.collections.ArrayList
 class BoardDetailActivity : AppCompatActivity() {
 
     var imm: InputMethodManager? = null
-    private var menuUserCheck = true
+    var detailMenu: Menu? = null
+    private var menuUserCheck = false    // 내 게시글일 경우 true
     private lateinit var BASE_URL: String
     private lateinit var intentBoardId: String
     private lateinit var intentActivityNum: String
@@ -114,6 +116,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val post = response.body()!!.data[0]
                         val postImgList = response.body()!!.imagepath
+
                         boardDetailTitle = post.title
                         boardDetailBody = post.body
                         boardDetailType = post.type
@@ -133,7 +136,7 @@ class BoardDetailActivity : AppCompatActivity() {
                             board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
-                        if (post.userCheck == "N") menuUserCheck = false
+                        if (post.userCheck == "Y") menuUserCheck = true
 
                         // 사진이 있을 경우
                         if (postImgList.size > 0) {
@@ -147,6 +150,8 @@ class BoardDetailActivity : AppCompatActivity() {
                                 it.orientation = LinearLayoutManager.HORIZONTAL
                             }
                         }
+                        if (!menuUserCheck) detailMenu?.setGroupVisible(R.id.board_detail_true, false)
+                        else detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
                     } else {
                         toast("게시글을 조회할 수 없습니다")
                         finish()
@@ -305,8 +310,7 @@ class BoardDetailActivity : AppCompatActivity() {
     // menu xml에서 설정한 menu를 붙임
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.board_detail_menu, menu)
-        if (!menuUserCheck) menu?.setGroupVisible(R.id.board_detail_true, false)
-        else menu?.findItem(R.id.board_detail_report)?.isVisible = false
+        detailMenu = menu
         return true
     }
 

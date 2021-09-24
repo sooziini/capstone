@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
+import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.padding
 
 class MealFragmentAdapter(
@@ -34,7 +36,7 @@ class MealFragmentAdapter(
             detailRv.setHasFixedSize(true)
 
             if (meal.date == todayDate) {
-                layout.background = context.resources.getDrawable(R.drawable.round_border_main_color)
+                layout.backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.round_border_main_color)
                 layout.padding = 10
             }
         }

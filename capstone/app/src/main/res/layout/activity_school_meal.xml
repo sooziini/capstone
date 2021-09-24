@@ -24,64 +24,54 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginTop="6dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/school_meal_toolbar">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="6dp"
-            app:srcCompat="@drawable/home_restaurant"
-            app:tint="@color/scrap" />
+        <Spinner
+            android:id="@+id/meal_activity_year_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
 
         <TextView
-            android:id="@+id/School_Meal_DateText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:text="년"
+            android:textColor="@color/basic" />
+
+        <Spinner
+            android:id="@+id/meal_activity_month_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="월"
             android:textColor="@color/basic" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/SchoolMeal_RecyclerView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:padding="4dp"
-        android:background="@drawable/shape_reply_child"
-        android:overScrollMode="never"
+        android:layout_height="0dp"
         android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
+        android:padding="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <TextView
-        android:id="@+id/SchoolMeal_CalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SchoolMeal_RecyclerView" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:gravity="center"
-        android:text="1.난류 2.우유 3.메밀 4.땅콩 5.대두 6.밀 7.고등어 8.게\n9.새우 10.돼지고기 11.복숭아 12.토마토 13.아황산류 14.호두\n15.닭고기 16.쇠고기 17.오징어 18.조개류(굴, 전복, 홍합 포함)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

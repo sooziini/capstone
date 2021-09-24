@@ -23,14 +23,13 @@
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
+        android:id="@+id/EnrollStudent_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="130dp"
         android:text="디바이스 내부 엑셀파일 리스트 (.xlsx, .xls)"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enroll_student_toolbar" />
 
@@ -38,12 +37,12 @@
         android:id="@+id/EnrollStudent_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enroll_student_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/EnrollStudent_TextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

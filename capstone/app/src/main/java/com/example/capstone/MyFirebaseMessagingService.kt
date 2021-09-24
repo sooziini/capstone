@@ -11,11 +11,12 @@ import androidx.core.app.NotificationCompat
 import com.example.capstone.main.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import org.jetbrains.anko.activityManager
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val TAG = "FirebaseService"
+    companion object {
+        private const val TAG = "FirebaseService"
+    }
 
     // 새 토큰이 생성될 때마다 onNewToken 콜백 호출
     override fun onNewToken(token: String) {
@@ -23,10 +24,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "new Token: $token")
 
         // 토큰 값 저장
-        val sp = this.getSharedPreferences("firebase", Context.MODE_PRIVATE)
+        val sp = getSharedPreferences("firebase", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString("token", token).apply()
-        editor.commit()
     }
 
     // 메세지 수신 시 호출
@@ -48,10 +48,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val uniId: Int = (System.currentTimeMillis() / 7).toInt()
 
         // Activity Stack 을 경로만 남김 A-B-C-D-B => A-B
+        // 액티비티 중복 생성 방지
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra("Notification", title)
-            putExtra("Notification", body)
+            // putExtra("Notification", title)
+            // putExtra("Notification", body)
         }
         // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)     // 액티비티 중복 생성 방지
         // 일회성 PendingIntent
@@ -72,6 +73,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)    // 터치 시 자동 삭제 true
             // .setSound(soundUri) // 알림 소리
             .setContentIntent(pendingIntent)    // 알림 실행 시 Intent
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

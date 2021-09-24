@@ -49,8 +49,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:text="학생회"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <ImageButton
                 android:id="@+id/leader_arrow_button"
@@ -96,8 +95,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:text="학생"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <ImageButton
                 android:id="@+id/student_arrow_button"

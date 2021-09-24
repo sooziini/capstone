@@ -4,11 +4,16 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
+import com.example.capstone.adapter.MealActivityAdapter
 import com.example.capstone.adapter.MealDetailAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
@@ -23,11 +28,10 @@ import kotlin.collections.ArrayList
 
 class SchoolMealActivity : AppCompatActivity() {
     private val cal = Calendar.getInstance()
-    private val year = cal.get(Calendar.YEAR)
-    private val month = cal.get(Calendar.MONTH)
-    private val day = cal.get(Calendar.DAY_OF_MONTH)
-    private lateinit var date: String
-    var mealList = ArrayList<String>()
+    private var year = cal.get(Calendar.YEAR)
+    private var month = cal.get(Calendar.MONTH) + 1
+    var itemList = ArrayList<ArrayList<Meal>>()
+    val weekList = ArrayList<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,18 +41,29 @@ class SchoolMealActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
-        val tyear = year.toString()
-        val tmonth = setDateSize((month + 1).toString())
-        val tday = setDateSize(day.toString())
+        retrofitLoadMeal()
 
-        date = tyear + tmonth + tday
-        School_Meal_DateText.text = "${tyear}년 ${tmonth}월 ${tday}일"
-        retrofitLoadMeal(date)
-    }
+        val yearList = arrayOf("${year - 2}", "${year - 1}", "$year", "${year + 1}", "${year + 2}")
+        meal_activity_year_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, yearList)
+        meal_activity_year_spinner.setSelection(2, false)
+        meal_activity_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                year = meal_activity_year_spinner.selectedItem.toString().toInt()
+                retrofitLoadMeal()
+            }
+        }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.school_meal_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        val monthList = Array(12) {i -> i + 1}
+        meal_activity_month_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, monthList)
+        meal_activity_month_spinner.setSelection(month - 1, false)
+        meal_activity_month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                month = meal_activity_month_spinner.selectedItem.toString().toInt()
+                retrofitLoadMeal()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,8 +82,21 @@ class SchoolMealActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun retrofitLoadMeal(date: String) {
-        (application as MasterApplication).service.loadMeal(date, date)
+    private fun retrofitLoadMeal() {
+        itemList.clear()
+        weekList.clear()
+
+        var textMonth = month.toString()
+        cal.set(year, month, 1)
+        val endDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        if (textMonth.length < 2)
+            textMonth = "0${month}"
+
+        val startDate = year.toString() + textMonth + "01"
+        val endDate = year.toString() + textMonth + endDay.toString()
+
+        (application as MasterApplication).service.weekMeal(startDate, endDate)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
                     call: Call<HashMap<String, Any>>,
@@ -76,28 +104,45 @@ class SchoolMealActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         if (response.body()!!["success"].toString() == "true") {
-                            mealList.clear()
-                            val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, String>>
-                            val todaymeal = dataArray[0]
-                            val mealData = todaymeal["DDISH_NM"]
-                            val mealArray = mealData?.split("<br/>")
-                            val kcal = todaymeal["CAL_INFO"]
+                            val dataMap = response.body()!!["mealInfo"] as LinkedTreeMap<String, ArrayList<LinkedTreeMap<String, Any>>>
 
-                            for (element in mealArray!!) mealList.add(element)
-                            SchoolMeal_CalText.text = "열량 : $kcal"
+                            for (i in 1..5) {
+                                val mealList = ArrayList<Meal>()
+                                val array = dataMap["$i"]
+
+                                if (array == null || array.isEmpty())
+                                    continue
+
+                                for (treeMap in array) {
+                                    val receiveYear = treeMap["year"] as String
+                                    val receiveMonth = treeMap["month"] as String
+                                    val receiveDay = treeMap["day"] as String
+                                    val mealDetailList = ArrayList<String>()
+                                    val mealArray = treeMap["dish"] as ArrayList<String>
+                                    for (item in mealArray) {
+                                        val arr = item.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+                                        mealDetailList.add(arr[0])
+                                    }
+                                    mealList.add(Meal(receiveYear, receiveMonth, receiveDay, mealDetailList))
+                                }
+                                itemList.add(mealList)
+                                weekList.add(i)
+                            }
+
+
                         } else {
-                            mealList.clear()
-                            SchoolMeal_CalText.text = ""
+                            itemList.clear()
+                            weekList.clear()
                         }
-                        SchoolMeal_RecyclerView.adapter = MealDetailAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        SchoolMeal_RecyclerView.adapter = MealActivityAdapter(itemList, weekList, LayoutInflater.from(this@SchoolMealActivity), this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
                     } else {
-                        mealList.clear()
-                        SchoolMeal_RecyclerView.adapter = MealDetailAdapter(mealList, LayoutInflater.from(this@SchoolMealActivity))
+                        itemList.clear()
+                        weekList.clear()
+                        SchoolMeal_RecyclerView.adapter = MealActivityAdapter(itemList, weekList, LayoutInflater.from(this@SchoolMealActivity), this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.layoutManager = LinearLayoutManager(this@SchoolMealActivity)
                         SchoolMeal_RecyclerView.setHasFixedSize(true)
-                        SchoolMeal_CalText.text = ""
                     }
                 }
 
@@ -108,29 +153,4 @@ class SchoolMealActivity : AppCompatActivity() {
                 }
             })
     }
-
-    // 메뉴 캘린더 버튼
-    fun selectDate(item: MenuItem) {
-        val listener = DatePickerDialog.OnDateSetListener { _, i, i2, i3 ->
-            // i년 i2월 i3일
-            val tempi2 = setDateSize((i2 + 1).toString())
-            val tempi3 = setDateSize(i3.toString())
-            School_Meal_DateText.text = "${i}년 ${tempi2}월 ${tempi3}일"
-            date = "$year" + tempi2 + tempi3
-            retrofitLoadMeal(date)
-        }
-
-        val picker = DatePickerDialog(this, listener, year, month, day)
-        picker.show()
-    }
-
-    // 날짜 형식화
-    private fun setDateSize(data: String): String {
-        return if (data.length < 2) {
-            val temp = "0${data}"
-            temp
-        } else
-            data
-    }
-
 }

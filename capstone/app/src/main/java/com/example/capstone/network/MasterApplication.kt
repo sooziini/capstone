@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MasterApplication: Application() {
     lateinit var service: RetrofitService
+  
     val BASE_URL = "http://220.149.31.104:3000"
     //220.149.31.104
 

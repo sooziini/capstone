@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/main2_menu_logout"
-        android:icon="@drawable/ic_logout"
+        android:icon="@drawable/logout"
         android:title="@string/main_menu_myinfo_logout"
         app:showAsAction="always" />
 </menu>

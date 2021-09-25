@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_dept"
-        android:icon="@drawable/ic_todo_menu_add"
+        android:icon="@drawable/todo_menu_add"
         android:onClick="addDeptOnClick"
         android:title="add_dept"
         app:showAsAction="always" />

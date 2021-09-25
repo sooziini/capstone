@@ -328,14 +328,12 @@ class TimeTableActivity : AppCompatActivity() {
                     val location: String? = locationEditText.text.toString()
                     val teacher: String? = teacherEditText.text.toString()
 
-                    deleteData(dayParam!!, periodParam + 1)
                     createTable(dept, day!!, period, location, teacher)
                     dialog.dismiss()
                 }
             }
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
                 val period = spinner.selectedItem.toString().toInt()
-
                 if (dayParam != null) deleteData(dayParam!!, periodParam + 1)
 
                 dialog.dismiss()

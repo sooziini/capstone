@@ -13,6 +13,11 @@ import com.example.capstone.R
 import com.example.capstone.dataclass.Meal
 import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.padding
+import org.jetbrains.anko.textColor
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MealFragmentAdapter(
     private val itemList: ArrayList<Meal>,
@@ -20,6 +25,9 @@ class MealFragmentAdapter(
     private val inflater: LayoutInflater,
     private val context: Context
 ): RecyclerView.Adapter<MealFragmentAdapter.MealFragmentViewHolder>() {
+
+    val cal = Calendar.getInstance()
+    val df: DateFormat = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
 
     inner class MealFragmentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val detailRv = itemView.findViewById<RecyclerView>(R.id.meal_fragment_rv2)
@@ -30,14 +38,28 @@ class MealFragmentAdapter(
             if (itemList.size == 0)
                 return
 
-            date.text = "${meal.year}년 ${meal.month}월 ${meal.day}일"
+            val now: Date? = df.parse(meal.date)
+            cal.time = now!!
+            val dayn = when (cal.get(Calendar.DAY_OF_WEEK)) {
+                1 -> "일"
+                2 -> "월"
+                3 -> "화"
+                4 -> "수"
+                5 -> "목"
+                6 -> "금"
+                7 -> "토"
+                else -> "-"
+            }
+
+            date.text = "${meal.month.toInt()}월 ${meal.day.toInt()}일 (${dayn})"
             detailRv.adapter = MealDetailAdapter(meal.mealFragmentItemList, inflater)
             detailRv.layoutManager = LinearLayoutManager(context)
             detailRv.setHasFixedSize(true)
 
             if (meal.date == todayDate) {
-                layout.backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.round_border_main_color)
-                layout.padding = 10
+                date.textColor = ContextCompat.getColor(context, R.color.main_color)
+                // layout.backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.round_border_main_color)
+                // layout.padding = 10
             }
         }
     }

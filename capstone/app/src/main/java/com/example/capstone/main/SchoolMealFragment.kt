@@ -80,7 +80,7 @@ class SchoolMealFragment : Fragment() {
                                 val day = todayMealList["day"] as String
 
                                 for (mealData in mealArray) {
-                                    val meal = mealData.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+                                    val meal = mealData.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".")
                                     mealDetailList.add(meal[0])
                                 }
                                 mealList.add(Meal(year, month, day, mealDetailList))

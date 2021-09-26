@@ -1,12 +1,9 @@
 package com.example.capstone.main
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -14,7 +11,6 @@ import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.adapter.MealActivityAdapter
-import com.example.capstone.adapter.MealDetailAdapter
 import com.example.capstone.dataclass.Meal
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
@@ -43,17 +39,7 @@ class SchoolMealActivity : AppCompatActivity() {
 
         retrofitLoadMeal()
 
-        val yearList = arrayOf("${year - 2}", "${year - 1}", "$year", "${year + 1}", "${year + 2}")
-        meal_activity_year_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, yearList)
-        meal_activity_year_spinner.setSelection(2, false)
-        meal_activity_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) { }
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                year = meal_activity_year_spinner.selectedItem.toString().toInt()
-                retrofitLoadMeal()
-            }
-        }
-
+        meal_activity_year_text.text = "${year}년"
         val monthList = Array(12) {i -> i + 1}
         meal_activity_month_spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, monthList)
         meal_activity_month_spinner.setSelection(month - 1, false)
@@ -128,8 +114,6 @@ class SchoolMealActivity : AppCompatActivity() {
                                 itemList.add(mealList)
                                 weekList.add(i)
                             }
-
-
                         } else {
                             itemList.clear()
                             weekList.clear()

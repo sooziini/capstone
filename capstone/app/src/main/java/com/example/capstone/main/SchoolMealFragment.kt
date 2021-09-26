@@ -68,8 +68,8 @@ class SchoolMealFragment : Fragment() {
                     response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
+                        mealList.clear()
                         if (response.body()!!["success"].toString() == "true") {
-                            mealList.clear()
                             val dataArray = response.body()!!["mealInfo"] as ArrayList<LinkedTreeMap<String, Any>>
 
                             for (todayMealList in dataArray) {
@@ -85,15 +85,10 @@ class SchoolMealFragment : Fragment() {
                                 }
                                 mealList.add(Meal(year, month, day, mealDetailList))
                             }
-                            meal_fragment_rv1.adapter = MealFragmentAdapter(mealList, today, LayoutInflater.from(requireContext()), requireContext())
-                            meal_fragment_rv1.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                            meal_fragment_rv1.setHasFixedSize(true)
-                        } else {
-                            mealList.clear()
-                            meal_fragment_rv1.adapter = MealFragmentAdapter(mealList, today, LayoutInflater.from(requireContext()), requireContext())
-                            meal_fragment_rv1.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                            meal_fragment_rv1.setHasFixedSize(true)
                         }
+                        meal_fragment_rv1.adapter = MealFragmentAdapter(mealList, today, LayoutInflater.from(requireContext()), requireContext())
+                        meal_fragment_rv1.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        meal_fragment_rv1.setHasFixedSize(true)
                     } else {
                         mealList.clear()
                         meal_fragment_rv1.adapter = MealFragmentAdapter(mealList, today, LayoutInflater.from(requireContext()), requireContext())

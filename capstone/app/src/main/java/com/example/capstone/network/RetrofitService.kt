@@ -323,4 +323,12 @@ interface RetrofitService {
     fun setDeviceToken(
         @Field("deviceToken") token: String
     ): Call<HashMap<String, String>>
+
+    // 자신이 신고한 게시글 조회
+    @GET ("board/report/me")
+    fun userLoadBoardReport(): Call<HashMap<String, Any>>
+
+    // 자신이 신고한 댓글 조회
+    @GET ("reply/report/me")
+    fun userLoadReplyReport(): Call<HashMap<String, Any>>
 }

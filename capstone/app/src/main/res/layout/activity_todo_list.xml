@@ -41,24 +41,18 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="6dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_baseline_star_24"
-                    app:tint="@color/scrap" />
 
                 <TextView
                     android:id="@+id/TodoList_DateTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@color/basic"
                     tools:text="" />
 
@@ -71,26 +65,25 @@
                     android:id="@+id/TodoList_CalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
-
+                    app:srcCompat="@drawable/todo_calendar" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/TodoAct_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:padding="4dp"
-                android:background="@drawable/shape_reply_child"
+                android:background="@drawable/round_border"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:background="@drawable/shape_reply_child"
+                android:background="@drawable/round_border"
                 android:orientation="vertical">
 
                 <TextView
@@ -101,7 +94,7 @@
                     android:padding="4dp"
                     android:layout_marginBottom="24dp"
                     android:layout_marginStart="16dp"
-                    android:text="할 일을 추가해 주세요"
+                    android:text="오늘은 할 일이 없어요!"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@color/basic" />
             </LinearLayout>

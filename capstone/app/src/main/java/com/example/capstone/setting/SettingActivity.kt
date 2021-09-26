@@ -114,12 +114,26 @@ class SettingActivity : AppCompatActivity() {
 
         // 게시판 신고 목록 조회
         SettingBoardReportLayout.setOnClickListener {
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra("type", "board")
+            intent.putExtra("user_id", intentUserId)
+            intent.putExtra("user_name", intentUserName)
+            intent.putExtra("user_student_id", intentUserStudentId)
 
+            startActivity(intent)
+            finish()
         }
 
         // 댓글 신고 목록 조회
         SettingReplyReportLayout.setOnClickListener {
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra("type", "reply")
+            intent.putExtra("user_id", intentUserId)
+            intent.putExtra("user_name", intentUserName)
+            intent.putExtra("user_student_id", intentUserStudentId)
 
+            startActivity(intent)
+            finish()
         }
 
     }

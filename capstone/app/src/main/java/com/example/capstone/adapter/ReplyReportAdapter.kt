@@ -10,20 +10,27 @@ import com.example.capstone.dataclass.ReplyReport
 
 class ReplyReportAdapter(
     private val reportList: ArrayList<ReplyReport>,
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater,
+    private val role: String
 ): RecyclerView.Adapter<ReplyReportAdapter.ReplyReportViewHolder>() {
 
     inner class ReplyReportViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val send_id_view = itemView.findViewById<TextView>(R.id.report_item_sendid)
         val recv_id_view = itemView.findViewById<TextView>(R.id.report_item_recvid)
+        val recv_id_text = itemView.findViewById<TextView>(R.id.report_item_recvid_text)
         val body_view = itemView.findViewById<TextView>(R.id.report_item_body)
         val regDate_view = itemView.findViewById<TextView>(R.id.report_item_regdate)
 
         fun bind(report: ReplyReport) {
             send_id_view.text = report.sendId
-            recv_id_view.text = report.recvId
             body_view.text = report.body
             regDate_view.text = report.regDate
+            if (role == "master")
+                recv_id_view.text = report.recvId
+            else {
+                recv_id_text.visibility = View.INVISIBLE
+                recv_id_view.visibility = View.INVISIBLE
+            }
         }
     }
 

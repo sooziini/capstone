@@ -2,7 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:icon="@drawable/ic_todo_menu_add"
+        android:icon="@drawable/todo_menu_add"
         android:onClick="todoAddOnClick"
         android:title="Todo_Menu_Add"
         app:showAsAction="always" />

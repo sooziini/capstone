@@ -387,6 +387,7 @@ class SettingActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         app.deleteUserToken()
+                        app.createRetrofit()
                         startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
                         finish()
                         toast("로그아웃 되었습니다")

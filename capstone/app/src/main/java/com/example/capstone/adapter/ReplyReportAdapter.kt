@@ -13,7 +13,6 @@ class ReplyReportAdapter(
     private val inflater: LayoutInflater,
     private val role: String
 ): RecyclerView.Adapter<ReplyReportAdapter.ReplyReportViewHolder>() {
-
     inner class ReplyReportViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val send_id_view = itemView.findViewById<TextView>(R.id.report_item_sendid)
         val recv_id_view = itemView.findViewById<TextView>(R.id.report_item_recvid)
@@ -22,6 +21,8 @@ class ReplyReportAdapter(
         val regDate_view = itemView.findViewById<TextView>(R.id.report_item_regdate)
 
         fun bind(report: ReplyReport) {
+            if (reportList.size == 0)
+                return
             send_id_view.text = report.sendId
             body_view.text = report.body
             regDate_view.text = report.regDate
@@ -35,15 +36,20 @@ class ReplyReportAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReplyReportViewHolder {
-        val view = inflater.inflate(R.layout.report_item, parent, false)
+        val view = if (reportList.size != 0)
+            inflater.inflate(R.layout.report_item, parent, false)
+        else inflater.inflate(R.layout.report_null_item, parent, false)
         return ReplyReportViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return reportList.size
+        return if (reportList.size == 0)
+            1
+        else reportList.size
     }
 
     override fun onBindViewHolder(holder: ReplyReportViewHolder, position: Int) {
-        holder.bind(reportList[position])
+        if (reportList.size != 0)
+            holder.bind(reportList[position])
     }
 }

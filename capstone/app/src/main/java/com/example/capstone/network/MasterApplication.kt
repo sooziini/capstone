@@ -2,6 +2,8 @@ package com.example.capstone.network
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import com.example.capstone.SplashActivity
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
@@ -21,8 +23,9 @@ import kotlin.coroutines.suspendCoroutine
 
 class MasterApplication: Application() {
     lateinit var service: RetrofitService
+    lateinit var context: Context
 
-    val BASE_URL = "http://220.149.31.104:3000"
+    val BASE_URL = "http://192.168.56.1:3000"
     //220.149.31.104
 
     override fun onCreate() {
@@ -33,6 +36,7 @@ class MasterApplication: Application() {
 
     // retrofit 생성하는 함수
     fun createRetrofit() {
+        context = applicationContext
         // header 설정 (header에 token이 있는 retrofit)
         // 원래 나가려던 통신을 original에 잡아둠
         // original에 header 추가 -> proceed
@@ -59,7 +63,7 @@ class MasterApplication: Application() {
             }
             .addInterceptor(header)
             if(checkIsLogin())
-                clientBuilder.authenticator(TokenAuthenticator(getUserToken(1)!!))
+                clientBuilder.authenticator(TokenAuthenticator(getUserToken(1)!!, this))
         val client = clientBuilder.build()
 
         // retrofit 생성
@@ -96,7 +100,7 @@ class MasterApplication: Application() {
                 })
             }
             .addInterceptor(header)
-            .authenticator(TokenAuthenticator(refreshToken))
+            .authenticator(TokenAuthenticator(refreshToken, this))
             .build()
 
         // retrofit 생성
@@ -184,6 +188,7 @@ class MasterApplication: Application() {
 
 class TokenAuthenticator(
     private val refreshToken: String,
+    private val app: MasterApplication
 ): Authenticator {
     companion object {
         private val TAG = TokenAuthenticator::class.java.simpleName
@@ -220,7 +225,7 @@ class TokenAuthenticator(
                 override fun onResponse(call: Call<HashMap<String, String>>, response: Response<HashMap<String, String>>) {
                     if (response.isSuccessful) {
                         val data = response.body()!!["access_token"]!!
-                        MasterApplication().saveUserToken("access_token", data)
+                        app.saveUserToken("access_token", data)
                         continuation.resume(data)
                     } else {
                         continuation.resume(null)

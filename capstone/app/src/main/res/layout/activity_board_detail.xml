@@ -55,14 +55,14 @@
 
                         <ImageView
                             android:id="@+id/board_detail_profile"
-                            android:layout_width="52sp"
-                            android:layout_height="52sp"
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
                             app:srcCompat="@drawable/profile_cloud" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -78,6 +78,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:text="@string/date"
+                                android:textColor="@color/basic"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                         </LinearLayout>
 
@@ -88,15 +89,15 @@
 
                         <ImageView
                             android:id="@+id/board_detail_like_btn"
-                            android:layout_width="25sp"
-                            android:layout_height="35sp"
+                            android:layout_width="22sp"
+                            android:layout_height="32sp"
                             android:layout_marginEnd="3dp"
                             app:srcCompat="@drawable/detail_like" />
 
                         <ImageView
                             android:id="@+id/board_detail_scrap_btn"
-                            android:layout_width="30sp"
-                            android:layout_height="35sp"
+                            android:layout_width="24sp"
+                            android:layout_height="32sp"
                             app:srcCompat="@drawable/detail_scrap"
                             app:tint="@color/scrap" />
 
@@ -133,9 +134,9 @@
 
                         <ImageView
                             android:id="@+id/board_detail_comment_img"
-                            android:layout_width="18sp"
-                            android:layout_height="18sp"
-                            android:layout_marginEnd="2dp"
+                            android:layout_width="16sp"
+                            android:layout_height="16sp"
+                            android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/detail_comment" />
 
                         <TextView
@@ -148,9 +149,9 @@
 
                         <ImageView
                             android:id="@+id/board_detail_like_img"
-                            android:layout_width="18sp"
-                            android:layout_height="18sp"
-                            android:layout_marginEnd="2dp"
+                            android:layout_width="16sp"
+                            android:layout_height="16sp"
+                            android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/detail_like" />
 
                         <TextView
@@ -163,9 +164,9 @@
 
                         <ImageView
                             android:id="@+id/board_detail_scrap_img"
-                            android:layout_width="18sp"
-                            android:layout_height="18sp"
-                            android:layout_marginEnd="2dp"
+                            android:layout_width="16sp"
+                            android:layout_height="16sp"
+                            android:layout_gravity="center_vertical"
                             android:src="@drawable/detail_scrap"
                             app:tint="@color/scrap" />
 

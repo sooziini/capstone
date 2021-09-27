@@ -37,15 +37,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/round_border"
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="12dp">
 
             <ImageView
                 android:id="@+id/setting_profile"
-                android:layout_width="65sp"
-                android:layout_height="65sp"
+                android:layout_width="60sp"
+                android:layout_height="60sp"
                 android:layout_marginStart="6dp"
                 android:src="@drawable/profile_cloud" />
 
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/round_border"
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="12dp">
@@ -230,12 +230,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/round_border"
-            android:padding="8dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/round_border"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -248,9 +248,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="신고 조회"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/basic"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -258,8 +258,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -275,8 +275,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -288,7 +288,5 @@
             </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,9 +72,8 @@
 
             <ImageView
                 android:id="@+id/post_item_comment_img"
-                android:layout_width="18sp"
-                android:layout_height="18sp"
-                android:layout_marginEnd="2dp"
+                android:layout_width="16sp"
+                android:layout_height="match_parent"
                 app:srcCompat="@drawable/detail_comment" />
 
             <TextView
@@ -87,9 +86,8 @@
 
             <ImageView
                 android:id="@+id/post_item_like_img"
-                android:layout_width="18sp"
-                android:layout_height="18sp"
-                android:layout_marginEnd="2dp"
+                android:layout_width="16sp"
+                android:layout_height="match_parent"
                 app:srcCompat="@drawable/detail_like" />
 
             <TextView
@@ -102,9 +100,8 @@
 
             <ImageView
                 android:id="@+id/post_item_scrap_img"
-                android:layout_width="18sp"
-                android:layout_height="18sp"
-                android:layout_marginEnd="2dp"
+                android:layout_width="16sp"
+                android:layout_height="match_parent"
                 android:src="@drawable/detail_scrap"
                 app:tint="@color/scrap" />
 

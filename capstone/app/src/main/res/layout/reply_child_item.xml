@@ -52,16 +52,16 @@
 
             <ImageView
                 android:id="@+id/child_reply_item_like_btn"
-                android:layout_width="18sp"
-                android:layout_height="18sp"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
                 android:layout_marginEnd="5dp"
                 android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/detail_like" />
 
             <ImageView
                 android:id="@+id/child_reply_item_report_btn"
-                android:layout_width="18sp"
-                android:layout_height="18sp"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
                 android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/reply_report" />
 
@@ -89,8 +89,8 @@
 
             <ImageView
                 android:id="@+id/child_reply_item_like_img"
-                android:layout_width="15sp"
-                android:layout_height="15sp"
+                android:layout_width="14sp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="8dp"

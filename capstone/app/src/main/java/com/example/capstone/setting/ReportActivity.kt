@@ -48,8 +48,8 @@ class ReportActivity : AppCompatActivity() {
             intentUserStudentId = intent.getStringExtra("user_student_id")!!
         }
 
-        if(intent.hasExtra("type"))
-            type = intent.getStringExtra("type")
+        if (intent.hasExtra("type"))
+            type = intent.getStringExtra("type")!!
         else finish()
 
         val text = when(type) {

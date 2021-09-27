@@ -176,7 +176,7 @@ class MasterReportActivity : AppCompatActivity() {
                             boardReportList.add(BoardReport(board_id, send_id, recv_id, body, regDate))
                         }
 
-                        BoardReportrcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@MasterReportActivity))
+                        BoardReportrcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@MasterReportActivity), "master")
                         BoardReportrcv.layoutManager = LinearLayoutManager(this@MasterReportActivity)
                         BoardReportrcv.setHasFixedSize(true)
                     } else {
@@ -225,7 +225,7 @@ class MasterReportActivity : AppCompatActivity() {
                             replyReportList.add(ReplyReport(reply_id, send_id, recv_id, body, regDate))
                         }
 
-                        ReplyReportrcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@MasterReportActivity))
+                        ReplyReportrcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@MasterReportActivity), "master")
                         ReplyReportrcv.layoutManager = LinearLayoutManager(this@MasterReportActivity)
                         ReplyReportrcv.setHasFixedSize(true)
                     } else {

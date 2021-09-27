@@ -215,7 +215,7 @@ class ReportSearchActivity : AppCompatActivity() {
                             reportList.add(BoardReport(board_id, send_id, recv_id, body, regDate))
                         }
 
-                        report_search_board_rcv.adapter = BoardReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity))
+                        report_search_board_rcv.adapter = BoardReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity), "master")
                         report_search_board_rcv.layoutManager = LinearLayoutManager(this@ReportSearchActivity)
                         report_search_board_rcv.setHasFixedSize(true)
                     } else {
@@ -252,7 +252,7 @@ class ReportSearchActivity : AppCompatActivity() {
                             reportList.add(ReplyReport(reply_id, send_id, recv_id, body, regDate))
                         }
 
-                        report_search_reply_rcv.adapter = ReplyReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity))
+                        report_search_reply_rcv.adapter = ReplyReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity), "master")
                         report_search_reply_rcv.layoutManager = LinearLayoutManager(this@ReportSearchActivity)
                         report_search_reply_rcv.setHasFixedSize(true)
                     } else {

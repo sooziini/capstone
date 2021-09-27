@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.example.capstone.main.MainActivity
+import com.example.capstone.master.MainActivity2
 import com.example.capstone.network.MasterApplication
 import com.example.capstone.user.LoginActivity
 
@@ -20,10 +21,14 @@ class SplashActivity : AppCompatActivity() {
         val app = application as MasterApplication
 
         val intent = if (app.checkIsLogin()) {
-            app.getUserToken(false).let { refreshToken ->
+            app.getUserToken(1).let { refreshToken ->
                 if (refreshToken != null && refreshToken != "") {
                     app.retrofitSetRefreshToken(refreshToken, this)
-                    Intent(this, MainActivity::class.java)
+                    val role = app.getUserToken(2)
+                    if (role == "master")
+                        Intent(this, MainActivity2::class.java)
+                    else
+                        Intent(this, MainActivity::class.java)
                 } else {
                     app.deleteUserToken()
                     Intent(this, LoginActivity::class.java)

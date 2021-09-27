@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/parent_reply_item_profile"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="28sp"
+            android:layout_height="28sp"
             app:srcCompat="@drawable/profile_cloud"
             app:tint="@color/main_color" />
 
@@ -84,7 +84,9 @@
             android:id="@+id/parent_reply_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date" />
+            android:text="@string/date"
+            android:textColor="@color/selected"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
         <ImageView
             android:id="@+id/parent_reply_item_like_img"
@@ -101,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:text="@string/count"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
     </LinearLayout>
 

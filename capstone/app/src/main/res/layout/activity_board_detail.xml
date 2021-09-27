@@ -55,14 +55,15 @@
 
                         <ImageView
                             android:id="@+id/board_detail_profile"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"
+                            android:layout_width="48sp"
+                            android:layout_height="48sp"
                             app:srcCompat="@drawable/profile_cloud" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
                             <TextView
@@ -70,7 +71,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/user"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                android:textColor="@color/basic"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                             <TextView
                                 android:id="@+id/board_detail_date"
@@ -78,8 +80,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:text="@string/date"
-                                android:textColor="@color/basic"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                                android:textColor="@color/selected"
+                                android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
                         </LinearLayout>
 
                         <View
@@ -92,12 +94,14 @@
                             android:layout_width="22sp"
                             android:layout_height="32sp"
                             android:layout_marginEnd="3dp"
+                            android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/detail_like" />
 
                         <ImageView
                             android:id="@+id/board_detail_scrap_btn"
                             android:layout_width="24sp"
                             android:layout_height="32sp"
+                            android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/detail_scrap"
                             app:tint="@color/scrap" />
 
@@ -107,10 +111,11 @@
                         android:id="@+id/board_detail_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
                         android:text="@string/title"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/basic"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/board_detail_linear" />
 
@@ -118,7 +123,7 @@
                         android:id="@+id/board_detail_body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:text="@string/body"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +139,8 @@
 
                         <ImageView
                             android:id="@+id/board_detail_comment_img"
-                            android:layout_width="16sp"
-                            android:layout_height="16sp"
+                            android:layout_width="14sp"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/detail_comment" />
 
@@ -145,12 +150,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
                             android:text="@string/count"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
                         <ImageView
                             android:id="@+id/board_detail_like_img"
-                            android:layout_width="16sp"
-                            android:layout_height="16sp"
+                            android:layout_width="14sp"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             app:srcCompat="@drawable/detail_like" />
 
@@ -160,12 +165,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
                             android:text="@string/count"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
                         <ImageView
                             android:id="@+id/board_detail_scrap_img"
-                            android:layout_width="16sp"
-                            android:layout_height="16sp"
+                            android:layout_width="14sp"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/detail_scrap"
                             app:tint="@color/scrap" />
@@ -175,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/count"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,11 +56,8 @@ class MealFragmentAdapter(
             detailRv.layoutManager = LinearLayoutManager(context)
             detailRv.setHasFixedSize(true)
 
-            if (meal.date == todayDate) {
+            if (meal.date == todayDate)
                 date.textColor = ContextCompat.getColor(context, R.color.main_color)
-                // layout.backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.round_border_main_color)
-                // layout.padding = 10
-            }
         }
     }
 

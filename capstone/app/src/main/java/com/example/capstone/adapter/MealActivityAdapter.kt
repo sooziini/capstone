@@ -22,6 +22,9 @@ class MealActivityAdapter(
         val week = itemView.findViewById<TextView>(R.id.meal_activity_weektext)
 
         fun bind(mealList: ArrayList<Meal>, weekNum: Int) {
+            if (itemList.size == 0)
+                return
+
             week.text = "${weekNum}주차"
             activityRv.adapter = MealFragmentAdapter(mealList, "00000000", inflater, context)
             activityRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -30,15 +33,21 @@ class MealActivityAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealActivityViewHolder {
-        val view = inflater.inflate(R.layout.school_meal_activity_item, parent, false)
+        val view = if (itemList.size != 0)
+            inflater.inflate(R.layout.school_meal_activity_item, parent, false)
+        else inflater.inflate(R.layout.school_meal_null_item, parent, false)
         return MealActivityViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return itemList.size
+        return if(itemList.size == 0)
+            1
+        else
+            itemList.size
     }
 
     override fun onBindViewHolder(holder: MealActivityViewHolder, position: Int) {
-        holder.bind(itemList[position], weekList[position])
+        if (itemList.size != 0)
+            holder.bind(itemList[position], weekList[position])
     }
 }

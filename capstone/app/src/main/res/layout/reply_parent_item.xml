@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/parent_reply_item_profile"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="28sp"
+            android:layout_height="28sp"
             app:srcCompat="@drawable/profile_cloud"
             app:tint="@color/main_color" />
 
@@ -38,24 +38,24 @@
 
         <ImageView
             android:id="@+id/parent_reply_item_comment_btn"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="6dp"
             app:srcCompat="@drawable/detail_comment" />
 
         <ImageView
             android:id="@+id/parent_reply_item_like_btn"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
             app:srcCompat="@drawable/detail_like" />
 
         <ImageView
             android:id="@+id/parent_reply_item_report_btn"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/reply_report" />
 
@@ -84,12 +84,14 @@
             android:id="@+id/parent_reply_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date" />
+            android:text="@string/date"
+            android:textColor="@color/selected"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
         <ImageView
             android:id="@+id/parent_reply_item_like_img"
-            android:layout_width="15sp"
-            android:layout_height="15sp"
+            android:layout_width="14sp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="2dp"
@@ -101,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:text="@string/count"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
     </LinearLayout>
 

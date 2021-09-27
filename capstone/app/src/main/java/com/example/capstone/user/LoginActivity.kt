@@ -88,6 +88,7 @@ class LoginActivity : AppCompatActivity() {
                                     } else {
                                         app.saveUserToken("access_token", accessToken)
                                         app.saveUserToken("refresh_token", refreshToken)
+                                        app.saveUserToken("role", result["role"].toString())
 
                                         sendRegistrationToServer()
 

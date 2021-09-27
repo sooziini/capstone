@@ -34,7 +34,7 @@ class MasterApplication: Application() {
             val original = it.request()
 
             if (checkIsLogin()) {
-                getUserToken(true).let { token ->
+                getUserToken(0).let { token ->
                     val request = original.newBuilder()
                         .header("Authorization", token!!)
                         .build()
@@ -73,14 +73,15 @@ class MasterApplication: Application() {
         return token != null
     }
 
-    // ver == true accessToken return
-    // ver == false refreshToken return
-    fun getUserToken(ver: Boolean): String? {
+    // ver == 0 accessToken return
+    // ver == 1 refreshToken return
+    // ver == 2 (else) role return
+    fun getUserToken(ver: Int): String? {
         val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val token = if (ver) {
-            sp.getString("access_token", "null")
-        } else {
-            sp.getString("refresh_token", "null")
+        val token = when (ver) {
+            0 -> sp.getString("access_token", "null")
+            1 -> sp.getString("refresh_token", "null")
+            else -> sp.getString("role", "null")
         }
 
         return if (token == "null") null
@@ -101,6 +102,7 @@ class MasterApplication: Application() {
         val editor = sp.edit()
         editor.remove("access_token")
         editor.remove("refresh_token")
+        editor.remove("role")
         editor.apply()
     }
 

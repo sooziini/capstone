@@ -25,7 +25,7 @@ class MasterApplication: Application() {
     lateinit var service: RetrofitService
     lateinit var context: Context
 
-    val BASE_URL = "http://192.168.56.1:3000"
+    val BASE_URL = "http://220.149.31.104:3000"
     //220.149.31.104
 
     override fun onCreate() {
@@ -172,6 +172,7 @@ class MasterApplication: Application() {
                             saveUserToken("refresh_token", refreshToken)
                     } else if (response.code() == 401) {
                         deleteUserToken()
+                        (mContext as SplashActivity).finish()
                     } else {
                         (mContext as SplashActivity).finish()
                     }

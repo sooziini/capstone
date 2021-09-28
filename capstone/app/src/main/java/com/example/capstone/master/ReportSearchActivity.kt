@@ -1,5 +1,6 @@
 package com.example.capstone.master
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.adapter.BoardReportAdapter
 import com.example.capstone.adapter.ReplyReportAdapter
+import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.BoardReport
 import com.example.capstone.dataclass.ReplyReport
 import com.example.capstone.network.MasterApplication
@@ -215,7 +217,14 @@ class ReportSearchActivity : AppCompatActivity() {
                             reportList.add(BoardReport(board_id, send_id, recv_id, body, regDate))
                         }
 
-                        report_search_board_rcv.adapter = BoardReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity), "master")
+                        report_search_board_rcv.adapter = BoardReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity),"master") { boardId ->
+                            val intent = Intent(this@ReportSearchActivity, BoardDetailActivity::class.java)
+                                .putExtra("board_id", boardId)
+                                .putExtra("activity_num", "4")
+                                .putExtra("masterRole", true)
+                            startActivity(intent)
+                            finish()
+                        }
                         report_search_board_rcv.layoutManager = LinearLayoutManager(this@ReportSearchActivity)
                         report_search_board_rcv.setHasFixedSize(true)
                     } else {
@@ -244,15 +253,23 @@ class ReportSearchActivity : AppCompatActivity() {
 
                         for (item in array) {
                             val reply_id = (item["reply_id"] as Double).roundToInt()
+                            val board_id: Int = (item["board_id"] as Double).roundToInt()
                             val send_id = item["send_id"] as String
                             val recv_id = item["recv_id"] as String
                             val body = item["body"] as String
                             val regDate = item["regdate"] as String
 
-                            reportList.add(ReplyReport(reply_id, send_id, recv_id, body, regDate))
+                            reportList.add(ReplyReport(reply_id, board_id, send_id, recv_id, body, regDate))
                         }
 
-                        report_search_reply_rcv.adapter = ReplyReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity), "master")
+                        report_search_reply_rcv.adapter = ReplyReportAdapter(reportList, LayoutInflater.from(this@ReportSearchActivity), "master") { boardId ->
+                            val intent = Intent(this@ReportSearchActivity, BoardDetailActivity::class.java)
+                                .putExtra("board_id", boardId)
+                                .putExtra("activity_num", "4")
+                                .putExtra("masterRole", true)
+                            startActivity(intent)
+                            finish()
+                        }
                         report_search_reply_rcv.layoutManager = LinearLayoutManager(this@ReportSearchActivity)
                         report_search_reply_rcv.setHasFixedSize(true)
                     } else {

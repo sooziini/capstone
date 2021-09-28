@@ -3,7 +3,6 @@ package com.example.capstone.adapter
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
@@ -172,11 +171,21 @@ class ReplyAdapter(
 
     fun addReplyItem(reply: Reply) {
         replyList.add(reply)
+        replyList.sortBy { it.parent_id }
         notifyDataSetChanged()
     }
 
     fun removeReplyItem(position: Int) {
-        replyList.removeAt(position)
+        if (replyList[position].level == 0) {
+            replyList.removeAt(position)
+            while (replyList.isNotEmpty())
+                if (replyList[position].level != 0)
+                    replyList.removeAt(position)
+                else
+                    break
+        } else {
+            replyList.removeAt(position)
+        }
         notifyDataSetChanged()
     }
 
@@ -214,6 +223,8 @@ class ReplyAdapter(
     }
 
     // 대댓글 & 댓글 신고하기 버튼 클릭 시 뜨는 dialog 설정 함수
+    // ver == true 대댓글 dialog
+    // ver == false 댓글 신고하기 dialog
     fun setReplyDialog(reply: Reply, ver: Boolean) {
         val builder = AlertDialog.Builder(context)
         val dialogView = inflater.inflate(R.layout.dialog_reply, null)
@@ -239,13 +250,9 @@ class ReplyAdapter(
                     response: Response<ReplyChange>
                 ) {
                     if (response.isSuccessful && response.body()!!.success == "true") {
-                        // val reply = response.body()!!.data
-                        // addReplyItem(reply)
-                        (context as BoardDetailActivity).finish()
-                        val intent = Intent(context, BoardDetailActivity::class.java)
-                        intent.putExtra("board_id", board_id)
-                        intent.putExtra("activity_num", "0")
-                        context.startActivity(intent)
+                        val reply = response.body()!!.data
+                        addReplyItem(reply)
+                        //(context as BoardDetailActivity).hideKeyboard()
                     } else {
                         context.toast("대댓글을 작성할 수 없습니다")
                         (context as Activity).finish()

@@ -81,9 +81,9 @@
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/Home_TimeTableButton"
-                        android:layout_width="18sp"
+                        android:layout_width="16sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
                         app:srcCompat="@drawable/arrow_forward" />
@@ -117,9 +117,9 @@
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/Home_MealButton"
-                        android:layout_width="18sp"
+                        android:layout_width="16sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
                         app:srcCompat="@drawable/arrow_forward" />
@@ -151,9 +151,9 @@
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/Home_TodoListButton"
-                        android:layout_width="18sp"
+                        android:layout_width="16sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
                         app:srcCompat="@drawable/arrow_forward" />

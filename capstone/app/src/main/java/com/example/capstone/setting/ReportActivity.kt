@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.adapter.BoardReportAdapter
 import com.example.capstone.adapter.ReplyReportAdapter
+import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.BoardReport
 import com.example.capstone.dataclass.ReplyReport
 import com.example.capstone.main.MainActivity
@@ -99,7 +100,17 @@ class ReportActivity : AppCompatActivity() {
                             boardReportList.add(BoardReport(boardId, sendId, recvId, body, regDate))
                         }
 
-                        report_activity_rcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@ReportActivity), "student")
+                        report_activity_rcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@ReportActivity), "student") { boardId ->
+                            val intent = Intent(this@ReportActivity, BoardDetailActivity::class.java)
+                                .putExtra("board_id", boardId)
+                                .putExtra("activity_num", "5")
+                                .putExtra("user_id", intentUserId)
+                                .putExtra("user_name", intentUserName)
+                                .putExtra("user_student_id", intentUserStudentId)
+                                .putExtra("type", type)
+                            startActivity(intent)
+                            finish()
+                        }
                         report_activity_rcv.layoutManager = LinearLayoutManager(this@ReportActivity)
                         report_activity_rcv.setHasFixedSize(true)
                     } else {
@@ -126,15 +137,26 @@ class ReportActivity : AppCompatActivity() {
 
                         for (item in array) {
                             val replyId: Int = (item["reply_id"] as Double).roundToInt()
+                            val board_id: Int = (item["board_id"] as Double).roundToInt()
                             val sendId: String = item["send_id"] as String
                             val recvId: String = item["recv_id"] as String
                             val body: String = item["body"] as String
                             val regDate: String = item["regdate"] as String
 
-                            replyReportList.add(ReplyReport(replyId, sendId, recvId, body, regDate))
+                            replyReportList.add(ReplyReport(replyId, board_id, sendId, recvId, body, regDate))
                         }
 
-                        report_activity_rcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@ReportActivity), "student")
+                        report_activity_rcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@ReportActivity), "student") { boardId ->
+                            val intent = Intent(this@ReportActivity, BoardDetailActivity::class.java)
+                                .putExtra("board_id", boardId)
+                                .putExtra("activity_num", "5")
+                                .putExtra("user_id", intentUserId)
+                                .putExtra("user_name", intentUserName)
+                                .putExtra("user_student_id", intentUserStudentId)
+                                .putExtra("type", type)
+                            startActivity(intent)
+                            finish()
+                        }
                         report_activity_rcv.layoutManager = LinearLayoutManager(this@ReportActivity)
                         report_activity_rcv.setHasFixedSize(true)
                     } else {

@@ -21,7 +21,10 @@ import com.example.capstone.dataclass.PostDetail
 import com.example.capstone.dataclass.Reply
 import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.dataclass.ReplyListList
+import com.example.capstone.master.MasterReportActivity
+import com.example.capstone.master.ReportSearchActivity
 import com.example.capstone.network.MasterApplication
+import com.example.capstone.setting.ReportActivity
 import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -45,6 +48,11 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailGoodCnt: String
     private lateinit var boardDetailScrapCnt: String
     private lateinit var replyAdapter: ReplyAdapter
+    private var masterRole: Boolean = false
+    private lateinit var intentUserId: String
+    private lateinit var intentUserName: String
+    private lateinit var intentUserStudentId: String
+    private lateinit var reportType: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +75,14 @@ class BoardDetailActivity : AppCompatActivity() {
         if (intent.hasExtra("board_id")) {
             intentBoardId = intent.getStringExtra("board_id")!!
             intentActivityNum = intent.getStringExtra("activity_num")!!
+            masterRole = intent.getBooleanExtra("masterRole", false)!!
+
+            if (intent.hasExtra("user_id")) {
+                intentUserId = intent.getStringExtra("user_id")!!
+                intentUserName = intent.getStringExtra("user_name")!!
+                intentUserStudentId = intent.getStringExtra("user_student_id")!!
+                reportType = intent.getStringExtra("type")!!
+            }
 
             // 받은 board_id로 게시글 detail GET
             retrofitGetPostDetail(intentBoardId)
@@ -137,7 +153,7 @@ class BoardDetailActivity : AppCompatActivity() {
                         if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                         if (post.userCheck == "Y") menuUserCheck = true
-
+                        Log.d("masterRole", masterRole.toString() + detailMenu.toString())
                         // 사진이 있을 경우
                         if (postImgList.size > 0) {
                             val uriPaths: ArrayList<Uri> = ArrayList()
@@ -150,8 +166,6 @@ class BoardDetailActivity : AppCompatActivity() {
                                 it.orientation = LinearLayoutManager.HORIZONTAL
                             }
                         }
-                        if (!menuUserCheck) detailMenu?.setGroupVisible(R.id.board_detail_true, false)
-                        else detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
                     } else {
                         toast("게시글을 조회할 수 없습니다")
                         finish()
@@ -187,7 +201,7 @@ class BoardDetailActivity : AppCompatActivity() {
                                     reply.add(replyList[i].child[j])
                             }
                         }
-                        replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, application)
+                        replyAdapter = ReplyAdapter(reply, LayoutInflater.from(this@BoardDetailActivity), this@BoardDetailActivity, menuInflater, masterRole, application)
                         reply_recyclerview.adapter = replyAdapter
                         reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                         reply_recyclerview.setHasFixedSize(true)
@@ -311,6 +325,14 @@ class BoardDetailActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.board_detail_menu, menu)
         detailMenu = menu
+
+        if (!masterRole) {
+            if (!menuUserCheck) detailMenu?.setGroupVisible(R.id.board_detail_true, false)
+            else detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
+        } else {
+            detailMenu?.findItem(R.id.board_detail_edit)?.isVisible = false
+            detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
+        }
         return true
     }
 
@@ -361,6 +383,20 @@ class BoardDetailActivity : AppCompatActivity() {
             }
             "2" -> {
                 startActivity(Intent(this, ScrapActivity::class.java))
+            }
+            "3" -> {
+                startActivity(Intent(this, MasterReportActivity::class.java))
+            }
+            "4" -> {
+                startActivity(Intent(this, ReportSearchActivity::class.java))
+            }
+            "5" -> {
+                val intent = Intent(this, ReportActivity::class.java)
+                    .putExtra("user_id", intentUserId)
+                    .putExtra("user_name", intentUserName)
+                    .putExtra("user_student_id", intentUserStudentId)
+                    .putExtra("type", reportType)
+                startActivity(intent)
             }
         }
         finish()

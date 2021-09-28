@@ -180,7 +180,7 @@ class SettingActivity : AppCompatActivity() {
 
     // 프로필 사진 변경 다이얼로그 설정하는 함수
     private fun setChangeProfileDialog() {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "프로필 사진을 변경하시겠습니까?"
@@ -217,9 +217,9 @@ class SettingActivity : AppCompatActivity() {
 
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수 (단일 선택)
     private fun getImages() {
-        var intent = Intent(Intent.ACTION_PICK)
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.setType("image/*")
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        intent.type = "image/*"
         startActivityForResult(intent, REQUEST_READ_EXTERNAL_STORAGE)
     }
 

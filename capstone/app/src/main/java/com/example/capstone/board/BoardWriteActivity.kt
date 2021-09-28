@@ -37,9 +37,12 @@ class BoardWriteActivity : AppCompatActivity() {
     private lateinit var intentBoardWriteId: String
     private lateinit var intentBoardWriteTitle: String
     private lateinit var intentBoardWriteBody: String
-    private val REQUEST_READ_EXTERNAL_STORAGE = 1000
     var uriPaths: ArrayList<Uri> = ArrayList()
     var filePaths: ArrayList<String> = ArrayList()
+
+    companion object {
+        const val REQUEST_READ_EXTERNAL_STORAGE = 1000
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,11 +131,13 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수
     private fun getImages() {
-        var intent = Intent(Intent.ACTION_PICK)
+        val intent = Intent()
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)      // 다중 선택 허용
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.setType("image/*")
-        startActivityForResult(Intent.createChooser(intent, "사진을 선택하세요"), REQUEST_READ_EXTERNAL_STORAGE)
+        intent.data = (MediaStore.Images.Media.EXTERNAL_CONTENT_URI)  // 결과값 uri로 설정
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE            // 구글 포토만 가능하게
+        //intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "사진 최대 10장 선택 가능"), REQUEST_READ_EXTERNAL_STORAGE)
     }
 
     // 선택한 이미지 파일의 절대 경로 구하는 함수
@@ -155,6 +160,10 @@ class BoardWriteActivity : AppCompatActivity() {
         if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
             if (resultCode == RESULT_OK) {
                 val count = data?.clipData!!.itemCount
+                if (count > 10) {
+                    toast("사진은 최대 10장 선택 가능합니다")
+                    return
+                }
                 uriPaths.clear()
                 filePaths.clear()
                 if (data.clipData != null && count > 1) {

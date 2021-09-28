@@ -1,17 +1,21 @@
 package com.example.capstone.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
+import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.ReplyReport
 
 class ReplyReportAdapter(
     private val reportList: ArrayList<ReplyReport>,
     private val inflater: LayoutInflater,
-    private val role: String
+    private val role: String,
+    private val itemClick: (String) -> Unit
 ): RecyclerView.Adapter<ReplyReportAdapter.ReplyReportViewHolder>() {
     inner class ReplyReportViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val send_id_view = itemView.findViewById<TextView>(R.id.report_item_sendid)
@@ -32,6 +36,8 @@ class ReplyReportAdapter(
                 recv_id_text.visibility = View.INVISIBLE
                 recv_id_view.visibility = View.INVISIBLE
             }
+
+            itemView.setOnClickListener { itemClick(report.boardId.toString()) }
         }
     }
 

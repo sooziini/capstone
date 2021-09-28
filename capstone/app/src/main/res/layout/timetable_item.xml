@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="110dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:padding="10dp"
@@ -13,24 +13,22 @@
         android:id="@+id/timetable_item_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="1"
         android:textColor="@color/basic"
-        android:textSize="14sp"
-        tools:text="1" />
+        android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
     <TextView
         android:id="@+id/timetable_item_classname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text=""
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         android:textColor="@color/main_color"
-        android:textStyle="bold"
-        tools:text="" />
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
@@ -39,18 +37,24 @@
             android:id="@+id/timetable_item_starttime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/selected"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time"
             tools:text="" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/selected"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time"
             android:text=" ~ " />
 
         <TextView
             android:id="@+id/timetable_item_endtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/selected"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Time"
             tools:text="" />
     </LinearLayout>
 

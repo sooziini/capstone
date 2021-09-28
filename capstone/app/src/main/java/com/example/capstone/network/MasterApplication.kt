@@ -170,6 +170,7 @@ class MasterApplication: Application() {
                             saveUserToken("refresh_token", refreshToken)
                     } else if (response.code() == 401) {
                         deleteUserToken()
+                        (mContext as SplashActivity).finish()
                     } else {
                         (mContext as SplashActivity).finish()
                     }

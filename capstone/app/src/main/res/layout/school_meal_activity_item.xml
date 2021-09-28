@@ -3,8 +3,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="8dp"
-    android:padding="10dp">
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="4dp"
+    android:padding="6dp">
 
     <TextView
         android:id="@+id/meal_activity_weektext"

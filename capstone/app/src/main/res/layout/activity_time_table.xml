@@ -190,6 +190,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -228,6 +229,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -265,6 +267,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -302,6 +305,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -355,6 +359,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -392,6 +397,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -429,6 +435,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -466,6 +473,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -503,6 +511,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -557,6 +566,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -594,6 +604,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -631,6 +642,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -658,7 +670,7 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:minHeight="70sp"
+                        android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
 
@@ -668,6 +680,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -706,6 +719,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -759,6 +773,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -796,6 +811,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -833,6 +849,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -870,6 +887,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -907,6 +925,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -960,6 +979,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -996,9 +1016,9 @@
                             android:id="@+id/Tue5_dept"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1040,6 +1060,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1077,6 +1098,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1114,6 +1136,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1167,6 +1190,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1194,7 +1218,6 @@
                         android:layout_margin="1dp"
                         android:layout_weight="1"
                         android:background="@color/basic_white"
-                        android:gravity="center"
                         android:minHeight="64sp"
                         android:orientation="vertical"
                         android:padding="2dp">
@@ -1205,6 +1228,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1242,6 +1266,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1279,6 +1304,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1316,6 +1342,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1369,6 +1396,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1406,6 +1434,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1443,6 +1472,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1480,6 +1510,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 
@@ -1517,6 +1548,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:maxLines="2"
+                            android:textStyle="bold"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/basic" />
 

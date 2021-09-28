@@ -25,6 +25,7 @@ class ReplyAdapter(
     private val inflater: LayoutInflater,
     private val context: Context,
     private val menuInflater: MenuInflater,
+    private val masterRole: Boolean,
     private val application: Application
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -64,8 +65,12 @@ class ReplyAdapter(
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
-                if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
-                else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+                if (!masterRole) {
+                    if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
+                    else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+                } else {
+                    pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+                }
 
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -234,7 +239,7 @@ class ReplyAdapter(
         builder.setPositiveButton("확인") { dialog, it ->
             val body = dialogEditText.text.toString()
             if (ver) retrofitCreateReplyReply(reply.board_id.toString(), reply.reply_id.toString(), body)
-            else retrofitReportReply(reply.reply_id.toString(), reply.user_id, body)
+            else retrofitReportReply(reply.reply_id.toString(), reply.user_id, body, reply.board_id.toString())
         }
             .setNegativeButton("취소", null)
         builder.setView(dialogView)
@@ -266,11 +271,12 @@ class ReplyAdapter(
     }
 
     // 댓글 신고 함수
-    private fun retrofitReportReply(reply_id: String, recv_id: String, body: String) {
+    private fun retrofitReportReply(reply_id: String, recv_id: String, body: String, board_id: String) {
         val params = HashMap<String, Any>()
         params["reply_id"] = reply_id
         params["recv_id"] = recv_id
         params["body"] = body
+        params["board_id"] = board_id
         (application as MasterApplication).service.reportReply(params)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(

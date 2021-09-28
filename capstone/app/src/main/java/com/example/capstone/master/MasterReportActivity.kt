@@ -22,6 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.math.roundToInt
 import com.example.capstone.R
+import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.Reply
 import com.example.capstone.user.LoginActivity
 
@@ -176,7 +177,14 @@ class MasterReportActivity : AppCompatActivity() {
                             boardReportList.add(BoardReport(board_id, send_id, recv_id, body, regDate))
                         }
 
-                        BoardReportrcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@MasterReportActivity), "master")
+                        BoardReportrcv.adapter = BoardReportAdapter(boardReportList, LayoutInflater.from(this@MasterReportActivity), "master") { boardId ->
+                            val intent = Intent(this@MasterReportActivity, BoardDetailActivity::class.java)
+                                .putExtra("board_id", boardId)
+                                .putExtra("activity_num", "3")
+                                .putExtra("masterRole", true)
+                            startActivity(intent)
+                            finish()
+                        }
                         BoardReportrcv.layoutManager = LinearLayoutManager(this@MasterReportActivity)
                         BoardReportrcv.setHasFixedSize(true)
                     } else {
@@ -218,14 +226,22 @@ class MasterReportActivity : AppCompatActivity() {
 
                         for (item in reportArray) {
                             val reply_id = (item["reply_id"] as Double).roundToInt()
+                            val board_id: Int = (item["board_id"] as Double).roundToInt()
                             val send_id = item["send_id"] as String
                             val recv_id = item["recv_id"] as String
                             val body = item["body"] as String
                             val regDate = item["regdate"] as String
-                            replyReportList.add(ReplyReport(reply_id, send_id, recv_id, body, regDate))
+                            replyReportList.add(ReplyReport(reply_id, board_id, send_id, recv_id, body, regDate))
                         }
 
-                        ReplyReportrcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@MasterReportActivity), "master")
+                        ReplyReportrcv.adapter = ReplyReportAdapter(replyReportList, LayoutInflater.from(this@MasterReportActivity), "master") { boardId ->
+                            val intent = Intent(this@MasterReportActivity, BoardDetailActivity::class.java)
+                                .putExtra("board_id", boardId)
+                                .putExtra("activity_num", "3")
+                                .putExtra("masterRole", true)
+                            startActivity(intent)
+                            finish()
+                        }
                         ReplyReportrcv.layoutManager = LinearLayoutManager(this@MasterReportActivity)
                         ReplyReportrcv.setHasFixedSize(true)
                     } else {

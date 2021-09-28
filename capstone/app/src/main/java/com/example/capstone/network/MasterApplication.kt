@@ -23,7 +23,6 @@ import kotlin.coroutines.suspendCoroutine
 
 class MasterApplication: Application() {
     lateinit var service: RetrofitService
-    lateinit var context: Context
 
     val BASE_URL = "http://220.149.31.104:3000"
     //220.149.31.104
@@ -36,7 +35,6 @@ class MasterApplication: Application() {
 
     // retrofit 생성하는 함수
     fun createRetrofit() {
-        context = applicationContext
         // header 설정 (header에 token이 있는 retrofit)
         // 원래 나가려던 통신을 original에 잡아둠
         // original에 header 추가 -> proceed
@@ -183,89 +181,5 @@ class MasterApplication: Application() {
                     (mContext as SplashActivity).finish()
                 }
             })
-    }
-}
-/////////////////////////////////////////// 토큰 만료시 재발급
-
-class TokenAuthenticator(
-    private val refreshToken: String,
-    private val app: MasterApplication
-): Authenticator {
-    companion object {
-        private val TAG = TokenAuthenticator::class.java.simpleName
-    }
-
-    override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-        if (response.code() == 401) {
-//            val refreshToken = CommonHelper.getRefreshToken(sharedPref)
-            val getNewDeviceToken = GlobalScope.async(Dispatchers.Default) {
-                getNewDeviceToken(refreshToken)
-            }
-
-            val token = runBlocking {
-                getNewDeviceToken.await()
-            }
-            if (token != null) {
-                return getRequest(response, token)
-            }
-        }
-        return null
-    }
-
-    private suspend inline fun getNewDeviceToken(token: String): String? {
-        return GlobalScope.async(Dispatchers.Default) {
-            callApiNewDeviceToken(token)
-        }.await()
-    }
-
-    private suspend inline fun callApiNewDeviceToken(token: String): String? = suspendCoroutine { continuation ->
-        createWebService<RetrofitService>()
-            .setRefreshToken(token)
-//            .with(rx)
-            .enqueue(object: Callback<HashMap<String, String>> {
-                override fun onResponse(call: Call<HashMap<String, String>>, response: Response<HashMap<String, String>>) {
-                    if (response.isSuccessful) {
-                        val data = response.body()!!["access_token"]!!
-                        app.saveUserToken("access_token", data)
-                        continuation.resume(data)
-                    } else {
-                        continuation.resume(null)
-                    }
-                }
-
-                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                    continuation.resume(null)
-                }
-            })
-        return@suspendCoroutine
-    }
-
-    private val okHttp = OkHttpClient.Builder()
-//        .connectTimeout(TIMEOUT_LIMIT, TimeUnit.SECONDS)
-//        .readTimeout(TIMEOUT_LIMIT, TimeUnit.SECONDS)
-//        .writeTimeout(TIMEOUT_LIMIT, TimeUnit.SECONDS)
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
-        .build()
-
-    private inline fun <reified T> createWebService(): T {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(MasterApplication().BASE_URL + "/api/")
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(
-                GsonBuilder().serializeNulls().create()
-            ))
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-            .build()
-        return retrofit.create(T::class.java)
-    }
-
-    private fun getRequest(response: okhttp3.Response, token: String): Request {
-        return response.request()
-            .newBuilder()
-            .removeHeader("Authorization")
-            .addHeader("Authorization", token)
-            .build()
     }
 }

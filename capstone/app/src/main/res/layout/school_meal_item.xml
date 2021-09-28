@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/meal_fragment_layout"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/round_border"
+    android:layout_height="match_parent"
     android:layout_margin="8dp"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:background="@drawable/round_border"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/meal_fragment_datetext"
@@ -22,5 +22,5 @@
         android:id="@+id/meal_fragment_rv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="3dp"/>
+        android:padding="3dp" />
 </LinearLayout>

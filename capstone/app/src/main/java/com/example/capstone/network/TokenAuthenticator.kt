@@ -28,7 +28,6 @@ class TokenAuthenticator(
 
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
         if (response.code() == 401) {
-//            val refreshToken = CommonHelper.getRefreshToken(sharedPref)
             val getNewDeviceToken = GlobalScope.async(Dispatchers.Default) {
                 getNewDeviceToken(refreshToken)
             }
@@ -72,9 +71,6 @@ class TokenAuthenticator(
     }
 
     private val okHttp = OkHttpClient.Builder()
-//        .connectTimeout(TIMEOUT_LIMIT, TimeUnit.SECONDS)
-//        .readTimeout(TIMEOUT_LIMIT, TimeUnit.SECONDS)
-//        .writeTimeout(TIMEOUT_LIMIT, TimeUnit.SECONDS)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
@@ -88,7 +84,6 @@ class TokenAuthenticator(
                 GsonConverterFactory.create(
                 GsonBuilder().serializeNulls().create()
             ))
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
             .build()
         return retrofit.create(T::class.java)
     }

@@ -75,7 +75,7 @@ class BoardDetailActivity : AppCompatActivity() {
         if (intent.hasExtra("board_id")) {
             intentBoardId = intent.getStringExtra("board_id")!!
             intentActivityNum = intent.getStringExtra("activity_num")!!
-            masterRole = intent.getBooleanExtra("masterRole", false)!!
+            masterRole = intent.getBooleanExtra("masterRole", false)
 
             if (intent.hasExtra("user_id")) {
                 intentUserId = intent.getStringExtra("user_id")!!

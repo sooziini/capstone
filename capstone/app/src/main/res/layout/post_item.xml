@@ -11,13 +11,13 @@
         android:id="@+id/post_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="14dp"
         android:layout_marginLeft="14dp"
-        android:text="@string/title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/basic"
+        android:layout_marginRight="14dp"
         android:ellipsize="end"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:text="@string/title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/basic" />
 
     <TextView
         android:id="@+id/post_item_body"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/date"
-                android:textAppearance="@style/TextAppearance.Compat.Notification.Time.Media" />
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Time" />
 
             <TextView
                 android:layout_width="wrap_content"

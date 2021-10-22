@@ -183,7 +183,7 @@ class ReplyAdapter(
     fun removeReplyItem(position: Int) {
         if (replyList[position].level == 0) {
             replyList.removeAt(position)
-            while (replyList.isNotEmpty())
+            while (replyList.isNotEmpty() && position < replyList.size)
                 if (replyList[position].level != 0)
                     replyList.removeAt(position)
                 else

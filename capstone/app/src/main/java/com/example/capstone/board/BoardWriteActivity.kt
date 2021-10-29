@@ -187,7 +187,7 @@ class BoardWriteActivity : AppCompatActivity() {
         }
 
         // 이미지 미리보기 화면
-        val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this))
+        val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this)) {}
         board_write_img_recyclerview.adapter = adapter
         board_write_img_recyclerview.layoutManager = LinearLayoutManager(this).also {
             it.orientation = LinearLayoutManager.HORIZONTAL

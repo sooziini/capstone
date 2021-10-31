@@ -133,7 +133,7 @@ class BoardWriteActivity : AppCompatActivity() {
     private fun getImages() {
         val intent = Intent()
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)      // 다중 선택 허용
-        intent.data = (MediaStore.Images.Media.EXTERNAL_CONTENT_URI)  // 결과값 uri로 설정
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI    // 결과값 uri로 설정
         intent.type = MediaStore.Images.Media.CONTENT_TYPE            // 구글 포토만 가능하게
         //intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -271,10 +271,6 @@ class BoardWriteActivity : AppCompatActivity() {
                     ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                         REQUEST_READ_EXTERNAL_STORAGE)
-                    // 다시 체크
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED)
-                        getImages()
                 } else {
                     // 권한이 있을 경우
                     getImages()

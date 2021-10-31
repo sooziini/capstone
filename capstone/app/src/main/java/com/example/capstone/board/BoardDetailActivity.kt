@@ -245,10 +245,8 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         replyAdapter.addReplyItem(reply)
-                        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()+1).toString()
-                        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
+                        addReplyCnt()
                         board_detail_comment.setText("").toString()
-                        hideKeyboard(board_detail_hidekeyboard)
                     } else {
                         toast("댓글을 작성할 수 없습니다")
                         finish()
@@ -263,8 +261,14 @@ class BoardDetailActivity : AppCompatActivity() {
             })
     }
 
-    fun deleteReply() {
-        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()-1).toString()
+    fun addReplyCnt() {
+        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()+1).toString()
+        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
+        hideKeyboard(board_detail_hidekeyboard)
+    }
+
+    fun deleteReplyCnt(deleteCnt: Int) {
+        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()-deleteCnt).toString()
         board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
     }
 

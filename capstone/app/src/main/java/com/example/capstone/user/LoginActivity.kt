@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         if (accessToken == null || refreshToken == null) {
-                            Toast.makeText(this@LoginActivity, "아이디와 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
+                            toast("아이디와 비밀번호가 일치하지 않습니다")
                         } else {
                             app.saveUserToken("access_token", accessToken)
                             app.saveUserToken("refresh_token", refreshToken)

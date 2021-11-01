@@ -25,9 +25,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     // 메세지 수신 시 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        if (remoteMessage.notification != null) {
+        if (remoteMessage.data.isNotEmpty()) {
             val board_id = remoteMessage.data["board_id"].toString()
-            sendNotification(remoteMessage.notification?.title, remoteMessage.notification?.body, board_id)
+            sendNotification(remoteMessage.data["title"], remoteMessage.data["body"], board_id)
         }
     }
 

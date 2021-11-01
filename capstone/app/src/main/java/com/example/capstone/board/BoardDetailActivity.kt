@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -149,18 +148,35 @@ class BoardDetailActivity : AppCompatActivity() {
                         if (boardDetailType == "notice") board_detail_nickname.setText(boardDetailUserId).toString()
 
                         if (post.goodCheck == "Y")
-                            board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                         if (post.userCheck == "Y") menuUserCheck = true
-                        Log.d("masterRole", masterRole.toString() + detailMenu.toString())
+
+                        if (!masterRole) {
+                            if (!menuUserCheck) {
+                                detailMenu?.findItem(R.id.board_detail_edit)?.isVisible = false
+                                detailMenu?.findItem(R.id.board_detail_delete)?.isVisible = false
+                            }
+                            else detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
+                        } else {
+                            detailMenu?.findItem(R.id.board_detail_edit)?.isVisible = false
+                            detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
+                        }
+
                         // 사진이 있을 경우
                         if (postImgList.size > 0) {
                             val uriPaths: ArrayList<Uri> = ArrayList()
                             for (i in 0 until postImgList.size)
                                 uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
 
-                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity))
+                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity)) { position ->
+                                // 첨부된 이미지 클릭했을 경우
+                                val intent = Intent(this@BoardDetailActivity, PostImagePagerActivity::class.java)
+                                intent.putExtra("uriPaths", uriPaths)
+                                intent.putExtra("position", position)
+                                startActivity(intent)
+                            }
                             board_detail_img_recyclerview.adapter = adapter
                             board_detail_img_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity).also {
                                 it.orientation = LinearLayoutManager.HORIZONTAL
@@ -230,10 +246,8 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         replyAdapter.addReplyItem(reply)
-                        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()+1).toString()
-                        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
+                        addReplyCnt()
                         board_detail_comment.setText("").toString()
-                        hideKeyboard(board_detail_hidekeyboard)
                     } else {
                         toast("댓글을 작성할 수 없습니다")
                         finish()
@@ -248,8 +262,14 @@ class BoardDetailActivity : AppCompatActivity() {
             })
     }
 
-    fun deleteReply() {
-        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()-1).toString()
+    fun addReplyCnt() {
+        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()+1).toString()
+        board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
+        hideKeyboard(board_detail_hidekeyboard)
+    }
+
+    fun deleteReplyCnt(deleteCnt: Int) {
+        boardDetailCommentCnt = (boardDetailCommentCnt.toInt()-deleteCnt).toString()
         board_detail_comment_cnt.setText(boardDetailCommentCnt).toString()
     }
 
@@ -326,13 +346,13 @@ class BoardDetailActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.board_detail_menu, menu)
         detailMenu = menu
 
-        if (!masterRole) {
-            if (!menuUserCheck) detailMenu?.setGroupVisible(R.id.board_detail_true, false)
-            else detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
-        } else {
-            detailMenu?.findItem(R.id.board_detail_edit)?.isVisible = false
-            detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
-        }
+//        if (!masterRole) {
+//            if (!menuUserCheck) detailMenu?.setGroupVisible(R.id.board_detail_true, false)
+//            else detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
+//        } else {
+//            detailMenu?.findItem(R.id.board_detail_edit)?.isVisible = false
+//            detailMenu?.findItem(R.id.board_detail_report)?.isVisible = false
+//        }
         return true
     }
 

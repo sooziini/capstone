@@ -19,9 +19,9 @@
 
     <string name="timetable">시간표</string>
 
-    <string name="title">title</string>
-    <string name="body">body</string>
-    <string name="date">date</string>
+    <string name="title">제목</string>
+    <string name="body">내용</string>
+    <string name="date">날짜</string>
     <string name="user">익명</string>
     <string name="count">0</string>
 

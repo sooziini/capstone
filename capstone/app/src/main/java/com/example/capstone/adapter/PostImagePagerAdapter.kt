@@ -4,6 +4,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.capstone.R
@@ -14,7 +15,7 @@ class PostImagePagerAdapter(
     private val inflater: LayoutInflater
 ): RecyclerView.Adapter<PostImagePagerAdapter.PostImagePagerViewHolder>() {
     inner class PostImagePagerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val img = itemView.post_img_viewpager_itemView
+        val img: ImageView = itemView.post_img_viewpager_itemView
 
         fun bind(postUri: Uri) {
             Glide.with(itemView.context)

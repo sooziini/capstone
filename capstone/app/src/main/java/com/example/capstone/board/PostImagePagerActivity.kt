@@ -15,7 +15,9 @@ class PostImagePagerActivity : AppCompatActivity() {
 
         if (intent.hasExtra("uriPaths")) {
             val uriPaths = intent.getSerializableExtra("uriPaths") as ArrayList<Uri>
+            val position = intent.getIntExtra("position", 0)
             post_img_viewpager.adapter = PostImagePagerAdapter(uriPaths, LayoutInflater.from(this@PostImagePagerActivity))
+            post_img_viewpager.currentItem = position
         } else {
             finish()
         }

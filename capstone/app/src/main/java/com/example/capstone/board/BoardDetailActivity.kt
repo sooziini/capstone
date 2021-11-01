@@ -170,10 +170,11 @@ class BoardDetailActivity : AppCompatActivity() {
                             for (i in 0 until postImgList.size)
                                 uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
 
-                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity)) { postUri ->
+                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity)) { position ->
                                 // 첨부된 이미지 클릭했을 경우
                                 val intent = Intent(this@BoardDetailActivity, PostImagePagerActivity::class.java)
                                 intent.putExtra("uriPaths", uriPaths)
+                                intent.putExtra("position", position)
                                 startActivity(intent)
                             }
                             board_detail_img_recyclerview.adapter = adapter

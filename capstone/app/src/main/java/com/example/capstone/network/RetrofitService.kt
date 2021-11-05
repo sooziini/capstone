@@ -220,6 +220,14 @@ interface RetrofitService {
     @DELETE("user/profile")
     fun deleteUserProfile(): Call<HashMap<String, String>>
 
+    // 자신이 신고한 게시글 조회
+    @GET ("board/report/me")
+    fun userLoadBoardReport(): Call<HashMap<String, Any>>
+
+    // 자신이 신고한 댓글 조회
+    @GET ("reply/report/me")
+    fun userLoadReplyReport(): Call<HashMap<String, Any>>
+
     // TodoList 날짜별 불러오기
     @GET("school/todo?")
     fun readTodo(
@@ -318,17 +326,20 @@ interface RetrofitService {
         @Query ("id") id: String
     ): Call<HashMap<String, Any>>
 
+    // 알림 장치 등록
     @FormUrlEncoded
-    @POST("device")
+    @POST("device/")
     fun setDeviceToken(
         @Field("deviceToken") token: String
     ): Call<HashMap<String, String>>
 
-    // 자신이 신고한 게시글 조회
-    @GET ("board/report/me")
-    fun userLoadBoardReport(): Call<HashMap<String, Any>>
+    // 알림 추가
+    @POST("notice/")
+    fun createNotification(
+        @Body noti: HashMap<String, String>
+    ): Call<HashMap<String, String>>
 
-    // 자신이 신고한 댓글 조회
-    @GET ("reply/report/me")
-    fun userLoadReplyReport(): Call<HashMap<String, Any>>
+    // 알림 조회
+    @GET("notice/")
+    fun getNotification(): Call<NotiList>
 }

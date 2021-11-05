@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.NoticeActivity
 import com.example.capstone.R
 import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.adapter.ReplyAdapter
@@ -417,6 +418,9 @@ class BoardDetailActivity : AppCompatActivity() {
                     .putExtra("user_student_id", intentUserStudentId)
                     .putExtra("type", reportType)
                 startActivity(intent)
+            }
+            "6" -> {
+                startActivity(Intent(this, NoticeActivity::class.java))
             }
         }
         finish()

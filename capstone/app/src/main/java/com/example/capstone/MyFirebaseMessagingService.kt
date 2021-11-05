@@ -9,11 +9,12 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.capstone.board.BoardDetailActivity
-import com.example.capstone.main.MainActivity
+import com.example.capstone.network.MasterApplication
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
 
     // 새 토큰이 생성될 때마다 onNewToken 콜백 호출
     override fun onNewToken(token: String) {
@@ -26,8 +27,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 메세지 수신 시 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()) {
+            val title = remoteMessage.data["title"]
+            val body = remoteMessage.data["body"]
             val board_id = remoteMessage.data["board_id"].toString()
-            sendNotification(remoteMessage.data["title"], remoteMessage.data["body"], board_id)
+            sendNotification(title, body, board_id)
+
+            val noti = HashMap<String, String>()
+            noti["title"] = title.toString()
+            noti["body"] = body.toString()
+            noti["board_id"] = board_id
+            val app = application as MasterApplication
+            if (app.isInForeground()) {     // 포그라운드
+                app.retrofitCreateNotification(noti)
+            } else {    // 백그라운드
+//                val sp = getSharedPreferences("", Context.MODE_PRIVATE)
+//                val editor = sp.edit()
+//                editor.putString(0, noti)
+//                editor.apply()
+                Log.d("abc", "back")
+            }
         }
     }
 

@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                 finish()
                             }
-                            app.updateRetrofit(refreshToken)
+                            app.createRetrofit(refreshToken)
                         }
                     } else {        // 3xx, 4xx 를 받은 경우
                         toast("아이디와 비밀번호가 일치하지 않습니다")

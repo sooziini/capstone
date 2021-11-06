@@ -10,6 +10,8 @@
         android:id="@+id/student_list_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -17,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="학생 조회"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/basic"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -27,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/round_border"
         android:orientation="vertical"
@@ -76,6 +78,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/round_border"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="회원가입"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/basic"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>

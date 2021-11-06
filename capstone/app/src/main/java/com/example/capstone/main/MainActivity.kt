@@ -1,6 +1,5 @@
 package com.example.capstone.main
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,13 +8,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.capstone.*
 import com.example.capstone.board.BoardActivity
 import com.example.capstone.board.ScrapActivity
 import com.example.capstone.network.MasterApplication
-import com.example.capstone.network.NotiWork
 import com.example.capstone.setting.SettingActivity
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_main.*

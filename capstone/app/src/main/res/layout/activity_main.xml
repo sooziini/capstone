@@ -62,13 +62,13 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 <LinearLayout
+                    android:id="@+id/Home_TimeTableButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/Home_TimeTableText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="오늘의 시간표"
@@ -82,7 +82,6 @@
                         android:layout_weight="1" />
 
                     <ImageView
-                        android:id="@+id/Home_TimeTableButton"
                         android:layout_width="16sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
@@ -98,13 +97,13 @@
                     android:scrollbars="horizontal"/>
 
                 <LinearLayout
+                    android:id="@+id/Home_MealButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/Home_MealText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="이번 주 급식표"
@@ -118,7 +117,6 @@
                         android:layout_weight="1" />
 
                     <ImageView
-                        android:id="@+id/Home_MealButton"
                         android:layout_width="16sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"
@@ -132,13 +130,13 @@
                     android:layout_marginTop="8dp"/>
 
                 <LinearLayout
+                    android:id="@+id/Home_TodoListButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="오늘의 할 일"
@@ -152,7 +150,6 @@
                         android:layout_weight="1" />
 
                     <ImageView
-                        android:id="@+id/Home_TodoListButton"
                         android:layout_width="16sp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"

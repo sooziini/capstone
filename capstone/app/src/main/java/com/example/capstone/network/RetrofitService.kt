@@ -336,7 +336,7 @@ interface RetrofitService {
     // 알림 추가
     @POST("notice/")
     fun createNotification(
-        @Body noti: HashMap<String, String>
+        @Body noti: HashMap<String, ArrayList<NotiPost>>
     ): Call<HashMap<String, String>>
 
     // 알림 조회

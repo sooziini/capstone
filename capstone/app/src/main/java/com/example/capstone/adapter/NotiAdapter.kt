@@ -19,7 +19,16 @@ class NotiAdapter (
         private val notiDate: TextView = itemView.findViewById(R.id.noti_item_date)
 
         fun bind(noti: Noti) {
-            notiType.text = noti.type
+            val type = when (noti.type) {
+                "1st_free" -> "1학년 자유게시판"
+                "2nd_free" -> "2학년 자유게시판"
+                "3rd_free" -> "3학년 자유게시판"
+                "sug" -> "학생 건의함"
+                "notice" -> "학생회 공지"
+                "club" -> "동아리 활동"
+                else -> "자유게시판"
+            }
+            notiType.text = type
             notiBody.text = noti.title+": "+noti.body
             notiDate.text = noti.regdate.substring(5, 16)
 

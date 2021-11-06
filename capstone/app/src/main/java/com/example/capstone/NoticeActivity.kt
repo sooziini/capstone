@@ -3,8 +3,10 @@ package com.example.capstone
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.adapter.NotiAdapter
 import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.NotiList
@@ -56,6 +58,7 @@ class NoticeActivity : AppCompatActivity() {
                                 finish()
                             }
                             notice_recyclerview.adapter = notiAdapter
+                            notice_recyclerview.layoutManager = LinearLayoutManager(this@NoticeActivity)
                             notice_recyclerview.setHasFixedSize(true)
                         } else {
                             notiAdapter.refreshNotiItem(notiList)

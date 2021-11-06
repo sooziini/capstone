@@ -9,12 +9,12 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.capstone.board.BoardDetailActivity
+import com.example.capstone.dataclass.NotiPost
 import com.example.capstone.network.MasterApplication
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-
 
     // 새 토큰이 생성될 때마다 onNewToken 콜백 호출
     override fun onNewToken(token: String) {
@@ -27,29 +27,38 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 메세지 수신 시 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()) {
-            val title = remoteMessage.data["title"]
-            val body = remoteMessage.data["body"]
+            Log.d("abc", "onMessageReceived")
+            val title = remoteMessage.data["title"].toString()
+            val body = remoteMessage.data["body"].toString()
             val board_id = remoteMessage.data["board_id"].toString()
+
             sendNotification(title, body, board_id)
 
-            val noti = HashMap<String, String>()
-            noti["title"] = title.toString()
-            noti["body"] = body.toString()
-            noti["board_id"] = board_id
+            val notiList = HashMap<String, ArrayList<NotiPost>>()
+            val notiArray = ArrayList<NotiPost>()
+            notiArray.add(NotiPost(title, body, board_id.toInt()))
+            notiList.put("list", notiArray)
+
+            Log.d("abc", notiList.toString())
             val app = application as MasterApplication
             if (app.isInForeground()) {     // 포그라운드
-                app.retrofitCreateNotification(noti)
+                app.retrofitCreateNotification(notiList)
             } else {    // 백그라운드
-//                val sp = getSharedPreferences("", Context.MODE_PRIVATE)
-//                val editor = sp.edit()
-//                editor.putString(0, noti)
-//                editor.apply()
                 Log.d("abc", "back")
             }
         }
     }
 
-    private fun sendNotification(title: String?, body: String?, board_id: String) {
+    fun saveMessage(title: String, body: String, board_id: Int) {
+        val sp = getSharedPreferences("notification", Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString("title", title)
+        editor.putString("body", body)
+        editor.putInt("board_id", board_id).apply()
+        Log.d("abc", "title"+title)
+    }
+
+    private fun sendNotification(title: String, body: String, board_id: String) {
         // RequestCode, Id를 고유값으로 지정하여 알림이 개별 표시되도록 함
         val uniId: Int = (System.currentTimeMillis() / 7).toInt()
 

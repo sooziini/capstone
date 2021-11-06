@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.example.capstone.dataclass.NotiPost
 import okhttp3.*
 import org.jetbrains.anko.toast
 import retrofit2.*
@@ -155,8 +156,8 @@ class MasterApplication: Application(), LifecycleObserver {
     }
 
     // 알림 추가 함수
-    fun retrofitCreateNotification(noti: HashMap<String, String>) {
-        service.createNotification(noti)
+    fun retrofitCreateNotification(notiList: HashMap<String, ArrayList<NotiPost>>) {
+        service.createNotification(notiList)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
@@ -164,10 +165,8 @@ class MasterApplication: Application(), LifecycleObserver {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         // 알림 추가 성공
-                        Log.d("abc", "알림 추가 성공")
                     } else {
                         // 알림 추가 실패
-                        Log.d("abc", "알림 추가 실패")
                     }
                 }
 

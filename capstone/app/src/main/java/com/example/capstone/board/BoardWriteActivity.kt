@@ -1,12 +1,14 @@
 package com.example.capstone.board
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +16,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +24,7 @@ import com.example.capstone.R
 import com.example.capstone.adapter.PostImageAdapter
 import com.example.capstone.network.MasterApplication
 import kotlinx.android.synthetic.main.activity_board_write.*
+import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -99,7 +103,7 @@ class BoardWriteActivity : AppCompatActivity() {
             else -> dialogText.text = "게시글을 수정하시겠습니까?"
         }
 
-        builder.setPositiveButton("확인") { dialog, it ->
+        builder.setPositiveButton("확인") { _, _ ->
                 submitWritePost(title, body)
             }
             .setNegativeButton("취소", null)
@@ -132,24 +136,26 @@ class BoardWriteActivity : AppCompatActivity() {
     // 갤러리에서 이미지 선택하도록 갤러리로 화면 전환하는 함수
     private fun getImages() {
         val intent = Intent()
+        // intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)      // 다중 선택 허용
         intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI    // 결과값 uri로 설정
         intent.type = MediaStore.Images.Media.CONTENT_TYPE            // 구글 포토만 가능하게
-        //intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "사진 최대 10장 선택 가능"), REQUEST_READ_EXTERNAL_STORAGE)
+        startActivityForResult(
+            Intent.createChooser(intent, "사진 최대 10장 선택 가능"),
+            REQUEST_READ_EXTERNAL_STORAGE
+        )
     }
 
     // 선택한 이미지 파일의 절대 경로 구하는 함수
-    fun getImageFilePath(contentUri: Uri): String {
-        var columnIndex = 0
+    private fun getImageFilePath(contentUri: Uri): String {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(contentUri, projection, null, null, null)
+        var columnIndex = 0
         if (cursor!!.moveToFirst()) {
             columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         }
 
-        // 파일의 절대 경로 return
         return cursor.getString(columnIndex)
     }
 
@@ -157,33 +163,32 @@ class BoardWriteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
-            if (resultCode == RESULT_OK) {
-                val count = data?.clipData!!.itemCount
+        if (requestCode == REQUEST_READ_EXTERNAL_STORAGE && resultCode == RESULT_OK) {
+            if (data?.clipData != null) {
+                val count = data.clipData!!.itemCount
                 if (count > 10) {
                     toast("사진은 최대 10장 선택 가능합니다")
                     return
                 }
                 uriPaths.clear()
                 filePaths.clear()
-                if (data.clipData != null && count > 1) {
-                    // 이미지 다중 선택
+                if (count > 1) {    // 이미지 다중 선택
                     for (i in 0 until count) {
                         val uri = data.clipData!!.getItemAt(i).uri
                         uriPaths.add(uri)
                         val filePath = getImageFilePath(uri)
                         filePaths.add(filePath)
                     }
-                } else {
-                    // 이미지 단일 선택
-                    val uri = data.data!!
-                    uriPaths.add(uri)
-                    val filePath = getImageFilePath(uri)
-                    filePaths.add(filePath)
+                } else {        // 이미지 단일 선택
+                    data.data?.let { uri ->
+                        uriPaths.add(uri)
+                        val filePath = getImageFilePath(uri)
+                        filePaths.add(filePath)
+                    }
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                // 사진 선택 취소
             }
+        } else if (resultCode == RESULT_CANCELED) {
+            // 사진 선택 취소
         }
 
         // 이미지 미리보기 화면
@@ -196,7 +201,11 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 새 글 작성의 경우
     // 입력받은 title과 body POST하는 함수
-    private fun retrofitCreatePost(title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
+    private fun retrofitCreatePost(
+        title: RequestBody,
+        body: RequestBody,
+        images: ArrayList<MultipartBody.Part>
+    ) {
         (application as MasterApplication).service.createPost(intentType, title, body, images)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
@@ -224,7 +233,12 @@ class BoardWriteActivity : AppCompatActivity() {
 
     // 글 수정의 경우
     // board_id + 입력받은 title, body, images UPDATE
-    private fun retrofitPutPost(board_id: String, title: RequestBody, body: RequestBody, images: ArrayList<MultipartBody.Part>) {
+    private fun retrofitPutPost(
+        board_id: String,
+        title: RequestBody,
+        body: RequestBody,
+        images: ArrayList<MultipartBody.Part>
+    ) {
         (application as MasterApplication).service.putPostDetail(board_id, title, body, images)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
@@ -232,7 +246,10 @@ class BoardWriteActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
-                        val intent = Intent(this@BoardWriteActivity, BoardDetailActivity::class.java)
+                        val intent = Intent(
+                            this@BoardWriteActivity,
+                            BoardDetailActivity::class.java
+                        )
                         intent.putExtra("board_id", board_id)
                         intent.putExtra("activity_num", "0")
                         startActivity(intent)
@@ -265,12 +282,17 @@ class BoardWriteActivity : AppCompatActivity() {
             }
             // 사진 첨부 버튼을 클릭했을 경우
             R.id.board_write_image -> {
-                val permissionChk = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                val permissionChk = ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
                 if (permissionChk != PackageManager.PERMISSION_GRANTED) {
                     // 권한이 없을 경우
-                    ActivityCompat.requestPermissions(this,
+                    ActivityCompat.requestPermissions(
+                        this,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        REQUEST_READ_EXTERNAL_STORAGE)
+                        REQUEST_READ_EXTERNAL_STORAGE
+                    )
                 } else {
                     // 권한이 있을 경우
                     getImages()

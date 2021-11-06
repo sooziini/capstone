@@ -3,10 +3,7 @@ package com.example.capstone.network
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.capstone.dataclass.NotiPost
 import okhttp3.*
@@ -20,27 +17,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MasterApplication: Application(), LifecycleObserver {
     lateinit var service: RetrofitService
 
-    val BASE_URL = "http://220.149.31.104:3000"     //220.149.31.104
+    val BASE_URL = "http://220.149.31.104:3000"    //220.149.31.104
 
     override fun onCreate() {
         super.onCreate()
-
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         createRetrofit(null)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onAppBackgrounded() {
-        Log.d("abc", "back"+isInForeground().toString())
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onAppForegrounded() {
-        Log.d("abc", "fore"+isInForeground().toString())
-    }
-
-    fun isInForeground(): Boolean {
-        return ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
     // retrofit 생성하는 함수

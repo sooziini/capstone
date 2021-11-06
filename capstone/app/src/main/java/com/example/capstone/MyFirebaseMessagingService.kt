@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.NotiPost
@@ -27,7 +26,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 메세지 수신 시 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()) {
-            Log.d("abc", "onMessageReceived")
             val title = remoteMessage.data["title"].toString()
             val body = remoteMessage.data["body"].toString()
             val board_id = remoteMessage.data["board_id"].toString()
@@ -38,24 +36,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val notiArray = ArrayList<NotiPost>()
             notiArray.add(NotiPost(title, body, board_id.toInt()))
             notiList.put("list", notiArray)
-
-            Log.d("abc", notiList.toString())
-            val app = application as MasterApplication
-            if (app.isInForeground()) {     // 포그라운드
-                app.retrofitCreateNotification(notiList)
-            } else {    // 백그라운드
-                Log.d("abc", "back")
-            }
+            (application as MasterApplication).retrofitCreateNotification(notiList)
         }
-    }
-
-    fun saveMessage(title: String, body: String, board_id: Int) {
-        val sp = getSharedPreferences("notification", Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString("title", title)
-        editor.putString("body", body)
-        editor.putInt("board_id", board_id).apply()
-        Log.d("abc", "title"+title)
     }
 
     private fun sendNotification(title: String, body: String, board_id: String) {
@@ -66,7 +48,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // 액티비티 중복 생성 방지
         // 이전에 실행된 액티비티들을 모두 없엔 후 새로운 액티비티 실행 플래그
         val intent = Intent(this, BoardDetailActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP and Intent.FLAG_ACTIVITY_SINGLE_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("board_id", board_id)
             putExtra("activity_num", "0")
         }

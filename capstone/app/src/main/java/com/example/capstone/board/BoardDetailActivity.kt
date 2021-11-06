@@ -247,6 +247,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         replyAdapter.addReplyItem(reply)
+                        board_detail_scroll.smoothScrollTo(0, 0)
                         addReplyCnt()
                         board_detail_comment.setText("").toString()
                     } else {

@@ -3,6 +3,7 @@ package com.example.capstone.setting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -151,8 +152,16 @@ class MyInfoActivity : AppCompatActivity() {
         for ((k, v) in userInfoMap) {
             if (map[k] != v) {
                 updateInfo(map)
+                changeInfo(map)
                 break
             }
+        }
+    }
+
+    private fun changeInfo(map: HashMap<String, String>) {
+        for ((k, v) in map) {
+            if (userInfoMap.containsKey(k) && userInfoMap[k] != v)
+                userInfoMap[k] = v
         }
     }
 

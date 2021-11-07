@@ -109,7 +109,7 @@ class SettingActivity : AppCompatActivity() {
 
         // 회원탈퇴
         SettingUserDeleteLayout.setOnClickListener {
-            setUserDeleteDialog()
+            setUserDialog(true)
         }
 
         // 게시판 신고 목록 조회
@@ -205,10 +205,6 @@ class SettingActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_READ_EXTERNAL_STORAGE)
-            // 다시 체크
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED)
-                getImages()
         } else {
             // 권한이 있을 경우
             getImages()
@@ -305,41 +301,7 @@ class SettingActivity : AppCompatActivity() {
             })
     }
 
-    // 회원탈퇴 다이얼로그 설정하는 함수
-    private fun setUserDeleteDialog() {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
-        val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
-        dialogText.text = "회원을 탈퇴하시겠습니까?"
 
-        builder.setPositiveButton("확인") { dialog, it ->
-            (application as MasterApplication).service.deleteUser()
-                .enqueue(object : Callback<HashMap<String, String>> {
-                    override fun onResponse(
-                        call: Call<HashMap<String, String>>,
-                        response: Response<HashMap<String, String>>
-                    ) {
-                        if (response.isSuccessful) {
-                            toast("회원탈퇴가 완료되었습니다")
-                            startActivity((Intent(this@SettingActivity, LoginActivity::class.java)))
-                            finish()
-                        } else {        // 3xx, 4xx 를 받은 경우
-                            toast("회원탈퇴를 할 수 없습니다")
-                            finish()
-                        }
-                    }
-
-                    // 응답 실패 시
-                    override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
-                        toast("network error")
-                        finish()
-                    }
-                })
-        }
-            .setNegativeButton("취소", null)
-        builder.setView(dialogView)
-        builder.show()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main2_menu, menu)
@@ -354,26 +316,55 @@ class SettingActivity : AppCompatActivity() {
                 return true
             }
             R.id.main2_menu_logout -> {
-                setLogoutDialog()
+                setUserDialog(false)
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    // 로그아웃 dialog 설정 함수
-    private fun setLogoutDialog() {
+    // 회원탈퇴 & 로그아웃 다이얼로그 설정 함수
+    // ver == true 회원탈퇴 dialog
+    // ver == false 로그아웃 dialog
+    private fun setUserDialog(ver: Boolean) {
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.dialog_board, null)
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
-        dialogText.text = "로그아웃 하시겠습니까?"
+        dialogText.text = if (ver) "회원을 탈퇴하시겠습니까?" else "로그아웃 하시겠습니까?"
 
         builder.setPositiveButton("확인") { dialog, it ->
-            retrofitLogout()
+            if (ver) retrofitDeleteUser()
+            else retrofitLogout()
         }
             .setNegativeButton("취소", null)
         builder.setView(dialogView)
         builder.show()
+    }
+
+    // 회원탈퇴하는 함수
+    private fun retrofitDeleteUser() {
+        (application as MasterApplication).service.deleteUser()
+            .enqueue(object : Callback<HashMap<String, String>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful) {
+                        toast("회원탈퇴가 완료되었습니다")
+                        startActivity((Intent(this@SettingActivity, LoginActivity::class.java)))
+                        finish()
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("회원탈퇴를 할 수 없습니다")
+                        finish()
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 
     // 로그아웃하는 함수
@@ -387,7 +378,7 @@ class SettingActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         app.deleteUserToken()
-                        app.createRetrofit()
+                        app.createRetrofit(null)
                         startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
                         finish()
                         toast("로그아웃 되었습니다")

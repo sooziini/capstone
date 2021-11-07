@@ -233,7 +233,6 @@ class TimeTableActivity : AppCompatActivity() {
         builder.setView(view)
             .setPositiveButton("확인", null)
             .setNegativeButton("취소", null)
-            .create()
 
         val dialog = builder.create()
         dialog.setOnShowListener {

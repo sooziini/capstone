@@ -180,18 +180,22 @@ class ReplyAdapter(
         notifyDataSetChanged()
     }
 
-    fun removeReplyItem(position: Int) {
+    fun removeReplyItem(position: Int): Int {
+        var cnt = 1
         if (replyList[position].level == 0) {
             replyList.removeAt(position)
-            while (replyList.isNotEmpty())
-                if (replyList[position].level != 0)
+            while (replyList.isNotEmpty() && position < replyList.size)
+                if (replyList[position].level != 0) {
                     replyList.removeAt(position)
+                    cnt += 1
+                }
                 else
                     break
         } else {
             replyList.removeAt(position)
         }
         notifyDataSetChanged()
+        return cnt
     }
 
     //댓글 삭제하기 버튼 클릭 시 뜨는 dialog 설정 함수
@@ -209,10 +213,10 @@ class ReplyAdapter(
                         response: Response<HashMap<String, String>>
                     ) {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
-                            removeReplyItem(position)
-                            (context as BoardDetailActivity).deleteReply()
+                            val deleteCnt = removeReplyItem(position)
+                            (context as BoardDetailActivity).deleteReplyCnt(deleteCnt)
                         } else {
-                            context.toast("댓글을 삭제할 수 없습니다.")
+                            context.toast("댓글을 삭제할 수 없습니다")
                             (context as Activity).finish()
                         }
                     }
@@ -236,14 +240,25 @@ class ReplyAdapter(
         val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
         dialogEditText.hint = if (ver) "대댓글을 입력해 주세요" else "신고 사유를 입력해 주세요"
 
-        builder.setPositiveButton("확인") { dialog, it ->
-            val body = dialogEditText.text.toString()
-            if (ver) retrofitCreateReplyReply(reply.board_id.toString(), reply.reply_id.toString(), body)
-            else retrofitReportReply(reply.reply_id.toString(), reply.user_id, body, reply.board_id.toString())
-        }
-            .setNegativeButton("취소", null)
         builder.setView(dialogView)
-        builder.show()
+            .setPositiveButton("확인", null)
+            .setNegativeButton("취소", null)
+
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val body = dialogEditText.text.toString()
+                if (body == "") {
+                    if (ver) context.toast("대댓글을 입력해 주세요")
+                    else context.toast("신고 사유를 입력해 주세요")
+                } else {
+                    if (ver) retrofitCreateReplyReply(reply.board_id.toString(), reply.reply_id.toString(), body)
+                    else retrofitReportReply(reply.reply_id.toString(), reply.user_id, body, reply.board_id.toString())
+                    dialog.dismiss()
+                }
+            }
+        }
+        dialog.show()
     }
 
     // 대댓글 작성 함수
@@ -257,6 +272,7 @@ class ReplyAdapter(
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         addReplyItem(reply)
+                        (context as BoardDetailActivity).addReplyCnt()
                         //(context as BoardDetailActivity).hideKeyboard()
                     } else {
                         context.toast("대댓글을 작성할 수 없습니다")

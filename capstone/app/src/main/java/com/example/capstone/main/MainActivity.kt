@@ -173,12 +173,12 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 // 선생님과의 대화
-                R.id.drawer_my_menu_message -> {
-                    main_drawerlayout.closeDrawers()
-                    startActivity(Intent(this, MessageActivity::class.java))
-                    finish()
-                    true
-                }
+//                R.id.drawer_my_menu_message -> {
+//                    main_drawerlayout.closeDrawers()
+//                    startActivity(Intent(this, MessageActivity::class.java))
+//                    finish()
+//                    true
+//                }
                 // 게시글 보관함
                 R.id.drawer_my_menu_scrap -> {
                     main_drawerlayout.closeDrawers()
@@ -207,6 +207,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

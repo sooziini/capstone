@@ -1,14 +1,11 @@
 package com.example.capstone.setting
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.capstone.R
 import com.example.capstone.network.MasterApplication
@@ -27,6 +24,7 @@ class MyInfoActivity : AppCompatActivity() {
     lateinit var intentUserId: String
     lateinit var intentUserName: String
     lateinit var intentUserStudentId: String
+    private lateinit var userInfoMap: HashMap<String, String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +35,7 @@ class MyInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
 
+        // 전화번호, 생년월일, 학년, 반, 번호, 이메일
         viewArray = arrayListOf(MyInfoPhoneText, MyInfoBirthText, MyInfoGradeText, MyInfoClassText, MyInfoNumText, MyInfoEmailText)
     }
 
@@ -71,6 +70,14 @@ class MyInfoActivity : AppCompatActivity() {
                         MyInfoClassText.setText((data["schoolclass"] as Double).roundToInt().toString())
                         MyInfoNumText.setText((data["schoolnumber"] as Double).roundToInt().toString())
                         MyInfoEmailText.setText(data["email"])
+
+                        userInfoMap = HashMap<String, String>()
+                        userInfoMap["phone"] = data["phone"].toString()
+                        userInfoMap["schoolgrade"] = (data["schoolgrade"] as Double).roundToInt().toString()
+                        userInfoMap["schoolclass"] = (data["schoolclass"] as Double).roundToInt().toString()
+                        userInfoMap["schoolnumber"] = (data["schoolnumber"] as Double).roundToInt().toString()
+                        userInfoMap["birth"] = data["birth"]?.split(" ")!![0]
+                        userInfoMap["email"] = data["email"].toString()
                     } else {        // 3xx, 4xx 를 받은 경우
                         toast("데이터를 조회할 수 없습니다")
                         finish()
@@ -111,25 +118,32 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     fun editModeOnClick(item: MenuItem) {
-        if (editMode) {
+        val regex = Regex("""\d\d\d\d-\d\d?-\d\d?""")
+
+        if (!MyInfoBirthText.text.toString().matches(regex)) {
+            toast("생년월일은 yyyy-mm-dd 형식으로 입력해 주세요.")
+            return
+        }
+        if (editMode) { // 수정 완료
             item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray) {
                 view.isEnabled = false
                 view.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post)
             }
-            updateInfo()
+            updateCheck()
             editMode = !editMode
-        } else {
+        } else {        // 수정 시작
             item.setIcon(R.drawable.editmode_done)
             for (view in viewArray) {
                 view.isEnabled = true
                 view.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post_main_color)
             }
-            editMode = ! editMode
+            editMode = !editMode
         }
     }
 
-    private fun updateInfo() {
+    // 변경된 정보가 있는지 확인
+    private fun updateCheck() {
         val map = HashMap<String, String>()
 
         map["phone"] = MyInfoPhoneText.text.toString()
@@ -137,10 +151,20 @@ class MyInfoActivity : AppCompatActivity() {
         map["schoolclass"] = MyInfoClassText.text.toString()
         map["schoolnumber"] = MyInfoNumText.text.toString()
         map["birth"] = MyInfoBirthText.text.toString()
-        map["year"] = MyInfoYearText.text.toString()
         map["email"] = MyInfoEmailText.text.toString()
+        map["year"] = MyInfoYearText.text.toString()    // 제거 (사용자가 변경할 수 없음)
 
-        (application as MasterApplication).service.updateInfo(map)
+        for ((k, v) in userInfoMap) {
+            if (map[k] != v) {
+                updateInfo(map)
+                break
+            }
+        }
+    }
+
+    private fun updateInfo(map: HashMap<String, String>) {
+        val app = application as MasterApplication
+        app.service.updateInfo(map)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
                     call: Call<HashMap<String, Any>>,
@@ -159,13 +183,20 @@ class MyInfoActivity : AppCompatActivity() {
                         }
 
                         if (accessToken == null || refreshToken == null) {
-                            Toast.makeText(this@MyInfoActivity, "", Toast.LENGTH_LONG).show()
+                            toast("회원정보를 수정할 수 없습니다")
+                            finish()
                         } else {
-                            // access_token 저장
-                            saveUserToken("access_token", accessToken, this@MyInfoActivity)
-                            // refresh_token 저장
-                            saveUserToken("refresh_token", refreshToken, this@MyInfoActivity)
+                            app.saveUserToken("access_token", accessToken)
+                            app.saveUserToken("refresh_token", refreshToken)
                             toast("회원정보가 수정되었습니다")
+
+                            var schoolClass = map["schoolclass"].toString()
+                            var schoolNum = map["schoolnumber"].toString()
+                            if (schoolClass.toInt() < 10)
+                                schoolClass = "0$schoolClass"
+                            if (schoolNum.toInt() < 10)
+                                schoolNum = "0$schoolNum"
+                            intentUserStudentId = map["schoolgrade"].toString()+schoolClass+schoolNum
                         }
 
                     } else {        // 3xx, 4xx 를 받은 경우
@@ -180,12 +211,5 @@ class MyInfoActivity : AppCompatActivity() {
                     finish()
                 }
             })
-    }
-
-    private fun saveUserToken(name: String, token: String, activity: Activity) {
-        val sp = activity.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.putString(name, token)
-        editor.apply()
     }
 }

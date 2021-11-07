@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -14,7 +13,6 @@ import com.example.capstone.master.MainActivity2
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원가입 클릭
         LoginRegisterBtn.setOnClickListener {
-            startActivity<SignUpActivity>()
+            startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
             finish()
         }
 
@@ -54,67 +52,66 @@ class LoginActivity : AppCompatActivity() {
             val post = HashMap<String, String>()
 
             when {
-                id == "" -> {
-                    toast("아이디를 입력해 주세요")
-                }
-                password == "" -> {
-                    toast("비밀번호를 입력해 주세요")
-                }
+                id == "" -> toast("아이디를 입력해 주세요")
+                password == "" -> toast("비밀번호를 입력해 주세요")
                 else -> {
                     post["id"] = id
                     post["password"] = password
-
-                    // 입력받은 id와 password POST
-                    app.service.login(post)
-                        .enqueue(object : Callback<HashMap<String, Any>> {
-                            override fun onResponse(
-                                call: Call<HashMap<String, Any>>,
-                                response: Response<HashMap<String, Any>>
-                            ) {
-                                if (response.isSuccessful) {
-                                    val result = response.body()
-                                    val tokenMap: LinkedTreeMap<String, String>
-                                    var accessToken: String? = null
-                                    var refreshToken: String? = null
-
-                                    if (result!!["token"] != null) {
-                                        tokenMap = result["token"] as LinkedTreeMap<String, String>
-                                        accessToken = tokenMap["access_token"].toString()
-                                        refreshToken = tokenMap["refresh_token"].toString()
-                                    }
-
-                                    if (accessToken == null || refreshToken == null) {
-                                        Toast.makeText(this@LoginActivity, "아이디와 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show()
-                                    } else {
-                                        app.saveUserToken("access_token", accessToken)
-                                        app.saveUserToken("refresh_token", refreshToken)
-                                        app.saveUserToken("role", result["role"].toString())
-
-                                        sendRegistrationToServer()
-
-                                        if (result["role"] == "master") {   // master 로그인
-                                            startActivity(Intent(this@LoginActivity, MainActivity2::class.java))
-                                            finish()
-                                        } else {      // 일반계정 로그인 (학생, 학생회)
-                                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                                            finish()
-                                        }
-                                        app.updateRetrofit(refreshToken)
-                                    }
-                                } else {        // 3xx, 4xx 를 받은 경우
-                                    toast("아이디와 비밀번호가 일치하지 않습니다")
-                                }
-                            }
-                            // 응답 실패 시
-                            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                                toast("network error")
-                                finish()
-                            }
-                        })
+                    retrofitLogin(post)
                 }
             }
-
         }
+    }
+
+    // 입력받은 id와 password POST 하는 함수
+    private fun retrofitLogin(post: HashMap<String, String>) {
+        val app = application as MasterApplication
+        app.service.login(post)
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        val tokenMap: LinkedTreeMap<String, String>
+                        var accessToken: String? = null
+                        var refreshToken: String? = null
+
+                        if (result!!["token"] != null) {
+                            tokenMap = result["token"] as LinkedTreeMap<String, String>
+                            accessToken = tokenMap["access_token"].toString()
+                            refreshToken = tokenMap["refresh_token"].toString()
+                        }
+
+                        if (accessToken == null || refreshToken == null) {
+                            toast("아이디와 비밀번호가 일치하지 않습니다")
+                        } else {
+                            app.saveUserToken("access_token", accessToken)
+                            app.saveUserToken("refresh_token", refreshToken)
+                            app.saveUserToken("role", result["role"].toString())
+
+                            sendRegistrationToServer()
+
+                            if (result["role"] == "master") {   // master 로그인
+                                startActivity(Intent(this@LoginActivity, MainActivity2::class.java))
+                                finish()
+                            } else {      // 일반계정 로그인 (학생, 학생회)
+                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                finish()
+                            }
+                            app.createRetrofit(refreshToken)
+                        }
+                    } else {        // 3xx, 4xx 를 받은 경우
+                        toast("아이디와 비밀번호가 일치하지 않습니다")
+                    }
+                }
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 
     // firebase 토큰을 서버로 전송

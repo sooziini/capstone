@@ -1,12 +1,10 @@
 package com.example.capstone.network
 
 import com.example.capstone.dataclass.*
-import com.google.gson.internal.LinkedTreeMap
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
-import java.time.Month
 
 interface RetrofitService {
     // 게시글 목록 조회
@@ -332,6 +330,9 @@ interface RetrofitService {
     fun setDeviceToken(
         @Field("deviceToken") token: String
     ): Call<HashMap<String, String>>
+
+    @DELETE("device/")
+    fun deleteDeviceToken(): Call<HashMap<String, String>>
 
     // 알림 추가
     @POST("notice/")

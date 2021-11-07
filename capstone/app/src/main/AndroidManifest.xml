@@ -10,14 +10,13 @@
     <application
         android:name=".network.MasterApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_cloudy"
+        android:icon="@mipmap/ic_sangcom"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_cloudy_round"
+        android:roundIcon="@mipmap/ic_sangcom_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".setting.PrivacyPolicyActivity"></activity>
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -26,12 +25,8 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service> <!-- <meta-data -->
-        <!-- android:name="firebase_messaging_auto_init_enabled" -->
-        <!-- android:value="false" /> -->
-        <!-- <meta-data -->
-        <!-- android:name="firebase_analytics_collection_enabled" -->
-        <!-- android:value="false" /> -->
+        </service>
+
         <activity android:name=".master.ReportSearchActivity" />
         <activity android:name=".master.MasterReportActivity" />
         <activity android:name=".master.StudentListActivity" />
@@ -46,6 +41,7 @@
         <activity android:name=".setting.ReportActivity" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".setting.PrivacyPolicyActivity"/>
         <activity android:name=".MessageActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>

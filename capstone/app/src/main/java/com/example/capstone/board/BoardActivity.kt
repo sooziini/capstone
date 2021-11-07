@@ -3,9 +3,11 @@ package com.example.capstone.board
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.adapter.BoardAdapter
@@ -55,6 +57,15 @@ class BoardActivity : AppCompatActivity() {
                     else -> "자유게시판"
                 }
                 board_toolbar_text.setText(text).toString()
+
+                if (type == "notice") {
+                    val app = application as MasterApplication
+                    if (app.getUserToken(2) == "student") {
+                        board_write_btn.visibility = View.GONE
+                        Log.d("abc", app.getUserToken(2)!!)
+                    }
+                }
+
                 retrofitGetPostList(false)   // 해당 게시판 전체 게시글 GET
             }
         } else {

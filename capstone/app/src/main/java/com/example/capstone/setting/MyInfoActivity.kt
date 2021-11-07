@@ -3,7 +3,6 @@ package com.example.capstone.setting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -22,9 +21,6 @@ import kotlin.math.roundToInt
 class MyInfoActivity : AppCompatActivity() {
     var editMode = false
     private lateinit var viewArray: ArrayList<EditText>
-    lateinit var intentUserId: String
-    lateinit var intentUserName: String
-    lateinit var intentUserStudentId: String
     private lateinit var userInfoMap: HashMap<String, String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,16 +38,6 @@ class MyInfoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        // 성공적으로 intent 전달값을 받았을 경우
-        if (intent.hasExtra("user_id")) {
-            intentUserId = intent.getStringExtra("user_id")!!
-            intentUserName = intent.getStringExtra("user_name")!!
-            intentUserStudentId = intent.getStringExtra("user_student_id")!!
-        } else {
-            // intent 실패할 경우 현재 액티비티 종료
-            finish()
-        }
 
         (application as MasterApplication).service.readInfo()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -105,11 +91,7 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, SettingActivity::class.java)
-        intent.putExtra("user_id", intentUserId)
-        intent.putExtra("user_name", intentUserName)
-        intent.putExtra("user_student_id", intentUserStudentId)
-        startActivity(intent)
+        startActivity(Intent(this, SettingActivity::class.java))
         finish()
     }
 
@@ -191,7 +173,6 @@ class MyInfoActivity : AppCompatActivity() {
                         } else {
                             app.saveUserToken("access_token", accessToken)
                             app.saveUserToken("refresh_token", refreshToken)
-                            toast("회원정보가 수정되었습니다")
 
                             var schoolClass = map["schoolclass"].toString()
                             var schoolNum = map["schoolnumber"].toString()
@@ -199,7 +180,10 @@ class MyInfoActivity : AppCompatActivity() {
                                 schoolClass = "0$schoolClass"
                             if (schoolNum.toInt() < 10)
                                 schoolNum = "0$schoolNum"
-                            intentUserStudentId = map["schoolgrade"].toString()+schoolClass+schoolNum
+                            val studentGradeId = map["schoolgrade"].toString()+schoolClass+schoolNum
+                            app.saveUserInfo("studentGradeId", studentGradeId)     // 학번 update
+
+                            toast("회원정보가 수정되었습니다")
                         }
 
                     } else {        // 3xx, 4xx 를 받은 경우

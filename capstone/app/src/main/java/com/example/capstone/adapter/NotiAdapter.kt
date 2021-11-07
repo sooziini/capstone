@@ -29,7 +29,7 @@ class NotiAdapter (
                 else -> "자유게시판"
             }
             notiType.text = type
-            notiBody.text = noti.title+" "+noti.body
+            notiBody.text = noti.title+": "+noti.body
             notiDate.text = noti.regdate.substring(5, 16)
 
             itemView.setOnClickListener { itemClick(noti) }

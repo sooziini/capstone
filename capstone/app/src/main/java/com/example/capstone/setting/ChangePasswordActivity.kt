@@ -16,11 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ChangePasswordActivity : AppCompatActivity() {
-    // 키보드 InputMethodManager 변수 선언
     private var imm: InputMethodManager? = null
-    lateinit var intentUserId: String
-    lateinit var intentUserName: String
-    lateinit var intentUserStudentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +33,6 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        // 성공적으로 intent 전달값을 받았을 경우
-        if (intent.hasExtra("user_id")) {
-            intentUserId = intent.getStringExtra("user_id")!!
-            intentUserName = intent.getStringExtra("user_name")!!
-            intentUserStudentId = intent.getStringExtra("user_student_id")!!
-        } else {
-            // intent 실패할 경우 현재 액티비티 종료
-            finish()
-        }
 
         ChangePasswordAuthButton.setOnClickListener {
             authPassword()
@@ -69,11 +55,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, SettingActivity::class.java)
-        intent.putExtra("user_id", intentUserId)
-        intent.putExtra("user_name", intentUserName)
-        intent.putExtra("user_student_id", intentUserStudentId)
-        startActivity(intent)
+        startActivity(Intent(this, SettingActivity::class.java))
         finish()
     }
 

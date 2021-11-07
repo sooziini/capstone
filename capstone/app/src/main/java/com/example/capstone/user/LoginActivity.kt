@@ -4,19 +4,23 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.example.capstone.R
 import com.example.capstone.main.MainActivity
 import com.example.capstone.master.MainActivity2
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.roundToInt
 
 class LoginActivity : AppCompatActivity() {
     private var mBackWait:Long = 0
@@ -27,8 +31,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        val app = application as MasterApplication
 
         // 키보드 InputMethodManager 세팅
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
@@ -91,12 +93,11 @@ class LoginActivity : AppCompatActivity() {
                             app.saveUserToken("refresh_token", refreshToken)
                             app.saveUserToken("role", result["role"].toString())
 
-                            sendRegistrationToServer()
-
                             if (result["role"] == "master") {   // master 로그인
                                 startActivity(Intent(this@LoginActivity, MainActivity2::class.java))
                                 finish()
                             } else {      // 일반계정 로그인 (학생, 학생회)
+                                sendRegistrationToServer()
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                 finish()
                             }

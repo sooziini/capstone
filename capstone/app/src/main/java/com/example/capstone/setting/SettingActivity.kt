@@ -35,9 +35,9 @@ import java.io.File
 
 class SettingActivity : AppCompatActivity() {
 
-    lateinit var intentUserId: String
-    lateinit var intentUserName: String
-    lateinit var intentUserStudentId: String
+    lateinit var studentId: String          // 아이디
+    lateinit var studentName: String        // 이름
+    lateinit var studentGradeId: String     // 학번
     private lateinit var BASE_URL: String
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
     lateinit var uriPath: Uri
@@ -49,7 +49,11 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         view = findViewById(R.id.setting_profile)
-        BASE_URL = (application as MasterApplication).BASE_URL
+        val app = application as MasterApplication
+        BASE_URL = app.BASE_URL
+        studentId = app.getUserInfo("studentId")!!
+        studentName = app.getUserInfo("studentName")!!
+        studentGradeId = app.getUserInfo("studentGradeId")!!
 
         // toolbar 설정
         setSupportActionBar(setting_toolbar)
@@ -59,28 +63,19 @@ class SettingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // 성공적으로 intent 전달값을 받았을 경우
-        if (intent.hasExtra("user_id")) {
-            intentUserId = intent.getStringExtra("user_id")!!
-            intentUserName = intent.getStringExtra("user_name")!!
-            intentUserStudentId = intent.getStringExtra("user_student_id")!!
 
-            setting_name.setText(intentUserName).toString()
-            setting_id.setText(intentUserId).toString()
+        setting_name.setText(studentName).toString()
+        setting_id.setText(studentId).toString()
 
-            val userGrade = intentUserStudentId.substring(0, 1).toInt().toString()
-            val userClass = intentUserStudentId.substring(1, 3).toInt().toString()
-            val userNumber = intentUserStudentId.substring(3, 5).toInt().toString()
-            setting_student_id1.setText(userGrade).toString()
-            setting_student_id2.setText(userClass).toString()
-            setting_student_id3.setText(userNumber).toString()
+        val userGrade = studentGradeId.substring(0, 1).toInt().toString()
+        val userClass = studentGradeId.substring(1, 3).toInt().toString()
+        val userNumber = studentGradeId.substring(3, 5).toInt().toString()
+        setting_student_id1.setText(userGrade).toString()
+        setting_student_id2.setText(userClass).toString()
+        setting_student_id3.setText(userNumber).toString()
 
-            // 기존 프로필 사진 설정
-            retrofitGetUserProfile()
-        } else {
-            // intent 실패할 경우 현재 액티비티 종료
-            finish()
-        }
+        // 기존 프로필 사진 설정
+        retrofitGetUserProfile()
 
         // 프로필 사진 변경
         SettingChangeProfileLayout.setOnClickListener {
@@ -89,21 +84,13 @@ class SettingActivity : AppCompatActivity() {
 
         // 비밀번호 변경
         SettingChangePasswordLayout.setOnClickListener {
-            val intent = Intent(this, ChangePasswordActivity::class.java)
-            intent.putExtra("user_id", intentUserId)
-            intent.putExtra("user_name", intentUserName)
-            intent.putExtra("user_student_id", intentUserStudentId)
-            startActivity(intent)
+            startActivity(Intent(this, ChangePasswordActivity::class.java))
             finish()
         }
 
         // 내 정보
         SettingMyInfoLayout.setOnClickListener {
-            val intent = Intent(this, MyInfoActivity::class.java)
-            intent.putExtra("user_id", intentUserId)
-            intent.putExtra("user_name", intentUserName)
-            intent.putExtra("user_student_id", intentUserStudentId)
-            startActivity(intent)
+            startActivity(Intent(this, MyInfoActivity::class.java))
             finish()
         }
 
@@ -115,11 +102,7 @@ class SettingActivity : AppCompatActivity() {
         // 게시판 신고 목록 조회
         SettingBoardReportLayout.setOnClickListener {
             val intent = Intent(this, ReportActivity::class.java)
-            intent.putExtra("type", "board")
-            intent.putExtra("user_id", intentUserId)
-            intent.putExtra("user_name", intentUserName)
-            intent.putExtra("user_student_id", intentUserStudentId)
-
+            intent.putExtra("reportType", "board")
             startActivity(intent)
             finish()
         }
@@ -127,15 +110,21 @@ class SettingActivity : AppCompatActivity() {
         // 댓글 신고 목록 조회
         SettingReplyReportLayout.setOnClickListener {
             val intent = Intent(this, ReportActivity::class.java)
-            intent.putExtra("type", "reply")
-            intent.putExtra("user_id", intentUserId)
-            intent.putExtra("user_name", intentUserName)
-            intent.putExtra("user_student_id", intentUserStudentId)
-
+            intent.putExtra("reportType", "reply")
             startActivity(intent)
             finish()
         }
 
+        // 개발자에게 피드백 전송
+        SettingFeedbackLayout.setOnClickListener {
+
+        }
+
+        // 개인정보처리방침
+        SettingAppInfoLayout.setOnClickListener {
+            startActivity(Intent(this, PrivacyPolicyActivity::class.java))
+            finish()
+        }
     }
 
     // 이미지 로드
@@ -150,7 +139,7 @@ class SettingActivity : AppCompatActivity() {
 
     // 프로필 사진 조회하는 함수
     private fun retrofitGetUserProfile() {
-        (application as MasterApplication).service.getUserProfile(intentUserId)
+        (application as MasterApplication).service.getUserProfile(studentId)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
@@ -185,12 +174,12 @@ class SettingActivity : AppCompatActivity() {
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "프로필 사진을 변경하시겠습니까?"
 
-        builder.setPositiveButton("확인") { dialog, it ->
+        builder.setPositiveButton("확인") { _, _ ->
             permissionCheck()
         }
             .setNegativeButton("취소", null)
         if (ver)
-            builder.setNeutralButton("삭제") { dialog, it ->
+            builder.setNeutralButton("삭제") { _, _ ->
                 retrofitDeleteUserProfile()
             }
         builder.setView(dialogView).show()
@@ -220,7 +209,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     // 선택한 이미지 파일의 절대 경로 구하는 함수
-    fun getImageFilePath(contentUri: Uri): String {
+    private fun getImageFilePath(contentUri: Uri): String {
         var columnIndex = 0
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(contentUri, projection, null, null, null)
@@ -301,8 +290,6 @@ class SettingActivity : AppCompatActivity() {
             })
     }
 
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main2_menu, menu)
         return true
@@ -332,7 +319,7 @@ class SettingActivity : AppCompatActivity() {
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = if (ver) "회원을 탈퇴하시겠습니까?" else "로그아웃 하시겠습니까?"
 
-        builder.setPositiveButton("확인") { dialog, it ->
+        builder.setPositiveButton("확인") { _, _ ->
             if (ver) retrofitDeleteUser()
             else retrofitLogout()
         }
@@ -377,7 +364,7 @@ class SettingActivity : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
-                        app.deleteUserToken()
+                        app.deleteUserInfo()
                         app.createRetrofit(null)
                         startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
                         finish()

@@ -37,4 +37,6 @@
     <string name="user_student_id3">번</string>
 
     <string name="firebase_notification_channel_id">channel</string>
+
+    <string name="privacy">개인정보..</string>
 </resources>

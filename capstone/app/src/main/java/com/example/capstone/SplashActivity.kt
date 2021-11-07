@@ -19,7 +19,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val app = application as MasterApplication
-
         val intent = if (app.checkIsLogin()) {
             app.getUserToken(1).let { refreshToken ->
                 if (refreshToken != null && refreshToken != "") {
@@ -30,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
                     else
                         Intent(this, MainActivity::class.java)
                 } else {
-                    app.deleteUserToken()
+                    app.deleteUserInfo()
                     Intent(this, LoginActivity::class.java)
                 }
             }

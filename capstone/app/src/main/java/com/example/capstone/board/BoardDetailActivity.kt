@@ -49,10 +49,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailScrapCnt: String
     private lateinit var replyAdapter: ReplyAdapter
     private var masterRole: Boolean = false
-    private lateinit var intentUserId: String
-    private lateinit var intentUserName: String
-    private lateinit var intentUserStudentId: String
-    private lateinit var reportType: String
+    private var reportType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,11 +74,14 @@ class BoardDetailActivity : AppCompatActivity() {
             intentActivityNum = intent.getStringExtra("activity_num")!!
             masterRole = intent.getBooleanExtra("masterRole", false)
 
-            if (intent.hasExtra("user_id")) {
-                intentUserId = intent.getStringExtra("user_id")!!
-                intentUserName = intent.getStringExtra("user_name")!!
-                intentUserStudentId = intent.getStringExtra("user_student_id")!!
-                reportType = intent.getStringExtra("type")!!
+            if (masterRole) {
+                board_detail_like_btn.visibility = View.GONE
+                board_detail_scrap_btn.visibility = View.GONE
+                board_detail_comment_btn.visibility = View.GONE
+            }
+
+            if (intent.hasExtra("reportType")) {
+                reportType = intent.getStringExtra("reportType")!!
             }
 
             // 받은 board_id로 게시글 detail GET
@@ -414,10 +414,7 @@ class BoardDetailActivity : AppCompatActivity() {
             }
             "5" -> {
                 val intent = Intent(this, ReportActivity::class.java)
-                    .putExtra("user_id", intentUserId)
-                    .putExtra("user_name", intentUserName)
-                    .putExtra("user_student_id", intentUserStudentId)
-                    .putExtra("type", reportType)
+                    .putExtra("reportType", reportType)
                 startActivity(intent)
             }
             "6" -> {
@@ -471,7 +468,7 @@ class BoardDetailActivity : AppCompatActivity() {
         val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
         dialogEditText.hint = "신고 사유를 입력해 주세요"
 
-        builder.setPositiveButton("확인") { dialog, it ->
+        builder.setPositiveButton("확인") { _, _ ->
             val body = dialogEditText.text.toString()
             val params = HashMap<String, Any>()
             params["board_id"] = intentBoardId

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.capstone.dataclass.NotiPost
 import okhttp3.*
 import org.jetbrains.anko.toast
@@ -49,7 +48,7 @@ class MasterApplication: Application(), LifecycleObserver {
             .apply {
                 if (refreshToken != null)   // refresh token으로 retrofit 재설정
                     authenticator(TokenAuthenticator(refreshToken, this@MasterApplication))
-                else {
+                else {           // 기본 retrofit 설정
                     if(checkIsLogin())
                         authenticator(TokenAuthenticator(getUserToken(1)!!, this@MasterApplication))
                 }
@@ -83,7 +82,6 @@ class MasterApplication: Application(), LifecycleObserver {
             1 -> sp.getString("refresh_token", "null")
             else -> sp.getString("role", "null")
         }
-
         return if (token == "null") null
         else token
     }
@@ -96,14 +94,27 @@ class MasterApplication: Application(), LifecycleObserver {
         editor.apply()
     }
 
-    // 토큰 삭제
-    fun deleteUserToken() {
-        val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+    // 사용자 정보 get
+    fun getUserInfo(name: String): String? {
+        val sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        return sp.getString(name, null)
+    }
+
+    // 사용자 정보 저장
+    fun saveUserInfo(name: String, info: String) {
+        val sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.remove("access_token")
-        editor.remove("refresh_token")
-        editor.remove("role")
+        editor.putString(name, info)
         editor.apply()
+    }
+
+    // 토큰 & 사용자 정보 삭제
+    fun deleteUserInfo() {
+        var sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        sp.edit().clear().apply()
+
+        sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        sp.edit().clear().apply()
     }
 
     // 토큰 재발급 함수
@@ -122,7 +133,7 @@ class MasterApplication: Application(), LifecycleObserver {
                         if (refreshToken != null && refreshToken != "")
                             saveUserToken("refresh_token", refreshToken)
                     } else if (response.code() == 401) {
-                        deleteUserToken()
+                        deleteUserInfo()
                         (mContext as Activity).finish()
                     } else {
                         (mContext as Activity).finish()

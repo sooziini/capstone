@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
@@ -12,6 +11,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -117,7 +117,19 @@ class SettingActivity : AppCompatActivity() {
 
         // 개발자에게 피드백 전송
         SettingFeedbackLayout.setOnClickListener {
-
+            val intent = Intent(Intent.ACTION_SENDTO) // 메일 전송 설정
+                .apply {
+                    type = "text/plain"
+                    data = Uri.parse("mailto:") // 이메일 앱에서만 인텐트 처리되도록 설정
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf("soojinpar1026@gmail.com"))
+                    putExtra(Intent.EXTRA_SUBJECT, "상콤 애플리케이션 피드백")
+                    putExtra(Intent.EXTRA_TEXT, "자세한 피드백 무조건 환영합니다:))")
+                }
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(Intent.createChooser(intent, "메일 전송하기"))
+            } else {
+                toast("메일을 전송할 수 없습니다")
+            }
         }
 
         // 개인정보처리방침
@@ -151,7 +163,7 @@ class SettingActivity : AppCompatActivity() {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
                             ver = true
                             val profileImg = response.body()!!["path"]
-                            val profileUri = Uri.parse(BASE_URL+profileImg)
+                            val profileUri = Uri.parse(BASE_URL + profileImg)
                             setProfile(profileUri)
                         } else {
                             toast("프로필 사진을 조회할 수 없습니다")
@@ -187,13 +199,18 @@ class SettingActivity : AppCompatActivity() {
 
     // 권한 체크하는 함수
     private fun permissionCheck() {
-        val permissionChk = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val permissionChk = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
 
         if (permissionChk != PackageManager.PERMISSION_GRANTED) {
             // 권한이 없을 경우
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_READ_EXTERNAL_STORAGE)
+                REQUEST_READ_EXTERNAL_STORAGE
+            )
         } else {
             // 권한이 있을 경우
             getImages()
@@ -376,6 +393,7 @@ class SettingActivity : AppCompatActivity() {
                         toast("로그아웃을 할 수 없습니다")
                     }
                 }
+
                 // 응답 실패 시
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     toast("network error")

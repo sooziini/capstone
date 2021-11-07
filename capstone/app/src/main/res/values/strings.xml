@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CLOUDY</string>
+    <string name="app_name">상콤</string>
 
     <!--    drawer navigation-->
     <string name="drawer_main_menu_home">홈</string>

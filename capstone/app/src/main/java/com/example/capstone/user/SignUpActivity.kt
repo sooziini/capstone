@@ -61,6 +61,7 @@ class SignUpActivity : AppCompatActivity() {
             SignUpStuNumEditText.backgroundDrawable = ContextCompat.getDrawable(applicationContext, R.drawable.shape_post_warn_red)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -72,6 +73,12 @@ class SignUpActivity : AppCompatActivity() {
 
         // 키보드 InputMethodManager 세팅
         imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+
+        // 개인 정보 수집 이용 동의서 txt 파일 로드
+        val inn = resources.openRawResource(R.raw.personalinfoagreement)
+        val b: ByteArray = inn.readBytes()
+        val personalInfo = String(b)
+        SignUpPersonalInfo.text = personalInfo
 
         // 학년 드롭다운 스피너
         val gradeList = arrayOf("학년", "1", "2", "3")     // 학년 드롭다운 배열
@@ -159,7 +166,6 @@ class SignUpActivity : AppCompatActivity() {
             toast("입학년도를 입력해 주세요")
             return
         }
-
         if (!stuAuth) {
             toast("학번인증을 해 주세요")
             return
@@ -175,8 +181,12 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        val regData = HashMap<String, Any>()
+        if (!SignUpPersonalInfoCheckbox.isChecked) {
+            toast("개인 정보 제3자 제공에 동의해 주세요")
+            return
+        }
 
+        val regData = HashMap<String, Any>()
         regData["id"] = id
         regData["password"] = password
         regData["name"] = name
@@ -198,7 +208,7 @@ class SignUpActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"] == "true") {
                         startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
-                        toast("회원가입이 완료되었습니다.")
+                        toast("회원가입이 완료되었습니다")
                     } else {
                         toast("회원가입을 할 수 없습니다")
                     }

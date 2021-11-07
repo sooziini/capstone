@@ -104,7 +104,7 @@ class MyInfoActivity : AppCompatActivity() {
         val regex = Regex("""\d\d\d\d-\d\d?-\d\d?""")
 
         if (!MyInfoBirthText.text.toString().matches(regex)) {
-            toast("생년월일은 yyyy-mm-dd 형식으로 입력해 주세요.")
+            toast("생년월일은 yyyy-mm-dd 형식으로 입력해 주세요")
             return
         }
         if (editMode) { // 수정 완료
@@ -128,7 +128,6 @@ class MyInfoActivity : AppCompatActivity() {
     // 변경된 정보가 있는지 확인
     private fun updateCheck() {
         val map = HashMap<String, String>()
-
         map["phone"] = MyInfoPhoneText.text.toString()
         map["schoolgrade"] = MyInfoGradeText.text.toString()
         map["schoolclass"] = MyInfoClassText.text.toString()

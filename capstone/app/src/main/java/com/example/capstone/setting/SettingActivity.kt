@@ -321,7 +321,10 @@ class SettingActivity : AppCompatActivity() {
 
         builder.setPositiveButton("확인") { _, _ ->
             if (ver) retrofitDeleteUser()
-            else retrofitLogout()
+            else {
+                (application as MasterApplication).retrofitDeleteDeviceToken()
+                retrofitLogout()
+            }
         }
             .setNegativeButton("취소", null)
         builder.setView(dialogView)

@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
                             }
                             Log.d("abc", app.getUserToken(2)!!)
 
-                            Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다🎊"
+                            Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다🎉"
                         } else {
                             toast("데이터를 조회할 수 없습니다")
                             finish()

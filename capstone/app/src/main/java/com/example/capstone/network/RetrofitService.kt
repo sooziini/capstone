@@ -333,6 +333,9 @@ interface RetrofitService {
         @Field("deviceToken") token: String
     ): Call<HashMap<String, String>>
 
+    @DELETE("device/")
+    fun deleteDeviceToken(): Call<HashMap<String, String>>
+
     // 알림 추가
     @POST("notice/")
     fun createNotification(

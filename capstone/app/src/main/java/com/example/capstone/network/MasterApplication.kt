@@ -46,9 +46,6 @@ class MasterApplication: Application(), LifecycleObserver {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(header)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
             .apply {
                 if (refreshToken != null)   // refresh token으로 retrofit 재설정
                     authenticator(TokenAuthenticator(refreshToken, this@MasterApplication))
@@ -165,9 +162,28 @@ class MasterApplication: Application(), LifecycleObserver {
                         // 알림 추가 실패
                     }
                 }
-
                 override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
                     // 알림 추가 실패
+                }
+            })
+    }
+
+    // device 토큰 삭제하는 함수
+    fun retrofitDeleteDeviceToken() {
+        service.deleteDeviceToken()
+            .enqueue(object : Callback<HashMap<String, String>>{
+                override fun onResponse(
+                    call: Call<HashMap<String, String>>,
+                    response: Response<HashMap<String, String>>
+                ) {
+                    if (response.isSuccessful && response.body()!!["success"] == "true") {
+                        // device 토큰 삭제 성공
+                    } else {
+                        // device 토큰 삭제 실패
+                    }
+                }
+                override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                    // device 토큰 삭제 실패
                 }
             })
     }

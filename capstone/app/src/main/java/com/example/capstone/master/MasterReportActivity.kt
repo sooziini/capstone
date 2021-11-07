@@ -70,7 +70,6 @@ class MasterReportActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             boardPage += 1
-
             readBoardReport()
         }
 
@@ -82,7 +81,6 @@ class MasterReportActivity : AppCompatActivity() {
             }
             else if (replyPage == 1)
                 return@setOnClickListener
-
             readReplyReport()
         }
 
@@ -165,7 +163,6 @@ class MasterReportActivity : AppCompatActivity() {
                         }
 
                         if (!boardNoData) setBoardPage(boardPage)
-
                         boardReportList.clear()
 
                         for (item in reportArray) {
@@ -200,7 +197,6 @@ class MasterReportActivity : AppCompatActivity() {
     }
 
     private fun readReplyReport() {
-
         (application as MasterApplication).service.readReplyReport(replyPage)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
@@ -221,7 +217,6 @@ class MasterReportActivity : AppCompatActivity() {
                         }
 
                         if (!replyNoData) setReplyPage(replyPage)
-
                         replyReportList.clear()
 
                         for (item in reportArray) {

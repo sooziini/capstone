@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
@@ -207,6 +208,8 @@ class MainActivity : AppCompatActivity() {
                                 app.saveUserInfo("studentGradeId", studentGradeId)
                                 app.saveUserInfo("studentYear", studentYear)
                             }
+                            Log.d("abc", app.getUserToken(2)!!)
+
                             Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다🎊"
                         } else {
                             toast("데이터를 조회할 수 없습니다")

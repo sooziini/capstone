@@ -63,8 +63,8 @@
                         android:layout_marginStart="12dp"
                         android:layout_weight="1"
                         android:text="게시판 신고목록"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textStyle="bold" />
+                        android:textColor="@color/basic"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                     <ImageButton
                         android:id="@+id/BoardReportButton"
@@ -167,7 +167,7 @@
                         android:layout_weight="1"
                         android:text="댓글 신고목록"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                        android:textStyle="bold" />
+                        android:textColor="@color/basic" />
 
                     <ImageButton
                         android:id="@+id/ReplyReportButton"

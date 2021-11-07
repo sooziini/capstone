@@ -27,7 +27,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()) {
             var title = remoteMessage.data["title"].toString()
-            title = title.substring(0, title.length-1)
+            title = title.replace(".", "")
             val body = remoteMessage.data["body"].toString()
             val board_id = remoteMessage.data["board_id"].toString()
 

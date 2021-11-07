@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.lifecycle.LifecycleObserver
 import com.example.capstone.dataclass.NotiPost
 import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import org.jetbrains.anko.toast
 import retrofit2.*
 import retrofit2.Call
@@ -45,6 +46,9 @@ class MasterApplication: Application(), LifecycleObserver {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(header)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .apply {
                 if (refreshToken != null)   // refresh token으로 retrofit 재설정
                     authenticator(TokenAuthenticator(refreshToken, this@MasterApplication))

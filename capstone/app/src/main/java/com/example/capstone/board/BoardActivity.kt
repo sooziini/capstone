@@ -3,7 +3,6 @@ package com.example.capstone.board
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -58,14 +57,10 @@ class BoardActivity : AppCompatActivity() {
                 }
                 board_toolbar_text.setText(text).toString()
 
-                if (type == "notice") {
-                    val app = application as MasterApplication
-                    if (app.getUserToken(2) == "student") {
+                if (type == "notice") {     // 학생회 공지 게시판일 경우 학생회만 글 작성 가능
+                    if ((application as MasterApplication).getUserToken(2) == "student")
                         board_write_btn.visibility = View.GONE
-                        Log.d("abc", app.getUserToken(2)!!)
-                    }
                 }
-
                 retrofitGetPostList(false)   // 해당 게시판 전체 게시글 GET
             }
         } else {

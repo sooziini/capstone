@@ -118,6 +118,12 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     fun editModeOnClick(item: MenuItem) {
+        val regex = Regex("""\d\d\d\d-\d\d?-\d\d?""")
+
+        if (!MyInfoBirthText.text.toString().matches(regex)) {
+            toast("생년월일은 yyyy-mm-dd 형식으로 입력해 주세요.")
+            return
+        }
         if (editMode) { // 수정 완료
             item.setIcon(R.drawable.editmode_edit)
             for (view in viewArray) {

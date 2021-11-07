@@ -66,7 +66,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // 알림에 대한 UI 정보 and 작업 저장
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.cloudy_alpha)             // 아이콘 설정
+            .setSmallIcon(R.mipmap.ic_sangcom_round)             // 아이콘 설정
             .setContentTitle(title)     // 제목
             .setContentText(body)     // 메시지 내용
             .setAutoCancel(true)    // 터치 시 자동 삭제 true

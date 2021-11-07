@@ -105,10 +105,10 @@
             android:id="@+id/MyInfoBirthText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/shape_post"
             android:ems="10"
             android:enabled="false"
-            android:inputType="number"
-            android:background="@drawable/shape_post"
+            android:inputType="date"
             android:padding="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 

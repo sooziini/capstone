@@ -6,15 +6,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.capstone.board.BoardDetailActivity
+import com.example.capstone.dataclass.NotiPost
 import com.example.capstone.network.MasterApplication
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-
 
     // 새 토큰이 생성될 때마다 onNewToken 콜백 호출
     override fun onNewToken(token: String) {
@@ -27,29 +26,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 메세지 수신 시 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()) {
-            val title = remoteMessage.data["title"]
-            val body = remoteMessage.data["body"]
+            var title = remoteMessage.data["title"].toString()
+            title = title.replace(".", "")
+            val body = remoteMessage.data["body"].toString()
             val board_id = remoteMessage.data["board_id"].toString()
+
             sendNotification(title, body, board_id)
 
-            val noti = HashMap<String, String>()
-            noti["title"] = title.toString()
-            noti["body"] = body.toString()
-            noti["board_id"] = board_id
-            val app = application as MasterApplication
-            if (app.isInForeground()) {     // 포그라운드
-                app.retrofitCreateNotification(noti)
-            } else {    // 백그라운드
-//                val sp = getSharedPreferences("", Context.MODE_PRIVATE)
-//                val editor = sp.edit()
-//                editor.putString(0, noti)
-//                editor.apply()
-                Log.d("abc", "back")
-            }
+            val notiList = HashMap<String, ArrayList<NotiPost>>()
+            val notiArray = ArrayList<NotiPost>()
+            notiArray.add(NotiPost(title, body, board_id.toInt()))
+            notiList.put("list", notiArray)
+            (application as MasterApplication).retrofitCreateNotification(notiList)
         }
     }
 
-    private fun sendNotification(title: String?, body: String?, board_id: String) {
+    private fun sendNotification(title: String, body: String, board_id: String) {
         // RequestCode, Id를 고유값으로 지정하여 알림이 개별 표시되도록 함
         val uniId: Int = (System.currentTimeMillis() / 7).toInt()
 
@@ -57,7 +49,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // 액티비티 중복 생성 방지
         // 이전에 실행된 액티비티들을 모두 없엔 후 새로운 액티비티 실행 플래그
         val intent = Intent(this, BoardDetailActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP and Intent.FLAG_ACTIVITY_SINGLE_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("board_id", board_id)
             putExtra("activity_num", "0")
         }

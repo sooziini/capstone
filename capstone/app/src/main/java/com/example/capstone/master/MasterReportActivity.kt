@@ -66,11 +66,10 @@ class MasterReportActivity : AppCompatActivity() {
         // 게시판 신고 다음 버튼
         BoardReportNextButton.setOnClickListener {
             if (boardPage == 1 && boardNoData) {
-                toast("마지막 페이지입니다.")
+                toast("마지막 페이지입니다")
                 return@setOnClickListener
             }
             boardPage += 1
-
             readBoardReport()
         }
 
@@ -82,14 +81,13 @@ class MasterReportActivity : AppCompatActivity() {
             }
             else if (replyPage == 1)
                 return@setOnClickListener
-
             readReplyReport()
         }
 
         // 댓글 신고 다음 버튼
         ReplyReportNextButton.setOnClickListener {
             if (replyPage == 1 && replyNoData) {
-                toast("마지막 페이지입니다.")
+                toast("마지막 페이지입니다")
                 return@setOnClickListener
             }
             replyPage += 1
@@ -157,7 +155,7 @@ class MasterReportActivity : AppCompatActivity() {
                         if(reportArray.size == 0) {
                             if (boardPage != 1) {
                                 boardPage -= 1
-                                toast("마지막 페이지입니다.")
+                                toast("마지막 페이지입니다")
                             }
                             else if (boardPage == 1)
                                 boardNoData = true
@@ -165,7 +163,6 @@ class MasterReportActivity : AppCompatActivity() {
                         }
 
                         if (!boardNoData) setBoardPage(boardPage)
-
                         boardReportList.clear()
 
                         for (item in reportArray) {
@@ -200,7 +197,6 @@ class MasterReportActivity : AppCompatActivity() {
     }
 
     private fun readReplyReport() {
-
         (application as MasterApplication).service.readReplyReport(replyPage)
             .enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
@@ -213,7 +209,7 @@ class MasterReportActivity : AppCompatActivity() {
                         if(reportArray.size == 0) {
                             if (replyPage != 1) {
                                 replyPage -= 1
-                                toast("마지막 페이지입니다.")
+                                toast("마지막 페이지입니다")
                             }
                             else if (replyPage == 1)
                                 replyNoData = true
@@ -221,7 +217,6 @@ class MasterReportActivity : AppCompatActivity() {
                         }
 
                         if (!replyNoData) setReplyPage(replyPage)
-
                         replyReportList.clear()
 
                         for (item in reportArray) {

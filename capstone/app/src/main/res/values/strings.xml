@@ -14,14 +14,15 @@
     <string name="main_menu_notice">알림</string>
     <string name="main_menu_myinfo">마이페이지</string>
     <string name="main_menu_myinfo_report">신고 조회</string>
-    <string name="main_menu_myinfo_setting">마이페이지</string>
     <string name="main_menu_myinfo_logout">로그아웃</string>
 
     <string name="timetable">시간표</string>
+    <string name="schoolMeal">급식표</string>
+    <string name="todoList">오늘의 할 일</string>
 
-    <string name="title">제목</string>
-    <string name="body">내용</string>
-    <string name="date">날짜</string>
+    <string name="title"> </string>
+    <string name="body"> </string>
+    <string name="date"> </string>
     <string name="user">익명</string>
     <string name="count">0</string>
 
@@ -36,4 +37,6 @@
     <string name="user_student_id3">번</string>
 
     <string name="firebase_notification_channel_id">channel</string>
+
+    <string name="privacy">개인정보..</string>
 </resources>

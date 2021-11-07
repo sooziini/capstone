@@ -15,6 +15,7 @@ import com.example.capstone.R
 import com.example.capstone.dataclass.Reply
 import com.example.capstone.dataclass.ReplyChange
 import com.example.capstone.network.MasterApplication
+import kotlinx.android.synthetic.main.activity_board_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +50,10 @@ class ReplyAdapter(
                 replyVer = true
             }
             if (reply.userCheck == "Y") popUserCheck = true
+            if (masterRole) {
+                replyCommentBtn.visibility = View.GONE
+                replyLikeBtn.visibility = View.GONE
+            }
 
             // 대댓글 버튼 눌렀을 경우
             replyCommentBtn.setOnClickListener {
@@ -65,12 +70,10 @@ class ReplyAdapter(
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
-                if (!masterRole) {
-                    if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
-                    else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
-                } else {
+                if (masterRole || popUserCheck)
                     pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
-                }
+                else
+                    pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
 
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -109,6 +112,7 @@ class ReplyAdapter(
                 replyVer = true
             }
             if (reply.userCheck == "Y") popUserCheck = true
+            if (masterRole) replyLikeBtn.visibility = View.GONE
 
             // 댓글 좋아요 버튼 눌렀을 경우
             replyLikeBtn.setOnClickListener {
@@ -120,8 +124,10 @@ class ReplyAdapter(
                 val pop = PopupMenu(context, replyReportBtn)
                 menuInflater.inflate(R.menu.board_reply_popup, pop.menu)
 
-                if (!popUserCheck) pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
-                else pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+                if (masterRole || popUserCheck)
+                    pop.menu.findItem(R.id.board_reply_popup_report).isVisible = false
+                else
+                    pop.menu.findItem(R.id.board_reply_popup_delete).isVisible = false
 
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -214,6 +220,7 @@ class ReplyAdapter(
                     ) {
                         if (response.isSuccessful && response.body()!!["success"] == "true") {
                             val deleteCnt = removeReplyItem(position)
+                            (context as BoardDetailActivity).board_detail_scroll.smoothScrollTo(0, 0)
                             (context as BoardDetailActivity).deleteReplyCnt(deleteCnt)
                         } else {
                             context.toast("댓글을 삭제할 수 없습니다")
@@ -272,8 +279,8 @@ class ReplyAdapter(
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         addReplyItem(reply)
+                        (context as BoardDetailActivity).board_detail_scroll.smoothScrollTo(0, 0)
                         (context as BoardDetailActivity).addReplyCnt()
-                        //(context as BoardDetailActivity).hideKeyboard()
                     } else {
                         context.toast("대댓글을 작성할 수 없습니다")
                         (context as Activity).finish()

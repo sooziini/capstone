@@ -7,6 +7,12 @@ data class NotiList(
     val data: ArrayList<Noti>
 ): Serializable
 
+data class NotiPost(
+    val title: String,
+    val body: String,
+    val board_id: Int
+): Serializable
+
 data class Noti (
     val title: String,
     val body: String,

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:background="@drawable/underline"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_post"
+    android:layout_marginTop="8dp"
     android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/FilePath_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="6dp"
         android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 </LinearLayout>

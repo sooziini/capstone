@@ -25,11 +25,11 @@ import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dayn: String
-    lateinit var studentGradeId: String     // 학번
-    lateinit var studentName: String        // 이름
-    lateinit var studentYear: String        // 입학년도
     lateinit var studentId: String          // 아이디
-    private var mBackWait:Long = 0
+    lateinit var studentName: String        // 이름
+    lateinit var studentGradeId: String     // 학번
+    lateinit var studentYear: String        // 입학년도
+    var mBackWait:Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         val instance = Calendar.getInstance()
         val month = (instance.get(Calendar.MONTH) + 1).toString()
         val day = instance.get(Calendar.DATE).toString()
-
         when (instance.get(Calendar.DAY_OF_WEEK)) {
             1 -> dayn = "일"
             2 -> dayn = "월"
@@ -54,47 +53,9 @@ class MainActivity : AppCompatActivity() {
             6 -> dayn = "금"
             7 -> dayn = "토"
         }
+        Home_DateText.text = month+"월 "+day+"일 ("+dayn+")"
 
-        Home_DateText.text = month + "월 " + day + "일 (" + dayn + ")"
-
-        (application as MasterApplication).service.authorization()
-            .enqueue(object : Callback<HashMap<String, Any>> {
-                override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
-                ) {
-                    if (response.isSuccessful) {
-                        if(response.body()!!["success"].toString() == "true") {
-                            val data = response.body()!!["data"] as LinkedTreeMap<String, Any>
-                            studentYear = (data["year"] as Double).roundToInt().toString()
-                            
-                            val stug = (data["schoolgrade"] as Double).roundToInt().toString()
-                            var stuc = (data["schoolclass"] as Double).roundToInt().toString()
-                            var stun = (data["schoolnumber"] as Double).roundToInt().toString()
-                            if (stuc.toInt() < 10)
-                                stuc = "0$stuc"
-                            if (stun.toInt() < 10)
-                                stun = "0$stun"
-                            studentGradeId = stug + stuc + stun
-                            studentName = data["name"].toString()
-                            studentId = data["id"].toString()
-                            Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다!"
-                        } else {
-                            toast("데이터를 조회할 수 없습니다")
-                            finish()
-                        }
-                    } else {
-                        toast("데이터를 조회할 수 없습니다")
-                        finish()
-                    }
-                }
-
-                // 응답 실패 시
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                    toast("network error")
-                    finish()
-                }
-            })
+        retrofitAuthorization()     // 학생 정보 조회
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_TimeTableFrameLayout, TimeTableFragment())
@@ -107,7 +68,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.Home_MealFrameLayout, SchoolMealFragment())
             .commit()
+    }
 
+    override fun onResume() {
+        super.onResume()
         main_menu_navigationview.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.drawer_main_menu_home -> {
@@ -209,9 +173,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    // 학생 정보 조회
+    fun retrofitAuthorization() {
+        val app = (application as MasterApplication)
+        app.service.authorization()
+            .enqueue(object : Callback<HashMap<String, Any>> {
+                override fun onResponse(
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        if(response.body()!!["success"].toString() == "true") {
+                            if (app.getUserInfo("studentId") != null) {
+                                studentId = app.getUserInfo("studentId")!!
+                                studentName = app.getUserInfo("studentName")!!
+                                studentGradeId = app.getUserInfo("studentGradeId")!!
+                                studentYear = app.getUserInfo("studentYear")!!
+                            } else {
+                                val data = response.body()!!["data"] as LinkedTreeMap<String, Any>
+                                val stug = (data["schoolgrade"] as Double).roundToInt().toString()
+                                var stuc = (data["schoolclass"] as Double).roundToInt().toString()
+                                var stun = (data["schoolnumber"] as Double).roundToInt().toString()
+                                if (stuc.toInt() < 10)
+                                    stuc = "0$stuc"
+                                if (stun.toInt() < 10)
+                                    stun = "0$stun"
+                                studentGradeId = stug + stuc + stun
+                                studentName = data["name"].toString()
+                                studentId = data["id"].toString()
+                                studentYear = (data["year"] as Double).roundToInt().toString()
 
+                                app.saveUserInfo("studentId", studentId)
+                                app.saveUserInfo("studentName", studentName)
+                                app.saveUserInfo("studentGradeId", studentGradeId)
+                                app.saveUserInfo("studentYear", studentYear)
+                            }
+                            Log.d("abc", app.getUserToken(2)!!)
+
+                            Home_WelcomeText.text = studentGradeId + " " + studentName + "님, 환영합니다🎊"
+                        } else {
+                            toast("데이터를 조회할 수 없습니다")
+                            finish()
+                        }
+                    } else {
+                        toast("데이터를 조회할 수 없습니다")
+                        finish()
+                    }
+                }
+
+                // 응답 실패 시
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                    toast("network error")
+                    finish()
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -234,11 +249,7 @@ class MainActivity : AppCompatActivity() {
             }
             // 마이페이지
             R.id.main_menu_myinfo -> {
-                val intent = Intent(this, SettingActivity::class.java)
-                intent.putExtra("user_id", studentId)
-                intent.putExtra("user_name", studentName)
-                intent.putExtra("user_student_id", studentGradeId)
-                startActivity(intent)
+                startActivity(Intent(this, SettingActivity::class.java))
                 finish()
                 return true
             }

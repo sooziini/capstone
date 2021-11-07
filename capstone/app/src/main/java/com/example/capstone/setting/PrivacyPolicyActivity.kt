@@ -1,30 +1,32 @@
-package com.example.capstone
+package com.example.capstone.setting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import com.example.capstone.main.MainActivity
-import kotlinx.android.synthetic.main.activity_message.*
+import com.example.capstone.R
+import kotlinx.android.synthetic.main.activity_setting.*
 
-class MessageActivity : AppCompatActivity() {
+class PrivacyPolicyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message)
+        setContentView(R.layout.activity_privacy_policy)
 
         // toolbar 설정
-        setSupportActionBar(message_toolbar)
+        setSupportActionBar(setting_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)       // 기본 뒤로가기 버튼 설정
         supportActionBar?.setDisplayShowTitleEnabled(false)     // 기본 title 제거
+    }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this, SettingActivity::class.java))
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            // toolbar의 뒤로가기 버튼을 눌렀을 때
-            android.R.id.home -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+            android.R.id.home -> {    // toolbar의 뒤로가기 버튼을 눌렀을 때
+                onBackPressed()
                 return true
             }
         }

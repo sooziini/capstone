@@ -12,7 +12,6 @@ import com.example.capstone.adapter.ReplyReportAdapter
 import com.example.capstone.board.BoardDetailActivity
 import com.example.capstone.dataclass.BoardReport
 import com.example.capstone.dataclass.ReplyReport
-import com.example.capstone.main.MainActivity
 import com.example.capstone.network.MasterApplication
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.activity_report.*
@@ -23,12 +22,9 @@ import retrofit2.Response
 import kotlin.math.roundToInt
 
 class ReportActivity : AppCompatActivity() {
-    lateinit var type: String
+    lateinit var reportType: String
     private val boardReportList = ArrayList<BoardReport>()
     private val replyReportList = ArrayList<ReplyReport>()
-    private lateinit var intentUserId: String
-    private lateinit var intentUserName: String
-    private lateinit var intentUserStudentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,20 +39,14 @@ class ReportActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (intent.hasExtra("user_id")) {
-            intentUserId = intent.getStringExtra("user_id")!!
-            intentUserName = intent.getStringExtra("user_name")!!
-            intentUserStudentId = intent.getStringExtra("user_student_id")!!
-        }
-
-        if (intent.hasExtra("type"))
-            type = intent.getStringExtra("type")!!
+        if (intent.hasExtra("reportType"))
+            reportType = intent.getStringExtra("reportType")!!
         else finish()
 
-        val text = when(type) {
+        val text = when(reportType) {
             "board" -> {
                 getBoardReportList()
-                "게시판 신고목록 조회"
+                "게시글 신고목록 조회"
             }
             "reply" -> {
                 getReplyReportList()
@@ -71,17 +61,7 @@ class ReportActivity : AppCompatActivity() {
         report_toolbar_text.text = text
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            // toolbar의 뒤로가기 버튼을 눌렀을 때
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
+    // 게시글 신고목록 조회
     private fun getBoardReportList() {
         (application as MasterApplication).service.userLoadBoardReport()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -104,10 +84,7 @@ class ReportActivity : AppCompatActivity() {
                             val intent = Intent(this@ReportActivity, BoardDetailActivity::class.java)
                                 .putExtra("board_id", boardId)
                                 .putExtra("activity_num", "5")
-                                .putExtra("user_id", intentUserId)
-                                .putExtra("user_name", intentUserName)
-                                .putExtra("user_student_id", intentUserStudentId)
-                                .putExtra("type", type)
+                                .putExtra("reportType", reportType)
                             startActivity(intent)
                             finish()
                         }
@@ -127,6 +104,7 @@ class ReportActivity : AppCompatActivity() {
             })
     }
 
+    // 댓글 신고목록 조회
     private fun getReplyReportList() {
         (application as MasterApplication).service.userLoadReplyReport()
             .enqueue(object : Callback<HashMap<String, Any>> {
@@ -150,10 +128,7 @@ class ReportActivity : AppCompatActivity() {
                             val intent = Intent(this@ReportActivity, BoardDetailActivity::class.java)
                                 .putExtra("board_id", boardId)
                                 .putExtra("activity_num", "5")
-                                .putExtra("user_id", intentUserId)
-                                .putExtra("user_name", intentUserName)
-                                .putExtra("user_student_id", intentUserStudentId)
-                                .putExtra("type", type)
+                                .putExtra("reportType", reportType)
                             startActivity(intent)
                             finish()
                         }
@@ -173,12 +148,19 @@ class ReportActivity : AppCompatActivity() {
             })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // toolbar의 뒤로가기 버튼을 눌렀을 때
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onBackPressed() {
-        val intent = Intent(this, SettingActivity::class.java)
-        intent.putExtra("user_id", intentUserId)
-        intent.putExtra("user_name", intentUserName)
-        intent.putExtra("user_student_id", intentUserStudentId)
-        startActivity(intent)
+        startActivity(Intent(this, SettingActivity::class.java))
         finish()
     }
 }

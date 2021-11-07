@@ -84,7 +84,7 @@ class MainActivity2 : AppCompatActivity() {
         val dialogText = dialogView.findViewById<TextView>(R.id.dialog_board_text)
         dialogText.text = "로그아웃 하시겠습니까?"
 
-        builder.setPositiveButton("확인") { dialog, it ->
+        builder.setPositiveButton("확인") { _, _ ->
             retrofitLogout()
         }
             .setNegativeButton("취소", null)
@@ -102,7 +102,7 @@ class MainActivity2 : AppCompatActivity() {
                     response: Response<HashMap<String, String>>
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
-                        app.deleteUserToken()
+                        app.deleteUserInfo()
                         app.createRetrofit(null)
                         startActivity(Intent(this@MainActivity2, LoginActivity::class.java))
                         finish()

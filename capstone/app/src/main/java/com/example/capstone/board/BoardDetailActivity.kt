@@ -49,10 +49,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private lateinit var boardDetailScrapCnt: String
     private lateinit var replyAdapter: ReplyAdapter
     private var masterRole: Boolean = false
-    private lateinit var intentUserId: String
-    private lateinit var intentUserName: String
-    private lateinit var intentUserStudentId: String
-    private lateinit var reportType: String
+    private var reportType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,18 +74,17 @@ class BoardDetailActivity : AppCompatActivity() {
             intentActivityNum = intent.getStringExtra("activity_num")!!
             masterRole = intent.getBooleanExtra("masterRole", false)
 
-            if (intent.hasExtra("user_id")) {
-                intentUserId = intent.getStringExtra("user_id")!!
-                intentUserName = intent.getStringExtra("user_name")!!
-                intentUserStudentId = intent.getStringExtra("user_student_id")!!
-                reportType = intent.getStringExtra("type")!!
+            if (masterRole) {
+                board_detail_like_btn.visibility = View.GONE
+                board_detail_scrap_btn.visibility = View.GONE
+                board_detail_comment_btn.visibility = View.GONE
             }
 
-            // 받은 board_id로 게시글 detail GET
-            retrofitGetPostDetail(intentBoardId)
-
-            // 받은 board_id로 댓글 GET
-            retrofitGetReplyList(intentBoardId)
+            if (intent.hasExtra("reportType")) {
+                reportType = intent.getStringExtra("reportType")!!
+            }
+            retrofitGetPostDetail(intentBoardId)    // 받은 board_id로 게시글 detail GET
+            retrofitGetReplyList(intentBoardId)     // 받은 board_id로 댓글 GET
         } else {
             // intent 실패할 경우 현재 액티비티 종료
             finish()
@@ -149,7 +145,7 @@ class BoardDetailActivity : AppCompatActivity() {
                         if (boardDetailType == "notice") board_detail_nickname.setText(boardDetailUserId).toString()
 
                         if (post.goodCheck == "Y")
-                        board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
+                            board_detail_like_btn.setImageResource(R.drawable.detail_like_selected)
                         if (post.scrapCheck == "Y")
                             board_detail_scrap_btn.setImageResource(R.drawable.detail_scrap_selected)
                         if (post.userCheck == "Y") menuUserCheck = true
@@ -169,20 +165,30 @@ class BoardDetailActivity : AppCompatActivity() {
                         if (postImgList.size > 0) {
                             val uriPaths: ArrayList<Uri> = ArrayList()
                             for (i in 0 until postImgList.size)
-                                uriPaths.add(Uri.parse(BASE_URL+postImgList[i]))
+                                uriPaths.add(Uri.parse(BASE_URL + postImgList[i]))
 
-                            val adapter = PostImageAdapter(uriPaths, LayoutInflater.from(this@BoardDetailActivity)) { position ->
+                            val adapter = PostImageAdapter(
+                                uriPaths,
+                                LayoutInflater.from(this@BoardDetailActivity)
+                            ) { position ->
                                 // 첨부된 이미지 클릭했을 경우
-                                val intent = Intent(this@BoardDetailActivity, PostImagePagerActivity::class.java)
+                                val intent = Intent(
+                                    this@BoardDetailActivity,
+                                    PostImagePagerActivity::class.java
+                                )
                                 intent.putExtra("uriPaths", uriPaths)
                                 intent.putExtra("position", position)
                                 startActivity(intent)
                             }
                             board_detail_img_recyclerview.adapter = adapter
-                            board_detail_img_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity).also {
-                                it.orientation = LinearLayoutManager.HORIZONTAL
-                            }
+                            board_detail_img_recyclerview.layoutManager =
+                                LinearLayoutManager(this@BoardDetailActivity).also {
+                                    it.orientation = LinearLayoutManager.HORIZONTAL
+                                }
                         }
+                    } else if (response.code() == 400) {
+                        toast("해당 게시글이 삭제되었습니다")
+                        onBackPressed()
                     } else {
                         toast("게시글을 조회할 수 없습니다")
                         finish()
@@ -222,6 +228,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         reply_recyclerview.adapter = replyAdapter
                         reply_recyclerview.layoutManager = LinearLayoutManager(this@BoardDetailActivity)
                         reply_recyclerview.setHasFixedSize(true)
+                    } else if (response.code() == 400) {
+                        // 해당 게시글이 삭제되었습니다
                     } else {
                         toast("댓글을 조회할 수 없습니다")
                         finish()
@@ -247,6 +255,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()!!.success == "true") {
                         val reply = response.body()!!.data
                         replyAdapter.addReplyItem(reply)
+                        board_detail_scroll.smoothScrollTo(0, 0)
                         addReplyCnt()
                         board_detail_comment.setText("").toString()
                     } else {
@@ -413,10 +422,7 @@ class BoardDetailActivity : AppCompatActivity() {
             }
             "5" -> {
                 val intent = Intent(this, ReportActivity::class.java)
-                    .putExtra("user_id", intentUserId)
-                    .putExtra("user_name", intentUserName)
-                    .putExtra("user_student_id", intentUserStudentId)
-                    .putExtra("type", reportType)
+                    .putExtra("reportType", reportType)
                 startActivity(intent)
             }
             "6" -> {
@@ -470,7 +476,7 @@ class BoardDetailActivity : AppCompatActivity() {
         val dialogEditText = dialogView.findViewById<EditText>(R.id.dialog_reply_edittext)
         dialogEditText.hint = "신고 사유를 입력해 주세요"
 
-        builder.setPositiveButton("확인") { dialog, it ->
+        builder.setPositiveButton("확인") { _, _ ->
             val body = dialogEditText.text.toString()
             val params = HashMap<String, Any>()
             params["board_id"] = intentBoardId

@@ -3,12 +3,10 @@ package com.example.capstone.network
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
+import com.example.capstone.dataclass.NotiPost
 import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import org.jetbrains.anko.toast
 import retrofit2.*
 import retrofit2.Call
@@ -19,27 +17,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MasterApplication: Application(), LifecycleObserver {
     lateinit var service: RetrofitService
 
-    val BASE_URL = "http://220.149.31.104:3000"     //220.149.31.104
+    val BASE_URL = "http://220.149.31.104:3000"    //220.149.31.104
 
     override fun onCreate() {
         super.onCreate()
-
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         createRetrofit(null)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onAppBackgrounded() {
-        Log.d("abc", "back"+isInForeground().toString())
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onAppForegrounded() {
-        Log.d("abc", "fore"+isInForeground().toString())
-    }
-
-    fun isInForeground(): Boolean {
-        return ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
     // retrofit 생성하는 함수
@@ -64,10 +46,13 @@ class MasterApplication: Application(), LifecycleObserver {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(header)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .apply {
                 if (refreshToken != null)   // refresh token으로 retrofit 재설정
                     authenticator(TokenAuthenticator(refreshToken, this@MasterApplication))
-                else {
+                else {           // 기본 retrofit 설정
                     if(checkIsLogin())
                         authenticator(TokenAuthenticator(getUserToken(1)!!, this@MasterApplication))
                 }
@@ -101,7 +86,6 @@ class MasterApplication: Application(), LifecycleObserver {
             1 -> sp.getString("refresh_token", "null")
             else -> sp.getString("role", "null")
         }
-
         return if (token == "null") null
         else token
     }
@@ -114,14 +98,27 @@ class MasterApplication: Application(), LifecycleObserver {
         editor.apply()
     }
 
-    // 토큰 삭제
-    fun deleteUserToken() {
-        val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+    // 사용자 정보 get
+    fun getUserInfo(name: String): String? {
+        val sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        return sp.getString(name, null)
+    }
+
+    // 사용자 정보 저장
+    fun saveUserInfo(name: String, info: String) {
+        val sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.remove("access_token")
-        editor.remove("refresh_token")
-        editor.remove("role")
+        editor.putString(name, info)
         editor.apply()
+    }
+
+    // 토큰 & 사용자 정보 삭제
+    fun deleteUserInfo() {
+        var sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        sp.edit().clear().apply()
+
+        sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        sp.edit().clear().apply()
     }
 
     // 토큰 재발급 함수
@@ -140,7 +137,7 @@ class MasterApplication: Application(), LifecycleObserver {
                         if (refreshToken != null && refreshToken != "")
                             saveUserToken("refresh_token", refreshToken)
                     } else if (response.code() == 401) {
-                        deleteUserToken()
+                        deleteUserInfo()
                         (mContext as Activity).finish()
                     } else {
                         (mContext as Activity).finish()
@@ -155,8 +152,8 @@ class MasterApplication: Application(), LifecycleObserver {
     }
 
     // 알림 추가 함수
-    fun retrofitCreateNotification(noti: HashMap<String, String>) {
-        service.createNotification(noti)
+    fun retrofitCreateNotification(notiList: HashMap<String, ArrayList<NotiPost>>) {
+        service.createNotification(notiList)
             .enqueue(object : Callback<HashMap<String, String>> {
                 override fun onResponse(
                     call: Call<HashMap<String, String>>,
@@ -164,10 +161,8 @@ class MasterApplication: Application(), LifecycleObserver {
                 ) {
                     if (response.isSuccessful && response.body()!!["success"].toString() == "true") {
                         // 알림 추가 성공
-                        Log.d("abc", "알림 추가 성공")
                     } else {
                         // 알림 추가 실패
-                        Log.d("abc", "알림 추가 실패")
                     }
                 }
 

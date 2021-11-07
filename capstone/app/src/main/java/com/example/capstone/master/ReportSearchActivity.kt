@@ -74,7 +74,7 @@ class ReportSearchActivity : AppCompatActivity() {
                 if (title == "") {
                     report_search_id_layout.visibility = View.GONE
                     report_search_body_scrollview.visibility = View.GONE
-                    toast("검색어를 입력해주세요")
+                    toast("검색어를 입력해 주세요")
                 } else {
                     // 키보드 InputMethodManager 세팅
                     // 버튼 클릭 시 키보드 내리기
@@ -185,7 +185,7 @@ class ReportSearchActivity : AppCompatActivity() {
         if (count == 0) {
             report_search_id_layout.visibility = View.GONE
             report_search_body_scrollview.visibility = View.GONE
-            toast("검색 결과가 없습니다.")
+            toast("검색 결과가 없습니다")
         }
         else {
             report_search_number.text = count.toString()

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.adapter.BoardAdapter
@@ -55,6 +56,11 @@ class BoardActivity : AppCompatActivity() {
                     else -> "자유게시판"
                 }
                 board_toolbar_text.setText(text).toString()
+
+                if (type == "notice") {     // 학생회 공지 게시판일 경우 학생회만 글 작성 가능
+                    if ((application as MasterApplication).getUserToken(2) == "student")
+                        board_write_btn.visibility = View.GONE
+                }
                 retrofitGetPostList(false)   // 해당 게시판 전체 게시글 GET
             }
         } else {

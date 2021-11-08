@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.capstone">
+    package="com.sangcom.capstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
-        android:name=".network.MasterApplication"
+        android:name="com.sangcom.capstone.network.MasterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_sangcom"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true">
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="com.sangcom.capstone.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -27,23 +27,23 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".master.ReportSearchActivity" />
-        <activity android:name=".master.MasterReportActivity" />
-        <activity android:name=".master.StudentListActivity" />
-        <activity android:name=".master.EnrollStudentActivity" />
-        <activity android:name=".master.MainActivity2" />
-        <activity android:name=".setting.MyInfoActivity" />
-        <activity android:name=".setting.ChangePasswordActivity" />
-        <activity android:name=".user.FindPasswordActivity" />
-        <activity android:name=".main.SchoolMealActivity" />
-        <activity android:name=".main.TodoListActivity" />
-        <activity android:name=".main.TimeTableActivity" />
-        <activity android:name=".setting.ReportActivity" />
-        <activity android:name=".NoticeActivity" />
-        <activity android:name=".setting.SettingActivity" />
-        <activity android:name=".setting.PrivacyPolicyActivity"/>
-        <activity android:name=".MessageActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.sangcom.capstone.master.ReportSearchActivity" />
+        <activity android:name="com.sangcom.capstone.master.MasterReportActivity" />
+        <activity android:name="com.sangcom.capstone.master.StudentListActivity" />
+        <activity android:name="com.sangcom.capstone.master.EnrollStudentActivity" />
+        <activity android:name="com.sangcom.capstone.master.MainActivity2" />
+        <activity android:name="com.sangcom.capstone.setting.MyInfoActivity" />
+        <activity android:name="com.sangcom.capstone.setting.ChangePasswordActivity" />
+        <activity android:name="com.sangcom.capstone.user.FindPasswordActivity" />
+        <activity android:name="com.sangcom.capstone.main.SchoolMealActivity" />
+        <activity android:name="com.sangcom.capstone.main.TodoListActivity" />
+        <activity android:name="com.sangcom.capstone.main.TimeTableActivity" />
+        <activity android:name="com.sangcom.capstone.setting.ReportActivity" />
+        <activity android:name="com.sangcom.capstone.NoticeActivity" />
+        <activity android:name="com.sangcom.capstone.setting.SettingActivity" />
+        <activity android:name="com.sangcom.capstone.setting.PrivacyPolicyActivity"/>
+        <activity android:name="com.sangcom.capstone.MessageActivity" />
+        <activity android:name="com.sangcom.capstone.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,20 +51,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".board.SearchActivity"
+            android:name="com.sangcom.capstone.board.SearchActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".board.ScrapActivity" />
+        <activity android:name="com.sangcom.capstone.board.ScrapActivity" />
         <activity
-            android:name=".board.BoardWriteActivity"
+            android:name="com.sangcom.capstone.board.BoardWriteActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".board.BoardDetailActivity"
+            android:name="com.sangcom.capstone.board.BoardDetailActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".board.BoardActivity" />
-        <activity android:name=".board.PostImagePagerActivity" />
-        <activity android:name=".user.SignUpActivity" />
-        <activity android:name=".user.LoginActivity" />
-        <activity android:name=".main.MainActivity" />
+        <activity android:name="com.sangcom.capstone.board.BoardActivity" />
+        <activity android:name="com.sangcom.capstone.board.PostImagePagerActivity" />
+        <activity android:name="com.sangcom.capstone.user.SignUpActivity" />
+        <activity android:name="com.sangcom.capstone.user.LoginActivity" />
+        <activity android:name="com.sangcom.capstone.main.MainActivity" />
     </application>
 
 </manifest>

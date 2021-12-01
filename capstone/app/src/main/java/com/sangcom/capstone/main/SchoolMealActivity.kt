@@ -106,10 +106,11 @@ class SchoolMealActivity : AppCompatActivity() {
                                     val mealDetailList = ArrayList<String>()
                                     val mealArray = treeMap["dish"] as ArrayList<String>
                                     for (item in mealArray) {
-                                        val arr = item.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".")
+                                        val arr = item.split("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "*")
                                         mealDetailList.add(arr[0])
                                     }
-                                    mealList.add(Meal(receiveYear, receiveMonth, receiveDay, mealDetailList))
+                                    val mealResultList = mealDetailList.distinct() as ArrayList<String>
+                                    mealList.add(Meal(receiveYear, receiveMonth, receiveDay, mealResultList))
                                 }
                                 itemList.add(mealList)
                                 weekList.add(i)

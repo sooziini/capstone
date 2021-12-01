@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:onClick="hideKeyboard"
+    android:background="#FFFFFF"
     tools:context=".user.LoginActivity">
 
     <LinearLayout
@@ -21,38 +22,19 @@
 
         <ImageView
             android:id="@+id/LoginImageView"
-            android:layout_width="140sp"
-            android:layout_height="140sp"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/logo" />
+            android:layout_width="280sp"
+            android:layout_height="210dp"
+            android:layout_marginTop="72dp"
+            app:srcCompat="@drawable/sangcom_login" />
 
-        <TextView
-            android:id="@+id/LoginTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="학교 생활을 더 편하고 즐겁게"
-            android:textColor="@color/basic" />
-
-        <TextView
-            android:id="@+id/LoginTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CLOUDY"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/main_color"
-            android:textSize="30sp"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/login_linear_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
+        android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:gravity="center"
         android:orientation="vertical"

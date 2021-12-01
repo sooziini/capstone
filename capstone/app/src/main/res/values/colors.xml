@@ -3,6 +3,7 @@
     <color name="main_color">#1669E4</color>
     <color name="no_select">#A8A8A8</color>
     <color name="selected">#8A8A8A</color>
+    <color name="privacy">#616161</color>
     <color name="reply_child">#F1F0F0</color>
     <color name="scrap">#ECD302</color>
     <color name="like">#ED405A</color>

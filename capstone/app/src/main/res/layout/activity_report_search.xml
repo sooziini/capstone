@@ -34,9 +34,9 @@
         android:id="@+id/report_search_id_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="ID :"
+            android:text="ID:"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text=", 신고받은 횟수 :"
+            android:text=", 신고받은 횟수:"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
